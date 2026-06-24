@@ -8,13 +8,29 @@ interface DashboardCardsProps {
 interface CardProps {
   label: string;
   value: string;
+  /** Show a skeleton bar instead of the value (first load only). */
+  skeleton?: boolean;
+  /** Use tabular figures so the number doesn't reflow on refresh. */
+  tabular?: boolean;
 }
 
-function Card({ label, value }: CardProps) {
+function Card({ label, value, skeleton, tabular }: CardProps) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 text-2xl font-semibold text-slate-800">{value}</p>
+    <div className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3.5">
+      <p className="text-[11px] font-medium uppercase tracking-wider text-slate-500">{label}</p>
+      {skeleton ? (
+        <div className="mt-2 h-7 w-20 animate-pulse rounded bg-slate-800" />
+      ) : (
+        <p
+          className={
+            "mt-1 truncate text-2xl font-semibold text-slate-100 " +
+            (tabular ? "tabular-nums" : "")
+          }
+          title={value}
+        >
+          {value}
+        </p>
+      )}
     </div>
   );
 }
@@ -28,25 +44,32 @@ function formatTimestamp(ts: string | null): string {
 
 /** Summary cards: active visitors, total points, crowded area, last updated. */
 export default function DashboardCards({ summary, loading }: DashboardCardsProps) {
-  const placeholder = loading && !summary ? "…" : "—";
+  const firstLoad = loading && !summary;
 
   return (
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       <Card
         label="Active Visitors"
-        value={summary ? String(summary.estimated_active_visitors) : placeholder}
+        value={summary ? String(summary.estimated_active_visitors) : "—"}
+        skeleton={firstLoad}
+        tabular
       />
       <Card
         label="Total Points"
-        value={summary ? String(summary.total_location_points) : placeholder}
+        value={summary ? summary.total_location_points.toLocaleString() : "—"}
+        skeleton={firstLoad}
+        tabular
       />
       <Card
         label="Most Crowded Area"
-        value={summary ? summary.most_crowded_area : placeholder}
+        value={summary ? summary.most_crowded_area : "—"}
+        skeleton={firstLoad}
       />
       <Card
         label="Last Updated"
-        value={summary ? formatTimestamp(summary.last_updated) : placeholder}
+        value={summary ? formatTimestamp(summary.last_updated) : "—"}
+        skeleton={firstLoad}
+        tabular
       />
     </div>
   );

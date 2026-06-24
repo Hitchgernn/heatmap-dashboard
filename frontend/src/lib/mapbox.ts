@@ -25,13 +25,14 @@ export function configureMapboxToken(): boolean {
   return true;
 }
 
-/** Create the map centered on Borobudur. */
+/** Create the map centered on Borobudur. Dark style frames the heatmap glow. */
 export function createMap(container: HTMLElement): mapboxgl.Map {
   return new mapboxgl.Map({
     container,
-    style: "mapbox://styles/mapbox/light-v11",
+    style: "mapbox://styles/mapbox/dark-v11",
     center: BOROBUDUR_CENTER,
     zoom: DEFAULT_ZOOM,
+    attributionControl: false,
   });
 }
 
@@ -88,12 +89,16 @@ export function setHeatmapVisible(map: mapboxgl.Map, visible: boolean): void {
 export function renderHotspotMarkers(map: mapboxgl.Map, hotspots: Hotspot[]): mapboxgl.Marker[] {
   return hotspots.map((h) => {
     const el = document.createElement("div");
-    el.className =
-      "rounded-full border-2 border-white shadow-md bg-red-600/80 cursor-pointer";
+    el.className = "cursor-pointer";
     // Scale marker by relative size (clamped) so big clusters read larger.
-    const size = Math.max(16, Math.min(40, 16 + Math.log10(h.total_points + 1) * 10));
+    const size = Math.max(18, Math.min(44, 16 + Math.log10(h.total_points + 1) * 12));
     el.style.width = `${size}px`;
     el.style.height = `${size}px`;
+    // Sky ring distinct from the warm density ramp, with a glow on the dark map.
+    el.style.borderRadius = "9999px";
+    el.style.border = "2px solid #38bdf8";
+    el.style.background = "rgba(56, 189, 248, 0.22)";
+    el.style.boxShadow = "0 0 0 2px rgba(2,6,23,0.65), 0 0 14px rgba(56,189,248,0.55)";
 
     const popup = new mapboxgl.Popup({ offset: 12, closeButton: false }).setHTML(
       `<div style="font-size:12px">
