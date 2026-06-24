@@ -1,0 +1,100 @@
+/**
+ * Mock data routes (development/testing only).
+ *
+ *   POST /api/mock/location   — insert one mock location
+ *   POST /api/mock/generate   — generate + insert a clustered batch
+ *
+ * Both force source "mock" and insert through the active repository.
+ */
+
+import { Router, type Request, type Response } from "express";
+import { getLocationRepository } from "../repositories";
+import { generateMockId, generateMockLocations } from "../services/mock-data.service";
+import {
+  isValidLatitude,
+  isValidLongitude,
+  isValidTimestamp,
+} from "../utils/validateLocation";
+import { errorResponse, successResponse } from "../utils/httpResponse";
+import type { LocationLog } from "../types/location";
+
+const router = Router();
+
+// Guard rails for bulk generation so a typo can't create millions of rows.
+const MAX_VISITORS = 5000;
+const MAX_POINTS_PER_VISITOR = 500;
+
+router.post("/location", async (req: Request, res: Response) => {
+  const body = (req.body ?? {}) as Record<string, unknown>;
+  const { visitor_id, timestamp, latitude, longitude, id_data } = body;
+
+  if (typeof visitor_id !== "string" || visitor_id.length === 0) {
+    return errorResponse(res, 400, "VALIDATION_ERROR", "visitor_id is required");
+  }
+  if (!isValidTimestamp(timestamp)) {
+    return errorResponse(res, 400, "VALIDATION_ERROR", "timestamp must be a valid ISO timestamp");
+  }
+  if (!isValidLatitude(latitude)) {
+    return errorResponse(res, 400, "INVALID_COORDINATE", "latitude is required and must be a number");
+  }
+  if (!isValidLongitude(longitude)) {
+    return errorResponse(res, 400, "INVALID_COORDINATE", "longitude is required and must be a number");
+  }
+
+  const location: LocationLog = {
+    id_data: typeof id_data === "string" && id_data.length > 0 ? id_data : generateMockId(),
+    timestamp: timestamp as string,
+    visitor_id,
+    latitude: latitude as number,
+    longitude: longitude as number,
+    source: "mock", // forced
+  };
+
+  try {
+    const repository = getLocationRepository();
+    await repository.insertLocation(location);
+    return res.status(201).json({ success: true, message: "Mock location inserted" });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return errorResponse(res, 500, "INTERNAL_SERVER_ERROR", message);
+  }
+});
+
+router.post("/generate", async (req: Request, res: Response) => {
+  const body = (req.body ?? {}) as Record<string, unknown>;
+  const visitorCount = Number(body.visitor_count);
+  const pointsPerVisitor = Number(body.points_per_visitor);
+
+  if (!Number.isInteger(visitorCount) || visitorCount <= 0 || visitorCount > MAX_VISITORS) {
+    return errorResponse(
+      res,
+      400,
+      "VALIDATION_ERROR",
+      `visitor_count must be an integer between 1 and ${MAX_VISITORS}`
+    );
+  }
+  if (
+    !Number.isInteger(pointsPerVisitor) ||
+    pointsPerVisitor <= 0 ||
+    pointsPerVisitor > MAX_POINTS_PER_VISITOR
+  ) {
+    return errorResponse(
+      res,
+      400,
+      "VALIDATION_ERROR",
+      `points_per_visitor must be an integer between 1 and ${MAX_POINTS_PER_VISITOR}`
+    );
+  }
+
+  try {
+    const repository = getLocationRepository();
+    const locations = generateMockLocations({ visitorCount, pointsPerVisitor });
+    await repository.insertManyLocations(locations);
+    return res.status(201).json({ success: true, inserted: locations.length });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return errorResponse(res, 500, "INTERNAL_SERVER_ERROR", message);
+  }
+});
+
+export default router;

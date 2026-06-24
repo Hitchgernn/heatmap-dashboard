@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment files (keep .env.example tracked)
+.env
+.env.local
+*/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# ML
+ml/__pycache__/
+ml/.venv/
+ml/venv/
+
+# Agent local settings
+.claude/settings.local.json

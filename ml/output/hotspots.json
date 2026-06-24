@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-06-24T14:00:00Z",
+  "algorithm": "DBSCAN",
+  "params": { "eps": 0.0005, "min_samples": 10 },
+  "note": "Sample fixture. Replace with real output from ml/hotspot_detection.py once the ML module is implemented.",
+  "hotspots": [
+    {
+      "cluster_id": "hotspot_01",
+      "center_lat": -7.6079,
+      "center_lng": 110.2037,
+      "total_points": 420,
+      "label": "High Density Hotspot"
+    },
+    {
+      "cluster_id": "hotspot_02",
+      "center_lat": -7.6095,
+      "center_lng": 110.205,
+      "total_points": 230,
+      "label": "Medium Density Hotspot"
+    },
+    {
+      "cluster_id": "hotspot_03",
+      "center_lat": -7.6079,
+      "center_lng": 110.2055,
+      "total_points": 140,
+      "label": "Medium Density Hotspot"
+    }
+  ]
+}
