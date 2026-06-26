@@ -1,38 +1,45 @@
-import { useEffect, useRef } from "react";
-import type { Map as MapboxMap, Marker } from "mapbox-gl";
+import { CircleMarker, Popup } from "react-leaflet";
 import type { Hotspot } from "../types/hotspot";
-import { renderHotspotMarkers } from "../lib/mapbox";
 
 interface HotspotLayerProps {
-  map: MapboxMap | null;
   hotspots: Hotspot[];
   visible: boolean;
 }
 
 /**
- * Renders hotspot markers onto an existing map. This component draws nothing
- * itself (returns null) — it manages Mapbox markers as a side effect so they
- * can be added/removed without recreating the map.
+ * Renders hotspots as Leaflet circle markers (declarative children of the
+ * MapContainer). Leaflet uses [latitude, longitude], so center is
+ * [center_lat, center_lng] — the opposite of GeoJSON. Sky ring distinct from
+ * the warm heat ramp.
  */
-export default function HotspotLayer({ map, hotspots, visible }: HotspotLayerProps) {
-  const markersRef = useRef<Marker[]>([]);
+export default function HotspotLayer({ hotspots, visible }: HotspotLayerProps) {
+  if (!visible) return null;
 
-  useEffect(() => {
-    if (!map) return;
-
-    // Clear previous markers before (re)rendering.
-    markersRef.current.forEach((m) => m.remove());
-    markersRef.current = [];
-
-    if (visible && hotspots.length > 0) {
-      markersRef.current = renderHotspotMarkers(map, hotspots);
-    }
-
-    return () => {
-      markersRef.current.forEach((m) => m.remove());
-      markersRef.current = [];
-    };
-  }, [map, hotspots, visible]);
-
-  return null;
+  return (
+    <>
+      {hotspots.map((h) => {
+        // Scale radius by relative size (clamped) so big clusters read larger.
+        const radius = Math.max(9, Math.min(22, 8 + Math.log10(h.total_points + 1) * 6));
+        return (
+          <CircleMarker
+            key={h.cluster_id}
+            center={[h.center_lat, h.center_lng]} // [lat, lng]
+            radius={radius}
+            pathOptions={{
+              color: "#38bdf8",
+              weight: 2,
+              fillColor: "#38bdf8",
+              fillOpacity: 0.22,
+            }}
+          >
+            <Popup>
+              <strong>{h.label}</strong>
+              <br />
+              {h.total_points} points
+            </Popup>
+          </CircleMarker>
+        );
+      })}
+    </>
+  );
 }

@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Fira+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
-@import "mapbox-gl/dist/mapbox-gl.css";
+@import "leaflet/dist/leaflet.css";
 
 @theme {
   --font-sans: "Fira Sans", ui-sans-serif, system-ui, sans-serif;
@@ -21,17 +21,45 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Dark base behind tiles so the map area never flashes white. */
+.leaflet-container {
+  background: #0f172a;
+  font-family: var(--font-sans);
+}
+
 /* Dark hotspot popups so they read against the dark map. */
-.mapboxgl-popup-content {
+.leaflet-popup-content-wrapper {
   background: #0f172a;
   color: #e2e8f0;
   border: 1px solid #1e293b;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
-.mapboxgl-popup-tip {
-  border-top-color: #0f172a !important;
-  border-bottom-color: #0f172a !important;
+.leaflet-popup-tip {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+}
+.leaflet-popup-content {
+  margin: 8px 12px;
+  font-size: 12px;
+}
+.leaflet-container a.leaflet-popup-close-button {
+  color: #94a3b8;
+}
+
+/* Dark zoom controls + attribution to match the operations shell. */
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background: #1e293b;
+  color: #e2e8f0;
+  border-bottom-color: #334155;
+}
+.leaflet-control-attribution {
+  background: rgba(15, 23, 42, 0.7) !important;
+  color: #94a3b8 !important;
+}
+.leaflet-control-attribution a {
+  color: #7dd3fc !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

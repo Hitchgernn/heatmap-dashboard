@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
-import type { Map as MapboxMap } from "mapbox-gl";
+import { useEffect, useMemo, useState } from "react";
 import MapView from "./components/MapView";
 import DashboardCards from "./components/DashboardCards";
 import TimeFilter from "./components/TimeFilter";
 import LayerToggle from "./components/LayerToggle";
-import HotspotLayer from "./components/HotspotLayer";
 import LoadingState from "./components/LoadingState";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
+import { toHeatPoints } from "./lib/map";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
 import type { Hotspot } from "./types/hotspot";
 
@@ -61,8 +60,8 @@ export default function App() {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [map, setMap] = useState<MapboxMap | null>(null);
-  const onMapReady = useCallback((m: MapboxMap) => setMap(m), []);
+  // Convert backend GeoJSON ([lng, lat]) to leaflet.heat points ([lat, lng, intensity]).
+  const heatPoints = useMemo(() => toHeatPoints(heatmap), [heatmap]);
 
   // Poll heatmap + summary together. Recreated when the time window changes.
   useEffect(() => {
@@ -193,8 +192,12 @@ export default function App() {
       {/* Map */}
       <main className="relative flex-1 px-4 pb-4 sm:px-6 sm:pb-6">
         <div className="relative h-full w-full overflow-hidden rounded-xl border border-slate-800 shadow-xl">
-          <MapView heatmap={heatmap} showHeatmap={showHeatmap} onMapReady={onMapReady} />
-          <HotspotLayer map={map} hotspots={hotspots} visible={showHotspots} />
+          <MapView
+            heatPoints={heatPoints}
+            showHeatmap={showHeatmap}
+            hotspots={hotspots}
+            showHotspots={showHotspots}
+          />
           {showHeatmap && <HeatmapLegend />}
         </div>
       </main>
