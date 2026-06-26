@@ -35,12 +35,20 @@ export default function MapView({
       <MapContainer
         center={BOROBUDUR_CENTER}
         zoom={DEFAULT_ZOOM}
+        maxZoom={22}
         scrollWheelZoom
         zoomControl={false}
         className="h-full w-full"
         style={{ height: "100%", width: "100%" }}
       >
-        <TileLayer url={TILE_URL} attribution={TILE_ATTRIBUTION} />
+        {/* CARTO tiles only exist up to z20; maxNativeZoom upscales them past
+            that so z21–22 stays sharp basemap instead of turning solid gray. */}
+        <TileLayer
+          url={TILE_URL}
+          attribution={TILE_ATTRIBUTION}
+          maxZoom={22}
+          maxNativeZoom={20}
+        />
         <ZoomControl position="bottomright" />
         <HeatLayer points={heatPoints} visible={showHeatmap} />
         <HotspotLayer hotspots={hotspots} visible={showHotspots} />

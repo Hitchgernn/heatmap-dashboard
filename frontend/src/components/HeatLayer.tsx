@@ -24,7 +24,7 @@ export default function HeatLayer({ points, visible }: HeatLayerProps) {
     const layer = L.heatLayer([], {
       radius: 28,
       blur: 20,
-      maxZoom: 18,
+      maxZoom: 22,
       minOpacity: 0.25,
       gradient: HEAT_GRADIENT,
     });
