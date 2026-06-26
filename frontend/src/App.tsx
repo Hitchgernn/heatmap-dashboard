@@ -1,56 +1,34 @@
 import { useEffect, useMemo, useState } from "react";
-import MapView from "./components/MapView";
-import DashboardCards from "./components/DashboardCards";
-import TimeFilter from "./components/TimeFilter";
-import LayerToggle from "./components/LayerToggle";
-import LoadingState from "./components/LoadingState";
+import Sidebar from "./components/Sidebar";
+import TopHeader from "./components/TopHeader";
+import DashboardView from "./components/DashboardView";
+import HeatmapView from "./components/HeatmapView";
+import HotspotsView from "./components/HotspotsView";
+import ShowSidebarButton from "./components/ShowSidebarButton";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
 import { toHeatPoints } from "./lib/map";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
 import type { Hotspot } from "./types/hotspot";
+import type { Page } from "./types/nav";
 
 const POLL_INTERVAL_MS = 30_000;
 
-/** Connection status pill in the header. */
-function StatusPill({ state }: { state: "live" | "refreshing" | "error" }) {
-  const config = {
-    live: { dot: "bg-emerald-400", text: "Live", tone: "text-emerald-300" },
-    refreshing: { dot: "bg-sky-400 animate-pulse", text: "Refreshing", tone: "text-sky-300" },
-    error: { dot: "bg-red-400", text: "Disconnected", tone: "text-red-300" },
-  }[state];
-
-  return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/60 px-3 py-1 text-xs font-medium">
-      <span className={"h-2 w-2 rounded-full " + config.dot} />
-      <span className={config.tone}>{config.text}</span>
-    </span>
-  );
-}
-
-/** Heatmap density legend overlay (anchored bottom-left of the map). */
-function HeatmapLegend() {
-  return (
-    <div className="pointer-events-none absolute bottom-4 left-4 rounded-lg border border-slate-700 bg-slate-900/85 px-3 py-2.5 text-xs text-slate-300 shadow-xl backdrop-blur">
-      <p className="mb-1.5 font-medium uppercase tracking-wider text-slate-400">Visitor density</p>
-      <div className="flex items-center gap-2">
-        <span className="text-[10px] text-slate-500">Low</span>
-        <span
-          className="h-2 w-28 rounded-full"
-          style={{
-            background:
-              "linear-gradient(to right, rgb(103,169,207), rgb(209,229,240), rgb(253,219,199), rgb(239,138,98), rgb(178,24,43))",
-          }}
-        />
-        <span className="text-[10px] text-slate-500">High</span>
-      </div>
-    </div>
-  );
-}
+const PAGE_TITLE: Record<Page, string> = {
+  dashboard: "Dashboard",
+  heatmap: "Heatmap",
+  hotspots: "Hotspots",
+  visitor: "Visitor View",
+  settings: "Settings",
+};
 
 export default function App() {
+  const [page, setPage] = useState<Page>("dashboard");
   const [timeWindow, setTimeWindow] = useState<TimeWindow>("15m");
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+
+  // Dashboard layer toggles (full-map pages force their own layer state).
   const [showHeatmap, setShowHeatmap] = useState(true);
-  const [showHotspots, setShowHotspots] = useState(false);
+  const [showHotspots, setShowHotspots] = useState(true);
 
   const [heatmap, setHeatmap] = useState<HeatmapFeatureCollection | null>(null);
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
@@ -58,6 +36,7 @@ export default function App() {
 
   const [firstLoad, setFirstLoad] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [hotspotsLoading, setHotspotsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Convert backend GeoJSON ([lng, lat]) to leaflet.heat points ([lat, lng, intensity]).
@@ -101,25 +80,32 @@ export default function App() {
     };
   }, [timeWindow]);
 
-  // Fetch hotspots only when the layer is enabled.
+  // Hotspots are used by every page (markers + dashboard table), so fetch them
+  // on mount and refresh on the same poll cadence.
   useEffect(() => {
-    if (!showHotspots) return;
     let cancelled = false;
     const controller = new AbortController();
 
-    getHotspots({}, controller.signal)
-      .then((hs) => {
+    async function loadHotspots() {
+      try {
+        const hs = await getHotspots({}, controller.signal);
         if (!cancelled) setHotspots(hs);
-      })
-      .catch(() => {
+      } catch {
         /* hotspots are optional — ignore errors silently */
-      });
+      } finally {
+        if (!cancelled) setHotspotsLoading(false);
+      }
+    }
+
+    loadHotspots();
+    const id = setInterval(loadHotspots, POLL_INTERVAL_MS);
 
     return () => {
       cancelled = true;
       controller.abort();
+      clearInterval(id);
     };
-  }, [showHotspots]);
+  }, []);
 
   const status: "live" | "refreshing" | "error" = error
     ? "error"
@@ -127,80 +113,75 @@ export default function App() {
       ? "refreshing"
       : "live";
 
-  return (
-    <div className="flex h-full flex-col bg-slate-950 text-slate-200">
-      {/* Header */}
-      <header className="border-b border-slate-800 bg-slate-900/40 px-4 py-3.5 sm:px-6">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500/15 text-sky-400">
-              {/* Lucide "activity" glyph — monitoring identity, not decoration */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-            </span>
-            <div>
-              <h1 className="text-base font-semibold leading-tight text-slate-100">
-                Borobudur Heatmap Dashboard
-              </h1>
-              <p className="text-xs text-slate-500">Visitor density monitoring</p>
-            </div>
-          </div>
-          {!firstLoad && <StatusPill state={status} />}
-        </div>
-      </header>
+  // Sidebar can be collapsed only on the full-map pages.
+  const collapsible = page === "heatmap" || page === "hotspots";
+  const showSidebar = page === "dashboard" ? true : sidebarVisible;
 
-      {/* Controls + cards */}
-      <div className="space-y-3 px-4 py-4 sm:px-6">
-        <DashboardCards summary={summary} loading={refreshing} />
+  return (
+    <div className="flex h-full bg-gray-50 text-gray-800">
+      <Sidebar
+        active={page}
+        onNavigate={(p) => setPage(p)}
+        visible={showSidebar}
+        onCollapse={collapsible ? () => setSidebarVisible(false) : undefined}
+      />
+
+      <div className="relative flex min-w-0 flex-1 flex-col">
+        <TopHeader title={PAGE_TITLE[page]} status={status} />
 
         {error && (
           <div
             role="alert"
-            className="flex items-center gap-2 rounded-lg border border-red-900/60 bg-red-950/40 px-4 py-2.5 text-sm text-red-300"
+            className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-6 py-2 text-sm text-red-700"
           >
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
             <span>
               {error}. Retrying every {POLL_INTERVAL_MS / 1000}s.
             </span>
           </div>
         )}
 
-        <div className="flex flex-wrap items-center gap-3">
-          <TimeFilter value={timeWindow} onChange={setTimeWindow} />
-          <LayerToggle
-            showHeatmap={showHeatmap}
-            showHotspots={showHotspots}
-            onToggleHeatmap={setShowHeatmap}
-            onToggleHotspots={setShowHotspots}
-          />
-          {firstLoad && <LoadingState mode="loading" />}
-        </div>
-      </div>
+        <main className="relative flex min-h-0 flex-1 flex-col overflow-auto">
+          {collapsible && !showSidebar && (
+            <ShowSidebarButton onClick={() => setSidebarVisible(true)} />
+          )}
 
-      {/* Map */}
-      <main className="relative flex-1 px-4 pb-4 sm:px-6 sm:pb-6">
-        <div className="relative h-full w-full overflow-hidden rounded-xl border border-slate-800 shadow-xl">
-          <MapView
-            heatPoints={heatPoints}
-            showHeatmap={showHeatmap}
-            hotspots={hotspots}
-            showHotspots={showHotspots}
-          />
-          {showHeatmap && <HeatmapLegend />}
-        </div>
-      </main>
+          {page === "dashboard" && (
+            <DashboardView
+              timeWindow={timeWindow}
+              onTimeChange={setTimeWindow}
+              heatPoints={heatPoints}
+              showHeatmap={showHeatmap}
+              showHotspots={showHotspots}
+              onToggleHeatmap={setShowHeatmap}
+              onToggleHotspots={setShowHotspots}
+              hotspots={hotspots}
+              summary={summary}
+              loading={refreshing}
+              hotspotsLoading={hotspotsLoading}
+            />
+          )}
+
+          {page === "heatmap" && (
+            <HeatmapView
+              timeWindow={timeWindow}
+              onTimeChange={setTimeWindow}
+              heatPoints={heatPoints}
+              hotspots={hotspots}
+              sidebarCollapsed={!showSidebar}
+            />
+          )}
+
+          {page === "hotspots" && (
+            <HotspotsView
+              timeWindow={timeWindow}
+              onTimeChange={setTimeWindow}
+              hotspots={hotspots}
+              sidebarCollapsed={!showSidebar}
+            />
+          )}
+        </main>
+      </div>
     </div>
   );
 }
