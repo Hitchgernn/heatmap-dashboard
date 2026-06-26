@@ -5,44 +5,34 @@ interface LayerToggleProps {
   onToggleHotspots: (value: boolean) => void;
 }
 
-interface ToggleProps {
+interface PillButtonProps {
   label: string;
-  checked: boolean;
-  onChange: (value: boolean) => void;
-  /** Accent dot color so each layer reads at a glance. */
-  dotClass: string;
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
 }
 
-/** A switch-style toggle with a clear on/off track and a layer color dot. */
-function Toggle({ label, checked, onChange, dotClass }: ToggleProps) {
+/** One segmented button in the layer pill. */
+function PillButton({ label, active, onClick, children }: PillButtonProps) {
   return (
     <button
       type="button"
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onChange(!checked)}
-      className="group inline-flex items-center gap-2 rounded-md px-1 py-1 text-sm text-slate-300 transition-colors hover:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400"
+      onClick={onClick}
+      aria-pressed={active}
+      className={
+        "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
+        (active
+          ? "bg-gray-900 text-white"
+          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900")
+      }
     >
-      <span
-        className={
-          "relative h-4 w-7 rounded-full transition-colors " +
-          (checked ? "bg-sky-500" : "bg-slate-700")
-        }
-      >
-        <span
-          className={
-            "absolute top-0.5 h-3 w-3 rounded-full bg-white transition-transform " +
-            (checked ? "translate-x-3.5" : "translate-x-0.5")
-          }
-        />
-      </span>
-      <span className={"h-1.5 w-1.5 rounded-full " + dotClass} aria-hidden="true" />
+      {children}
       {label}
     </button>
   );
 }
 
-/** Toggles for the heatmap and hotspot layers. */
+/** Segmented layer pill (Heatmap / Hotspots) for the dashboard map preview. */
 export default function LayerToggle({
   showHeatmap,
   showHotspots,
@@ -50,22 +40,28 @@ export default function LayerToggle({
   onToggleHotspots,
 }: LayerToggleProps) {
   return (
-    <div className="inline-flex items-center gap-4 rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-1.5">
-      <span className="text-[11px] font-medium uppercase tracking-wider text-slate-500">
-        Layers
-      </span>
-      <Toggle
+    <div className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+      <PillButton
         label="Heatmap"
-        checked={showHeatmap}
-        onChange={onToggleHeatmap}
-        dotClass="bg-orange-400"
-      />
-      <Toggle
+        active={showHeatmap}
+        onClick={() => onToggleHeatmap(!showHeatmap)}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polygon points="12 2 2 7 12 12 22 7 12 2" />
+          <polyline points="2 17 12 22 22 17" />
+          <polyline points="2 12 12 17 22 12" />
+        </svg>
+      </PillButton>
+      <PillButton
         label="Hotspots"
-        checked={showHotspots}
-        onChange={onToggleHotspots}
-        dotClass="bg-sky-400"
-      />
+        active={showHotspots}
+        onClick={() => onToggleHotspots(!showHotspots)}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <circle cx="12" cy="10" r="3" />
+          <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z" />
+        </svg>
+      </PillButton>
     </div>
   );
 }
