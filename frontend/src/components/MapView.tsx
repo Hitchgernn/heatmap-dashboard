@@ -35,7 +35,7 @@ export default function MapView({
       <MapContainer
         center={BOROBUDUR_CENTER}
         zoom={DEFAULT_ZOOM}
-        maxZoom={22}
+        maxZoom={20}
         scrollWheelZoom
         zoomControl={false}
         className="h-full w-full"
@@ -46,7 +46,7 @@ export default function MapView({
         <TileLayer
           url={TILE_URL}
           attribution={TILE_ATTRIBUTION}
-          maxZoom={22}
+          maxZoom={20}
           maxNativeZoom={20}
         />
         <ZoomControl position="bottomright" />
