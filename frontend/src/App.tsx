@@ -113,9 +113,9 @@ export default function App() {
       ? "refreshing"
       : "live";
 
-  // Sidebar can be collapsed only on the full-map pages.
-  const collapsible = page === "heatmap" || page === "hotspots";
-  const showSidebar = page === "dashboard" ? true : sidebarVisible;
+  // Sidebar can be collapsed on every functional page.
+  const collapsible = page === "dashboard" || page === "heatmap" || page === "hotspots";
+  const showSidebar = sidebarVisible;
 
   return (
     <div className="flex h-full bg-gray-50 text-gray-800">
@@ -159,6 +159,7 @@ export default function App() {
               summary={summary}
               loading={refreshing}
               hotspotsLoading={hotspotsLoading}
+              sidebarCollapsed={!showSidebar}
             />
           )}
 

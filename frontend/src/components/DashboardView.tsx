@@ -20,6 +20,8 @@ interface DashboardViewProps {
   summary: DashboardSummary | null;
   loading: boolean;
   hotspotsLoading: boolean;
+  /** Sidebar is collapsed — shift the top-left control clear of the show button. */
+  sidebarCollapsed: boolean;
 }
 
 /**
@@ -39,6 +41,7 @@ export default function DashboardView({
   summary,
   loading,
   hotspotsLoading,
+  sidebarCollapsed,
 }: DashboardViewProps) {
   return (
     <div className="space-y-5 p-6">
@@ -51,7 +54,7 @@ export default function DashboardView({
             hotspots={hotspots}
             showHotspots={showHotspots}
           >
-            <div className="absolute left-3 top-3 z-[600]">
+            <div className={"absolute top-3 z-[600] " + (sidebarCollapsed ? "left-14" : "left-3")}>
               <TimeFilter value={timeWindow} onChange={onTimeChange} />
             </div>
             <div className="absolute right-3 top-3 z-[600]">

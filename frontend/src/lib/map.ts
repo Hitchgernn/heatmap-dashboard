@@ -10,7 +10,8 @@ import type { HeatmapFeatureCollection } from "../types/heatmap";
 
 // Leaflet uses [latitude, longitude] (the opposite of GeoJSON).
 export const BOROBUDUR_CENTER: LatLngTuple = [-7.6079, 110.2037];
-export const DEFAULT_ZOOM = 14;
+// Start zoomed tightly on Candi Borobudur (the temple fills the view).
+export const DEFAULT_ZOOM = 17;
 
 // CARTO "positron" light basemap — OpenStreetMap data, no token required.
 export const TILE_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
