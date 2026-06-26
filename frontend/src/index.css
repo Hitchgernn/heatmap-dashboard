@@ -15,51 +15,63 @@ body,
 }
 
 body {
-  background-color: #020617; /* slate-950 — avoids white flash before React mounts */
-  color: #e2e8f0; /* slate-200 */
+  background-color: #f9fafb; /* gray-50 — avoids flash before React mounts */
+  color: #1f2937; /* gray-800 */
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Dark base behind tiles so the map area never flashes white. */
+/* Light base behind tiles so the map area never flashes a dark color. */
 .leaflet-container {
-  background: #0f172a;
+  background: #e5e7eb;
   font-family: var(--font-sans);
 }
 
-/* Dark hotspot popups so they read against the dark map. */
+/* Hotspot label tooltips: clean white chips, no arrow. */
+.leaflet-tooltip.hotspot-label {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+}
+.leaflet-tooltip.hotspot-label::before {
+  display: none; /* hide the tooltip arrow */
+}
+
+/* Popups (if used): light to match the dashboard. */
 .leaflet-popup-content-wrapper {
-  background: #0f172a;
-  color: #e2e8f0;
-  border: 1px solid #1e293b;
+  background: #ffffff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 .leaflet-popup-tip {
-  background: #0f172a;
-  border: 1px solid #1e293b;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
 }
 .leaflet-popup-content {
   margin: 8px 12px;
   font-size: 12px;
 }
-.leaflet-container a.leaflet-popup-close-button {
-  color: #94a3b8;
-}
 
-/* Dark zoom controls + attribution to match the operations shell. */
+/* Light zoom controls + attribution to match the dashboard shell. */
 .leaflet-bar a,
 .leaflet-bar a:hover {
-  background: #1e293b;
-  color: #e2e8f0;
-  border-bottom-color: #334155;
+  background: #ffffff;
+  color: #374151;
+  border-bottom-color: #e5e7eb;
 }
 .leaflet-control-attribution {
-  background: rgba(15, 23, 42, 0.7) !important;
-  color: #94a3b8 !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #6b7280 !important;
 }
 .leaflet-control-attribution a {
-  color: #7dd3fc !important;
+  color: #2563eb !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
