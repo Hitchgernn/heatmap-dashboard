@@ -39,8 +39,8 @@ function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
 }
 
 /**
- * Summary cards (stacked, right column of the Dashboard): active visitors,
- * total points, most crowded area. Uses the existing summary API data.
+ * Summary cards (top row of the Dashboard): active visitors, total points,
+ * most crowded area. Uses the existing summary API data.
  */
 export default function DashboardCards({ summary, loading, areaCount }: DashboardCardsProps) {
   const firstLoad = loading && !summary;
@@ -48,7 +48,7 @@ export default function DashboardCards({ summary, loading, areaCount }: Dashboar
     areaCount && areaCount > 0 ? `Showing ${areaCount} ${areaCount === 1 ? "area" : "areas"}` : undefined;
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <Card
         label="Estimated Active Visitors"
         value={summary ? summary.estimated_active_visitors.toLocaleString() : "—"}

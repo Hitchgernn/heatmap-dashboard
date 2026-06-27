@@ -25,8 +25,8 @@ interface DashboardViewProps {
 }
 
 /**
- * Dashboard overview: a map preview (left) with stacked summary cards (right)
- * and a hotspot summary table beneath. The map shows the heatmap + hotspot
+ * Dashboard overview: a top row of summary cards, then a map (left) with the
+ * hotspot summary panel beside it (right). The map shows the heatmap + hotspot
  * labels, with the time/layer controls and density legend overlaid.
  */
 export default function DashboardView({
@@ -45,9 +45,12 @@ export default function DashboardView({
 }: DashboardViewProps) {
   return (
     <div className="space-y-5 p-6">
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_320px]">
-        {/* Map preview */}
-        <div className="relative h-[440px] overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+      {/* Summary cards across the top */}
+      <DashboardCards summary={summary} loading={loading} areaCount={hotspots.length} />
+
+      {/* Map (left) + hotspot summary panel (right) */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_360px]">
+        <div className="relative h-[480px] overflow-hidden rounded-xl border border-gray-200 shadow-sm">
           <MapView
             heatPoints={heatPoints}
             showHeatmap={showHeatmap}
@@ -71,11 +74,8 @@ export default function DashboardView({
           </MapView>
         </div>
 
-        {/* Summary cards */}
-        <DashboardCards summary={summary} loading={loading} areaCount={hotspots.length} />
+        <HotspotTable hotspots={hotspots} loading={hotspotsLoading} />
       </div>
-
-      <HotspotTable hotspots={hotspots} loading={hotspotsLoading} />
     </div>
   );
 }
