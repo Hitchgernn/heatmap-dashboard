@@ -24,8 +24,9 @@ export function buildDashboardSummary(
 ): DashboardSummary {
   const valid = cleanLocations(locations);
 
-  // Distinct visitor_id — counted internally, never returned.
-  const distinctVisitors = new Set(valid.map((loc) => loc.visitor_id));
+  // Distinct visitors — counted internally, never returned. Prefer the
+  // pseudonymous visitor_key (Hyperbase) and fall back to visitor_id (memory/mock).
+  const distinctVisitors = new Set(valid.map((loc) => loc.visitor_key ?? loc.visitor_id));
 
   // Latest timestamp among valid points.
   let lastUpdated: string | null = null;
