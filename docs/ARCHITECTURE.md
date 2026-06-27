@@ -38,7 +38,7 @@ Express + TypeScript REST API. Layered:
 ```txt
 routes/        HTTP layer — validation, status codes, error envelope
 services/      Aggregation + GeoJSON transformation (pure, testable)
-repositories/  Storage abstraction (memory fallback + Hyperbase placeholder)
+repositories/  Storage abstraction (memory fallback + Hyperbase REST)
 utils/         Validation, time-window resolution, density labeling
 config/        Bounds, grid size, env
 types/         Shared domain types
@@ -75,8 +75,9 @@ insertManyLocations(locations): Promise<void>
 
 - `MemoryLocationRepository` — in-process store, seeds sample data, used until
   Hyperbase credentials exist. Selected with `REPOSITORY_DRIVER=memory`.
-- `HyperbaseLocationRepository` — placeholder; throws until implemented.
-  Selected with `REPOSITORY_DRIVER=hyperbase`.
+- `HyperbaseLocationRepository` — Hyperbase REST integration (server-side HTTP
+  client, cached service JWT, bounded paginated reads, bounded-concurrency
+  inserts). Selected with `REPOSITORY_DRIVER=hyperbase`.
 
 Swapping drivers requires no service changes.
 
