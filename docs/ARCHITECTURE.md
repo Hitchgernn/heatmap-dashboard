@@ -17,17 +17,19 @@ Mobile App / Mock Generator
       → Grid aggregation
       → GeoJSON transformation
   → GeoJSON REST API
-  → Frontend (React + Vite + Mapbox)
-  → Mapbox heatmap layer
+  → Frontend (React + Vite + Leaflet)
+  → Leaflet heatmap layer
 ```
 
 ## 2. Components
 
-### 2.1 Frontend (planned)
+### 2.1 Frontend (built)
 
-React + Vite + TypeScript + Tailwind + Mapbox GL JS. Client-side only; no SSR.
-Polls `GET /api/heatmap/aggregate` and `GET /api/dashboard/summary` every ~30s
-and updates the existing Mapbox GeoJSON source in place (no map re-creation).
+React + Vite + TypeScript + Tailwind + Leaflet (`react-leaflet` + `leaflet.heat`).
+Client-side only; no SSR. Uses CARTO OpenStreetMap tiles, so no map token is
+needed. Polls `GET /api/heatmap/aggregate` and `GET /api/dashboard/summary`
+every ~30s and updates the existing Leaflet heat layer in place (no map
+re-creation).
 
 ### 2.2 Backend (this phase)
 

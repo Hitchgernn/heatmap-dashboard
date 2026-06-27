@@ -8,7 +8,7 @@ Build a web-based Borobudur Heatmap Dashboard for visualizing visitor density in
 
 The existing mobile app records visitor location data such as latitude, longitude, timestamp, and visitor_id. The data is stored in Hyperbase, a Backend-as-a-Service that uses ScyllaDB.
 
-This dashboard will fetch raw location data from Hyperbase through a backend service, clean and aggregate the data, transform it into GeoJSON, and display it as a colored heatmap on an interactive Mapbox map.
+This dashboard will fetch raw location data from Hyperbase through a backend service, clean and aggregate the data, transform it into GeoJSON, and display it as a colored heatmap on an interactive Leaflet map.
 
 The system must not stream every raw GPS point to the frontend in real-time because that would be heavy and inefficient. Instead, use a near real-time aggregated heatmap approach.
 
@@ -24,13 +24,13 @@ Use:
 * Vite
 * TypeScript
 * Tailwind CSS
-* Mapbox GL JS
+* Leaflet (react-leaflet + leaflet.heat)
 
 Do not use Next.js for this project.
 
 Reason:
 
-This dashboard is mainly a client-side geospatial visualization app. The main workload is Mapbox rendering, GeoJSON source updates, API polling, and UI interaction. Server-side rendering and SEO are not important for this use case. React + Vite is simpler, faster to develop, easier to deploy as static files, and flexible for multiple deployment options.
+This dashboard is mainly a client-side geospatial visualization app. The main workload is Leaflet rendering, GeoJSON-driven heat layer updates, API polling, and UI interaction. Server-side rendering and SEO are not important for this use case. React + Vite is simpler, faster to develop, easier to deploy as static files, and flexible for multiple deployment options. Leaflet with CARTO OpenStreetMap tiles needs no map token.
 
 ### Backend
 
@@ -85,7 +85,7 @@ Final deployment choice can be decided later depending on infrastructure constra
 
 The project must achieve the following:
 
-1. Display an interactive Borobudur map using Mapbox.
+1. Display an interactive Borobudur map using Leaflet.
 2. Fetch raw location data from Hyperbase through the backend.
 3. Clean and validate raw latitude and longitude data.
 4. Filter invalid or out-of-bound coordinates.
@@ -129,7 +129,7 @@ Mobile App
 → Aggregation Layer
 → GeoJSON API
 → Frontend Dashboard
-→ Mapbox Heatmap
+→ Leaflet Heatmap
 
 ### Testing Flow
 
@@ -139,7 +139,7 @@ Mock Data Generator
 → Aggregation Layer
 → GeoJSON API
 → Frontend Dashboard
-→ Mapbox Heatmap
+→ Leaflet Heatmap
 
 ### Important Rule
 
@@ -193,7 +193,7 @@ borobudur-heatmap-dashboard/
 │   │   │   └── LoadingState.tsx
 │   │   ├── lib/
 │   │   │   ├── api.ts
-│   │   │   └── mapbox.ts
+│   │   │   └── map.ts
 │   │   ├── types/
 │   │   │   ├── heatmap.ts
 │   │   │   └── hotspot.ts
@@ -662,7 +662,7 @@ Rules:
 The frontend must:
 
 1. Render the dashboard layout.
-2. Render a Mapbox map centered on Borobudur.
+2. Render a Leaflet map centered on Borobudur.
 3. Fetch aggregated GeoJSON from the backend.
 4. Display a colored heatmap layer.
 5. Provide time filter controls.
@@ -682,7 +682,7 @@ The page should include:
 2. Dashboard summary cards
 3. Time filter
 4. Layer toggle
-5. Mapbox map
+5. Leaflet map
 6. Heatmap layer
 7. Hotspot layer toggle
 8. Last updated timestamp
@@ -697,18 +697,18 @@ Suggested layout:
 -------------------------------------------------
 | Filter: 5m | 15m | 1h | Today | Custom        |
 -------------------------------------------------
-| Mapbox Map + Aggregated Heatmap               |
+| Leaflet Map + Aggregated Heatmap              |
 -------------------------------------------------
 ```
 
-### 14.3 Mapbox Requirements
+### 14.3 Map Requirements
 
-The Mapbox map must:
+The Leaflet map must:
 
 1. Center on Borobudur.
 2. Use aggregated GeoJSON from the backend.
 3. Add a heatmap layer.
-4. Update source data when the API refreshes.
+4. Update layer data when the API refreshes.
 5. Avoid reinitializing the whole map on every refresh.
 6. Keep heatmap color visible.
 7. Keep the rest of the UI simple and layout-focused.

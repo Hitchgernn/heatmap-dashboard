@@ -766,8 +766,8 @@ Default interval:
 
 Polling rules:
 
-1. Do not recreate the Mapbox map on every poll.
-2. Only update the existing GeoJSON source using new data.
+1. Do not recreate the Leaflet map on every poll.
+2. Only update the existing heat layer using new data.
 3. Show last updated timestamp.
 4. Show loading state only on first load.
 5. Show subtle refreshing state for later updates.
