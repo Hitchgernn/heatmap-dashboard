@@ -19,12 +19,15 @@ export const env = {
   /** When using the memory repository, seed a small sample dataset on boot. */
   seedDevData: (process.env.SEED_DEV_DATA ?? "true").toLowerCase() === "true",
 
-  /** Hyperbase connection settings (placeholder — not wired up yet). */
+  /** Hyperbase connection settings (used when REPOSITORY_DRIVER=hyperbase). */
   hyperbase: {
     baseUrl: process.env.HYPERBASE_BASE_URL || "",
-    token: process.env.HYPERBASE_TOKEN || "",
     projectId: process.env.HYPERBASE_PROJECT_ID || "",
-    collectionId: process.env.HYPERBASE_COLLECTION_ID || "",
+    collectionId: process.env.HYPERBASE_LOCATION_COLLECTION_ID || "",
+    tokenId: process.env.HYPERBASE_TOKEN_ID || "",
+    tokenSecret: process.env.HYPERBASE_TOKEN_SECRET || "",
+    pageSize: num(process.env.HYPERBASE_PAGE_SIZE, 500),
+    timeoutMs: num(process.env.HYPERBASE_TIMEOUT_MS, 5000),
   },
 
   /** Machine learning module settings. */
