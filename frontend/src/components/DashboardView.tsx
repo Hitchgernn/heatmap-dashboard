@@ -49,7 +49,7 @@ export default function DashboardView({
       <DashboardCards summary={summary} loading={loading} areaCount={hotspots.length} />
 
       {/* Map (left, square) + hotspot summary panel (right, wider) */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,560px)_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,720px)_1fr]">
         <div className="relative aspect-square overflow-hidden rounded-xl border border-gray-200 shadow-sm">
           <MapView
             heatPoints={heatPoints}

@@ -9,7 +9,7 @@ import type { LatLngTuple } from "leaflet";
 import type { HeatmapFeatureCollection } from "../types/heatmap";
 
 // Leaflet uses [latitude, longitude] (the opposite of GeoJSON).
-export const BOROBUDUR_CENTER: LatLngTuple = [-7.6079, 110.2037];
+export const BOROBUDUR_CENTER: LatLngTuple = [-7.607898742482102, 110.20385897610012];
 // Start zoomed tightly on Candi Borobudur (the temple fills the view).
 export const DEFAULT_ZOOM = 19;
 
