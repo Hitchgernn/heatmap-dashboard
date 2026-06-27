@@ -15,7 +15,7 @@ export default function LoadingState({ mode }: LoadingStateProps) {
   }
 
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-500">
+    <span className="inline-flex items-center gap-1.5 font-mono text-xs font-medium text-gray-500">
       <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gray-900" />
       Refreshing
     </span>

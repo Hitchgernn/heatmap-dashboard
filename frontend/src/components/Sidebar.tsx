@@ -72,15 +72,15 @@ export default function Sidebar({ active, onNavigate, visible, onCollapse }: Sid
     <aside className="flex h-full w-64 shrink-0 flex-col border-r border-gray-200 bg-white">
       {/* Branding */}
       <div className="px-6 pb-5 pt-6">
-        <h1 className="text-xl font-bold leading-none text-gray-900">Borobudur</h1>
-        <p className="mt-1 text-[11px] font-medium uppercase tracking-wider text-gray-400">
+        <h1 className="font-display text-2xl leading-none text-gray-900">Borobudur</h1>
+        <p className="mt-1 font-mono text-[11px] font-medium uppercase tracking-wider text-gray-400">
           Precision Monitoring
         </p>
         {onCollapse && (
           <button
             type="button"
             onClick={onCollapse}
-            className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-gray-700"
+            className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-gray-700"
           >
             <span aria-hidden="true">&laquo;</span> Collapse
           </button>

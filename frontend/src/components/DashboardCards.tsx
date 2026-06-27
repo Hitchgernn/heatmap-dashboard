@@ -22,12 +22,15 @@ function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
   return (
     <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
       <span className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: accent }} aria-hidden="true" />
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400">{label}</p>
+      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400">{label}</p>
       {skeleton ? (
         <div className="mt-2 h-8 w-24 animate-pulse rounded bg-gray-100" />
       ) : (
         <p
-          className={"mt-1 truncate text-3xl font-bold text-gray-900 " + (tabular ? "tabular-nums" : "")}
+          className={
+            "mt-1 truncate text-3xl text-gray-900 " +
+            (tabular ? "font-mono font-semibold tabular-nums" : "font-display")
+          }
           title={value}
         >
           {value}

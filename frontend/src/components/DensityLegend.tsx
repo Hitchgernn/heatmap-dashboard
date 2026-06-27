@@ -13,7 +13,7 @@ export default function DensityLegend() {
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white/95 px-3 py-2.5 text-xs shadow-md backdrop-blur">
-      <p className="mb-1.5 font-semibold uppercase tracking-wider text-gray-500">
+      <p className="mb-1.5 font-mono font-semibold uppercase tracking-wider text-gray-500">
         Visitor Density
       </p>
       <ul className="space-y-1">

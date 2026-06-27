@@ -13,7 +13,7 @@ function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
   }[status];
 
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-medium">
+    <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 font-mono text-xs font-medium">
       <span className={"h-2 w-2 rounded-full " + config.dot} />
       <span className={config.tone}>{config.text}</span>
     </span>
@@ -27,7 +27,7 @@ function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
 export default function TopHeader({ title, status }: TopHeaderProps) {
   return (
     <header className="flex h-16 shrink-0 items-center gap-4 border-b border-gray-200 bg-white px-6">
-      <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+      <h2 className="font-display text-xl text-gray-900">{title}</h2>
 
       <div className="relative mx-auto w-full max-w-md">
         <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400">

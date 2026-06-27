@@ -28,7 +28,7 @@ export default function HotspotTable({ hotspots, loading }: HotspotTableProps) {
   return (
     <section className="rounded-xl border border-gray-200 bg-white shadow-sm">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 px-5 py-3.5">
-        <h2 className="text-sm font-semibold text-gray-900">Hotspot Summary</h2>
+        <h2 className="font-display text-lg text-gray-900">Hotspot Summary</h2>
         <div className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 p-0.5">
           {(["all", "high"] as Filter[]).map((f) => (
             <button
@@ -50,7 +50,7 @@ export default function HotspotTable({ hotspots, loading }: HotspotTableProps) {
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-gray-100 text-[11px] font-semibold uppercase tracking-wider text-gray-400">
+            <tr className="border-b border-gray-100 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400">
               <th className="px-5 py-2.5">Area / Hotspot</th>
               <th className="px-5 py-2.5">Density Level</th>
               <th className="px-5 py-2.5 text-right">Visitor Points</th>
@@ -77,7 +77,7 @@ export default function HotspotTable({ hotspots, loading }: HotspotTableProps) {
                   <tr key={h.cluster_id} className="border-b border-gray-50 last:border-0 hover:bg-gray-50">
                     <td className="px-5 py-3">
                       <p className="font-medium text-gray-900">{h.label}</p>
-                      <p className="text-xs text-gray-400">ID: #{h.cluster_id}</p>
+                      <p className="font-mono text-xs text-gray-400">ID: #{h.cluster_id}</p>
                     </td>
                     <td className="px-5 py-3">
                       <span className="inline-flex items-center gap-1.5 text-gray-700">
@@ -85,11 +85,11 @@ export default function HotspotTable({ hotspots, loading }: HotspotTableProps) {
                         {meta.label}
                       </span>
                     </td>
-                    <td className="px-5 py-3 text-right tabular-nums text-gray-700">
+                    <td className="px-5 py-3 text-right font-mono tabular-nums text-gray-700">
                       {h.total_points.toLocaleString()}
                     </td>
                     <td className="px-5 py-3">
-                      <span className={"inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium " + meta.badgeClass}>
+                      <span className={"inline-flex rounded-full px-2.5 py-0.5 font-mono text-xs font-medium " + meta.badgeClass}>
                         {meta.status}
                       </span>
                     </td>

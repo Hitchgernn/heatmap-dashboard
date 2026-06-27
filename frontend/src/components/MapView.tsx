@@ -59,7 +59,7 @@ export default function MapView({
       {isEmpty && (
         <div className="pointer-events-none absolute inset-0 z-[500] flex items-center justify-center">
           <div className="rounded-lg border border-gray-200 bg-white/95 px-4 py-3 text-center text-sm text-gray-600 shadow-lg backdrop-blur">
-            <p className="font-medium text-gray-800">No visitor activity</p>
+            <p className="font-display text-lg text-gray-800">No visitor activity</p>
             <p className="mt-0.5 text-gray-500">Nothing recorded in this time window yet.</p>
           </div>
         </div>
