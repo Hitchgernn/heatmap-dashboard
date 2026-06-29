@@ -107,6 +107,15 @@ export class HyperbaseHttpClient {
   }
 
   /**
+   * Force a fresh token-based login to verify the configured credentials work.
+   * Resolves on success, throws HyperbaseError on failure. Never returns or logs
+   * the JWT — intended for connectivity/debug checks only.
+   */
+  async authenticate(): Promise<void> {
+    await this.login();
+  }
+
+  /**
    * Authenticated JSON request against a Hyperbase record endpoint. Retries once
    * after a fresh login if the cached JWT is rejected (401/403), since the JWT
    * may have expired between requests.

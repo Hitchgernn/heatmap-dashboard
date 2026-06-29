@@ -9,6 +9,7 @@ import heatmapRoutes from "./routes/heatmap.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import mockRoutes from "./routes/mock.routes";
 import hotspotRoutes from "./routes/hotspot.routes";
+import debugRoutes from "./routes/debug.routes";
 
 export function createApp() {
   const app = express();
@@ -25,6 +26,7 @@ export function createApp() {
   app.use("/api/dashboard", dashboardRoutes);
   app.use("/api/mock", mockRoutes);
   app.use("/api/hotspots", hotspotRoutes);
+  app.use("/api/debug", debugRoutes); // TEMPORARY — remove before production
 
   // 404 fallback in the standard error format.
   app.use((_req: Request, res: Response) => {
