@@ -1,7 +1,13 @@
 /**
  * Centralized environment configuration.
  * Reads from process.env with sensible defaults for local development.
+ *
+ * dotenv is loaded here, the single module that touches process.env, so the
+ * backend/.env file is applied before any value below is read. Every other
+ * module imports `env` from here, guaranteeing this runs first.
  */
+
+import "dotenv/config";
 
 export type RepositoryDriver = "memory" | "hyperbase";
 
