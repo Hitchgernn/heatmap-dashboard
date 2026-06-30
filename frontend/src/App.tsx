@@ -139,8 +139,8 @@ export default function App() {
   const collapsible = page === "dashboard" || page === "heatmap" || page === "hotspots";
   const showSidebar = sidebarVisible;
 
-  // Search is contextual to the map pages; the Dashboard has no search.
-  const showSearch = page === "heatmap" || page === "hotspots";
+  // Search shows on the Dashboard and both map pages.
+  const showSearch = page === "dashboard" || page === "heatmap" || page === "hotspots";
 
   return (
     <div className="flex h-full bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
