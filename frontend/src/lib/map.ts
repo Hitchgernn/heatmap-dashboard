@@ -13,16 +13,28 @@ export const BOROBUDUR_CENTER: LatLngTuple = [-7.607898742482102, 110.2038589761
 // Start zoomed tightly on Candi Borobudur (the temple fills the view).
 export const DEFAULT_ZOOM = 19;
 
-// CARTO basemaps — OpenStreetMap data, no token required. "Voyager" is a bright,
-// detailed light basemap (the temple and paths read far more clearly than the
-// pale Positron) for the light theme; "Dark Matter" for the dark theme. The
-// active URL is picked by resolved theme in MapView.
+// Basemaps — both tokenless. Light theme uses CARTO "Voyager": a bright,
+// detailed basemap where the temple and paths read clearly. For dark mode,
+// CARTO "Dark Matter" renders roads and terrain almost invisibly, so we use
+// Esri World Imagery (satellite) instead — a dark-balanced backdrop where
+// Borobudur, the roads, and the surrounding terrain are all clearly visible,
+// and the warm heat gradient still reads on top. The active source is picked
+// by resolved theme in MapView. Note Esri uses {z}/{y}/{x} order, no {s}/{r}.
 export const TILE_URL_LIGHT = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-export const TILE_URL_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+export const TILE_URL_DARK = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
 /** @deprecated kept for back-compat; prefer the explicit light/dark URLs. */
 export const TILE_URL = TILE_URL_LIGHT;
-export const TILE_ATTRIBUTION =
+
+export const TILE_ATTRIBUTION_LIGHT =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+export const TILE_ATTRIBUTION_DARK =
+  'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Source: Esri, Maxar, Earthstar Geographics';
+/** @deprecated kept for back-compat; prefer the explicit light/dark attributions. */
+export const TILE_ATTRIBUTION = TILE_ATTRIBUTION_LIGHT;
+
+/** Highest zoom each basemap serves real tiles for (Leaflet upscales beyond it). */
+export const TILE_MAX_NATIVE_ZOOM_LIGHT = 20;
+export const TILE_MAX_NATIVE_ZOOM_DARK = 19;
 
 /** leaflet.heat point: [latitude, longitude, intensity]. */
 export type HeatPoint = [number, number, number];

@@ -6,7 +6,10 @@ import HotspotLayer from "./HotspotLayer";
 import {
   BOROBUDUR_CENTER,
   DEFAULT_ZOOM,
-  TILE_ATTRIBUTION,
+  TILE_ATTRIBUTION_DARK,
+  TILE_ATTRIBUTION_LIGHT,
+  TILE_MAX_NATIVE_ZOOM_DARK,
+  TILE_MAX_NATIVE_ZOOM_LIGHT,
   TILE_URL_DARK,
   TILE_URL_LIGHT,
 } from "../lib/map";
@@ -62,7 +65,10 @@ export default function MapView({
 
   // Switching the tile URL on a mounted <TileLayer> doesn't always force a
   // refetch, so key it by theme to remount just the layer (map stays put).
-  const tileUrl = resolvedTheme === "dark" ? TILE_URL_DARK : TILE_URL_LIGHT;
+  const isDark = resolvedTheme === "dark";
+  const tileUrl = isDark ? TILE_URL_DARK : TILE_URL_LIGHT;
+  const tileAttribution = isDark ? TILE_ATTRIBUTION_DARK : TILE_ATTRIBUTION_LIGHT;
+  const maxNativeZoom = isDark ? TILE_MAX_NATIVE_ZOOM_DARK : TILE_MAX_NATIVE_ZOOM_LIGHT;
 
   return (
     <div className="relative h-full w-full bg-gray-100 dark:bg-gray-800">
@@ -75,14 +81,15 @@ export default function MapView({
         className="h-full w-full"
         style={{ height: "100%", width: "100%" }}
       >
-        {/* CARTO tiles only exist up to z20; maxNativeZoom upscales them past
-            that so z21–22 stays sharp basemap instead of turning solid gray. */}
+        {/* Tiles only exist up to each basemap's native zoom; maxNativeZoom
+            upscales them past that so deep zoom stays sharp basemap instead of
+            turning solid gray. */}
         <TileLayer
           key={resolvedTheme}
           url={tileUrl}
-          attribution={TILE_ATTRIBUTION}
+          attribution={tileAttribution}
           maxZoom={20}
-          maxNativeZoom={20}
+          maxNativeZoom={maxNativeZoom}
         />
         <ZoomControl position="bottomright" />
         <ResizeHandler />
