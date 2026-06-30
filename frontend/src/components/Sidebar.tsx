@@ -8,6 +8,8 @@ interface SidebarProps {
   visible: boolean;
   /** Collapse button (only shown on pages that allow hiding). */
   onCollapse?: () => void;
+  /** Open the Settings modal (bottom-left action beside the profile). */
+  onOpenSettings: () => void;
 }
 
 interface NavItem {
@@ -63,17 +65,17 @@ const NAV_ITEMS: NavItem[] = [
   { id: "heatmap", label: "Heatmap", enabled: true, icon: ICON.heatmap },
   { id: "hotspots", label: "Hotspots", enabled: true, icon: ICON.hotspots },
   { id: "visitor", label: "Visitor View", enabled: false, icon: ICON.visitor },
-  { id: "settings", label: "Settings", enabled: true, icon: ICON.settings },
 ];
 
 /**
- * Left navigation rail: branding, nav items, collapse control, admin profile.
+ * Left navigation rail: branding, nav items, collapse control, and a bottom row
+ * with the admin profile plus a Settings action (opens the settings modal).
  *
  * The rail stays mounted and animates its width between 16rem and 0 so the
  * collapse / return glides instead of snapping. The inner content keeps a fixed
  * width and is clipped during the transition so labels don't reflow.
  */
-export default function Sidebar({ active, onNavigate, visible, onCollapse }: SidebarProps) {
+export default function Sidebar({ active, onNavigate, visible, onCollapse, onOpenSettings }: SidebarProps) {
   const { t } = useLanguage();
 
   return (
@@ -151,20 +153,44 @@ export default function Sidebar({ active, onNavigate, visible, onCollapse }: Sid
           })}
         </nav>
 
-        {/* Admin profile */}
-        <div className="border-t border-gray-100 px-4 py-4 dark:border-gray-800">
-          <div className="flex items-center gap-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white dark:bg-white dark:text-gray-900">
-              AU
-            </span>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">
-                {t("sidebar.adminName")}
-              </p>
-              <p className="truncate text-xs text-gray-400 dark:text-gray-500">
-                {t("sidebar.adminRole")}
-              </p>
+        {/* Bottom row: admin profile + Settings action (opens the modal) */}
+        <div className="border-t border-gray-100 px-3 py-3 dark:border-gray-800">
+          <div className="flex items-center gap-2">
+            <div className="flex min-w-0 flex-1 items-center gap-3 px-1">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white dark:bg-white dark:text-gray-900">
+                AU
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">
+                  {t("sidebar.adminName")}
+                </p>
+                <p className="truncate text-xs text-gray-400 dark:text-gray-500">
+                  {t("sidebar.adminRole")}
+                </p>
+              </div>
             </div>
+            <button
+              type="button"
+              onClick={onOpenSettings}
+              tabIndex={visible ? 0 : -1}
+              aria-label={t("sidebar.settings")}
+              title={t("sidebar.settings")}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                {ICON.settings}
+              </svg>
+            </button>
           </div>
         </div>
       </div>

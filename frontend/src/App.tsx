@@ -5,6 +5,7 @@ import DashboardView from "./components/DashboardView";
 import HeatmapView from "./components/HeatmapView";
 import HotspotsView from "./components/HotspotsView";
 import SettingsView from "./components/SettingsView";
+import Modal from "./components/Modal";
 import ShowSidebarButton from "./components/ShowSidebarButton";
 import { useLanguage } from "./context/language";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
@@ -24,9 +25,21 @@ const PAGE_TITLE: Record<Page, string> = {
   settings: "Settings",
 };
 
+// Persist the active page so a refresh restores where you were. Settings is a
+// modal (not a page) and visitor isn't wired, so only these three are stored.
+const PAGE_STORAGE_KEY = "borobudur.page";
+const PERSISTED_PAGES: Page[] = ["dashboard", "heatmap", "hotspots"];
+
+function readStoredPage(): Page {
+  if (typeof localStorage === "undefined") return "dashboard";
+  const stored = localStorage.getItem(PAGE_STORAGE_KEY) as Page | null;
+  return stored && PERSISTED_PAGES.includes(stored) ? stored : "dashboard";
+}
+
 export default function App() {
   const { t } = useLanguage();
-  const [page, setPage] = useState<Page>("dashboard");
+  const [page, setPage] = useState<Page>(readStoredPage);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [timeWindow, setTimeWindow] = useState<TimeWindow>("15m");
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
@@ -45,6 +58,11 @@ export default function App() {
 
   // Convert backend GeoJSON ([lng, lat]) to leaflet.heat points ([lat, lng, intensity]).
   const heatPoints = useMemo(() => toHeatPoints(heatmap), [heatmap]);
+
+  // Persist the active page so a browser refresh restores it.
+  useEffect(() => {
+    if (PERSISTED_PAGES.includes(page)) localStorage.setItem(PAGE_STORAGE_KEY, page);
+  }, [page]);
 
   // Poll heatmap + summary together. Recreated when the time window changes.
   useEffect(() => {
@@ -121,6 +139,9 @@ export default function App() {
   const collapsible = page === "dashboard" || page === "heatmap" || page === "hotspots";
   const showSidebar = sidebarVisible;
 
+  // Search is contextual to the map pages; the Dashboard has no search.
+  const showSearch = page === "heatmap" || page === "hotspots";
+
   return (
     <div className="flex h-full bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
       <Sidebar
@@ -128,10 +149,11 @@ export default function App() {
         onNavigate={(p) => setPage(p)}
         visible={showSidebar}
         onCollapse={collapsible ? () => setSidebarVisible(false) : undefined}
+        onOpenSettings={() => setSettingsOpen(true)}
       />
 
       <div className="relative flex min-w-0 flex-1 flex-col">
-        <TopHeader title={PAGE_TITLE[page]} status={status} />
+        <TopHeader title={PAGE_TITLE[page]} status={status} showSearch={showSearch} />
 
         {error && (
           <div
@@ -148,45 +170,51 @@ export default function App() {
             <ShowSidebarButton onClick={() => setSidebarVisible(true)} />
           )}
 
-          {page === "dashboard" && (
-            <DashboardView
-              timeWindow={timeWindow}
-              onTimeChange={setTimeWindow}
-              heatPoints={heatPoints}
-              showHeatmap={showHeatmap}
-              showHotspots={showHotspots}
-              onToggleHeatmap={setShowHeatmap}
-              onToggleHotspots={setShowHotspots}
-              hotspots={hotspots}
-              summary={summary}
-              loading={refreshing}
-              hotspotsLoading={hotspotsLoading}
-              sidebarCollapsed={!showSidebar}
-            />
-          )}
+          {/* Keyed by page so React remounts on navigation, replaying the
+              page-enter animation for a smooth transition between views. */}
+          <div key={page} className="page-enter flex min-h-0 flex-1 flex-col">
+            {page === "dashboard" && (
+              <DashboardView
+                timeWindow={timeWindow}
+                onTimeChange={setTimeWindow}
+                heatPoints={heatPoints}
+                showHeatmap={showHeatmap}
+                showHotspots={showHotspots}
+                onToggleHeatmap={setShowHeatmap}
+                onToggleHotspots={setShowHotspots}
+                hotspots={hotspots}
+                summary={summary}
+                loading={refreshing}
+                hotspotsLoading={hotspotsLoading}
+                sidebarCollapsed={!showSidebar}
+              />
+            )}
 
-          {page === "heatmap" && (
-            <HeatmapView
-              timeWindow={timeWindow}
-              onTimeChange={setTimeWindow}
-              heatPoints={heatPoints}
-              hotspots={hotspots}
-              sidebarCollapsed={!showSidebar}
-            />
-          )}
+            {page === "heatmap" && (
+              <HeatmapView
+                timeWindow={timeWindow}
+                onTimeChange={setTimeWindow}
+                heatPoints={heatPoints}
+                hotspots={hotspots}
+                sidebarCollapsed={!showSidebar}
+              />
+            )}
 
-          {page === "hotspots" && (
-            <HotspotsView
-              timeWindow={timeWindow}
-              onTimeChange={setTimeWindow}
-              hotspots={hotspots}
-              sidebarCollapsed={!showSidebar}
-            />
-          )}
-
-          {page === "settings" && <SettingsView />}
+            {page === "hotspots" && (
+              <HotspotsView
+                timeWindow={timeWindow}
+                onTimeChange={setTimeWindow}
+                hotspots={hotspots}
+                sidebarCollapsed={!showSidebar}
+              />
+            )}
+          </div>
         </main>
       </div>
+
+      <Modal open={settingsOpen} onClose={() => setSettingsOpen(false)} title={PAGE_TITLE.settings}>
+        <SettingsView onClose={() => setSettingsOpen(false)} />
+      </Modal>
     </div>
   );
 }

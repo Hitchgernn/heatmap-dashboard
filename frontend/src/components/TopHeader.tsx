@@ -5,6 +5,8 @@ interface TopHeaderProps {
   title: string;
   /** Live/refreshing/error status pill. */
   status: "live" | "refreshing" | "error";
+  /** Whether to show the search input (map pages only — not the Dashboard). */
+  showSearch?: boolean;
 }
 
 function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
@@ -27,27 +29,31 @@ function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
  * Top bar: page title, search input (placeholder only — no backend search),
  * status pill, and decorative action icons.
  */
-export default function TopHeader({ title, status }: TopHeaderProps) {
+export default function TopHeader({ title, status, showSearch = false }: TopHeaderProps) {
   const { t } = useLanguage();
 
   return (
     <header className="flex h-16 shrink-0 items-center gap-4 border-b border-gray-200 bg-white px-6 dark:border-gray-800 dark:bg-gray-900">
       <h2 className="font-display text-xl text-gray-900 dark:text-white">{title}</h2>
 
-      <div className="relative mx-auto w-full max-w-md">
-        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-500">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
-        </span>
-        <input
-          type="search"
-          placeholder={t("header.searchPlaceholder")}
-          aria-label={t("header.searchPlaceholder")}
-          className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder:text-gray-500 dark:focus:border-gray-600 dark:focus:bg-gray-800 dark:focus:ring-gray-700"
-        />
-      </div>
+      {showSearch ? (
+        <div className="relative mx-auto w-full max-w-md">
+          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-500">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </span>
+          <input
+            type="search"
+            placeholder={t("header.searchPlaceholder")}
+            aria-label={t("header.searchPlaceholder")}
+            className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2 pl-9 pr-3 text-sm text-gray-700 placeholder:text-gray-400 focus:border-gray-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder:text-gray-500 dark:focus:border-gray-600 dark:focus:bg-gray-800 dark:focus:ring-gray-700"
+          />
+        </div>
+      ) : (
+        <div className="flex-1" />
+      )}
 
       <div className="flex items-center gap-3">
         <StatusPill status={status} />

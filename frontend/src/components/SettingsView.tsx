@@ -112,41 +112,60 @@ const LANG_OPTIONS: { value: Lang; titleKey: TranslationKey; descKey: Translatio
 ];
 
 /**
- * Settings page: Appearance (Light / Dark / System) and Language (English /
+ * Settings panel: Appearance (Light / Dark / System) and Language (English /
  * Indonesia). Both persist via their context providers (localStorage). This is
- * a presentational, client-only page — no backend calls.
+ * a presentational, client-only panel — no backend calls. Rendered inside the
+ * settings Modal, so it owns its header + close button.
  */
-export default function SettingsView() {
+export default function SettingsView({ onClose }: { onClose?: () => void }) {
   const { theme, setTheme } = useTheme();
   const { lang, setLang, t } = useLanguage();
 
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-5 p-6">
-      <SettingsGroup title={t("settings.appearanceTitle")} description={t("settings.appearanceDesc")}>
-        {THEME_OPTIONS.map((opt) => (
-          <OptionCard
-            key={opt.value}
-            title={t(opt.titleKey)}
-            description={t(opt.descKey)}
-            selected={theme === opt.value}
-            onSelect={() => setTheme(opt.value)}
-            icon={opt.icon}
-          />
-        ))}
-      </SettingsGroup>
+    <div className="flex flex-col">
+      <header className="flex items-center justify-between gap-3 border-b border-gray-100 px-6 py-4 dark:border-gray-800">
+        <h2 className="font-display text-xl text-gray-900 dark:text-white">Settings</h2>
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close settings"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-white"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        )}
+      </header>
 
-      <SettingsGroup title={t("settings.languageTitle")} description={t("settings.languageDesc")}>
-        {LANG_OPTIONS.map((opt) => (
-          <OptionCard
-            key={opt.value}
-            title={t(opt.titleKey)}
-            description={t(opt.descKey)}
-            selected={lang === opt.value}
-            onSelect={() => setLang(opt.value)}
-            icon={opt.icon}
-          />
-        ))}
-      </SettingsGroup>
+      <div className="space-y-5 p-6">
+        <SettingsGroup title={t("settings.appearanceTitle")} description={t("settings.appearanceDesc")}>
+          {THEME_OPTIONS.map((opt) => (
+            <OptionCard
+              key={opt.value}
+              title={t(opt.titleKey)}
+              description={t(opt.descKey)}
+              selected={theme === opt.value}
+              onSelect={() => setTheme(opt.value)}
+              icon={opt.icon}
+            />
+          ))}
+        </SettingsGroup>
+
+        <SettingsGroup title={t("settings.languageTitle")} description={t("settings.languageDesc")}>
+          {LANG_OPTIONS.map((opt) => (
+            <OptionCard
+              key={opt.value}
+              title={t(opt.titleKey)}
+              description={t(opt.descKey)}
+              selected={lang === opt.value}
+              onSelect={() => setLang(opt.value)}
+              icon={opt.icon}
+            />
+          ))}
+        </SettingsGroup>
+      </div>
     </div>
   );
 }

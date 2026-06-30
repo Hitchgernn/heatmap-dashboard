@@ -20,6 +20,7 @@ const en = {
   "sidebar.adminName": "Admin User",
   "sidebar.adminRole": "System Administrator",
   "sidebar.comingSoon": "Coming soon",
+  "sidebar.settings": "Settings",
 
   // Top header
   "header.searchPlaceholder": "Search area, hotspot, or zone...",
@@ -103,6 +104,7 @@ const id: Record<TranslationKey, string> = {
   "sidebar.adminName": "Pengguna Admin",
   "sidebar.adminRole": "Administrator Sistem",
   "sidebar.comingSoon": "Segera hadir",
+  "sidebar.settings": "Settings",
 
   // Top header
   "header.searchPlaceholder": "Cari area, hotspot, atau zona...",
