@@ -78,21 +78,14 @@ const en = {
 
   // Settings — Appearance
   "settings.appearanceTitle": "Appearance",
-  "settings.appearanceDesc": "Choose how the dashboard looks.",
   "settings.themeLight": "Light",
-  "settings.themeLightDesc": "Always use the light theme.",
   "settings.themeDark": "Dark",
-  "settings.themeDarkDesc": "Always use the dark theme.",
   "settings.themeSystem": "System",
-  "settings.themeSystemDesc": "Match your operating system.",
 
   // Settings — Language
   "settings.languageTitle": "Language",
-  "settings.languageDesc": "Choose your preferred language.",
   "settings.langEnglish": "English",
-  "settings.langEnglishDesc": "Use English across the dashboard.",
   "settings.langIndonesia": "Indonesia",
-  "settings.langIndonesiaDesc": "Use Indonesian across the dashboard.",
 } as const;
 
 export type TranslationKey = keyof typeof en;
@@ -162,21 +155,14 @@ const id: Record<TranslationKey, string> = {
 
   // Settings — Appearance
   "settings.appearanceTitle": "Tampilan",
-  "settings.appearanceDesc": "Pilih tampilan dashboard.",
   "settings.themeLight": "Terang",
-  "settings.themeLightDesc": "Selalu gunakan tema terang.",
   "settings.themeDark": "Gelap",
-  "settings.themeDarkDesc": "Selalu gunakan tema gelap.",
   "settings.themeSystem": "Sistem",
-  "settings.themeSystemDesc": "Ikuti sistem operasi Anda.",
 
   // Settings — Language
   "settings.languageTitle": "Bahasa",
-  "settings.languageDesc": "Pilih bahasa yang Anda inginkan.",
   "settings.langEnglish": "English",
-  "settings.langEnglishDesc": "Gunakan bahasa Inggris di seluruh dashboard.",
   "settings.langIndonesia": "Indonesia",
-  "settings.langIndonesiaDesc": "Gunakan bahasa Indonesia di seluruh dashboard.",
 };
 
 const dictionaries: Record<Lang, Record<TranslationKey, string>> = { en, id };

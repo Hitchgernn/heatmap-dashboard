@@ -7,13 +7,12 @@ import type { TranslationKey } from "../lib/i18n";
 /** A single selectable option card (radio-style) in a settings group. */
 interface OptionCardProps {
   title: string;
-  description: string;
   selected: boolean;
   onSelect: () => void;
   icon: React.ReactNode;
 }
 
-function OptionCard({ title, description, selected, onSelect, icon }: OptionCardProps) {
+function OptionCard({ title, selected, onSelect, icon }: OptionCardProps) {
   return (
     <button
       type="button"
@@ -21,7 +20,7 @@ function OptionCard({ title, description, selected, onSelect, icon }: OptionCard
       aria-checked={selected}
       onClick={onSelect}
       className={
-        "flex w-full items-start gap-3 rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
+        "flex w-full items-center gap-3 rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
         (selected
           ? "border-gray-900 bg-gray-50 dark:border-white dark:bg-gray-800"
           : "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800")
@@ -29,7 +28,7 @@ function OptionCard({ title, description, selected, onSelect, icon }: OptionCard
     >
       <span
         className={
-          "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg " +
+          "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg " +
           (selected
             ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
             : "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400")
@@ -37,22 +36,15 @@ function OptionCard({ title, description, selected, onSelect, icon }: OptionCard
       >
         {icon}
       </span>
-      <span className="min-w-0 flex-1">
-        <span className="flex items-center justify-between gap-2">
-          <span className="font-medium text-gray-900 dark:text-white">{title}</span>
-          <span
-            className={
-              "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border " +
-              (selected
-                ? "border-gray-900 dark:border-white"
-                : "border-gray-300 dark:border-gray-600")
-            }
-            aria-hidden="true"
-          >
-            {selected && <span className="h-2 w-2 rounded-full bg-gray-900 dark:bg-white" />}
-          </span>
-        </span>
-        <span className="mt-0.5 block text-sm text-gray-500 dark:text-gray-400">{description}</span>
+      <span className="min-w-0 flex-1 truncate font-medium text-gray-900 dark:text-white">{title}</span>
+      <span
+        className={
+          "flex h-4 w-4 shrink-0 items-center justify-center rounded-full border " +
+          (selected ? "border-gray-900 dark:border-white" : "border-gray-300 dark:border-gray-600")
+        }
+        aria-hidden="true"
+      >
+        {selected && <span className="h-2 w-2 rounded-full bg-gray-900 dark:bg-white" />}
       </span>
     </button>
   );
@@ -60,15 +52,13 @@ function OptionCard({ title, description, selected, onSelect, icon }: OptionCard
 
 interface SettingsGroupProps {
   title: string;
-  description: string;
   children: React.ReactNode;
 }
 
-function SettingsGroup({ title, description, children }: SettingsGroupProps) {
+function SettingsGroup({ title, children }: SettingsGroupProps) {
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <h3 className="font-display text-lg text-gray-900 dark:text-white">{title}</h3>
-      <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">{description}</p>
       <div role="radiogroup" aria-label={title} className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {children}
       </div>
@@ -100,15 +90,15 @@ const GLOBE = (
   </svg>
 );
 
-const THEME_OPTIONS: { value: Theme; titleKey: TranslationKey; descKey: TranslationKey; icon: React.ReactNode }[] = [
-  { value: "light", titleKey: "settings.themeLight", descKey: "settings.themeLightDesc", icon: SUN },
-  { value: "dark", titleKey: "settings.themeDark", descKey: "settings.themeDarkDesc", icon: MOON },
-  { value: "system", titleKey: "settings.themeSystem", descKey: "settings.themeSystemDesc", icon: MONITOR },
+const THEME_OPTIONS: { value: Theme; titleKey: TranslationKey; icon: React.ReactNode }[] = [
+  { value: "light", titleKey: "settings.themeLight", icon: SUN },
+  { value: "dark", titleKey: "settings.themeDark", icon: MOON },
+  { value: "system", titleKey: "settings.themeSystem", icon: MONITOR },
 ];
 
-const LANG_OPTIONS: { value: Lang; titleKey: TranslationKey; descKey: TranslationKey; icon: React.ReactNode }[] = [
-  { value: "en", titleKey: "settings.langEnglish", descKey: "settings.langEnglishDesc", icon: GLOBE },
-  { value: "id", titleKey: "settings.langIndonesia", descKey: "settings.langIndonesiaDesc", icon: GLOBE },
+const LANG_OPTIONS: { value: Lang; titleKey: TranslationKey; icon: React.ReactNode }[] = [
+  { value: "en", titleKey: "settings.langEnglish", icon: GLOBE },
+  { value: "id", titleKey: "settings.langIndonesia", icon: GLOBE },
 ];
 
 /**
@@ -140,12 +130,11 @@ export default function SettingsView({ onClose }: { onClose?: () => void }) {
       </header>
 
       <div className="space-y-5 p-6">
-        <SettingsGroup title={t("settings.appearanceTitle")} description={t("settings.appearanceDesc")}>
+        <SettingsGroup title={t("settings.appearanceTitle")}>
           {THEME_OPTIONS.map((opt) => (
             <OptionCard
               key={opt.value}
               title={t(opt.titleKey)}
-              description={t(opt.descKey)}
               selected={theme === opt.value}
               onSelect={() => setTheme(opt.value)}
               icon={opt.icon}
@@ -153,12 +142,11 @@ export default function SettingsView({ onClose }: { onClose?: () => void }) {
           ))}
         </SettingsGroup>
 
-        <SettingsGroup title={t("settings.languageTitle")} description={t("settings.languageDesc")}>
+        <SettingsGroup title={t("settings.languageTitle")}>
           {LANG_OPTIONS.map((opt) => (
             <OptionCard
               key={opt.value}
               title={t(opt.titleKey)}
-              description={t(opt.descKey)}
               selected={lang === opt.value}
               onSelect={() => setLang(opt.value)}
               icon={opt.icon}
