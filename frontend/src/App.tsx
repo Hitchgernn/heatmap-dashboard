@@ -4,6 +4,7 @@ import TopHeader from "./components/TopHeader";
 import DashboardView from "./components/DashboardView";
 import HeatmapView from "./components/HeatmapView";
 import HotspotsView from "./components/HotspotsView";
+import MockGeneratorView from "./components/MockGeneratorView";
 import SettingsView from "./components/SettingsView";
 import Modal from "./components/Modal";
 import ShowSidebarButton from "./components/ShowSidebarButton";
@@ -21,14 +22,15 @@ const PAGE_TITLE: Record<Page, string> = {
   dashboard: "Dashboard",
   heatmap: "Heatmap",
   hotspots: "Hotspots",
+  mock: "Mock Generator",
   visitor: "Visitor View",
   settings: "Settings",
 };
 
 // Persist the active page so a refresh restores where you were. Settings is a
-// modal (not a page) and visitor isn't wired, so only these three are stored.
+// modal (not a page) and visitor isn't wired, so only these four are stored.
 const PAGE_STORAGE_KEY = "borobudur.page";
-const PERSISTED_PAGES: Page[] = ["dashboard", "heatmap", "hotspots"];
+const PERSISTED_PAGES: Page[] = ["dashboard", "heatmap", "hotspots", "mock"];
 
 function readStoredPage(): Page {
   if (typeof localStorage === "undefined") return "dashboard";
@@ -208,6 +210,8 @@ export default function App() {
                 sidebarCollapsed={!showSidebar}
               />
             )}
+
+            {page === "mock" && <MockGeneratorView />}
           </div>
         </main>
       </div>

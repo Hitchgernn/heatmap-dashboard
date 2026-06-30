@@ -85,3 +85,44 @@ export function getHotspots(
   const url = buildUrl("/api/hotspots", { source: params.source ?? "mock" });
   return fetchData<{ hotspots: Hotspot[] }>(url, signal).then((d) => d.hotspots);
 }
+
+export interface GenerateMockParams {
+  visitorCount: number;
+  pointsPerVisitor: number;
+  source: string;
+}
+
+export interface GenerateMockResult {
+  inserted: number;
+  source: string;
+}
+
+/**
+ * Generate + insert a clustered batch of mock visitor data via the backend.
+ * POST /api/mock/generate returns a bare { success, inserted, source } object
+ * (not the { success, data } envelope), so this reads those fields directly.
+ */
+export async function generateMockData(
+  params: GenerateMockParams,
+  signal?: AbortSignal
+): Promise<GenerateMockResult> {
+  const res = await fetch(`${BASE_URL}/api/mock/generate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      visitor_count: params.visitorCount,
+      points_per_visitor: params.pointsPerVisitor,
+      source: params.source,
+    }),
+    signal,
+  });
+
+  const body = (await res.json().catch(() => null)) as
+    | { success?: boolean; inserted?: number; source?: string; error?: { message?: string } }
+    | null;
+
+  if (!res.ok || !body?.success) {
+    throw new Error(body?.error?.message ?? `HTTP ${res.status}`);
+  }
+  return { inserted: body.inserted ?? 0, source: body.source ?? params.source };
+}
