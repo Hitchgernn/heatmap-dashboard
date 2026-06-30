@@ -22,8 +22,8 @@ function PillButton({ label, active, onClick, children }: PillButtonProps) {
       className={
         "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
         (active
-          ? "bg-gray-900 text-white"
-          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900")
+          ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
+          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white")
       }
     >
       {children}
@@ -39,8 +39,9 @@ export default function LayerToggle({
   onToggleHeatmap,
   onToggleHotspots,
 }: LayerToggleProps) {
+  // "Heatmap" / "Hotspots" are section names — kept untranslated (see i18n.ts).
   return (
-    <div className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-white p-1 shadow-sm">
+    <div className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <PillButton
         label="Heatmap"
         active={showHeatmap}

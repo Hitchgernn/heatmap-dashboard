@@ -2,6 +2,7 @@ import MapView from "./MapView";
 import TimeFilter from "./TimeFilter";
 import DensityLegend from "./DensityLegend";
 import ActiveIndicator from "./ActiveIndicator";
+import { useLanguage } from "../context/language";
 import type { HeatPoint } from "../lib/map";
 import type { TimeWindow } from "../types/heatmap";
 import type { Hotspot } from "../types/hotspot";
@@ -27,6 +28,7 @@ export default function HeatmapView({
   hotspots,
   sidebarCollapsed,
 }: HeatmapViewProps) {
+  const { t } = useLanguage();
   return (
     <div className="relative flex-1">
       <MapView heatPoints={heatPoints} showHeatmap hotspots={hotspots} showHotspots>
@@ -34,7 +36,7 @@ export default function HeatmapView({
           <TimeFilter value={timeWindow} onChange={onTimeChange} />
         </div>
         <div className="absolute right-3 top-3 z-[600]">
-          <ActiveIndicator label="Heatmap Active" />
+          <ActiveIndicator label={t("active.heatmap")} />
         </div>
         <div className="absolute bottom-3 left-3 z-[600]">
           <DensityLegend />

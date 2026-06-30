@@ -1,9 +1,10 @@
 import type { Page } from "../types/nav";
+import { useLanguage } from "../context/language";
 
 interface SidebarProps {
   active: Page;
   onNavigate: (page: Page) => void;
-  /** When false, the sidebar is hidden (full-map pages). */
+  /** When false, the sidebar collapses to zero width (animated). */
   visible: boolean;
   /** Collapse button (only shown on pages that allow hiding). */
   onCollapse?: () => void;
@@ -11,6 +12,7 @@ interface SidebarProps {
 
 interface NavItem {
   id: Page;
+  /** Section name — intentionally untranslated (proper noun, see i18n.ts). */
   label: string;
   /** Whether this page is wired to a real view. */
   enabled: boolean;
@@ -61,81 +63,108 @@ const NAV_ITEMS: NavItem[] = [
   { id: "heatmap", label: "Heatmap", enabled: true, icon: ICON.heatmap },
   { id: "hotspots", label: "Hotspots", enabled: true, icon: ICON.hotspots },
   { id: "visitor", label: "Visitor View", enabled: false, icon: ICON.visitor },
-  { id: "settings", label: "Settings", enabled: false, icon: ICON.settings },
+  { id: "settings", label: "Settings", enabled: true, icon: ICON.settings },
 ];
 
-/** Left navigation rail: branding, nav items, collapse control, admin profile. */
+/**
+ * Left navigation rail: branding, nav items, collapse control, admin profile.
+ *
+ * The rail stays mounted and animates its width between 16rem and 0 so the
+ * collapse / return glides instead of snapping. The inner content keeps a fixed
+ * width and is clipped during the transition so labels don't reflow.
+ */
 export default function Sidebar({ active, onNavigate, visible, onCollapse }: SidebarProps) {
-  if (!visible) return null;
+  const { t } = useLanguage();
 
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r border-gray-200 bg-white">
-      {/* Branding */}
-      <div className="px-6 pb-5 pt-6">
-        <h1 className="font-display text-2xl leading-none text-gray-900">Borobudur</h1>
-        <p className="mt-1 font-mono text-[11px] font-medium uppercase tracking-wider text-gray-400">
-          Precision Monitoring
-        </p>
-        {onCollapse && (
-          <button
-            type="button"
-            onClick={onCollapse}
-            className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-gray-700"
-          >
-            <span aria-hidden="true">&laquo;</span> Collapse
-          </button>
-        )}
-      </div>
-
-      {/* Nav */}
-      <nav className="flex-1 space-y-1 px-3">
-        {NAV_ITEMS.map((item) => {
-          const isActive = item.enabled && item.id === active;
-          return (
+    <aside
+      aria-hidden={!visible}
+      className={
+        "h-full shrink-0 overflow-hidden border-r bg-white transition-[width] duration-300 ease-in-out motion-reduce:transition-none dark:border-gray-800 dark:bg-gray-900 " +
+        (visible ? "w-64 border-gray-200" : "w-0 border-transparent")
+      }
+    >
+      <div
+        className={
+          "flex h-full w-64 flex-col transition-opacity duration-200 ease-in-out motion-reduce:transition-none " +
+          (visible ? "opacity-100" : "opacity-0")
+        }
+      >
+        {/* Branding */}
+        <div className="px-6 pb-5 pt-6">
+          <h1 className="font-display text-2xl leading-none text-gray-900 dark:text-white">
+            Borobudur
+          </h1>
+          <p className="mt-1 font-mono text-[11px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
+            {t("sidebar.tagline")}
+          </p>
+          {onCollapse && (
             <button
-              key={item.id}
               type="button"
-              disabled={!item.enabled}
-              onClick={() => item.enabled && onNavigate(item.id)}
-              aria-current={isActive ? "page" : undefined}
-              className={
-                "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
-                (isActive
-                  ? "bg-gray-900 text-white"
-                  : item.enabled
-                    ? "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                    : "cursor-not-allowed text-gray-300")
-              }
-              title={item.enabled ? undefined : "Coming soon"}
+              onClick={onCollapse}
+              tabIndex={visible ? 0 : -1}
+              className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                {item.icon}
-              </svg>
-              {item.label}
+              <span aria-hidden="true">&laquo;</span> {t("sidebar.collapse")}
             </button>
-          );
-        })}
-      </nav>
+          )}
+        </div>
 
-      {/* Admin profile */}
-      <div className="border-t border-gray-100 px-4 py-4">
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white">
-            AU
-          </span>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-gray-900">Admin User</p>
-            <p className="truncate text-xs text-gray-400">System Administrator</p>
+        {/* Nav */}
+        <nav className="flex-1 space-y-1 px-3">
+          {NAV_ITEMS.map((item) => {
+            const isActive = item.enabled && item.id === active;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                disabled={!item.enabled}
+                tabIndex={visible ? 0 : -1}
+                onClick={() => item.enabled && onNavigate(item.id)}
+                aria-current={isActive ? "page" : undefined}
+                className={
+                  "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
+                  (isActive
+                    ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
+                    : item.enabled
+                      ? "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
+                      : "cursor-not-allowed text-gray-300 dark:text-gray-600")
+                }
+                title={item.enabled ? undefined : t("sidebar.comingSoon")}
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  {item.icon}
+                </svg>
+                {item.label}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Admin profile */}
+        <div className="border-t border-gray-100 px-4 py-4 dark:border-gray-800">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 text-sm font-semibold text-white dark:bg-white dark:text-gray-900">
+              AU
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">
+                {t("sidebar.adminName")}
+              </p>
+              <p className="truncate text-xs text-gray-400 dark:text-gray-500">
+                {t("sidebar.adminRole")}
+              </p>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import MapView from "./MapView";
 import TimeFilter from "./TimeFilter";
 import ActiveIndicator from "./ActiveIndicator";
+import { useLanguage } from "../context/language";
 import type { TimeWindow } from "../types/heatmap";
 import type { Hotspot } from "../types/hotspot";
 
@@ -23,6 +24,7 @@ export default function HotspotsView({
   hotspots,
   sidebarCollapsed,
 }: HotspotsViewProps) {
+  const { t } = useLanguage();
   return (
     <div className="relative flex-1">
       <MapView heatPoints={[]} showHeatmap={false} hotspots={hotspots} showHotspots>
@@ -30,7 +32,7 @@ export default function HotspotsView({
           <TimeFilter value={timeWindow} onChange={onTimeChange} />
         </div>
         <div className="absolute right-3 top-3 z-[600]">
-          <ActiveIndicator label="Hotspots Active" />
+          <ActiveIndicator label={t("active.hotspots")} />
         </div>
       </MapView>
     </div>

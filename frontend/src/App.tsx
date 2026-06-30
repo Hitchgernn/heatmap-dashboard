@@ -4,7 +4,9 @@ import TopHeader from "./components/TopHeader";
 import DashboardView from "./components/DashboardView";
 import HeatmapView from "./components/HeatmapView";
 import HotspotsView from "./components/HotspotsView";
+import SettingsView from "./components/SettingsView";
 import ShowSidebarButton from "./components/ShowSidebarButton";
+import { useLanguage } from "./context/language";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
 import { toHeatPoints } from "./lib/map";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
@@ -13,6 +15,7 @@ import type { Page } from "./types/nav";
 
 const POLL_INTERVAL_MS = 30_000;
 
+// Page titles are proper section names — intentionally untranslated (see i18n.ts).
 const PAGE_TITLE: Record<Page, string> = {
   dashboard: "Dashboard",
   heatmap: "Heatmap",
@@ -22,6 +25,7 @@ const PAGE_TITLE: Record<Page, string> = {
 };
 
 export default function App() {
+  const { t } = useLanguage();
   const [page, setPage] = useState<Page>("dashboard");
   const [timeWindow, setTimeWindow] = useState<TimeWindow>("15m");
   const [sidebarVisible, setSidebarVisible] = useState(true);
@@ -118,7 +122,7 @@ export default function App() {
   const showSidebar = sidebarVisible;
 
   return (
-    <div className="flex h-full bg-gray-50 text-gray-800">
+    <div className="flex h-full bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
       <Sidebar
         active={page}
         onNavigate={(p) => setPage(p)}
@@ -132,12 +136,10 @@ export default function App() {
         {error && (
           <div
             role="alert"
-            className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-6 py-2 text-sm text-red-700"
+            className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-6 py-2 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300"
           >
             <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
-            <span>
-              {error}. Retrying every {POLL_INTERVAL_MS / 1000}s.
-            </span>
+            <span>{t("error.retrying", { error, seconds: POLL_INTERVAL_MS / 1000 })}</span>
           </div>
         )}
 
@@ -181,6 +183,8 @@ export default function App() {
               sidebarCollapsed={!showSidebar}
             />
           )}
+
+          {page === "settings" && <SettingsView />}
         </main>
       </div>
     </div>

@@ -2,6 +2,10 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
 
+/* Class-based dark mode: `dark:` variants apply when <html> has `.dark`
+   (toggled by the ThemeProvider), not from the OS media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Fira Code", ui-monospace, SFMono-Regular, monospace;
@@ -22,10 +26,19 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Dark base behind the shell (matches the gray-950 app background). */
+html.dark body {
+  background-color: #030712; /* gray-950 */
+  color: #e5e7eb; /* gray-200 */
+}
+
 /* Light base behind tiles so the map area never flashes a dark color. */
 .leaflet-container {
   background: #e5e7eb;
   font-family: var(--font-sans);
+}
+html.dark .leaflet-container {
+  background: #1f2937; /* gray-800 */
 }
 
 /* Hotspot label tooltips: clean white chips, no arrow. */

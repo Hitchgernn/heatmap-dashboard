@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Borobudur Heatmap Dashboard</title>
+    <script>
+      // Apply the stored theme before React mounts to avoid a light/dark flash.
+      (function () {
+        try {
+          var stored = localStorage.getItem("borobudur.theme") || "system";
+          var dark =
+            stored === "dark" ||
+            (stored === "system" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+          var lang = localStorage.getItem("borobudur.lang");
+          if (lang === "en" || lang === "id") document.documentElement.lang = lang;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -13,8 +13,12 @@ export const BOROBUDUR_CENTER: LatLngTuple = [-7.607898742482102, 110.2038589761
 // Start zoomed tightly on Candi Borobudur (the temple fills the view).
 export const DEFAULT_ZOOM = 19;
 
-// CARTO "positron" light basemap — OpenStreetMap data, no token required.
-export const TILE_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+// CARTO basemaps — OpenStreetMap data, no token required. Light "positron" for
+// the light theme, dark "dark matter" for the dark theme (picked in MapView).
+export const TILE_URL_LIGHT = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+export const TILE_URL_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+/** @deprecated kept for back-compat; prefer the explicit light/dark URLs. */
+export const TILE_URL = TILE_URL_LIGHT;
 export const TILE_ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 

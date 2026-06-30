@@ -1,4 +1,5 @@
 import type { DashboardSummary } from "../types/heatmap";
+import { useLanguage } from "../context/language";
 
 interface DashboardCardsProps {
   summary: DashboardSummary | null;
@@ -20,15 +21,15 @@ interface CardProps {
 
 function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
   return (
-    <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm">
+    <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <span className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: accent }} aria-hidden="true" />
-      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400">{label}</p>
+      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">{label}</p>
       {skeleton ? (
-        <div className="mt-2 h-8 w-24 animate-pulse rounded bg-gray-100" />
+        <div className="mt-2 h-8 w-24 animate-pulse rounded bg-gray-100 dark:bg-gray-800" />
       ) : (
         <p
           className={
-            "mt-1 truncate text-3xl text-gray-900 " +
+            "mt-1 truncate text-3xl text-gray-900 dark:text-white " +
             (tabular ? "font-mono font-semibold tabular-nums" : "font-display")
           }
           title={value}
@@ -36,7 +37,7 @@ function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
           {value}
         </p>
       )}
-      {hint && !skeleton && <p className="mt-1.5 text-xs text-gray-500">{hint}</p>}
+      {hint && !skeleton && <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">{hint}</p>}
     </div>
   );
 }
@@ -46,14 +47,19 @@ function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
  * most crowded area. Uses the existing summary API data.
  */
 export default function DashboardCards({ summary, loading, areaCount }: DashboardCardsProps) {
+  const { t } = useLanguage();
   const firstLoad = loading && !summary;
   const areaHint =
-    areaCount && areaCount > 0 ? `Showing ${areaCount} ${areaCount === 1 ? "area" : "areas"}` : undefined;
+    areaCount && areaCount > 0
+      ? areaCount === 1
+        ? t("cards.showingAreaOne", { count: areaCount })
+        : t("cards.showingAreaMany", { count: areaCount })
+      : undefined;
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
       <Card
-        label="Estimated Active Visitors"
+        label={t("cards.activeVisitors")}
         value={summary ? summary.estimated_active_visitors.toLocaleString() : "—"}
         accent="#16a34a"
         hint={areaHint}
@@ -61,18 +67,18 @@ export default function DashboardCards({ summary, loading, areaCount }: Dashboar
         tabular
       />
       <Card
-        label="Total Location Points"
+        label={t("cards.totalPoints")}
         value={summary ? summary.total_location_points.toLocaleString() : "—"}
         accent="#111827"
-        hint="Updated live"
+        hint={t("cards.updatedLive")}
         skeleton={firstLoad}
         tabular
       />
       <Card
-        label="Most Crowded Area"
+        label={t("cards.mostCrowded")}
         value={summary ? summary.most_crowded_area : "—"}
         accent="#dc2626"
-        hint="High density"
+        hint={t("cards.highDensity")}
         skeleton={firstLoad}
       />
     </div>
