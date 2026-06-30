@@ -16,7 +16,7 @@ import {
   isValidTimestamp,
 } from "../utils/validateLocation";
 import { errorResponse, successResponse } from "../utils/httpResponse";
-import type { LocationLog } from "../types/location";
+import type { LocationLog, LocationSource } from "../types/location";
 
 const router = Router();
 
@@ -86,11 +86,25 @@ router.post("/generate", async (req: Request, res: Response) => {
     );
   }
 
+  // Source is optional; default to "mock". Only the known sources are accepted.
+  let source: LocationSource = "mock";
+  if (body.source !== undefined) {
+    if (body.source !== "mock" && body.source !== "mobile_app") {
+      return errorResponse(
+        res,
+        400,
+        "VALIDATION_ERROR",
+        'source must be "mock" or "mobile_app"'
+      );
+    }
+    source = body.source;
+  }
+
   try {
     const repository = getLocationRepository();
-    const locations = generateMockLocations({ visitorCount, pointsPerVisitor });
+    const locations = generateMockLocations({ visitorCount, pointsPerVisitor, source });
     await repository.insertManyLocations(locations);
-    return res.status(201).json({ success: true, inserted: locations.length });
+    return res.status(201).json({ success: true, inserted: locations.length, source });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     return errorResponse(res, 500, "INTERNAL_SERVER_ERROR", message);

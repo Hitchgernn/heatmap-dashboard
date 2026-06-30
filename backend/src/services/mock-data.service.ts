@@ -7,7 +7,7 @@
 
 import { BOROBUDUR_BOUNDS } from "../config/bounds";
 import { NAMED_AREAS } from "../config/areas";
-import type { LocationLog } from "../types/location";
+import type { LocationLog, LocationSource } from "../types/location";
 
 let idCounter = 0;
 
@@ -40,6 +40,8 @@ function jitter(spread: number): number {
 interface GenerateOptions {
   visitorCount: number;
   pointsPerVisitor: number;
+  /** Source to tag generated records with (defaults to "mock"). */
+  source?: LocationSource;
   now?: Date;
 }
 
@@ -49,6 +51,7 @@ interface GenerateOptions {
  */
 export function generateMockLocations(opts: GenerateOptions): LocationLog[] {
   const now = opts.now ?? new Date();
+  const source: LocationSource = opts.source ?? "mock";
   const out: LocationLog[] = [];
 
   for (let v = 0; v < opts.visitorCount; v++) {
@@ -74,7 +77,7 @@ export function generateMockLocations(opts: GenerateOptions): LocationLog[] {
         visitor_id: visitorId,
         latitude: lat,
         longitude: lng,
-        source: "mock",
+        source,
       });
     }
   }
