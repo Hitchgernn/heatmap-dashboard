@@ -2,7 +2,7 @@
  * Leaflet map helpers: center/zoom, tile source, and the conversion from
  * backend GeoJSON ([lng, lat]) to leaflet.heat points ([lat, lng, intensity]).
  *
- * No Mapbox token needed — uses CARTO dark tiles (OpenStreetMap data).
+ * No Mapbox token needed — uses CARTO tiles (OpenStreetMap data).
  */
 
 import type { LatLngTuple } from "leaflet";
@@ -13,9 +13,11 @@ export const BOROBUDUR_CENTER: LatLngTuple = [-7.607898742482102, 110.2038589761
 // Start zoomed tightly on Candi Borobudur (the temple fills the view).
 export const DEFAULT_ZOOM = 19;
 
-// CARTO basemaps — OpenStreetMap data, no token required. Light "positron" for
-// the light theme, dark "dark matter" for the dark theme (picked in MapView).
-export const TILE_URL_LIGHT = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+// CARTO basemaps — OpenStreetMap data, no token required. "Voyager" is a bright,
+// detailed light basemap (the temple and paths read far more clearly than the
+// pale Positron) for the light theme; "Dark Matter" for the dark theme. The
+// active URL is picked by resolved theme in MapView.
+export const TILE_URL_LIGHT = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
 export const TILE_URL_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
 /** @deprecated kept for back-compat; prefer the explicit light/dark URLs. */
 export const TILE_URL = TILE_URL_LIGHT;
