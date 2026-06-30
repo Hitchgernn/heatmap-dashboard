@@ -213,7 +213,14 @@ export default function App() {
       </div>
 
       <Modal open={settingsOpen} onClose={() => setSettingsOpen(false)} title={PAGE_TITLE.settings}>
-        <SettingsView onClose={() => setSettingsOpen(false)} />
+        <SettingsView
+          onClose={() => setSettingsOpen(false)}
+          onLogout={() => {
+            // No auth backend yet — reset the session to a clean Dashboard.
+            localStorage.removeItem(PAGE_STORAGE_KEY);
+            window.location.reload();
+          }}
+        />
       </Modal>
     </div>
   );

@@ -86,6 +86,9 @@ const en = {
   "settings.languageTitle": "Language",
   "settings.langEnglish": "English",
   "settings.langIndonesia": "Indonesia",
+
+  // Settings — Account
+  "settings.logout": "Log out",
 } as const;
 
 export type TranslationKey = keyof typeof en;
@@ -163,6 +166,9 @@ const id: Record<TranslationKey, string> = {
   "settings.languageTitle": "Bahasa",
   "settings.langEnglish": "English",
   "settings.langIndonesia": "Indonesia",
+
+  // Settings — Account
+  "settings.logout": "Keluar",
 };
 
 const dictionaries: Record<Lang, Record<TranslationKey, string>> = { en, id };
