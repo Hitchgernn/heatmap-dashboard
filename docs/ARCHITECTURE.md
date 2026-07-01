@@ -26,10 +26,11 @@ Mobile App / Mock Generator
 ### 2.1 Frontend (built)
 
 React + Vite + TypeScript + Tailwind + Leaflet (`react-leaflet` + `leaflet.heat`).
-Client-side only; no SSR. Uses CARTO OpenStreetMap tiles, so no map token is
-needed. Polls `GET /api/heatmap/aggregate` and `GET /api/dashboard/summary`
-every ~30s and updates the existing Leaflet heat layer in place (no map
-re-creation).
+Client-side only; no SSR. Supports light/dark/system themes and English/Indonesian
+i18n. Uses tokenless raster tiles (CARTO Voyager in light mode, Esri World Imagery
+in dark mode), so no map token is needed. Polls `GET /api/heatmap/aggregate` and
+`GET /api/dashboard/summary` every ~30s and updates the existing Leaflet heat layer
+in place (no map re-creation).
 
 ### 2.2 Backend (this phase)
 

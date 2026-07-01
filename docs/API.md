@@ -409,11 +409,11 @@ Content-Type: application/json
 
 ### Field Descriptions
 
-| Field                | Type   | Required | Description                                                |
-| -------------------- | ------ | -------: | ---------------------------------------------------------- |
-| `visitor_count`      | number |      Yes | Number of mock visitors to generate.                       |
-| `points_per_visitor` | number |      Yes | Number of location points per visitor.                     |
-| `source`             | string |       No | Must be `mock`. Backend should force this value to `mock`. |
+| Field                | Type   | Required | Description                                                                 |
+| -------------------- | ------ | -------: | --------------------------------------------------------------------------- |
+| `visitor_count`      | number |      Yes | Number of mock visitors to generate.                                        |
+| `points_per_visitor` | number |      Yes | Number of location points per visitor.                                      |
+| `source`             | string |       No | Source to tag generated records with. Allowed: `mock`, `mobile_app`. Default: `mock`. |
 
 ### Mock Distribution
 
@@ -434,7 +434,8 @@ Do not generate fully random points across the entire map.
 ```json
 {
   "success": true,
-  "inserted": 1000
+  "inserted": 1000,
+  "source": "mock"
 }
 ```
 
@@ -602,7 +603,8 @@ export type LocationSource = "mobile_app" | "mock";
 export interface LocationLog {
   id_data: string;
   timestamp: string;
-  visitor_id: string;
+  visitor_id: string; // internal only — never exposed to the frontend
+  visitor_key?: string; // pseudonymous Hyperbase id, internal only; optional (mock/memory paths use visitor_id)
   latitude: number;
   longitude: number;
   source: LocationSource;
@@ -732,6 +734,7 @@ Required functions:
 getAggregatedHeatmap(params)
 getDashboardSummary(params)
 getHotspots(params)
+generateMockData(params)  // used by the Mock Generator admin page
 ```
 
 Example:
