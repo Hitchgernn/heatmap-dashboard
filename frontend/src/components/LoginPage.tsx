@@ -76,7 +76,7 @@ export default function LoginPage() {
         <div className="w-full max-w-sm">
           {/* Mobile branding (hidden on desktop) */}
           <div className="mb-10 lg:hidden">
-            <div className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400/80">
+            <div className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-gray-900 dark:text-gray-100/80">
               Monitoring System
             </div>
             <h1 className="font-display text-3xl text-gray-900 dark:text-white">
@@ -118,7 +118,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                className="block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-gray-100 dark:focus:ring-gray-100/20"
                 placeholder="admin@example.com"
               />
             </div>
@@ -137,7 +137,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+                className="block w-full rounded-lg border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/20 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:border-gray-100 dark:focus:ring-gray-100/20"
                 placeholder="••••••••"
               />
             </div>
@@ -145,7 +145,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 active:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:active:bg-emerald-600"
+              className="flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 active:bg-black disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 dark:active:bg-gray-200"
             >
               {loading ? (
                 <span className="flex items-center gap-2">
