@@ -2,7 +2,8 @@
  * Leaflet map helpers: center/zoom, tile source, and the conversion from
  * backend GeoJSON ([lng, lat]) to leaflet.heat points ([lat, lng, intensity]).
  *
- * No Mapbox token needed — uses CARTO tiles (OpenStreetMap data).
+ * No map token needed — uses CARTO tiles (OpenStreetMap data) by default;
+ * Esri World Imagery (satellite) is available as an opt-in basemap.
  */
 
 import type { LatLngTuple } from "leaflet";
@@ -13,28 +14,48 @@ export const BOROBUDUR_CENTER: LatLngTuple = [-7.607898742482102, 110.2038589761
 // Start zoomed tightly on Candi Borobudur (the temple fills the view).
 export const DEFAULT_ZOOM = 19;
 
-// Basemaps — both tokenless. Light theme uses CARTO "Voyager": a bright,
-// detailed basemap where the temple and paths read clearly. For dark mode,
-// CARTO "Dark Matter" renders roads and terrain almost invisibly, so we use
-// Esri World Imagery (satellite) instead — a dark-balanced backdrop where
-// Borobudur, the roads, and the surrounding terrain are all clearly visible,
-// and the warm heat gradient still reads on top. The active source is picked
-// by resolved theme in MapView. Note Esri uses {z}/{y}/{x} order, no {s}/{r}.
-export const TILE_URL_LIGHT = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-export const TILE_URL_DARK = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
-/** @deprecated kept for back-compat; prefer the explicit light/dark URLs. */
-export const TILE_URL = TILE_URL_LIGHT;
+// ---------------------------------------------------------------------------
+// Basemap definitions — all tokenless.
+// ---------------------------------------------------------------------------
 
-export const TILE_ATTRIBUTION_LIGHT =
+/** The two user-selectable basemaps. */
+export type BasemapId = "carto" | "satellite";
+
+// CARTO Voyager — bright street map; great for light mode.
+export const TILE_URL_CARTO_LIGHT = "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+// CARTO Dark Matter — dark street map; consistent style with Voyager, good dark backdrop.
+export const TILE_URL_CARTO_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+// Esri World Imagery — satellite; opt-in only, no subdomains, y/x order.
+export const TILE_URL_SATELLITE = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+
+export const TILE_ATTRIBUTION_CARTO =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-export const TILE_ATTRIBUTION_DARK =
+export const TILE_ATTRIBUTION_SATELLITE =
   'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Source: Esri, Maxar, Earthstar Geographics';
-/** @deprecated kept for back-compat; prefer the explicit light/dark attributions. */
-export const TILE_ATTRIBUTION = TILE_ATTRIBUTION_LIGHT;
 
 /** Highest zoom each basemap serves real tiles for (Leaflet upscales beyond it). */
-export const TILE_MAX_NATIVE_ZOOM_LIGHT = 20;
-export const TILE_MAX_NATIVE_ZOOM_DARK = 19;
+export const TILE_MAX_NATIVE_ZOOM_CARTO = 20;
+export const TILE_MAX_NATIVE_ZOOM_SATELLITE = 19;
+
+// ---------------------------------------------------------------------------
+// Legacy exports — kept for back-compat; prefer the explicit named constants.
+// ---------------------------------------------------------------------------
+/** @deprecated use TILE_URL_CARTO_LIGHT */
+export const TILE_URL_LIGHT = TILE_URL_CARTO_LIGHT;
+/** @deprecated use TILE_URL_SATELLITE */
+export const TILE_URL_DARK = TILE_URL_SATELLITE;
+/** @deprecated use TILE_URL_CARTO_LIGHT */
+export const TILE_URL = TILE_URL_CARTO_LIGHT;
+/** @deprecated use TILE_ATTRIBUTION_CARTO */
+export const TILE_ATTRIBUTION_LIGHT = TILE_ATTRIBUTION_CARTO;
+/** @deprecated use TILE_ATTRIBUTION_SATELLITE */
+export const TILE_ATTRIBUTION_DARK = TILE_ATTRIBUTION_SATELLITE;
+/** @deprecated use TILE_ATTRIBUTION_CARTO */
+export const TILE_ATTRIBUTION = TILE_ATTRIBUTION_CARTO;
+/** @deprecated use TILE_MAX_NATIVE_ZOOM_CARTO */
+export const TILE_MAX_NATIVE_ZOOM_LIGHT = TILE_MAX_NATIVE_ZOOM_CARTO;
+/** @deprecated use TILE_MAX_NATIVE_ZOOM_SATELLITE */
+export const TILE_MAX_NATIVE_ZOOM_DARK = TILE_MAX_NATIVE_ZOOM_SATELLITE;
 
 /** leaflet.heat point: [latitude, longitude, intensity]. */
 export type HeatPoint = [number, number, number];
