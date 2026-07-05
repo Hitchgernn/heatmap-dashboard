@@ -45,27 +45,27 @@ export default function LoginPage() {
         className="login-brand-enter relative hidden w-[45%] overflow-hidden bg-gray-900 bg-cover bg-center lg:flex lg:flex-col lg:justify-between"
         style={{ backgroundImage: "url('/login-bg.jpg')" }}
       >
-        {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gray-900/60 bg-gradient-to-br from-emerald-900/50 via-transparent to-cyan-900/40" />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/60" />
 
         <div className="relative z-10 flex flex-1 flex-col justify-center px-12 xl:px-16">
-          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400/80">
+          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
             Monitoring System
           </div>
           <h1 className="font-display text-5xl leading-tight text-white xl:text-6xl">
             Borobudur
           </h1>
-          <p className="mt-1 font-display text-2xl italic text-gray-400 xl:text-3xl">
+          <p className="mt-1 font-display text-2xl italic text-white/80 xl:text-3xl">
             Heatmap Dashboard
           </p>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-gray-500">
+          <p className="mt-6 max-w-sm text-sm leading-relaxed text-white/90">
             Real-time visitor density monitoring and spatial analytics for
             the Borobudur Temple Compounds.
           </p>
         </div>
 
         <div className="relative z-10 px-12 pb-8 xl:px-16">
-          <div className="text-xs text-gray-600">
+          <div className="text-xs text-white/70">
             Precision Monitoring · Aggregated Analytics
           </div>
         </div>
