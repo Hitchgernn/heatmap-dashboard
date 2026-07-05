@@ -32,7 +32,7 @@ function buildUrl(path: string, params: Record<string, string | undefined>): str
 }
 
 async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
-  const res = await fetch(url, { signal });
+  const res = await fetch(url, { signal, credentials: "include" });
   if (!res.ok) {
     // Try to surface the backend's standard error message.
     let detail = `HTTP ${res.status}`;
@@ -108,6 +108,7 @@ export async function generateMockData(
 ): Promise<GenerateMockResult> {
   const res = await fetch(`${BASE_URL}/api/mock/generate`, {
     method: "POST",
+    credentials: "include",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       visitor_count: params.visitorCount,

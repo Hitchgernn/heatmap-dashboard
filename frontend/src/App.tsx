@@ -8,7 +8,9 @@ import MockGeneratorView from "./components/MockGeneratorView";
 import SettingsView from "./components/SettingsView";
 import Modal from "./components/Modal";
 import ShowSidebarButton from "./components/ShowSidebarButton";
+import LoginPage from "./components/LoginPage";
 import { useLanguage } from "./context/language";
+import { useAuth } from "./context/auth";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
 import { toHeatPoints } from "./lib/map";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
@@ -38,7 +40,39 @@ function readStoredPage(): Page {
   return stored && PERSISTED_PAGES.includes(stored) ? stored : "dashboard";
 }
 
+/**
+ * Top-level App component — handles the auth gate. When authenticated,
+ * renders the Dashboard shell; otherwise shows the login page.
+ */
 export default function App() {
+  const { status: authStatus, signout } = useAuth();
+
+  if (authStatus === "loading") {
+    return (
+      <div className="flex h-full items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <div className="flex flex-col items-center gap-3">
+          <svg className="h-8 w-8 animate-spin text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+          </svg>
+          <span className="text-sm text-gray-500 dark:text-gray-400">Loading…</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (authStatus === "unauthenticated") {
+    return <LoginPage />;
+  }
+
+  return <DashboardShell onLogout={signout} />;
+}
+
+/**
+ * The authenticated dashboard shell — all hooks live here so they're never
+ * called conditionally (React rules-of-hooks).
+ */
+function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const { t } = useLanguage();
   const [page, setPage] = useState<Page>(readStoredPage);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -219,10 +253,9 @@ export default function App() {
       <Modal open={settingsOpen} onClose={() => setSettingsOpen(false)} title={PAGE_TITLE.settings}>
         <SettingsView
           onClose={() => setSettingsOpen(false)}
-          onLogout={() => {
-            // No auth backend yet — reset the session to a clean Dashboard.
+          onLogout={async () => {
             localStorage.removeItem(PAGE_STORAGE_KEY);
-            window.location.reload();
+            await onLogout();
           }}
         />
       </Modal>
