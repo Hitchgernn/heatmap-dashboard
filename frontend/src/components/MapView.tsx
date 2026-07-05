@@ -11,12 +11,10 @@ import {
   TILE_MAX_NATIVE_ZOOM_CARTO,
   TILE_MAX_NATIVE_ZOOM_SATELLITE,
   TILE_URL_CARTO_LIGHT,
-  TILE_URL_CARTO_DARK,
   TILE_URL_SATELLITE,
 } from "../lib/map";
 import type { BasemapId, HeatPoint } from "../lib/map";
 import type { Hotspot } from "../types/hotspot";
-import { useTheme } from "../context/theme";
 import { useLanguage } from "../context/language";
 
 interface MapViewProps {
@@ -187,35 +185,28 @@ export default function MapView({
   showHotspots,
   children,
 }: MapViewProps) {
-  const { resolvedTheme } = useTheme();
   const { t } = useLanguage();
   const isEmpty = showHeatmap && heatPoints.length === 0;
 
-  // Basemap state — default is CARTO; satellite is opt-in.
+  // Basemap state — default is CARTO Voyager; satellite is opt-in.
+  // CARTO Voyager is always used regardless of light/dark theme so the
+  // map appearance stays identical when toggling the dashboard theme.
   const [basemap, setBasemap] = useState<BasemapId>("carto");
 
-  const isDark = resolvedTheme === "dark";
-
-  // Resolve tile config from the selected basemap (+ theme for CARTO).
-  const tileConfig = (() => {
-    if (basemap === "satellite") {
-      return {
+  // Resolve tile config from the selected basemap only (theme-independent).
+  const tileConfig = basemap === "satellite"
+    ? {
         url: TILE_URL_SATELLITE,
         attribution: TILE_ATTRIBUTION_SATELLITE,
         maxNativeZoom: TILE_MAX_NATIVE_ZOOM_SATELLITE,
-        // Satellite doesn't change with theme; key by basemap only.
         key: "satellite",
+      }
+    : {
+        url: TILE_URL_CARTO_LIGHT,
+        attribution: TILE_ATTRIBUTION_CARTO,
+        maxNativeZoom: TILE_MAX_NATIVE_ZOOM_CARTO,
+        key: "carto",
       };
-    }
-    // CARTO — pick Voyager (light) or Dark Matter (dark) based on theme.
-    return {
-      url: isDark ? TILE_URL_CARTO_DARK : TILE_URL_CARTO_LIGHT,
-      attribution: TILE_ATTRIBUTION_CARTO,
-      maxNativeZoom: TILE_MAX_NATIVE_ZOOM_CARTO,
-      // Remount tile layer when basemap or CARTO variant changes.
-      key: `carto-${isDark ? "dark" : "light"}`,
-    };
-  })();
 
   return (
     <div className="relative h-full w-full bg-gray-100 dark:bg-gray-800">
