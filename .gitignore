@@ -28,3 +28,5 @@ ml/venv/
 # Agent
 .claude/
 CLAUDE.md
+.agents
+.codegraph/
