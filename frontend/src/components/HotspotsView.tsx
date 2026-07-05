@@ -1,6 +1,7 @@
 import MapView from "./MapView";
 import TimeFilter from "./TimeFilter";
 import ActiveIndicator from "./ActiveIndicator";
+import DensityLegend from "./DensityLegend";
 import { useLanguage } from "../context/language";
 import type { TimeWindow } from "../types/heatmap";
 import type { Hotspot } from "../types/hotspot";
@@ -33,6 +34,9 @@ export default function HotspotsView({
         </div>
         <div className="absolute right-3 top-3 z-[600]">
           <ActiveIndicator label={t("active.hotspots")} />
+        </div>
+        <div className="absolute bottom-3 left-3 z-[600]">
+          <DensityLegend />
         </div>
       </MapView>
     </div>
