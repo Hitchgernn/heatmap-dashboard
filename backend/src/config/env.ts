@@ -36,6 +36,23 @@ export const env = {
     timeoutMs: num(process.env.HYPERBASE_TIMEOUT_MS, 5000),
   },
 
+  /** Auth settings for dashboard admin users. */
+  auth: {
+    /** Hyperbase collection where admin user records are stored. */
+    adminCollectionId: process.env.HYPERBASE_AUTH_COLLECTION_ID || "",
+    /** Shared secret required in the signup body to create admin accounts. */
+    registrationSecret: process.env.ADMIN_REGISTRATION_SECRET || "",
+    /** Secret used to sign the session cookie. */
+    cookieSecret: process.env.COOKIE_SECRET || "dev-cookie-secret-change-me",
+    /** Cookie name for the admin session JWT. */
+    cookieName: "borobudur_session",
+    /** Cookie max-age in milliseconds (default 24h). */
+    cookieMaxAgeMs: num(process.env.COOKIE_MAX_AGE_MS, 86_400_000),
+  },
+
+  /** Whether the app is running in production. */
+  isProduction: process.env.NODE_ENV === "production",
+
   /** Machine learning module settings. */
   ml: {
     /** Path to precomputed DBSCAN hotspot output. Empty → service default. */
