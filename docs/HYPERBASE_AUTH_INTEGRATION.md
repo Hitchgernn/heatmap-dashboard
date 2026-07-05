@@ -172,3 +172,15 @@ sequenceDiagram
 
 3. **Privacy Restrictions:**
    The frontend must **never** receive raw `visitor_id` UUIDs or access to individual movement history data. The Express proxy must intercept all requests and aggregate or strip these fields before returning the response to the dashboard UI.
+
+4. **Environment Setup & Provisioning:**
+   The Express backend requires the following authentication-specific environment variables in its `.env` file:
+   - `HYPERBASE_AUTH_COLLECTION_ID`: The UUID of the collection used for admin user records.
+   - `ADMIN_REGISTRATION_SECRET`: A secure string used by the `POST /signup` endpoint to authorize admin creation.
+   - `COOKIE_SECRET`: A secure string to sign the Express session cookie.
+   
+   **Provisioning Quirks (SvelteKit UI):**
+   When creating a new project via the Hyperbase SvelteKit UI, it automatically provisions a default `Users` collection and an `App Token`.
+   - The `App Token` provides the `HYPERBASE_TOKEN_ID` and `HYPERBASE_TOKEN_SECRET` values.
+   - The default `Users` collection uses `username` (string) instead of `email`, and lacks a `role` field.
+   - For this dashboard integration, you must either add `role` (string) to the default `Users` schema and rename `username` to `email`, or create a completely new `admins` collection with `email` (`auth_column: true`), `password` (`auth_column: true, hashed: true`), and `role` (string), then use its UUID for `HYPERBASE_AUTH_COLLECTION_ID`.
