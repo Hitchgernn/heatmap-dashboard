@@ -99,7 +99,7 @@ function LayerPicker({ basemap, onChange }: LayerPickerProps) {
   const active = options.find((o) => o.id === basemap)!;
 
   return (
-    <div className="absolute bottom-20 right-3 z-[1000] select-none">
+    <div className="absolute bottom-[7.5rem] left-3 z-[1000] select-none">
       {/* Expanded panel */}
       {open && (
         <div
