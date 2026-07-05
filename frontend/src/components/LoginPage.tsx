@@ -41,9 +41,12 @@ export default function LoginPage() {
   return (
     <div className="flex h-full min-h-screen bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
       {/* Left branding panel — hidden on mobile */}
-      <div className="login-brand-enter relative hidden w-[45%] overflow-hidden bg-gray-900 lg:flex lg:flex-col lg:justify-between">
+      <div 
+        className="login-brand-enter relative hidden w-[45%] overflow-hidden bg-gray-900 bg-cover bg-center lg:flex lg:flex-col lg:justify-between"
+        style={{ backgroundImage: "url('/login-bg.jpg')" }}
+      >
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-transparent to-cyan-900/20" />
+        <div className="absolute inset-0 bg-gray-900/60 bg-gradient-to-br from-emerald-900/50 via-transparent to-cyan-900/40" />
 
         <div className="relative z-10 flex flex-1 flex-col justify-center px-12 xl:px-16">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400/80">
