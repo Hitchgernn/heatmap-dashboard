@@ -172,7 +172,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       : "live";
 
   // Sidebar can be collapsed on every functional page.
-  const collapsible = page === "dashboard" || page === "heatmap" || page === "hotspots";
+  const collapsible = page === "dashboard" || page === "heatmap" || page === "hotspots" || page === "mock";
   const showSidebar = sidebarVisible;
 
   // Search shows on the Dashboard and both map pages.
