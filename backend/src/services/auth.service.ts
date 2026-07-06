@@ -243,13 +243,16 @@ export async function validateSession(
   // Simpler approach: decode the JWT to get collection_id + record_id, then
   // fetch that specific record using the service JWT.
   const claims = decodeJwtPayload(currentToken);
-  if (!claims?.collection_id || !claims?.record_id) {
+  // Hyperbase JWT payload shape: { id: { Token: [ tokenId, { collection_id, id } ] }, exp: ... }
+  const claimData = (claims?.id as any)?.Token?.[1];
+  
+  if (!claimData?.collection_id || !claimData?.id) {
     throw new AuthError("JWT missing user claim", 401);
   }
 
   const projectId = env.hyperbase.projectId;
   const record = await client.serviceRequest<{ data?: AdminUser }>(
-    `/api/rest/project/${projectId}/collection/${claims.collection_id}/record/${claims.record_id}`,
+    `/api/rest/project/${projectId}/collection/${claimData.collection_id}/record/${claimData.id}`,
     "GET"
   );
 
