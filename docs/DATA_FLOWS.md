@@ -109,7 +109,7 @@ sequenceDiagram
     Mid-->>Route: req.user set, next()
     Route-->>Lib: 200 {success:true, data:{_id,email,role}}
     Lib-->>Ctx: AuthUser
-    Ctx->>Ctx: setUser(u); setStatus("authenticated")
+    Ctx->>Ctx: setUser(u), setStatus("authenticated")
     App->>App: render DashboardShell
 
     Note over Ctx,App: on any failure at any step, catch -> setStatus("unauthenticated") -> App renders LoginPage
@@ -140,8 +140,8 @@ sequenceDiagram
     Ctx->>Lib: getMe() (fetch full profile right after cookie is set)
     Lib->>Route: GET /me (same validateSession path as 2.1)
     Route-->>Ctx: AuthUser
-    Ctx->>Ctx: setUser(u); setStatus("authenticated")
-    Ctx-->>Login: resolves -> App renders DashboardShell
+    Ctx->>Ctx: setUser(u), setStatus("authenticated")
+    Ctx-->>Login: resolves, App renders DashboardShell
 
     Note over Ctx,Login: on throw, Ctx sets error message, Login shows it, status stays "unauthenticated"
 ```
