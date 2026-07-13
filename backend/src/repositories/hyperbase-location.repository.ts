@@ -1,17 +1,30 @@
 /**
  * Hyperbase-backed LocationRepository.
  *
- * Reads and writes location logs through the Hyperbase REST API only (never
- * ScyllaDB directly). Queries are always bounded by a time range and a page
- * size, and paginate backwards using the `_id` UUIDv7 clustering key. Bulk
- * inserts run with bounded concurrency rather than an unbounded Promise.all.
+ * Reads location data through the Hyperbase REST API only (never ScyllaDB
+ * directly), from the mobile app's `coordinate data` collection:
  *
- * Privacy: `visitor_key` is mapped into the internal LocationLog for distinct
- * visitor counting but is never returned to the frontend (the GeoJSON/summary
- * transforms have no field for it).
+ *   _id (uuid, UUIDv7)  _created_by (uuid)  _updated_at (timestamp)
+ *   altitude_m (double) client_id (string)  floor (int)
+ *   latitude (double)   longitude (double)
+ *
+ * There is no custom `timestamp` field — record time is the Hyperbase-managed
+ * `_updated_at`, and because `_id` is a UUIDv7 clustering key its high bits
+ * encode the same milliseconds, so time-window filters are expressed as `_id`
+ * range bounds (efficient clustering-key range, no reliance on filtering
+ * built-in columns). Queries paginate backwards by tightening the `_id` upper
+ * bound. `altitude_m` and `floor` exist in the collection but are not fetched —
+ * the 2D heatmap has no use for them.
+ *
+ * The collection is written by the mobile app only; inserts through this
+ * repository are unsupported and throw (mock data is a memory-driver feature).
+ *
+ * Privacy: `client_id` is mapped into the internal visitor_key/visitor_id for
+ * distinct visitor counting but is never returned to the frontend (the
+ * GeoJSON/summary transforms have no field for it).
  */
 
-import type { LocationLog, LocationQuery, LocationSource } from "../types/location";
+import type { LocationLog, LocationQuery } from "../types/location";
 import { resolveTimeRange } from "../utils/timeWindow";
 import type { LocationRepository } from "./location.repository";
 import {
@@ -28,27 +41,25 @@ export interface HyperbaseConfigShape extends HyperbaseClientConfig {
 /** Fields requested from / returned by the Hyperbase record endpoints. */
 const RECORD_FIELDS = [
   "_id",
-  "id_data",
-  "timestamp",
-  "visitor_key",
+  "_updated_at",
+  "client_id",
   "latitude",
   "longitude",
-  "source",
 ] as const;
 
 /** Hard ceiling on pages fetched per query, so a bad cursor can't loop forever. */
 const MAX_PAGES = 100;
-/** Concurrent insert requests for bulk insert (doc suggests 10–25). */
-const INSERT_CONCURRENCY = 15;
+
+const INSERT_UNSUPPORTED =
+  "The Hyperbase coordinate collection is written by the mobile app only — " +
+  "inserts through the dashboard backend are not supported (use the memory driver for mock data)";
 
 interface HyperbaseRecord {
   _id?: unknown;
-  id_data?: unknown;
-  timestamp?: unknown;
-  visitor_key?: unknown;
+  _updated_at?: unknown;
+  client_id?: unknown;
   latitude?: unknown;
   longitude?: unknown;
-  source?: unknown;
 }
 
 interface QueryResponse {
@@ -81,32 +92,27 @@ export class HyperbaseLocationRepository implements LocationRepository {
     return `/api/rest/project/${this.projectId}/collection/${this.collectionId}/records`;
   }
 
-  private get recordPath(): string {
-    return `/api/rest/project/${this.projectId}/collection/${this.collectionId}/record`;
-  }
-
   async getLocations(params: LocationQuery): Promise<LocationLog[]> {
-    const range = resolveTimeRange(params);
     const source = params.source ?? "all";
+    // The coordinate collection holds mobile-app data only; a mock-only query
+    // can never match, so skip the round trip.
+    if (source === "mock") return [];
 
-    // Base AND children: always time-bounded, source filter unless "all".
-    const baseChildren: RecordFilter[] = [
-      { field: "timestamp", op: ">=", value: range.from.toISOString() },
-      { field: "timestamp", op: "<", value: range.to.toISOString() },
-    ];
-    if (source !== "all") {
-      baseChildren.push({ field: "source", op: "=", value: source });
-    }
+    const range = resolveTimeRange(params);
+    const lowerBound = uuidV7Bound(range.from);
+    const upperBound = uuidV7Bound(range.to);
 
     const results: LocationLog[] = [];
     let cursor: string | null = null;
 
     for (let page = 0; page < MAX_PAGES; page++) {
-      const children = [...baseChildren];
-      // Paginate backwards on the _id clustering key (descending order).
-      if (cursor !== null) {
-        children.push({ field: "_id", op: "<", value: cursor });
-      }
+      // Time window as a UUIDv7 `_id` range. Paginating backwards tightens the
+      // upper bound instead of adding a second `<` restriction on `_id`, which
+      // ScyllaDB would reject.
+      const children: RecordFilter[] = [
+        { field: "_id", op: ">=", value: lowerBound },
+        { field: "_id", op: "<", value: cursor ?? upperBound },
+      ];
 
       const body = {
         fields: [...RECORD_FIELDS],
@@ -133,83 +139,54 @@ export class HyperbaseLocationRepository implements LocationRepository {
     return results;
   }
 
-  async insertLocation(location: LocationLog): Promise<void> {
-    await this.client.authedRequest(this.recordPath, "POST", toRecordPayload(location));
+  async insertLocation(_location: LocationLog): Promise<void> {
+    throw new HyperbaseError(INSERT_UNSUPPORTED);
   }
 
-  async insertManyLocations(locations: LocationLog[]): Promise<void> {
-    // Bounded concurrency: process a sliding window of INSERT_CONCURRENCY
-    // requests instead of an unbounded Promise.all over every record.
-    let index = 0;
-    let failed = 0;
-    let firstError: unknown = null;
-
-    const worker = async (): Promise<void> => {
-      while (index < locations.length) {
-        const current = locations[index++];
-        try {
-          await this.insertLocation(current);
-        } catch (err) {
-          failed++;
-          if (firstError === null) firstError = err;
-        }
-      }
-    };
-
-    const workers = Array.from(
-      { length: Math.min(INSERT_CONCURRENCY, locations.length) },
-      () => worker()
-    );
-    await Promise.all(workers);
-
-    if (failed > 0) {
-      const detail = firstError instanceof Error ? firstError.message : "unknown error";
-      throw new HyperbaseError(
-        `Bulk insert: ${failed}/${locations.length} records failed (first error: ${detail})`
-      );
-    }
+  async insertManyLocations(_locations: LocationLog[]): Promise<void> {
+    throw new HyperbaseError(INSERT_UNSUPPORTED);
   }
 }
 
-const VALID_SOURCES: readonly LocationSource[] = ["mobile_app", "mock"];
+/**
+ * Synthesize a UUIDv7 boundary value for a point in time: the 48-bit unix
+ * millisecond timestamp in the high bits, version/variant bits set so it
+ * compares within the same version class as real UUIDv7 ids, and zeroed
+ * random bits so it sorts before every real id generated in that millisecond.
+ * Usable as an inclusive lower / exclusive upper `_id` range bound.
+ */
+function uuidV7Bound(date: Date): string {
+  const ms = Math.max(date.getTime(), 0);
+  const hex = ms.toString(16).padStart(12, "0");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-7000-8000-000000000000`;
+}
 
 /**
- * Map a Hyperbase record into an internal LocationLog. Returns null for records
- * with missing/invalid fields so a single bad row can't poison aggregation.
- * Bounds filtering is intentionally left to the cleansing step downstream.
+ * Map a Hyperbase `coordinate data` record into an internal LocationLog.
+ * Returns null for records with missing/invalid fields so a single bad row
+ * can't poison aggregation. Bounds filtering is intentionally left to the
+ * cleansing step downstream.
  */
 function mapRecord(record: HyperbaseRecord): LocationLog | null {
-  const { id_data, timestamp, visitor_key, latitude, longitude, source } = record;
+  const { _id, _updated_at, client_id, latitude, longitude } = record;
 
-  if (typeof id_data !== "string" || id_data.length === 0) return null;
-  if (typeof timestamp !== "string" || !Number.isFinite(Date.parse(timestamp))) return null;
+  if (typeof _id !== "string" || _id.length === 0) return null;
+  if (typeof _updated_at !== "string" || !Number.isFinite(Date.parse(_updated_at))) return null;
   if (typeof latitude !== "number" || !Number.isFinite(latitude)) return null;
   if (typeof longitude !== "number" || !Number.isFinite(longitude)) return null;
-  if (typeof source !== "string" || !VALID_SOURCES.includes(source as LocationSource)) return null;
 
-  const key = typeof visitor_key === "string" && visitor_key.length > 0 ? visitor_key : undefined;
+  const key = typeof client_id === "string" && client_id.length > 0 ? client_id : undefined;
 
   return {
-    id_data,
-    timestamp,
-    // Mirror the pseudonymous key into visitor_id so existing internal counting
-    // (which reads visitor_id) keeps working; both stay internal-only.
-    visitor_id: key ?? id_data,
+    id_data: _id,
+    timestamp: _updated_at,
+    // Mirror the pseudonymous client id into visitor_id so existing internal
+    // counting (which reads visitor_id) keeps working; both stay internal-only.
+    visitor_id: key ?? _id,
     visitor_key: key,
     latitude,
     longitude,
-    source: source as LocationSource,
-  };
-}
-
-/** Build the Hyperbase insert payload, preferring visitor_key for the schema. */
-function toRecordPayload(location: LocationLog): Record<string, unknown> {
-  return {
-    id_data: location.id_data,
-    timestamp: location.timestamp,
-    visitor_key: location.visitor_key ?? location.visitor_id,
-    latitude: location.latitude,
-    longitude: location.longitude,
-    source: location.source,
+    // Everything in the real collection comes from the mobile app.
+    source: "mobile_app",
   };
 }

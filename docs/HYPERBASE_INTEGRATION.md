@@ -2,6 +2,16 @@
 
 ## Borobudur Aggregated Heatmap Dashboard
 
+> **⚠️ Schema superseded.** The `location_logs` collection design in this
+> document (§5 custom fields `id_data`, `timestamp`, `visitor_key`, `source`,
+> and every sample record/query built on them) was a testing plan. The real
+> collection written by the Borobudur mobile app is **`coordinate data`**
+> (`_id`, `_created_by`, `_updated_at`, `altitude_m`, `client_id`, `floor`,
+> `latitude`, `longitude` — no custom timestamp, no source column), and the
+> backend repository targets it. See **`HYPERBASE_SCHEMA.md`** for the
+> authoritative schema and query shape. Transport details here (auth,
+> pagination, ALLOW FILTERING, token rules) still apply.
+
 ## 1. Purpose
 
 This document defines how the Borobudur Heatmap Dashboard backend should

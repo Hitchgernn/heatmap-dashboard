@@ -13,9 +13,10 @@ export interface LocationLog {
   timestamp: string; // ISO 8601, e.g. "2026-06-16T10:30:00Z"
   visitor_id: string; // internal only — never exposed to the frontend
   /**
-   * Pseudonymous visitor identifier from Hyperbase, used internally for distinct
-   * visitor counting. Internal only — never exposed to the frontend. Optional so
-   * the in-memory/mock paths (which use `visitor_id`) stay unchanged.
+   * Pseudonymous visitor identifier (the Hyperbase collection's `client_id`),
+   * used internally for distinct visitor counting. Internal only — never
+   * exposed to the frontend. Optional so the in-memory/mock paths (which use
+   * `visitor_id`) stay unchanged.
    */
   visitor_key?: string;
   latitude: number;

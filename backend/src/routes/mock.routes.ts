@@ -8,6 +8,7 @@
  */
 
 import { Router, type Request, type Response } from "express";
+import { env } from "../config/env";
 import { getLocationRepository } from "../repositories";
 import { generateMockId, generateMockLocations } from "../services/mock-data.service";
 import {
@@ -24,7 +25,26 @@ const router = Router();
 const MAX_VISITORS = 5000;
 const MAX_POINTS_PER_VISITOR = 500;
 
+/**
+ * Mock data only exists on the memory driver. The real Hyperbase coordinate
+ * collection is written by the mobile app alone: it has no `source` column to
+ * tell mock rows apart, and record time is the Hyperbase-set `_updated_at`,
+ * so backdated mock timestamps are impossible there.
+ */
+function rejectOnHyperbase(res: Response): boolean {
+  if (env.repositoryDriver !== "hyperbase") return false;
+  errorResponse(
+    res,
+    400,
+    "VALIDATION_ERROR",
+    "Mock data is unavailable on the hyperbase driver — the coordinate collection is written by the mobile app only"
+  );
+  return true;
+}
+
 router.post("/location", async (req: Request, res: Response) => {
+  if (rejectOnHyperbase(res)) return;
+
   const body = (req.body ?? {}) as Record<string, unknown>;
   const { visitor_id, timestamp, latitude, longitude, id_data } = body;
 
@@ -61,6 +81,8 @@ router.post("/location", async (req: Request, res: Response) => {
 });
 
 router.post("/generate", async (req: Request, res: Response) => {
+  if (rejectOnHyperbase(res)) return;
+
   const body = (req.body ?? {}) as Record<string, unknown>;
   const visitorCount = Number(body.visitor_count);
   const pointsPerVisitor = Number(body.points_per_visitor);

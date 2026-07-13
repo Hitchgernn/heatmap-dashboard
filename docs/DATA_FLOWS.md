@@ -64,6 +64,11 @@ Key details:
   (frontend comment explicitly flags this: "Backend guard rails (mock.routes.ts)").
 - **`source` is forced/whitelisted**, never arbitrary — only `"mock"` or
   `"mobile_app"` accepted, defaults to `"mock"`.
+- **Memory driver only.** On `REPOSITORY_DRIVER=hyperbase` both mock endpoints
+  return 400 before validation: the real `coordinate data` collection has no
+  `source` column (mock rows would be permanent and indistinguishable from
+  mobile data) and record time is the Hyperbase-set `_updated_at` (backdated
+  timestamps impossible). See `HYPERBASE_SCHEMA.md`.
 - Insert goes through the same `LocationRepository` interface as production
   data, so generated rows flow through the exact same aggregation/heatmap
   pipeline as real mobile-app data — that's the point of the mock generator
