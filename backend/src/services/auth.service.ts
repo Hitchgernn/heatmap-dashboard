@@ -11,24 +11,31 @@
 
 import { env } from "../config/env";
 
-/** Lightweight Hyperbase fetch wrapper for auth-specific calls. */
+/**
+ * Lightweight Hyperbase fetch wrapper for auth-specific calls.
+ *
+ * Reads `env.hyperbaseAuth` (not `env.hyperbase`): the admin auth collection
+ * may live in a different Hyperbase project than the location data, with its
+ * own project ID and service token. When the HYPERBASE_AUTH_* vars are unset
+ * these fall back to the location project's values (see config/env.ts).
+ */
 class HyperbaseAuthClient {
   private serviceJwt: string | null = null;
 
   private get baseUrl(): string {
-    return env.hyperbase.baseUrl;
+    return env.hyperbaseAuth.baseUrl;
   }
   private get projectId(): string {
-    return env.hyperbase.projectId;
+    return env.hyperbaseAuth.projectId;
   }
   private get tokenId(): string {
-    return env.hyperbase.tokenId;
+    return env.hyperbaseAuth.tokenId;
   }
   private get tokenSecret(): string {
-    return env.hyperbase.tokenSecret;
+    return env.hyperbaseAuth.tokenSecret;
   }
   private get timeoutMs(): number {
-    return env.hyperbase.timeoutMs;
+    return env.hyperbaseAuth.timeoutMs;
   }
 
   private async fetchWithTimeout(url: string, init: RequestInit): Promise<Response> {
@@ -173,8 +180,8 @@ export async function signinAdmin(email: string, password: string): Promise<stri
   const result = await client.publicRequest<{ data?: { token?: string } }>(
     "/api/rest/auth/token-based",
     {
-      token_id: env.hyperbase.tokenId,
-      token: env.hyperbase.tokenSecret,
+      token_id: env.hyperbaseAuth.tokenId,
+      token: env.hyperbaseAuth.tokenSecret,
       collection_id: collectionId,
       data: { email: email.toLowerCase(), password },
     }
@@ -192,7 +199,7 @@ export async function signinAdmin(email: string, password: string): Promise<stri
  */
 export async function signupAdmin(email: string, password: string): Promise<AdminUser> {
   const collectionId = env.auth.adminCollectionId;
-  const projectId = env.hyperbase.projectId;
+  const projectId = env.hyperbaseAuth.projectId;
   if (!collectionId || !projectId) throw new AuthError("Auth collection not configured", 500);
 
   const result = await client.serviceRequest<{ data?: AdminUser }>(
@@ -250,7 +257,7 @@ export async function validateSession(
     throw new AuthError("JWT missing user claim", 401);
   }
 
-  const projectId = env.hyperbase.projectId;
+  const projectId = env.hyperbaseAuth.projectId;
   const record = await client.serviceRequest<{ data?: AdminUser }>(
     `/api/rest/project/${projectId}/collection/${claimData.collection_id}/record/${claimData.id}`,
     "GET"

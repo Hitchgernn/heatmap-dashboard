@@ -178,6 +178,18 @@ sequenceDiagram
    - `HYPERBASE_AUTH_COLLECTION_ID`: The UUID of the collection used for admin user records.
    - `ADMIN_REGISTRATION_SECRET`: A secure string used by the `POST /signup` endpoint to authorize admin creation.
    - `COOKIE_SECRET`: A secure string to sign the Express session cookie.
+
+   **Separate auth project:** the auth collection may live in a *different*
+   Hyperbase project than the location (`coordinate data`) collection. Four
+   optional overrides exist — `HYPERBASE_AUTH_BASE_URL`,
+   `HYPERBASE_AUTH_PROJECT_ID`, `HYPERBASE_AUTH_TOKEN_ID`,
+   `HYPERBASE_AUTH_TOKEN_SECRET` — each falling back to its `HYPERBASE_*`
+   counterpart when empty, so a single-project setup needs nothing extra.
+   Hyperbase tokens are project-scoped: setting a different
+   `HYPERBASE_AUTH_PROJECT_ID` requires that project's own token id/secret.
+   All auth-service calls (`signin`, `signup`, session validation / record
+   fetch) go through `env.hyperbaseAuth` (see `config/env.ts` and
+   `services/auth.service.ts`).
    
    **Provisioning Quirks (SvelteKit UI):**
    When creating a new project via the Hyperbase SvelteKit UI, it automatically provisions a default `Users` collection and an `App Token`.
