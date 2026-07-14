@@ -75,7 +75,7 @@ export function getAggregatedHeatmap(
 ): Promise<HeatmapFeatureCollection> {
   const url = buildUrl("/api/heatmap/aggregate", {
     ...windowParams(params.window),
-    source: params.source ?? "mock",
+    source: params.source ?? "all",
   });
   // Heatmap endpoint returns raw GeoJSON, not the envelope.
   return fetchJson<HeatmapFeatureCollection>(url, signal);
@@ -87,7 +87,7 @@ export function getDashboardSummary(
 ): Promise<DashboardSummary> {
   const url = buildUrl("/api/dashboard/summary", {
     ...windowParams(params.window),
-    source: params.source ?? "mock",
+    source: params.source ?? "all",
   });
   return fetchData<DashboardSummary>(url, signal);
 }
@@ -96,7 +96,7 @@ export function getHotspots(
   params: { source?: string } = {},
   signal?: AbortSignal
 ): Promise<Hotspot[]> {
-  const url = buildUrl("/api/hotspots", { source: params.source ?? "mock" });
+  const url = buildUrl("/api/hotspots", { source: params.source ?? "all" });
   return fetchData<{ hotspots: Hotspot[] }>(url, signal).then((d) => d.hotspots);
 }
 
