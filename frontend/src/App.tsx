@@ -76,7 +76,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const { t } = useLanguage();
   const [page, setPage] = useState<Page>(readStoredPage);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [timeWindow, setTimeWindow] = useState<TimeWindow>("15m");
+  const [timeWindow, setTimeWindow] = useState<TimeWindow>({ kind: "preset", value: "15m" });
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   // Dashboard layer toggles (full-map pages force their own layer state).

@@ -7,8 +7,12 @@
 import type { LocationQuery, SourceFilter, TimeWindowPreset } from "../types/location";
 import { isValidTimestamp } from "./validateLocation";
 
-const VALID_WINDOWS: TimeWindowPreset[] = ["5m", "15m", "1h", "today"];
+const VALID_WINDOWS: TimeWindowPreset[] = ["5m", "15m", "1h", "today", "3d", "7d", "30d"];
 const VALID_SOURCES: SourceFilter[] = ["mobile_app", "mock", "all"];
+
+// Cap custom from/to spans so one request can't ask for an unbounded amount of
+// history (the Hyperbase driver pages up to 100 × page-size rows per query).
+const MAX_CUSTOM_RANGE_MS = 90 * 24 * 60 * 60 * 1000; // 90 days
 
 export type ParseResult =
   | { ok: true; value: LocationQuery }
@@ -38,12 +42,30 @@ export function parseLocationQuery(query: Record<string, unknown>): ParseResult 
     };
   }
 
-  if (hasCustomRange && (!isValidTimestamp(from) || !isValidTimestamp(to))) {
-    return {
-      ok: false,
-      code: "VALIDATION_ERROR",
-      message: "from and to must be valid ISO timestamps",
-    };
+  if (hasCustomRange) {
+    if (!isValidTimestamp(from) || !isValidTimestamp(to)) {
+      return {
+        ok: false,
+        code: "VALIDATION_ERROR",
+        message: "from and to must be valid ISO timestamps",
+      };
+    }
+    const fromMs = Date.parse(from);
+    const toMs = Date.parse(to);
+    if (fromMs >= toMs) {
+      return {
+        ok: false,
+        code: "INVALID_TIME_WINDOW",
+        message: "from must be earlier than to",
+      };
+    }
+    if (toMs - fromMs > MAX_CUSTOM_RANGE_MS) {
+      return {
+        ok: false,
+        code: "INVALID_TIME_WINDOW",
+        message: "custom time range must not exceed 90 days",
+      };
+    }
   }
 
   const value: LocationQuery = {

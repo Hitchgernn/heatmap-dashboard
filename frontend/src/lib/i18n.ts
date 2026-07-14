@@ -61,6 +61,11 @@ const en = {
 
   // Time filter
   "time.today": "Today",
+  "time.custom": "Custom",
+  "time.last": "Last",
+  "time.apply": "Apply",
+  "time.hours": "hours",
+  "time.days": "days",
 
   // Full-map active indicators
   "active.heatmap": "Heatmap Active",
@@ -141,6 +146,11 @@ const id: Record<TranslationKey, string> = {
 
   // Time filter
   "time.today": "Hari Ini",
+  "time.custom": "Kustom",
+  "time.last": "Terakhir",
+  "time.apply": "Terapkan",
+  "time.hours": "jam",
+  "time.days": "hari",
 
   // Full-map active indicators
   "active.heatmap": "Heatmap Aktif",

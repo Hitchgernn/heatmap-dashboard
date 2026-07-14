@@ -159,14 +159,14 @@ GET /api/heatmap/aggregate?window=15m&source=mock
 
 | Parameter | Type          | Required | Description                                                                      |
 | --------- | ------------- | -------: | -------------------------------------------------------------------------------- |
-| `window`  | string        |       No | Time window preset. Allowed values: `5m`, `15m`, `1h`, `today`. Default: `15m`.  |
+| `window`  | string        |       No | Time window preset. Allowed values: `5m`, `15m`, `1h`, `today`, `3d`, `7d`, `30d`. Default: `15m`. |
 | `from`    | ISO timestamp |       No | Custom start time.                                                               |
 | `to`      | ISO timestamp |       No | Custom end time.                                                                 |
 | `source`  | string        |       No | Data source filter. Allowed values: `mobile_app`, `mock`, `all`. Default: `all`. |
 
 ### Rules
 
-1. If `from` and `to` are provided, use custom date range.
+1. If `from` and `to` are provided, use custom date range. `from` must be earlier than `to` and the span must not exceed 90 days (`INVALID_TIME_WINDOW` otherwise).
 2. If `from` and `to` are not provided, use `window`.
 3. Validate all timestamps.
 4. Validate latitude and longitude.
@@ -241,7 +241,7 @@ GET /api/dashboard/summary?window=15m&source=mock
 
 | Parameter | Type          | Required | Description                                                                      |
 | --------- | ------------- | -------: | -------------------------------------------------------------------------------- |
-| `window`  | string        |       No | Time window preset. Allowed values: `5m`, `15m`, `1h`, `today`. Default: `15m`.  |
+| `window`  | string        |       No | Time window preset. Allowed values: `5m`, `15m`, `1h`, `today`, `3d`, `7d`, `30d`. Default: `15m`. |
 | `from`    | ISO timestamp |       No | Custom start time.                                                               |
 | `to`      | ISO timestamp |       No | Custom end time.                                                                 |
 | `source`  | string        |       No | Data source filter. Allowed values: `mobile_app`, `mock`, `all`. Default: `all`. |

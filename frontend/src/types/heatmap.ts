@@ -5,7 +5,18 @@
  * backend never sends it and the frontend must never display it.
  */
 
-export type TimeWindow = "5m" | "15m" | "1h" | "today";
+export type TimeWindowPreset = "5m" | "15m" | "1h" | "today" | "3d" | "7d" | "30d";
+
+export type CustomTimeUnit = "hours" | "days";
+
+/**
+ * Selected time window: either a named backend preset (sent as `window=`) or a
+ * user-entered "last N hours/days" range (sent as a fresh `from`/`to` pair on
+ * every fetch so the window rolls forward with polling).
+ */
+export type TimeWindow =
+  | { kind: "preset"; value: TimeWindowPreset }
+  | { kind: "custom"; amount: number; unit: CustomTimeUnit };
 
 export type DensityLevel = "low" | "medium" | "high";
 

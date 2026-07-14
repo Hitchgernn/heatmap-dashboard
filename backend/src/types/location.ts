@@ -24,7 +24,7 @@ export interface LocationLog {
   source: LocationSource;
 }
 
-export type TimeWindowPreset = "5m" | "15m" | "1h" | "today";
+export type TimeWindowPreset = "5m" | "15m" | "1h" | "today" | "3d" | "7d" | "30d";
 export type SourceFilter = LocationSource | "all";
 
 /** Query parameters used when fetching location data from a repository. */

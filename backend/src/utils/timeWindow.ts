@@ -20,6 +20,9 @@ const PRESET_MS: Record<TimeWindowPreset, number> = {
   "15m": 15 * 60 * 1000,
   "1h": 60 * 60 * 1000,
   today: 24 * 60 * 60 * 1000, // handled specially below
+  "3d": 3 * 24 * 60 * 60 * 1000,
+  "7d": 7 * 24 * 60 * 60 * 1000,
+  "30d": 30 * 24 * 60 * 60 * 1000,
 };
 
 export function resolveTimeRange(query: LocationQuery, now: Date = new Date()): TimeRange {

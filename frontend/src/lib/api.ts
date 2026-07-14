@@ -16,6 +16,20 @@ export interface HeatmapParams {
   source?: string;
 }
 
+/**
+ * Convert the selected TimeWindow into query params. Presets map to `window=`;
+ * custom "last N hours/days" windows compute a fresh from/to pair at call time
+ * so every poll re-anchors the range to now (the window rolls forward, same as
+ * presets).
+ */
+function windowParams(window: TimeWindow): Record<string, string | undefined> {
+  if (window.kind === "preset") return { window: window.value };
+  const unitMs = window.unit === "hours" ? 3_600_000 : 86_400_000;
+  const to = new Date();
+  const from = new Date(to.getTime() - window.amount * unitMs);
+  return { from: from.toISOString(), to: to.toISOString() };
+}
+
 /** Envelope returned by non-GeoJSON endpoints. */
 interface ApiEnvelope<T> {
   success: boolean;
@@ -60,7 +74,7 @@ export function getAggregatedHeatmap(
   signal?: AbortSignal
 ): Promise<HeatmapFeatureCollection> {
   const url = buildUrl("/api/heatmap/aggregate", {
-    window: params.window,
+    ...windowParams(params.window),
     source: params.source ?? "mock",
   });
   // Heatmap endpoint returns raw GeoJSON, not the envelope.
@@ -72,7 +86,7 @@ export function getDashboardSummary(
   signal?: AbortSignal
 ): Promise<DashboardSummary> {
   const url = buildUrl("/api/dashboard/summary", {
-    window: params.window,
+    ...windowParams(params.window),
     source: params.source ?? "mock",
   });
   return fetchData<DashboardSummary>(url, signal);
