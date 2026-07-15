@@ -81,6 +81,20 @@ export function getAggregatedHeatmap(
   return fetchJson<HeatmapFeatureCollection>(url, signal);
 }
 
+/**
+ * Fetch one absolute historical slice (a timelapse frame). Same raw-GeoJSON
+ * endpoint as getAggregatedHeatmap, but with explicit from/to instants
+ * instead of a rolling window.
+ */
+export function getHeatmapSlice(
+  fromIso: string,
+  toIso: string,
+  signal?: AbortSignal
+): Promise<HeatmapFeatureCollection> {
+  const url = buildUrl("/api/heatmap/aggregate", { from: fromIso, to: toIso, source: "all" });
+  return fetchJson<HeatmapFeatureCollection>(url, signal);
+}
+
 export function getDashboardSummary(
   params: HeatmapParams,
   signal?: AbortSignal
