@@ -67,6 +67,21 @@ const en = {
   "time.hours": "hours",
   "time.days": "days",
 
+  // Timelapse (heatmap page)
+  "tl.date": "Date",
+  "tl.range": "Range",
+  "tl.from": "From",
+  "tl.to": "To",
+  "tl.step": "Interval",
+  "tl.start": "Start",
+  "tl.play": "Play",
+  "tl.pause": "Pause",
+  "tl.loading": "Loading frame…",
+  "tl.frameError": "Frame failed to load — drag to retry",
+  "tl.errInvalidRange": "End must be after start",
+  "tl.errSpanTooLong": "Range too long (max 90 days)",
+  "tl.errTooManyFrames": "Too many frames — increase interval or shrink range",
+
   // Full-map active indicators
   "active.heatmap": "Heatmap Active",
   "active.hotspots": "Hotspots Active",
@@ -151,6 +166,21 @@ const id: Record<TranslationKey, string> = {
   "time.apply": "Terapkan",
   "time.hours": "jam",
   "time.days": "hari",
+
+  // Timelapse (heatmap page)
+  "tl.date": "Tanggal",
+  "tl.range": "Rentang",
+  "tl.from": "Dari",
+  "tl.to": "Sampai",
+  "tl.step": "Interval",
+  "tl.start": "Mulai",
+  "tl.play": "Putar",
+  "tl.pause": "Jeda",
+  "tl.loading": "Memuat bingkai…",
+  "tl.frameError": "Bingkai gagal dimuat — geser untuk mencoba lagi",
+  "tl.errInvalidRange": "Waktu akhir harus setelah waktu awal",
+  "tl.errSpanTooLong": "Rentang terlalu panjang (maks 90 hari)",
+  "tl.errTooManyFrames": "Terlalu banyak bingkai — perbesar interval atau persempit rentang",
 
   // Full-map active indicators
   "active.heatmap": "Heatmap Aktif",
