@@ -231,7 +231,6 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 timeWindow={timeWindow}
                 onTimeChange={setTimeWindow}
                 heatPoints={heatPoints}
-                hotspots={hotspots}
                 sidebarCollapsed={!showSidebar}
               />
             )}
