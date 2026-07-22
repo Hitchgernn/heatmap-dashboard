@@ -97,6 +97,26 @@ export const env = {
     cookieMaxAgeMs: num(process.env.COOKIE_MAX_AGE_MS, 86_400_000),
   },
 
+  /**
+   * PostgreSQL connection for admin auth. Auth is self-hosted in Postgres
+   * (NOT Hyperbase) — location logs stay in Hyperbase, auth lives here. Prefer
+   * DATABASE_URL; discrete PG* vars are the fallback.
+   */
+  database: {
+    url: process.env.DATABASE_URL || "",
+    host: process.env.PGHOST || "localhost",
+    port: num(process.env.PGPORT, 5432),
+    user: process.env.PGUSER || "borobudur",
+    password: process.env.PGPASSWORD || "",
+    name: process.env.PGDATABASE || "borobudur_auth",
+  },
+
+  /** JSON Web Token settings for admin sessions (we sign our own tokens now). */
+  jwt: {
+    secret: process.env.JWT_SECRET || "dev-jwt-secret-change-me",
+    expiresIn: process.env.JWT_EXPIRES_IN || "24h",
+  },
+
   /** Whether the app is running in production. */
   isProduction: process.env.NODE_ENV === "production",
 

@@ -99,12 +99,14 @@ React 18 + Vite 6 + TypeScript + Tailwind v4 + Leaflet (`leaflet` + `react-leafl
 
 ## Authentication
 
-Admin-only auth via Hyperbase BaaS proxy. See `docs/HYPERBASE_AUTH_INTEGRATION.md` for the full specification.
+Admin-only auth backed by **self-hosted PostgreSQL** (location logs stay in Hyperbase; only auth moved to Postgres). `docs/HYPERBASE_AUTH_INTEGRATION.md` is the historical Hyperbase-proxy spec — superseded, kept for reference.
+
+**Database**: an `admins` table (`id` uuid, `email` unique, `password_hash`, `role`, `created_at`) in Postgres. `db/schema.sql` is the DDL; `db/pool.ts` is the shared `pg.Pool` (reads `DATABASE_URL` or discrete `PG*`); `db/init.ts` applies the schema idempotently (`npm run db:init`). `docker-compose.yml` provides the Postgres service (auto-applies the schema on first init via `/docker-entrypoint-initdb.d`).
 
 **Backend auth stack** (`backend/src/`):
-- `config/env.ts` — env vars: `HYPERBASE_AUTH_COLLECTION_ID`, `ADMIN_REGISTRATION_SECRET`, `COOKIE_SECRET`, `COOKIE_MAX_AGE_MS`, plus the `HYPERBASE_AUTH_{BASE_URL,PROJECT_ID,TOKEN_ID,TOKEN_SECRET}` project overrides (`env.hyperbaseAuth`, fall back to location values).
-- `services/auth.service.ts` — Hyperbase proxy: `signinAdmin` (token-based), `signupAdmin` (record insert), `validateSession` (token renew + record fetch). Uses a dedicated `HyperbaseAuthClient` class reading `env.hyperbaseAuth`.
-- `middleware/auth.middleware.ts` — `requireAuth` (reads JWT from `borobudur_session` httpOnly cookie, validates via Hyperbase, attaches `req.user`), `requireRole` (checks `req.user.role`).
+- `config/env.ts` — env vars: `DATABASE_URL` (or `PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE`), `JWT_SECRET`, `JWT_EXPIRES_IN` (default 24h), `ADMIN_REGISTRATION_SECRET`, `COOKIE_SECRET`, `COOKIE_MAX_AGE_MS`. (The legacy `HYPERBASE_AUTH_*` vars remain in env for now but are unused by auth.)
+- `services/auth.service.ts` — Postgres-backed, **same exported surface** as before: `signinAdmin` (bcrypt-compare → sign our own JWT), `signupAdmin` (bcrypt-hash → INSERT, 409 on duplicate email), `validateSession` (`jwt.verify` → reload admin row → enforce `role === "admin"`). Uses `bcryptjs` + `jsonwebtoken`; no Hyperbase calls.
+- `middleware/auth.middleware.ts` — `requireAuth` (reads JWT from `borobudur_session` httpOnly cookie, validates via `validateSession`, attaches `req.user`), `requireRole` (checks `req.user.role`). Unchanged in shape by the Postgres swap.
 - `routes/auth/index.ts` — aggregator mounted at `/api/auth`. Currently only admin; designed for future `/api/auth/visitor/*`.
 - `routes/auth/admin.routes.ts` — `POST /signin`, `POST /signup` (gated by `ADMIN_REGISTRATION_SECRET`), `POST /logout`, `GET /me`.
 
@@ -117,7 +119,9 @@ All data routes (`/api/heatmap`, `/api/dashboard`, `/api/mock`, `/api/hotspots`,
 - `App.tsx` — auth gate: loading spinner → login page → `DashboardShell`. All hooks live in `DashboardShell` (not conditionally).
 - `lib/api.ts` — all data fetches include `credentials: "include"` for cookie transport.
 
-**Cookie**: `borobudur_session`, httpOnly, secure (in production), SameSite=strict, 24h default.
+**Cookie**: `borobudur_session`, httpOnly, secure (in production), SameSite=strict, 24h default. The cookie carries our own signed JWT (was a Hyperbase-issued JWT before the Postgres migration).
+
+**Migration note**: the old Hyperbase auth used Argon2id hashes that can't be extracted, so existing admin(s) must re-register via `POST /api/auth/admin/signup` (gated by `ADMIN_REGISTRATION_SECRET`) against the new Postgres store.
 
 ## Hard rules (non-negotiable)
 
