@@ -18,6 +18,38 @@ const router = Router();
 
 const VALID_SOURCES: SourceFilter[] = ["mobile_app", "mock", "all"];
 
+/**
+ * @openapi
+ * /api/hotspots:
+ *   get:
+ *     tags: [Hotspots]
+ *     summary: DBSCAN hotspot detection results
+ *     description: >
+ *       Returns precomputed DBSCAN hotspot clusters. For MVP the result is read
+ *       from ml/output/hotspots.json; query params are validated for format but
+ *       do not filter the precomputed set.
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/FromParam'
+ *       - $ref: '#/components/parameters/ToParam'
+ *       - $ref: '#/components/parameters/SourceParam'
+ *     responses:
+ *       200:
+ *         description: Hotspot clusters.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/HotspotsResponse'
+ *       400:
+ *         description: Invalid query parameters.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Missing or invalid session cookie.
+ */
 router.get("/", async (req: Request, res: Response) => {
   const { from, to, source } = req.query;
 

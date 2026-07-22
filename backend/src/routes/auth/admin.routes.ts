@@ -23,6 +23,45 @@ const router = Router();
 
 // ── POST /signin ─────────────────────────────────────────────────────────────
 
+/**
+ * @openapi
+ * /api/auth/admin/signin:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Sign in an admin, set session cookie
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password]
+ *             properties:
+ *               email: { type: string, format: email }
+ *               password: { type: string, format: password }
+ *     responses:
+ *       200:
+ *         description: Signed in. Sets the httpOnly borobudur_session cookie.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success: { type: boolean, example: true }
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     email: { type: string, format: email }
+ *       400:
+ *         description: Missing email or password.
+ *       401:
+ *         description: Invalid email or password.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
 router.post("/signin", async (req: Request, res: Response) => {
   const { email, password } = req.body ?? {};
 
@@ -48,6 +87,41 @@ router.post("/signin", async (req: Request, res: Response) => {
 
 // ── POST /signup ─────────────────────────────────────────────────────────────
 
+/**
+ * @openapi
+ * /api/auth/admin/signup:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Create an admin account (gated by registration secret)
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [email, password, registration_secret]
+ *             properties:
+ *               email: { type: string, format: email }
+ *               password: { type: string, format: password, minLength: 8 }
+ *               registration_secret: { type: string }
+ *     responses:
+ *       201:
+ *         description: Admin created.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success: { type: boolean, example: true }
+ *                 data: { $ref: '#/components/schemas/AdminUser' }
+ *       400:
+ *         description: Validation error.
+ *       403:
+ *         description: Invalid registration secret.
+ *       503:
+ *         description: Admin registration not configured.
+ */
 router.post("/signup", async (req: Request, res: Response) => {
   const { email, password, registration_secret } = req.body ?? {};
 
@@ -90,6 +164,17 @@ router.post("/signup", async (req: Request, res: Response) => {
 
 // ── POST /logout ─────────────────────────────────────────────────────────────
 
+/**
+ * @openapi
+ * /api/auth/admin/logout:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Clear the session cookie
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Logged out.
+ */
 router.post("/logout", (_req: Request, res: Response) => {
   res.clearCookie(env.auth.cookieName, { path: "/" });
   return successResponse(res, { message: "Logged out" });
@@ -97,6 +182,27 @@ router.post("/logout", (_req: Request, res: Response) => {
 
 // ── GET /me ──────────────────────────────────────────────────────────────────
 
+/**
+ * @openapi
+ * /api/auth/admin/me:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Current admin profile
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Current admin.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success: { type: boolean, example: true }
+ *                 data: { $ref: '#/components/schemas/AdminUser' }
+ *       401:
+ *         description: Missing or invalid session cookie.
+ */
 router.get("/me", requireAuth, (req: Request, res: Response) => {
   const user = req.user!;
   return successResponse(res, {

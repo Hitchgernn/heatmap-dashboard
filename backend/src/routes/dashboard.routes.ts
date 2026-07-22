@@ -15,6 +15,39 @@ import { errorResponse, successResponse } from "../utils/httpResponse";
 
 const router = Router();
 
+/**
+ * @openapi
+ * /api/dashboard/summary:
+ *   get:
+ *     tags: [Dashboard]
+ *     summary: Aggregate dashboard statistics
+ *     description: >
+ *       Returns aggregate-only summary cards (estimated active visitors, total
+ *       points, most crowded area, last updated). Distinct visitors are counted
+ *       internally; visitor_id is never exposed.
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/WindowParam'
+ *       - $ref: '#/components/parameters/FromParam'
+ *       - $ref: '#/components/parameters/ToParam'
+ *       - $ref: '#/components/parameters/SourceParam'
+ *     responses:
+ *       200:
+ *         description: Summary statistics.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DashboardSummary'
+ *       400:
+ *         description: Invalid query parameters.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Missing or invalid session cookie.
+ */
 router.get("/summary", async (req: Request, res: Response) => {
   const parsed = parseLocationQuery(req.query as Record<string, unknown>);
   if (!parsed.ok) {

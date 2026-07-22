@@ -5,7 +5,9 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
 import { env } from "./config/env";
+import { openapiSpec } from "./config/swagger";
 import heatmapRoutes from "./routes/heatmap.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
 import mockRoutes from "./routes/mock.routes";
@@ -25,6 +27,12 @@ export function createApp() {
   app.get("/health", (_req: Request, res: Response) => {
     res.status(200).json({ status: "ok" });
   });
+
+  // API documentation (public). Swagger UI at /api/docs, raw spec at /api/docs.json.
+  app.get("/api/docs.json", (_req: Request, res: Response) => {
+    res.status(200).json(openapiSpec);
+  });
+  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
   // Auth routes are public (they handle their own auth checks internally).
   app.use("/api/auth", authRoutes);

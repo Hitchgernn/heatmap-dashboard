@@ -42,6 +42,39 @@ function rejectOnHyperbase(res: Response): boolean {
   return true;
 }
 
+/**
+ * @openapi
+ * /api/mock/location:
+ *   post:
+ *     tags: [Mock]
+ *     summary: Insert one mock location (dev/testing)
+ *     description: Inserts a single mock location. source is forced to "mock".
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [visitor_id, timestamp, latitude, longitude]
+ *             properties:
+ *               visitor_id: { type: string, example: mock_visitor_001 }
+ *               timestamp: { type: string, format: date-time }
+ *               latitude: { type: number, example: -7.6079 }
+ *               longitude: { type: number, example: 110.2037 }
+ *     responses:
+ *       201:
+ *         description: Inserted.
+ *       400:
+ *         description: Validation error, or mock unavailable on the hyperbase driver.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Missing or invalid session cookie.
+ */
 router.post("/location", async (req: Request, res: Response) => {
   if (rejectOnHyperbase(res)) return;
 
@@ -80,6 +113,49 @@ router.post("/location", async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @openapi
+ * /api/mock/generate:
+ *   post:
+ *     tags: [Mock]
+ *     summary: Bulk-generate clustered mock data (dev/testing)
+ *     description: >
+ *       Generates realistic clustered mock visitor points around Borobudur and
+ *       inserts them. Distribution follows config/areas.ts (Main Stupa 45%,
+ *       Entrance 25%, East Stairs 15%, West 10%, scatter 5%).
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [visitor_count, points_per_visitor]
+ *             properties:
+ *               visitor_count: { type: integer, minimum: 1, maximum: 5000, example: 100 }
+ *               points_per_visitor: { type: integer, minimum: 1, maximum: 500, example: 10 }
+ *               source: { type: string, enum: [mock, mobile_app], default: mock }
+ *     responses:
+ *       201:
+ *         description: Inserted count.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success: { type: boolean, example: true }
+ *                 inserted: { type: integer, example: 1000 }
+ *                 source: { type: string, example: mock }
+ *       400:
+ *         description: Validation error, or mock unavailable on the hyperbase driver.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Missing or invalid session cookie.
+ */
 router.post("/generate", async (req: Request, res: Response) => {
   if (rejectOnHyperbase(res)) return;
 
