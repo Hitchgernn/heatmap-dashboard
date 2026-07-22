@@ -1,0 +1,128 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project
+
+Borobudur Aggregated Heatmap Dashboard — a web dashboard that visualizes visitor density at the Borobudur temple. Raw GPS logs (from a mobile app, stored in Hyperbase/ScyllaDB) are fetched by the backend, cleaned, aggregated into a grid, and served as GeoJSON. The frontend polls that GeoJSON and renders a Leaflet heatmap (OpenStreetMap tiles, no map token needed).
+
+Status: the backend (`backend/`, all six data endpoints plus admin auth) and the frontend (`frontend/`, a monitoring dashboard with light/dark/system themes and English/Indonesian i18n) are built and build-verified. ML hotspot detection is at the exploration stage — `ml/notebooks/dbscan_exploration.ipynb` (DBSCAN + folium maps, committed with outputs) drives it; there is no standalone `hotspot_detection.py` yet, so `GET /api/hotspots` still reads the precomputed `ml/output/hotspots.json` fixture. The Docker/Nginx deployment layer is still missing. See `docs/` for the full spec — `API.md` is the authoritative endpoint contract, and `HYPERBASE_SCHEMA.md` is authoritative for the Hyperbase data model (the `coordinate data` collection; it supersedes the older `location_logs` design in `HYPERBASE_INTEGRATION.md`). `DATA_FLOWS.md` has the mock-generator and auth sequence diagrams.
+
+## Code intelligence
+
+This repo ships a graphify knowledge graph at `graphify-out/` (not gitignored). For codebase questions, run `graphify query "<question>"` first — it returns a scoped subgraph (code **and** docs, ~700 nodes) far smaller than grepping or reading `GRAPH_REPORT.md` wholesale; `graphify path "<A>" "<B>"` for relationships, `graphify explain "<concept>"` for one concept. After changing code, run `graphify update .` (AST-only, no API cost) to keep it current. `graphify-out/obsidian/` is a human-navigable vault of the same graph for Obsidian's graph view. A `.codegraph/` index also exists locally (gitignored, personal) — when present, `codegraph_explore` / `codegraph explore "<symbols>"` returns verbatim source plus callers for a symbol before editing.
+
+## Commands
+
+Backend (from `backend/`):
+
+```bash
+npm install        # install deps
+npm run dev        # ts-node-dev, hot reload on http://localhost:3001
+npm run build      # tsc -> dist/
+npm start          # run built dist/index.js
+npm run typecheck  # tsc --noEmit (run this to verify changes; build also does it)
+npm test           # node --test with tsx (no test files exist yet)
+```
+
+Frontend (from `frontend/`):
+
+```bash
+npm install        # install deps
+npm run dev        # vite dev server on http://localhost:5173
+npm run build      # tsc --noEmit && vite build -> dist/
+npm run preview    # serve the built bundle on http://localhost:4173
+npm run typecheck  # tsc --noEmit
+```
+
+There is no lint step in either package. Verify changes with `npm run build` (or `typecheck`). No test runner is wired up for the frontend.
+
+The memory repository auto-seeds ~97 clustered sample points on boot, so backend endpoints return data immediately without Hyperbase credentials. Seeded timestamps are anchored at boot and span the prior ~14 min, so they age out of the default 15m window once the server has run a while — regenerate with `POST /api/mock/generate` to repopulate. Running a single backend test once tests exist: `node --test --import tsx ./src/path/to/file.test.ts`.
+
+The frontend map is Leaflet with theme-aware OpenStreetMap tiles — no map token needed (CARTO Voyager in light mode, Esri World Imagery satellite in dark mode). `frontend/.env` only needs `VITE_API_BASE_URL` (gitignored; defaults to `http://localhost:3001`).
+
+Commits follow Conventional Commits scoped to this project (`feat(frontend):`, `chore(repo):`, etc.); see git history for the established style.
+
+### Gotcha: stale dev server
+
+The node process appears as `node-22` in `pgrep`, so `pkill -f "dist/index.js"` does NOT match it. If a new server fails to bind (`EADDRINUSE` on 3001/5173) the old code keeps answering — making new routes look like 404s. Find and kill the real PID: `ss -ltnp | grep :3001` then `kill <pid>`.
+
+## Backend architecture
+
+Layered Express + TypeScript. Dependencies point inward: `routes → services → repositories`, with `utils`, `config`, and `types` shared. Services never import a concrete repository — only the `LocationRepository` interface.
+
+**The request pipeline** (the core flow worth understanding):
+1. A route validates query params (`utils/parseQuery.ts`) and calls `getLocationRepository()`. Time windows: presets `5m|15m|1h|today|3d|7d|30d` (`window=`), or a custom `from`/`to` ISO pair (must satisfy `from < to`, span ≤ 90 days → `INVALID_TIME_WINDOW` otherwise). **Every data route must use the shared `parseLocationQuery()` — never inline its own validation.** (The heatmap route once carried a stale copy-pasted `VALID_WINDOWS`; a subset array still satisfies `TimeWindowPreset[]`, so tsc can't catch the drift.)
+2. The repository returns raw `LocationLog[]` filtered by time window + source.
+3. `services/aggregation.service.ts` cleans them (`utils/validateLocation.ts`: coord/timestamp validity **and** Borobudur-bounds filtering — out-of-bounds points are dropped here), snaps survivors onto a fixed grid (`GRID_SIZE` in `config/bounds.ts`), counts per cell, normalizes to a `weight` (0–1), and labels density.
+4. `services/geojson.service.ts` converts cells to a GeoJSON `FeatureCollection`.
+
+**Repository pattern:** `repositories/index.ts` is a singleton factory selecting the driver from `REPOSITORY_DRIVER` env (`memory` default, or `hyperbase`). `MemoryLocationRepository` is the working in-process store; `HyperbaseLocationRepository` is implemented — it talks to the hosted Hyperbase BaaS over REST via `HyperbaseHttpClient` (token-based auth → cached Bearer JWT, `AbortController` timeout, one re-login retry on 401/403). It reads the mobile app's `coordinate data` collection (`_id`, `_updated_at`, `altitude_m`, `client_id`, `floor`, `latitude`, `longitude` — no custom `timestamp`, no `source` column; see `docs/HYPERBASE_SCHEMA.md`). Queries use `{fields, filters:[{op:"AND",children}], limit}` with time windows expressed as **UUIDv7 `_id` range bounds** (the UUIDv7 high bits encode unix-ms, so `_id >= bound(from)` / `_id < bound(to)`); pagination tightens the upper bound with the last `_id` seen instead of adding a second `<` restriction. The driver is read-only: inserts throw, mock endpoints return 400 on it, and `source=mock` queries short-circuit to `[]` (all rows map to `source: "mobile_app"`). Swapping drivers requires no service changes.
+
+**Hyperbase requires a `backend/.env`** (gitignored) with `REPOSITORY_DRIVER=hyperbase` plus `HYPERBASE_BASE_URL`, `HYPERBASE_PROJECT_ID`, `HYPERBASE_LOCATION_COLLECTION_ID`, `HYPERBASE_TOKEN_ID`, `HYPERBASE_TOKEN_SECRET`. **Location and auth are separate Hyperbase projects**: the admin auth collection has its own `HYPERBASE_AUTH_BASE_URL` / `HYPERBASE_AUTH_PROJECT_ID` / `HYPERBASE_AUTH_TOKEN_ID` / `HYPERBASE_AUTH_TOKEN_SECRET` (each falls back to its location counterpart when empty, so single-project setups need nothing extra; tokens are project-scoped, so a different auth project needs its own token). `env.hyperbase` = location project, `env.hyperbaseAuth` = auth project (`auth.service.ts` uses only the latter). `config/env.ts` calls `import "dotenv/config"` on its first line — without dotenv the file is never read and the driver silently falls back to `memory`. The Hyperbase schema field is `client_id`; the repository mirrors it into the internal `visitor_key`/`visitor_id` for distinct counting (all stay internal-only — see hard rules). A temporary `GET /api/debug/hyperbase` route (`routes/debug.routes.ts`, mounted in `index.ts`) verifies auth without exposing the JWT — **remove before production.**
+
+**Config is centralized** — never hardcode geography. `config/bounds.ts` holds `BOROBUDUR_BOUNDS`, `BOROBUDUR_CENTER`, `GRID_SIZE`; `config/areas.ts` holds named-area clusters used by both the mock generator (realistic distribution) and the dashboard (`most_crowded_area` label). `config/env.ts` is the only place that reads `process.env`.
+
+**Hotspots** (`GET /api/hotspots`) read a precomputed `ml/output/hotspots.json` (DBSCAN runs out-of-band; the Python script isn't built yet). Path overridable via `ML_HOTSPOTS_PATH`.
+
+## Frontend architecture
+
+React 18 + Vite 6 + TypeScript + Tailwind v4 + Leaflet (`leaflet` + `react-leaflet` v4 + `leaflet.heat`). Client-side only. `App.tsx` owns page/data state and fetching; components are presentational. Two React contexts wrap the app in `main.tsx`: `ThemeProvider` and `LanguageProvider`.
+
+- **The map is created exactly once.** `MapView.tsx` renders a react-leaflet `<MapContainer>` (created once) + `<TileLayer>`, with `HeatLayer` and `HotspotLayer` as children that get the map via react-leaflet context. The `<TileLayer>` is keyed by `resolvedTheme` so switching light/dark remounts just the layer (the map stays put); a `ResizeHandler` child calls `invalidateSize` on container resize (sidebar collapse animates width).
+- **`HeatLayer.tsx`** wraps `leaflet.heat`: creates one `L.heatLayer` and calls `setLatLngs` to update points in place; toggles visibility by add/remove from the map (never recreated on poll).
+- **`HotspotLayer.tsx`** renders declarative `<CircleMarker>` children (one per hotspot), returning `null` when hidden.
+- **`lib/map.ts`** holds center/zoom, light/dark tile URLs + attributions + native-zoom, the heat gradient, and `toHeatPoints()` — the GeoJSON→heat conversion.
+- **Polling:** `App.tsx` polls heatmap + summary together every 30s (`POLL_INTERVAL_MS`); changing the time window tears down and restarts the interval. First load shows a prominent loader, later polls a subtle status pill.
+- **Time window is a discriminated union** (`types/heatmap.ts`): `{ kind: "preset", value }` or `{ kind: "custom", amount, unit: "hours" | "days" }`. `TimeFilter.tsx` renders the preset pills plus a Custom popover (capped at the backend's 90-day limit). `lib/api.ts` `windowParams()` maps presets to `window=` and computes a **fresh `from`/`to` pair on every fetch** for custom windows so the range rolls forward with polling.
+- **Heatmap page has Live/Timelapse modes** (`HeatmapView.tsx`): Timelapse replays a chosen date or from/to range in fixed steps (5m–1h). Each frame is one absolute slice fetched via `lib/api.ts` `getHeatmapSlice(from, to)` (same raw-GeoJSON endpoint); `hooks/useTimelapse.ts` caches frames by index as promises (no double-fetch, failed fetches self-evict for retry), prefetches 3 ahead, and auto-plays at 800ms/frame. Frame math + validation (288-frame cap, 90-day span mirror) in `lib/timelapse.ts`; UI in `TimelapseSetup.tsx`/`TimelapseBar.tsx`. The Heatmap page renders **no hotspot markers** — those live on Dashboard/Hotspots pages only.
+- **`lib/api.ts` handles two response styles:** the heatmap endpoint returns raw GeoJSON; summary/hotspots use the `{ success, data }` envelope; `POST /api/mock/generate` returns a bare `{ success, inserted, source }` (no envelope). Reads `VITE_API_BASE_URL` (default `http://localhost:3001`; behind Nginx, `/api`). Data fetches default to `source=all` — not `mock`, which would short-circuit to empty on the hyperbase driver.
+
+**Theme system (`context/theme.tsx`):** light / dark / system, persisted to `localStorage` (`borobudur.theme`), applied via Tailwind class-based dark mode — toggles `.dark` on `<html>`, tracks the OS preference live via `matchMedia` in system mode. `index.css` enables it with `@custom-variant dark (&:where(.dark, .dark *))`. An inline script in `index.html` applies the stored theme (and language) before React mounts to avoid a flash. Components carry `dark:` variants throughout.
+
+**i18n (`context/language.tsx` + `lib/i18n.ts`):** English (`en`) / Indonesian (`id`), persisted to `localStorage` (`borobudur.lang`). `useLanguage()` exposes `t(key, vars?)`. `en` is the source of truth (its keys define `TranslationKey`; `id` must cover the same keys — type-enforced). **Section/product names stay English in both locales** (Dashboard, Heatmap, Hotspots, Borobudur, Settings, Mock Generator) — they read as proper nouns and sound off when localized, so they live as literals in components, not in the dictionary.
+
+**Pages & navigation:** `Sidebar.tsx` switches between `dashboard` / `heatmap` / `hotspots` / `mock` views (page content is keyed by page in `App.tsx` to replay a `page-enter` transition). The active page persists to `localStorage` (`borobudur.page`) so a refresh restores it. **Settings is a modal, not a page** — opened from a gear button beside the profile at the sidebar bottom, rendered via `Modal.tsx` (centered, blurred backdrop, Escape/backdrop-click to close). `SettingsView.tsx` has Appearance + Language pickers and a Logout button (no auth backend yet — clears the persisted page and reloads).
+
+### Frontend gotchas
+
+- **Leaflet uses `[latitude, longitude]`; backend GeoJSON is `[longitude, latitude]`.** Convert when crossing the boundary: `lib/map.ts` `toHeatPoints()` maps GeoJSON features to `[lat, lng, weight]`; hotspot `CircleMarker` centers use `[center_lat, center_lng]`. Do not mix these up.
+- The Google Fonts `@import` must be the **first line** of `src/index.css`, before the Tailwind import, or the build warns and fonts may not load.
+- Build is `tsc --noEmit && vite build` — a single tsconfig, not project references (the `tsc -b` / `tsconfig.node.json` setup was removed because it conflicted with `noEmit`). `*.tsbuildinfo` is gitignored.
+
+## Response conventions
+
+- GeoJSON endpoints (`/api/heatmap/aggregate`) return raw GeoJSON, no envelope.
+- All other endpoints use `{ success: true, data }` or `{ success: false, error: { code, message } }` (`utils/httpResponse.ts`). Error codes: `VALIDATION_ERROR`, `INVALID_TIME_WINDOW`, `INVALID_COORDINATE`, `NOT_FOUND`, `INTERNAL_SERVER_ERROR`.
+
+## Authentication
+
+Admin-only auth via Hyperbase BaaS proxy. See `docs/HYPERBASE_AUTH_INTEGRATION.md` for the full specification.
+
+**Backend auth stack** (`backend/src/`):
+- `config/env.ts` — env vars: `HYPERBASE_AUTH_COLLECTION_ID`, `ADMIN_REGISTRATION_SECRET`, `COOKIE_SECRET`, `COOKIE_MAX_AGE_MS`, plus the `HYPERBASE_AUTH_{BASE_URL,PROJECT_ID,TOKEN_ID,TOKEN_SECRET}` project overrides (`env.hyperbaseAuth`, fall back to location values).
+- `services/auth.service.ts` — Hyperbase proxy: `signinAdmin` (token-based), `signupAdmin` (record insert), `validateSession` (token renew + record fetch). Uses a dedicated `HyperbaseAuthClient` class reading `env.hyperbaseAuth`.
+- `middleware/auth.middleware.ts` — `requireAuth` (reads JWT from `borobudur_session` httpOnly cookie, validates via Hyperbase, attaches `req.user`), `requireRole` (checks `req.user.role`).
+- `routes/auth/index.ts` — aggregator mounted at `/api/auth`. Currently only admin; designed for future `/api/auth/visitor/*`.
+- `routes/auth/admin.routes.ts` — `POST /signin`, `POST /signup` (gated by `ADMIN_REGISTRATION_SECRET`), `POST /logout`, `GET /me`.
+
+All data routes (`/api/heatmap`, `/api/dashboard`, `/api/mock`, `/api/hotspots`, `/api/debug`) are protected by `requireAuth`.
+
+**Frontend auth** (`frontend/src/`):
+- `lib/auth.ts` — API client for `/api/auth/admin/*` endpoints (all use `credentials: "include"`).
+- `context/auth.tsx` — `AuthProvider`/`useAuth`: checks session on mount via `GET /me`, exposes `signin`/`signout`/`status`/`user`/`error`.
+- `components/LoginPage.tsx` — split-panel login page matching the dashboard design system.
+- `App.tsx` — auth gate: loading spinner → login page → `DashboardShell`. All hooks live in `DashboardShell` (not conditionally).
+- `lib/api.ts` — all data fetches include `credentials: "include"` for cookie transport.
+
+**Cookie**: `borobudur_session`, httpOnly, secure (in production), SameSite=strict, 24h default.
+
+## Hard rules (non-negotiable)
+
+- **GeoJSON coordinates are `[longitude, latitude]`** — never `[lat, lng]`. This is the classic bug; the whole map breaks silently if reversed. Note Leaflet is the opposite — it takes `[lat, lng]` — so convert at the boundary (see `lib/map.ts`), never reorder the GeoJSON itself.
+- **Never expose `visitor_id`** in any frontend-facing response. It may be used internally (e.g. distinct-visitor counts). The `HeatmapFeature`/response types have no field for it, keeping this true by construction — don't add one.
+- **Serve aggregated data only** — no raw point streaming, no individual routes/movement history. Updates are REST polling, not WebSockets.
+- **Frontend never touches Hyperbase** — all data flows through the backend REST API.
+- **Do not use Next.js** for the frontend (React + Vite + TS + Tailwind + Leaflet). It is a client-side geospatial dashboard; no SSR/SEO needed.
+- **ML scope is DBSCAN hotspot detection only** — no deep learning, crowd prediction, trajectory analysis, next-zone prediction, or route recommendation.
+- Keep the MVP simple and modular; reuse the existing aggregation/validation/time-window/density utilities rather than duplicating them.
