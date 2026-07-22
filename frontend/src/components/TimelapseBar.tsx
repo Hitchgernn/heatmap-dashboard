@@ -72,15 +72,26 @@ export default function TimelapseBar({
         </div>
       </div>
 
-      {(loading || error) && (
-        <p
-          className={
-            "text-xs " + (error ? "text-red-600 dark:text-red-400" : "text-gray-400 dark:text-gray-500")
-          }
-        >
-          {error ? t("tl.frameError") : t("tl.loading")}
-        </p>
-      )}
+      {(loading || error) &&
+        (error ? (
+          <p className="text-xs text-red-600 dark:text-red-400">{t("tl.frameError")}</p>
+        ) : (
+          <p
+            className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400"
+            role="status"
+            aria-live="polite"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              className="h-3 w-3 animate-spin text-gray-400 dark:text-gray-500"
+              aria-hidden="true"
+            >
+              <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
+              <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            {t("tl.processing")}
+          </p>
+        ))}
     </div>
   );
 }

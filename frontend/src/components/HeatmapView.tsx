@@ -102,6 +102,23 @@ export default function HeatmapView({
           <DensityLegend />
         </div>
 
+        {/* Processing overlay: signals the frame slice is being fetched + aggregated. */}
+        {timelapseActive && tl.loading && !tl.error && (
+          <div className="absolute left-1/2 top-3 z-[600] -translate-x-1/2">
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex items-center gap-2 rounded-full border border-gray-200 bg-white/95 px-3 py-1.5 text-xs font-medium text-gray-700 shadow-md backdrop-blur dark:border-gray-700 dark:bg-gray-900/95 dark:text-gray-200"
+            >
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 animate-spin text-gray-500 dark:text-gray-400" aria-hidden="true">
+                <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
+                <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+              {t("tl.processing")}
+            </div>
+          </div>
+        )}
+
         {timelapseActive && config && tl.bounds && (
           <div className="absolute bottom-3 left-1/2 z-[600] w-[min(560px,calc(100%-180px))] -translate-x-1/2">
             <TimelapseBar

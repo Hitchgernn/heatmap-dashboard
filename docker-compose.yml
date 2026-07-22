@@ -1,0 +1,31 @@
+# Local infrastructure for the Borobudur dashboard.
+#
+# Currently provides the PostgreSQL admin-auth database only. Location data
+# stays in Hyperbase (external BaaS), and the backend/frontend containers are
+# part of the not-yet-built deployment layer — add them here later.
+#
+# Bring up:   docker compose up -d postgres
+# The schema in backend/src/db/schema.sql is auto-applied on first init (empty
+# volume). For an existing volume, run `npm run db:init` from backend/ instead.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${PGUSER:-borobudur}
+      POSTGRES_PASSWORD: ${PGPASSWORD:-borobudur}
+      POSTGRES_DB: ${PGDATABASE:-borobudur_auth}
+    ports:
+      - "${PGPORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/src/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER:-borobudur} -d ${PGDATABASE:-borobudur_auth}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

@@ -27,7 +27,6 @@ ml/venv/
 
 # Agent
 .claude/
-CLAUDE.md
 .agents
 .codegraph/
 ml/output/hotspots_preview.json

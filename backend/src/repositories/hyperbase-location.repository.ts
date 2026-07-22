@@ -36,7 +36,20 @@ import {
 /** Connection settings needed to talk to Hyperbase. */
 export interface HyperbaseConfigShape extends HyperbaseClientConfig {
   pageSize: number;
+  /**
+   * When true, inserts are allowed (real POSTs) instead of throwing. Only the
+   * separate mock collection is writable; the real mobile-app collection is not.
+   */
+  writable?: boolean;
+  /**
+   * When true, this instance targets the separate MOCK collection: reads are not
+   * short-circuited for source=mock, and mapped rows are labeled source "mock".
+   */
+  mockCollection?: boolean;
 }
+
+/** Bounded concurrency for bulk inserts (Hyperbase has no native batch endpoint). */
+const INSERT_CONCURRENCY = 10;
 
 /** Fields requested from / returned by the Hyperbase record endpoints. */
 const RECORD_FIELDS = [
@@ -78,6 +91,8 @@ export class HyperbaseLocationRepository implements LocationRepository {
   private readonly projectId: string;
   private readonly collectionId: string;
   private readonly pageSize: number;
+  private readonly writable: boolean;
+  private readonly mockCollection: boolean;
 
   constructor(config: HyperbaseConfigShape) {
     HyperbaseHttpClient.assertConfigured(config);
@@ -86,17 +101,24 @@ export class HyperbaseLocationRepository implements LocationRepository {
     this.collectionId = config.collectionId;
     // Clamp page size into a sane bounded range.
     this.pageSize = Math.min(Math.max(Math.floor(config.pageSize) || 500, 1), 1000);
+    this.writable = config.writable ?? false;
+    this.mockCollection = config.mockCollection ?? false;
   }
 
   private get recordsPath(): string {
     return `/api/rest/project/${this.projectId}/collection/${this.collectionId}/records`;
   }
 
+  private get recordPath(): string {
+    return `/api/rest/project/${this.projectId}/collection/${this.collectionId}/record`;
+  }
+
   async getLocations(params: LocationQuery): Promise<LocationLog[]> {
     const source = params.source ?? "all";
-    // The coordinate collection holds mobile-app data only; a mock-only query
-    // can never match, so skip the round trip.
-    if (source === "mock") return [];
+    // The real coordinate collection holds mobile-app data only; a mock-only
+    // query can never match, so skip the round trip. The separate mock
+    // collection is exempt — it holds only mock rows.
+    if (!this.mockCollection && source === "mock") return [];
 
     const range = resolveTimeRange(params);
     const lowerBound = uuidV7Bound(range.from);
@@ -127,7 +149,7 @@ export class HyperbaseLocationRepository implements LocationRepository {
       let lastId: string | null = null;
       for (const record of records) {
         if (typeof record._id === "string") lastId = record._id;
-        const mapped = mapRecord(record);
+        const mapped = mapRecord(record, this.mockCollection ? "mock" : "mobile_app");
         if (mapped) results.push(mapped);
       }
 
@@ -139,13 +161,37 @@ export class HyperbaseLocationRepository implements LocationRepository {
     return results;
   }
 
-  async insertLocation(_location: LocationLog): Promise<void> {
-    throw new HyperbaseError(INSERT_UNSUPPORTED);
+  async insertLocation(location: LocationLog): Promise<void> {
+    if (!this.writable) throw new HyperbaseError(INSERT_UNSUPPORTED);
+    await this.client.authedRequest(this.recordPath, "POST", toRecordBody(location));
   }
 
-  async insertManyLocations(_locations: LocationLog[]): Promise<void> {
-    throw new HyperbaseError(INSERT_UNSUPPORTED);
+  async insertManyLocations(locations: LocationLog[]): Promise<void> {
+    if (!this.writable) throw new HyperbaseError(INSERT_UNSUPPORTED);
+    // Hyperbase exposes single-record insert only; fan out with bounded
+    // concurrency so a large batch can't open thousands of sockets at once.
+    for (let i = 0; i < locations.length; i += INSERT_CONCURRENCY) {
+      const chunk = locations.slice(i, i + INSERT_CONCURRENCY);
+      await Promise.all(
+        chunk.map((loc) => this.client.authedRequest(this.recordPath, "POST", toRecordBody(loc)))
+      );
+    }
   }
+}
+
+/**
+ * Map an internal LocationLog to a Hyperbase `coordinate data` record body.
+ * Only the dashboard-relevant fields are written; Hyperbase sets `_id` (UUIDv7)
+ * and `_updated_at` itself, so mock rows are timestamped at insert time (the
+ * backdated LocationLog.timestamp is not persisted — fine for spatial
+ * clustering observation within the current window).
+ */
+function toRecordBody(location: LocationLog): Record<string, unknown> {
+  return {
+    client_id: location.visitor_id,
+    latitude: location.latitude,
+    longitude: location.longitude,
+  };
 }
 
 /**
@@ -167,7 +213,10 @@ function uuidV7Bound(date: Date): string {
  * can't poison aggregation. Bounds filtering is intentionally left to the
  * cleansing step downstream.
  */
-function mapRecord(record: HyperbaseRecord): LocationLog | null {
+function mapRecord(
+  record: HyperbaseRecord,
+  source: "mobile_app" | "mock"
+): LocationLog | null {
   const { _id, _updated_at, client_id, latitude, longitude } = record;
 
   if (typeof _id !== "string" || _id.length === 0) return null;
@@ -186,7 +235,7 @@ function mapRecord(record: HyperbaseRecord): LocationLog | null {
     visitor_key: key,
     latitude,
     longitude,
-    // Everything in the real collection comes from the mobile app.
-    source: "mobile_app",
+    // Real collection = mobile app; the separate mock collection = mock.
+    source,
   };
 }

@@ -21,6 +21,46 @@ function errorResponse(res: Response, status: number, code: string, message: str
   return res.status(status).json({ success: false, error: { code, message } });
 }
 
+/**
+ * @openapi
+ * /api/heatmap/aggregate:
+ *   get:
+ *     tags: [Heatmap]
+ *     summary: Aggregated heatmap as GeoJSON
+ *     description: >
+ *       Fetches raw locations for the time window, cleans + bounds-filters them,
+ *       snaps to a grid, and returns a raw GeoJSON FeatureCollection (no
+ *       envelope). Coordinates are [longitude, latitude]. visitor_id is never
+ *       included.
+ *     security:
+ *       - cookieAuth: []
+ *     parameters:
+ *       - $ref: '#/components/parameters/WindowParam'
+ *       - $ref: '#/components/parameters/FromParam'
+ *       - $ref: '#/components/parameters/ToParam'
+ *       - $ref: '#/components/parameters/SourceParam'
+ *     responses:
+ *       200:
+ *         description: GeoJSON FeatureCollection (empty features array when no data).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/HeatmapFeatureCollection'
+ *       400:
+ *         description: Invalid query parameters or time window.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       401:
+ *         description: Missing or invalid session cookie.
+ *       500:
+ *         description: Internal error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
 router.get("/aggregate", async (req: Request, res: Response) => {
   const parsed = parseLocationQuery(req.query);
   if (!parsed.ok) {
