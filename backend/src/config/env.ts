@@ -40,6 +40,32 @@ export const env = {
   },
 
   /**
+   * Hyperbase connection for a SEPARATE MOCK collection — distinct from the
+   * mobile app's real `coordinate data` collection. When
+   * HYPERBASE_MOCK_COLLECTION_ID is set (and REPOSITORY_DRIVER=hyperbase), the
+   * mock generator writes here instead of being rejected, and reads with
+   * source=mock are routed to this collection so generated data can be observed
+   * (e.g. DBSCAN clustering) without touching real mobile-app data. Each var
+   * overrides its location counterpart and falls back to it when unset, mirroring
+   * the hyperbaseAuth pattern (a different project needs its own token).
+   */
+  hyperbaseMock: {
+    baseUrl: process.env.HYPERBASE_MOCK_BASE_URL || process.env.HYPERBASE_BASE_URL || "",
+    projectId: process.env.HYPERBASE_MOCK_PROJECT_ID || process.env.HYPERBASE_PROJECT_ID || "",
+    collectionId: process.env.HYPERBASE_MOCK_COLLECTION_ID || "",
+    tokenId: process.env.HYPERBASE_MOCK_TOKEN_ID || process.env.HYPERBASE_TOKEN_ID || "",
+    tokenSecret:
+      process.env.HYPERBASE_MOCK_TOKEN_SECRET || process.env.HYPERBASE_TOKEN_SECRET || "",
+    pageSize: num(process.env.HYPERBASE_PAGE_SIZE, 500),
+    timeoutMs: num(process.env.HYPERBASE_TIMEOUT_MS, 5000),
+  },
+
+  /** True when a separate Hyperbase mock collection is configured. */
+  get mockCollectionEnabled(): boolean {
+    return Boolean(process.env.HYPERBASE_MOCK_COLLECTION_ID);
+  },
+
+  /**
    * Hyperbase connection for the AUTH project (admin users collection).
    * The auth collection may live in a different Hyperbase project than the
    * location data — each HYPERBASE_AUTH_* var overrides its location
