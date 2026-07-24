@@ -34,8 +34,10 @@ const MODE_PILL_ACTIVE = "bg-gray-900 text-white dark:bg-white dark:text-gray-90
 const MODE_PILL_IDLE =
   "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white";
 
+// min-w-0 lets the native date/time inputs shrink inside flex rows — without it
+// they refuse to go below their (wide) min-content width and overflow the panel.
 const INPUT_CLASS =
-  "rounded-md border border-gray-200 bg-white px-2 py-1 font-mono text-sm text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100";
+  "min-w-0 rounded-md border border-gray-200 bg-white px-2 py-1 font-mono text-sm text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:border-gray-700 dark:bg-gray-950 dark:text-gray-100";
 
 /**
  * Range + step picker for timelapse mode: a whole day (date input) or an
@@ -63,7 +65,7 @@ export default function TimelapseSetup({ onStart }: TimelapseSetupProps) {
   const canStart = range !== null && error === null;
 
   return (
-    <div className="flex w-64 flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900">
+    <div className="flex w-72 flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <div
         role="group"
         aria-label="Range mode"
@@ -93,26 +95,28 @@ export default function TimelapseSetup({ onStart }: TimelapseSetupProps) {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           aria-label={t("tl.date")}
-          className={INPUT_CLASS}
+          className={`${INPUT_CLASS} w-full`}
         />
       ) : (
+        // Labels stack above their inputs: a datetime-local is far too wide to
+        // sit beside its label in this panel.
         <div className="flex flex-col gap-1.5">
-          <label className="flex items-center justify-between gap-2 text-xs text-gray-600 dark:text-gray-300">
+          <label className="flex flex-col gap-1 text-xs text-gray-600 dark:text-gray-300">
             {t("tl.from")}
             <input
               type="datetime-local"
               value={from}
               onChange={(e) => setFrom(e.target.value)}
-              className={INPUT_CLASS}
+              className={`${INPUT_CLASS} w-full`}
             />
           </label>
-          <label className="flex items-center justify-between gap-2 text-xs text-gray-600 dark:text-gray-300">
+          <label className="flex flex-col gap-1 text-xs text-gray-600 dark:text-gray-300">
             {t("tl.to")}
             <input
               type="datetime-local"
               value={to}
               onChange={(e) => setTo(e.target.value)}
-              className={INPUT_CLASS}
+              className={`${INPUT_CLASS} w-full`}
             />
           </label>
         </div>
