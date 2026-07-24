@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import TopHeader from "./components/TopHeader";
+import type { DataSource } from "./components/TopHeader";
 import DashboardView from "./components/DashboardView";
 import HeatmapView from "./components/HeatmapView";
 import HotspotsView from "./components/HotspotsView";
@@ -40,6 +41,16 @@ function readStoredPage(): Page {
   return stored && PERSISTED_PAGES.includes(stored) ? stored : "dashboard";
 }
 
+// Persist the chosen data source so a refresh keeps it (e.g. Mock stays Mock).
+// Cleared on logout so a fresh login starts from the Mobile App default.
+const SOURCE_STORAGE_KEY = "borobudur.source";
+
+function readStoredSource(): DataSource {
+  if (typeof localStorage === "undefined") return "mobile_app";
+  const stored = localStorage.getItem(SOURCE_STORAGE_KEY);
+  return stored === "mock" || stored === "mobile_app" ? stored : "mobile_app";
+}
+
 /**
  * Top-level App component — handles the auth gate. When authenticated,
  * renders the Dashboard shell; otherwise shows the login page.
@@ -77,6 +88,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [page, setPage] = useState<Page>(readStoredPage);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [timeWindow, setTimeWindow] = useState<TimeWindow>({ kind: "preset", value: "15m" });
+  const [source, setSource] = useState<DataSource>(readStoredSource);
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   // Dashboard layer toggles (full-map pages force their own layer state).
@@ -100,6 +112,11 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
     if (PERSISTED_PAGES.includes(page)) localStorage.setItem(PAGE_STORAGE_KEY, page);
   }, [page]);
 
+  // Persist the data source so a refresh keeps Mock selected.
+  useEffect(() => {
+    localStorage.setItem(SOURCE_STORAGE_KEY, source);
+  }, [source]);
+
   // Poll heatmap + summary together. Recreated when the time window changes.
   useEffect(() => {
     let cancelled = false;
@@ -109,8 +126,8 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       if (!cancelled) setRefreshing(true);
       try {
         const [hm, sm] = await Promise.all([
-          getAggregatedHeatmap({ window: timeWindow }, controller.signal),
-          getDashboardSummary({ window: timeWindow }, controller.signal),
+          getAggregatedHeatmap({ window: timeWindow, source }, controller.signal),
+          getDashboardSummary({ window: timeWindow, source }, controller.signal),
         ]);
         if (cancelled) return;
         setHeatmap(hm);
@@ -136,7 +153,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       controller.abort();
       clearInterval(id);
     };
-  }, [timeWindow]);
+  }, [timeWindow, source]);
 
   // Hotspots are used by every page (markers + dashboard table), so fetch them
   // on mount and refresh on the same poll cadence.
@@ -146,7 +163,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
 
     async function loadHotspots() {
       try {
-        const hs = await getHotspots({}, controller.signal);
+        const hs = await getHotspots({ source }, controller.signal);
         if (!cancelled) setHotspots(hs);
       } catch {
         /* hotspots are optional — ignore errors silently */
@@ -155,6 +172,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       }
     }
 
+    setHotspotsLoading(true);
     loadHotspots();
     const id = setInterval(loadHotspots, POLL_INTERVAL_MS);
 
@@ -163,7 +181,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       controller.abort();
       clearInterval(id);
     };
-  }, []);
+  }, [source]);
 
   const status: "live" | "refreshing" | "error" = error
     ? "error"
@@ -189,7 +207,14 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       />
 
       <div className="relative flex min-w-0 flex-1 flex-col">
-        <TopHeader title={PAGE_TITLE[page]} status={status} showSearch={showSearch} />
+        <TopHeader
+          title={PAGE_TITLE[page]}
+          status={status}
+          showSearch={showSearch}
+          showSource={showSearch}
+          source={source}
+          onSourceChange={setSource}
+        />
 
         {error && (
           <div
@@ -231,6 +256,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 timeWindow={timeWindow}
                 onTimeChange={setTimeWindow}
                 heatPoints={heatPoints}
+                source={source}
                 sidebarCollapsed={!showSidebar}
               />
             )}
@@ -254,6 +280,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
           onClose={() => setSettingsOpen(false)}
           onLogout={async () => {
             localStorage.removeItem(PAGE_STORAGE_KEY);
+            localStorage.removeItem(SOURCE_STORAGE_KEY);
             await onLogout();
           }}
         />

@@ -1,6 +1,8 @@
 import MapView from "./MapView";
 import DashboardCards from "./DashboardCards";
 import HotspotTable from "./HotspotTable";
+import HotspotBarChart from "./HotspotBarChart";
+import DensityDonut from "./DensityDonut";
 import TimeFilter from "./TimeFilter";
 import LayerToggle from "./LayerToggle";
 import DensityLegend from "./DensityLegend";
@@ -25,9 +27,11 @@ interface DashboardViewProps {
 }
 
 /**
- * Dashboard overview: a top row of summary cards, then a map (left) with the
- * hotspot summary panel beside it (right). The map shows the heatmap + hotspot
- * labels, with the time/layer controls and density legend overlaid.
+ * Dashboard overview: a top row of summary cards, then a flexible map (left)
+ * beside a fixed-width right column holding the points-per-area bar chart above
+ * the hotspot summary table. The map absorbs the width freed when the sidebar
+ * collapses; the right column stays put. Map shows heatmap + hotspot labels
+ * with the time/layer controls and density legend overlaid.
  */
 export default function DashboardView({
   timeWindow,
@@ -48,8 +52,12 @@ export default function DashboardView({
       {/* Summary cards across the top */}
       <DashboardCards summary={summary} loading={loading} areaCount={hotspots.length} />
 
-      {/* Map (left, square) + hotspot summary panel (right, wider) */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,720px)_1fr]">
+      {/* Capped map (left, up to ~720px square) + flexible right column (bar
+          chart over table). The map holds its size; the right column is 1fr, so
+          it extends to fill the width freed when the sidebar collapses.
+          items-start keeps the shorter right column from stretching to the
+          map's height. */}
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,720px)_minmax(0,1fr)] lg:items-start">
         <div className="relative aspect-square overflow-hidden rounded-xl border border-gray-200 shadow-sm">
           <MapView
             heatPoints={heatPoints}
@@ -74,7 +82,15 @@ export default function DashboardView({
           </MapView>
         </div>
 
-        <HotspotTable hotspots={hotspots} loading={hotspotsLoading} />
+        <div className="flex flex-col gap-5">
+          {/* Two charts side by side (stack below xl so the bar labels keep room):
+              per-area magnitude on the left, density-tier composition on the right. */}
+          <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
+            <HotspotBarChart hotspots={hotspots} loading={hotspotsLoading} />
+            <DensityDonut hotspots={hotspots} loading={hotspotsLoading} />
+          </div>
+          <HotspotTable hotspots={hotspots} loading={hotspotsLoading} />
+        </div>
       </div>
     </div>
   );

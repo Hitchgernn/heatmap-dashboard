@@ -72,15 +72,13 @@ export default function TimelapseBar({
         </div>
       </div>
 
-      {(loading || error) &&
-        (error ? (
-          <p className="text-xs text-red-600 dark:text-red-400">{t("tl.frameError")}</p>
-        ) : (
-          <p
-            className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400"
-            role="status"
-            aria-live="polite"
-          >
+      {/* Always render this row at a fixed height so the bar never changes size
+          as frames settle — only its content toggles between idle/loading/error. */}
+      <div className="flex h-4 items-center text-xs" role="status" aria-live="polite">
+        {error ? (
+          <span className="text-red-600 dark:text-red-400">{t("tl.frameError")}</span>
+        ) : loading ? (
+          <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
             <svg
               viewBox="0 0 16 16"
               className="h-3 w-3 animate-spin text-gray-400 dark:text-gray-500"
@@ -90,8 +88,12 @@ export default function TimelapseBar({
               <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
             {t("tl.processing")}
-          </p>
-        ))}
+          </span>
+        ) : (
+          /* Invisible placeholder keeps the row's height reserved when idle. */
+          <span aria-hidden="true">&nbsp;</span>
+        )}
+      </div>
     </div>
   );
 }

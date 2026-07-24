@@ -43,7 +43,10 @@ export interface Timelapse {
   bounds: TimelapseRange | null;
 }
 
-export function useTimelapse(config: TimelapseConfig | null): Timelapse {
+export function useTimelapse(
+  config: TimelapseConfig | null,
+  source: string = "all"
+): Timelapse {
   const [frameIndex, setFrameIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [points, setPoints] = useState<HeatPoint[]>([]);
@@ -55,7 +58,8 @@ export function useTimelapse(config: TimelapseConfig | null): Timelapse {
 
   const totalFrames = config ? frameCount(config.range, config.step) : 0;
 
-  // Full reset when the range/step changes or the mode toggles.
+  // Full reset when the range/step changes, the mode toggles, or the data
+  // source switches — cached frames belong to the old source and must be dropped.
   useEffect(() => {
     cacheRef.current = new Map();
     const controller = config ? new AbortController() : null;
@@ -66,7 +70,7 @@ export function useTimelapse(config: TimelapseConfig | null): Timelapse {
     setLoading(false);
     setError(false);
     return () => controller?.abort();
-  }, [config]);
+  }, [config, source]);
 
   const fetchFrame = useCallback(
     (index: number): Promise<HeatPoint[]> => {
@@ -80,6 +84,7 @@ export function useTimelapse(config: TimelapseConfig | null): Timelapse {
         p = getHeatmapSlice(
           new Date(b.fromMs).toISOString(),
           new Date(b.toMs).toISOString(),
+          source,
           abortRef.current?.signal
         ).then(toHeatPoints);
         p.catch(() => cache.delete(index));
@@ -87,7 +92,7 @@ export function useTimelapse(config: TimelapseConfig | null): Timelapse {
       }
       return p;
     },
-    [config]
+    [config, source]
   );
 
   // Load the current frame and prefetch the next few.

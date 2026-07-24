@@ -15,6 +15,8 @@ interface HeatmapViewProps {
   timeWindow: TimeWindow;
   onTimeChange: (w: TimeWindow) => void;
   heatPoints: HeatPoint[];
+  /** Selected data source (mobile_app | mock) — threaded into timelapse frames. */
+  source: string;
   /** Sidebar is collapsed — shift top-left controls clear of the show button. */
   sidebarCollapsed: boolean;
 }
@@ -41,13 +43,14 @@ export default function HeatmapView({
   timeWindow,
   onTimeChange,
   heatPoints,
+  source,
   sidebarCollapsed,
 }: HeatmapViewProps) {
   const { t, lang } = useLanguage();
   const [mode, setMode] = useState<"live" | "timelapse">("live");
   const [config, setConfig] = useState<TimelapseConfig | null>(null);
   const timelapseActive = mode === "timelapse";
-  const tl = useTimelapse(timelapseActive ? config : null);
+  const tl = useTimelapse(timelapseActive ? config : null, source);
 
   const displayPoints = timelapseActive ? tl.points : heatPoints;
   const multiDay = config !== null && config.range.toMs - config.range.fromMs > DAY_MS;

@@ -1,5 +1,7 @@
 import { useLanguage } from "../context/language";
 
+export type DataSource = "mobile_app" | "mock";
+
 interface TopHeaderProps {
   /** Page title shown on the left (section name — untranslated). */
   title: string;
@@ -7,6 +9,54 @@ interface TopHeaderProps {
   status: "live" | "refreshing" | "error";
   /** Whether to show the search input (map pages only — not the Dashboard). */
   showSearch?: boolean;
+  /** Whether to show the Mobile App / Mock data-source toggle (data pages only). */
+  showSource?: boolean;
+  /** Currently selected data source. */
+  source?: DataSource;
+  /** Change the data source. */
+  onSourceChange?: (s: DataSource) => void;
+}
+
+// "Mobile App" / "Mock" are product-style labels — English in both locales, like
+// "Live"/"Timelapse" (see i18n.ts convention).
+const SOURCE_PILL_BASE =
+  "rounded-md px-2.5 py-1 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400";
+const SOURCE_PILL_ACTIVE = "bg-gray-900 text-white dark:bg-white dark:text-gray-900";
+const SOURCE_PILL_IDLE =
+  "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white";
+
+function SourceToggle({
+  source,
+  onSourceChange,
+}: {
+  source: DataSource;
+  onSourceChange: (s: DataSource) => void;
+}) {
+  const options: { id: DataSource; label: string }[] = [
+    { id: "mobile_app", label: "Mobile App" },
+    { id: "mock", label: "Mock" },
+  ];
+  return (
+    <div
+      role="group"
+      aria-label="Data source"
+      className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 p-0.5 dark:border-gray-700 dark:bg-gray-800"
+    >
+      {options.map((opt) => (
+        <button
+          key={opt.id}
+          type="button"
+          onClick={() => onSourceChange(opt.id)}
+          aria-pressed={source === opt.id}
+          className={
+            SOURCE_PILL_BASE + " " + (source === opt.id ? SOURCE_PILL_ACTIVE : SOURCE_PILL_IDLE)
+          }
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
+  );
 }
 
 function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
@@ -29,7 +79,14 @@ function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
  * Top bar: page title, search input (placeholder only — no backend search),
  * status pill, and decorative action icons.
  */
-export default function TopHeader({ title, status, showSearch = false }: TopHeaderProps) {
+export default function TopHeader({
+  title,
+  status,
+  showSearch = false,
+  showSource = false,
+  source = "mobile_app",
+  onSourceChange,
+}: TopHeaderProps) {
   const { t } = useLanguage();
 
   return (
@@ -56,6 +113,9 @@ export default function TopHeader({ title, status, showSearch = false }: TopHead
       )}
 
       <div className="flex items-center gap-3">
+        {showSource && onSourceChange && (
+          <SourceToggle source={source} onSourceChange={onSourceChange} />
+        )}
         <StatusPill status={status} />
         <span className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-400 dark:border-gray-700 dark:text-gray-500">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

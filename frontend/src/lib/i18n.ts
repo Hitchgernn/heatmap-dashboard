@@ -37,6 +37,10 @@ const en = {
   "cards.updatedLive": "Updated live",
   "cards.highDensity": "High density",
 
+  // Hotspot charts
+  "chart.title": "Visitor Points by Area",
+  "chart.densityTitle": "Density Mix",
+
   // Hotspot table
   "table.title": "Hotspot Summary",
   "table.filterAll": "All Areas",
@@ -133,6 +137,10 @@ const id: Record<TranslationKey, string> = {
   "cards.showingAreaMany": "Menampilkan {count} area",
   "cards.updatedLive": "Diperbarui langsung",
   "cards.highDensity": "Kepadatan tinggi",
+
+  // Hotspot charts
+  "chart.title": "Poin Pengunjung per Area",
+  "chart.densityTitle": "Komposisi Kepadatan",
 
   // Hotspot table
   "table.title": "Ringkasan Hotspot",

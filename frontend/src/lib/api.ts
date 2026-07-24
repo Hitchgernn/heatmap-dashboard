@@ -89,9 +89,10 @@ export function getAggregatedHeatmap(
 export function getHeatmapSlice(
   fromIso: string,
   toIso: string,
+  source: string = "all",
   signal?: AbortSignal
 ): Promise<HeatmapFeatureCollection> {
-  const url = buildUrl("/api/heatmap/aggregate", { from: fromIso, to: toIso, source: "all" });
+  const url = buildUrl("/api/heatmap/aggregate", { from: fromIso, to: toIso, source });
   return fetchJson<HeatmapFeatureCollection>(url, signal);
 }
 
