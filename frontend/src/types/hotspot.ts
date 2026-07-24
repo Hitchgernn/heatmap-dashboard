@@ -3,6 +3,16 @@
  * Aggregate cluster info only — no visitor_id, no individual points.
  */
 
+/**
+ * A clustered scatter point: position + density tier only (null = noise). No
+ * visitor_id, no timestamp — a snapshot scatter, not movement history.
+ */
+export interface ClusterPoint {
+  lat: number;
+  lng: number;
+  tier: "low" | "medium" | "high" | null;
+}
+
 export interface Hotspot {
   cluster_id: string;
   center_lat: number;

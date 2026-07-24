@@ -24,6 +24,8 @@ interface DashboardViewProps {
   summary: DashboardSummary | null;
   loading: boolean;
   hotspotsLoading: boolean;
+  /** Non-null while recomputing (e.g. after a source/window switch). */
+  aggregatingLabel?: string | null;
   /** Sidebar is collapsed — shift the top-left control clear of the show button. */
   sidebarCollapsed: boolean;
 }
@@ -47,6 +49,7 @@ export default function DashboardView({
   summary,
   loading,
   hotspotsLoading,
+  aggregatingLabel,
   sidebarCollapsed,
 }: DashboardViewProps) {
   // Selected hotspot, kept in sync between the table and the map markers.
@@ -73,6 +76,7 @@ export default function DashboardView({
             showHotspots={showHotspots}
             selectedHotspotId={selectedId}
             onSelectHotspot={toggleSelect}
+            aggregatingLabel={aggregatingLabel}
           >
             <div className={"absolute top-3 z-[600] " + (sidebarCollapsed ? "left-14" : "left-3")}>
               <TimeFilter value={timeWindow} onChange={onTimeChange} />

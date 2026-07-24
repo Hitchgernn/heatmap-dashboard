@@ -7,14 +7,18 @@ import DbscanControls, { type DbscanParams } from "./DbscanControls";
 import HotspotDetailCard from "./HotspotDetailCard";
 import { useLanguage } from "../context/language";
 import type { TimeWindow } from "../types/heatmap";
-import type { Hotspot } from "../types/hotspot";
+import type { ClusterPoint, Hotspot } from "../types/hotspot";
 
 interface HotspotsViewProps {
   timeWindow: TimeWindow;
   onTimeChange: (w: TimeWindow) => void;
   hotspots: Hotspot[];
+  /** DBSCAN scatter points, colored by cluster tier (grey = noise). */
+  clusterPoints: ClusterPoint[];
   dbscanParams: DbscanParams;
   onDbscanChange: (p: DbscanParams) => void;
+  /** Non-null while recomputing (e.g. after a source/param switch). */
+  aggregatingLabel?: string | null;
   /** Sidebar is collapsed — shift top-left controls clear of the show button. */
   sidebarCollapsed: boolean;
 }
@@ -28,8 +32,10 @@ export default function HotspotsView({
   timeWindow,
   onTimeChange,
   hotspots,
+  clusterPoints,
   dbscanParams,
   onDbscanChange,
+  aggregatingLabel,
   sidebarCollapsed,
 }: HotspotsViewProps) {
   const { t } = useLanguage();
@@ -41,10 +47,13 @@ export default function HotspotsView({
       <MapView
         heatPoints={[]}
         showHeatmap={false}
+        clusterPoints={clusterPoints}
+        showClusterPoints
         hotspots={hotspots}
         showHotspots
         selectedHotspotId={selectedId}
         onSelectHotspot={setSelectedId}
+        aggregatingLabel={aggregatingLabel}
       >
         <div className={"absolute top-3 z-[600] flex flex-col gap-2 " + (sidebarCollapsed ? "left-14" : "left-3")}>
           <TimeFilter value={timeWindow} onChange={onTimeChange} />

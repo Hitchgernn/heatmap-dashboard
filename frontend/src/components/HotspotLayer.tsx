@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import { Circle, CircleMarker, Tooltip } from "react-leaflet";
+import { Circle, Marker } from "react-leaflet";
+import L from "leaflet";
 import type { Hotspot } from "../types/hotspot";
 import { hotspotTier, maxPoints, TIER_META, type DensityTier } from "../lib/hotspots";
 
@@ -17,12 +18,30 @@ function tierOf(h: Hotspot, max: number): DensityTier {
   return (h.density_level as DensityTier) ?? hotspotTier(h.total_points, max);
 }
 
+/** Teardrop map pin as a Leaflet divIcon, colored by density tier. */
+function pinIcon(color: string, selected: boolean): L.DivIcon {
+  const w = selected ? 34 : 28;
+  const h = Math.round(w * 1.33);
+  return L.divIcon({
+    className: "hotspot-pin",
+    html: `<svg width="${w}" height="${h}" viewBox="0 0 24 32" xmlns="http://www.w3.org/2000/svg"
+      style="filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))">
+      <path d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.4 18.6 0 12 0z"
+        fill="${color}" stroke="#ffffff" stroke-width="${selected ? 2.5 : 2}"/>
+      <circle cx="12" cy="12" r="4.2" fill="#ffffff"/>
+    </svg>`,
+    iconSize: [w, h],
+    iconAnchor: [w / 2, h], // tip at the exact centroid
+    tooltipAnchor: [0, -h + 6],
+  });
+}
+
 /**
- * Renders hotspots as interactive Leaflet circle markers (declarative children
- * of the MapContainer). Each cluster gets a translucent extent circle sized to
- * its real radius (metres), a centroid marker colored by density tier, and a
- * permanent label. Clicking a marker selects it; the selected cluster is
- * enlarged and its extent circle emphasized. Leaflet uses [latitude, longitude].
+ * Renders hotspots as interactive Leaflet map pins (declarative children of the
+ * MapContainer). Each cluster gets a translucent extent circle sized to its real
+ * radius (metres) and a teardrop pin at the centroid, colored by density tier.
+ * Clicking selects it; the selected cluster's pin is enlarged and its extent
+ * circle emphasized. Leaflet uses [latitude, longitude].
  */
 export default function HotspotLayer({ hotspots, visible, selectedId, onSelect }: HotspotLayerProps) {
   if (!visible) return null;
@@ -35,8 +54,6 @@ export default function HotspotLayer({ hotspots, visible, selectedId, onSelect }
         const tier = tierOf(h, max);
         const color = TIER_META[tier].color;
         const selected = selectedId === h.cluster_id;
-        // Scale radius by relative size (clamped) so big clusters read larger.
-        const markerRadius = Math.max(7, Math.min(16, 6 + Math.log10(h.total_points + 1) * 5));
 
         return (
           <Fragment key={h.cluster_id}>
@@ -56,21 +73,14 @@ export default function HotspotLayer({ hotspots, visible, selectedId, onSelect }
               />
             )}
 
-            <CircleMarker
-              center={[h.center_lat, h.center_lng]} // [lat, lng]
-              radius={selected ? markerRadius + 3 : markerRadius}
-              pathOptions={{
-                color: "#ffffff",
-                weight: selected ? 3 : 2,
-                fillColor: color,
-                fillOpacity: 1,
-              }}
+            {/* No permanent label — the cluster name shows in the detail card
+                on click, keeping the map uncluttered. */}
+            <Marker
+              position={[h.center_lat, h.center_lng]} // [lat, lng]
+              icon={pinIcon(color, selected)}
               eventHandlers={{ click: () => onSelect?.(h.cluster_id) }}
-            >
-              <Tooltip permanent direction="bottom" offset={[0, markerRadius]} className="hotspot-label">
-                {h.label}
-              </Tooltip>
-            </CircleMarker>
+            />
+
           </Fragment>
         );
       })}

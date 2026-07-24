@@ -7,7 +7,7 @@
  */
 
 import type { HeatmapFeatureCollection, DashboardSummary, TimeWindow } from "../types/heatmap";
-import type { Hotspot } from "../types/hotspot";
+import type { ClusterPoint, Hotspot } from "../types/hotspot";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001";
 
@@ -116,17 +116,25 @@ export interface HotspotParams {
   minSamples?: number;
 }
 
+export interface HotspotsResult {
+  hotspots: Hotspot[];
+  points: ClusterPoint[];
+}
+
 export function getHotspots(
   params: HotspotParams = {},
   signal?: AbortSignal
-): Promise<Hotspot[]> {
+): Promise<HotspotsResult> {
   const url = buildUrl("/api/hotspots", {
     ...(params.window ? windowParams(params.window) : {}),
     source: params.source ?? "all",
     eps: params.eps !== undefined ? String(params.eps) : undefined,
     minSamples: params.minSamples !== undefined ? String(params.minSamples) : undefined,
   });
-  return fetchData<{ hotspots: Hotspot[] }>(url, signal).then((d) => d.hotspots);
+  return fetchData<{ hotspots: Hotspot[]; points?: ClusterPoint[] }>(url, signal).then((d) => ({
+    hotspots: d.hotspots,
+    points: d.points ?? [],
+  }));
 }
 
 export interface GenerateMockParams {
