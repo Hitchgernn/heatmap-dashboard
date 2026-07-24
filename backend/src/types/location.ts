@@ -69,9 +69,9 @@ export interface HeatmapFeatureCollection {
 }
 
 /**
- * Hotspot detection result (DBSCAN). Produced by the ML module and read back
- * from a precomputed file for MVP. Contains aggregate cluster info only — no
- * visitor_id, no individual points.
+ * Hotspot detection result (DBSCAN), computed live from the current window's
+ * location data. Contains aggregate cluster info only — no visitor_id, no
+ * individual points.
  */
 export interface Hotspot {
   cluster_id: string;
@@ -79,4 +79,10 @@ export interface Hotspot {
   center_lng: number;
   total_points: number;
   label: string;
+  /** Density tier relative to the busiest cluster in this result set. */
+  density_level: DensityLevel;
+  /** Cluster extent: max distance from centroid to a member, in metres. */
+  radius_m: number;
+  /** Fraction (0..1) of all clustered points that fell in this cluster. */
+  share: number;
 }
