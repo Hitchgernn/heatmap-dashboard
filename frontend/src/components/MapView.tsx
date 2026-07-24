@@ -6,16 +6,15 @@ import HotspotLayer from "./HotspotLayer";
 import {
   BOROBUDUR_CENTER,
   DEFAULT_ZOOM,
-  TILE_ATTRIBUTION_CARTO,
+  TILE_ATTRIBUTION_OSM,
   TILE_ATTRIBUTION_SATELLITE,
-  TILE_MAX_NATIVE_ZOOM_CARTO,
+  TILE_MAX_NATIVE_ZOOM_OSM,
   TILE_MAX_NATIVE_ZOOM_SATELLITE,
-  TILE_URL_CARTO_LIGHT,
+  TILE_URL_OSM,
   TILE_URL_SATELLITE,
 } from "../lib/map";
 import type { BasemapId, HeatPoint } from "../lib/map";
 import type { Hotspot } from "../types/hotspot";
-import { useLanguage } from "../context/language";
 
 interface MapViewProps {
   heatPoints: HeatPoint[];
@@ -75,15 +74,15 @@ interface LayerPickerProps {
 
 /**
  * Compact floating layer-switcher rendered on top of the map. Two options:
- * CARTO (default) and Satellite. Styled as a glass card consistent with the
- * dashboard's dark/light design system.
+ * OpenStreetMap (default) and Satellite. Styled as a glass card consistent with
+ * the dashboard's dark/light design system.
  */
 function LayerPicker({ basemap, onChange }: LayerPickerProps) {
   const [open, setOpen] = useState(false);
 
   const options: { id: BasemapId; label: string; icon: ReactNode }[] = [
     {
-      id: "carto",
+      id: "osm",
       label: "Map",
       icon: <StreetIcon className="h-4 w-4" />,
     },
@@ -174,9 +173,10 @@ function LayerPicker({ basemap, onChange }: LayerPickerProps) {
 /**
  * Owns the Leaflet map. MapContainer creates the map exactly once; the heat
  * and hotspot layers update in place via the map context. No token required —
- * uses CARTO tiles by default (both light and dark mode share the CARTO style
- * so the map appearance is unchanged by theme switching). Satellite is
- * available via the in-map layer picker. `children` render as overlays on top.
+ * uses standard OpenStreetMap tiles by default (the same basemap the DBSCAN
+ * notebook uses, and identical in light and dark mode so theme switching does
+ * not change the map's appearance). Satellite is available via the in-map layer
+ * picker. `children` render as overlays on top.
  */
 export default function MapView({
   heatPoints,
@@ -185,13 +185,10 @@ export default function MapView({
   showHotspots,
   children,
 }: MapViewProps) {
-  const { t } = useLanguage();
-  const isEmpty = showHeatmap && heatPoints.length === 0;
-
-  // Basemap state — default is CARTO Voyager; satellite is opt-in.
-  // CARTO Voyager is always used regardless of light/dark theme so the
-  // map appearance stays identical when toggling the dashboard theme.
-  const [basemap, setBasemap] = useState<BasemapId>("carto");
+  // Basemap state — default is OpenStreetMap; satellite is opt-in.
+  // OSM is always used regardless of light/dark theme so the map appearance
+  // stays identical when toggling the dashboard theme.
+  const [basemap, setBasemap] = useState<BasemapId>("osm");
 
   // Resolve tile config from the selected basemap only (theme-independent).
   const tileConfig = basemap === "satellite"
@@ -202,10 +199,10 @@ export default function MapView({
         key: "satellite",
       }
     : {
-        url: TILE_URL_CARTO_LIGHT,
-        attribution: TILE_ATTRIBUTION_CARTO,
-        maxNativeZoom: TILE_MAX_NATIVE_ZOOM_CARTO,
-        key: "carto",
+        url: TILE_URL_OSM,
+        attribution: TILE_ATTRIBUTION_OSM,
+        maxNativeZoom: TILE_MAX_NATIVE_ZOOM_OSM,
+        key: "osm",
       };
 
   return (
@@ -240,15 +237,6 @@ export default function MapView({
       <LayerPicker basemap={basemap} onChange={setBasemap} />
 
       {children}
-
-      {isEmpty && (
-        <div className="pointer-events-none absolute inset-0 z-[500] flex items-center justify-center">
-          <div className="rounded-lg border border-gray-200 bg-white/95 px-4 py-3 text-center text-sm text-gray-600 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-900/95 dark:text-gray-300">
-            <p className="font-display text-lg text-gray-800 dark:text-white">{t("map.emptyTitle")}</p>
-            <p className="mt-0.5 text-gray-500 dark:text-gray-400">{t("map.emptyBody")}</p>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -29,5 +29,6 @@ ml/venv/
 .claude/
 .agents
 .codegraph/
+graphify-out/
 ml/output/hotspots_preview.json
 ml/sample/

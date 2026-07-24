@@ -87,10 +87,6 @@ const en = {
   "active.heatmap": "Heatmap Active",
   "active.hotspots": "Hotspots Active",
 
-  // Map empty state
-  "map.emptyTitle": "No visitor activity",
-  "map.emptyBody": "Nothing recorded in this time window yet.",
-
   // Loading
   "loading.loading": "Loading…",
 
@@ -187,10 +183,6 @@ const id: Record<TranslationKey, string> = {
   // Full-map active indicators
   "active.heatmap": "Heatmap Aktif",
   "active.hotspots": "Hotspot Aktif",
-
-  // Map empty state
-  "map.emptyTitle": "Tidak ada aktivitas pengunjung",
-  "map.emptyBody": "Belum ada yang tercatat pada rentang waktu ini.",
 
   // Loading
   "loading.loading": "Memuat…",
