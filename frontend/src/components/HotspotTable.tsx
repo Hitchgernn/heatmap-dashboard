@@ -6,6 +6,10 @@ import { useLanguage } from "../context/language";
 interface HotspotTableProps {
   hotspots: Hotspot[];
   loading: boolean;
+  /** Selected cluster id (row highlighted), synced with the map. */
+  selectedId?: string | null;
+  /** Called when a row is clicked. */
+  onSelect?: (id: string) => void;
 }
 
 type Filter = "all" | "high";
@@ -15,7 +19,7 @@ type Filter = "all" | "high";
  * existing /api/hotspots data. Columns: Area/Hotspot, Density Level, Visitor
  * Points, Status. No action buttons (no dispatch/alerts) per the spec.
  */
-export default function HotspotTable({ hotspots, loading }: HotspotTableProps) {
+export default function HotspotTable({ hotspots, loading, selectedId, onSelect }: HotspotTableProps) {
   const { t } = useLanguage();
   const [filter, setFilter] = useState<Filter>("all");
   const max = useMemo(() => maxPoints(hotspots), [hotspots]);
@@ -77,10 +81,19 @@ export default function HotspotTable({ hotspots, loading }: HotspotTableProps) {
             ) : (
               rows.map(({ h, tier }) => {
                 const meta = TIER_META[tier];
+                const isSelected = selectedId === h.cluster_id;
                 return (
                   <tr
                     key={h.cluster_id}
-                    className="border-b border-gray-50 last:border-0 hover:bg-gray-50 dark:border-gray-800/60 dark:hover:bg-gray-800/50"
+                    onClick={() => onSelect?.(h.cluster_id)}
+                    aria-selected={isSelected}
+                    className={
+                      "border-b border-gray-50 last:border-0 dark:border-gray-800/60 " +
+                      (onSelect ? "cursor-pointer " : "") +
+                      (isSelected
+                        ? "bg-blue-50 dark:bg-blue-950/40"
+                        : "hover:bg-gray-50 dark:hover:bg-gray-800/50")
+                    }
                   >
                     <td className="px-5 py-3">
                       <p className="font-medium text-gray-900 dark:text-white">{h.label}</p>

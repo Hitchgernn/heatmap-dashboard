@@ -158,6 +158,14 @@ html.dark .leaflet-container {
   animation: login-form-enter 400ms 120ms ease-out both;
 }
 
+@keyframes map-aggregating-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.map-aggregating {
+  animation: map-aggregating-in 200ms ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -138,11 +138,14 @@ const options: swaggerJSDoc.Options = {
         Hotspot: {
           type: "object",
           properties: {
-            cluster_id: { type: "string", example: "hotspot_01" },
+            cluster_id: { type: "string", example: "cluster_0" },
             center_lat: { type: "number", example: -7.6079 },
             center_lng: { type: "number", example: 110.2037 },
             total_points: { type: "integer", example: 420 },
-            label: { type: "string", example: "High Density Hotspot" },
+            label: { type: "string", example: "Main Stupa" },
+            density_level: { $ref: "#/components/schemas/DensityLevel" },
+            radius_m: { type: "integer", example: 24, description: "Cluster extent radius in metres." },
+            share: { type: "number", example: 0.42, description: "Fraction of clustered points in this cluster." },
           },
         },
         HotspotsResponse: {
@@ -155,6 +158,22 @@ const options: swaggerJSDoc.Options = {
                 hotspots: {
                   type: "array",
                   items: { $ref: "#/components/schemas/Hotspot" },
+                },
+                points: {
+                  type: "array",
+                  description: "Clustered scatter points: position + density tier only (no visitor_id).",
+                  items: {
+                    type: "object",
+                    properties: {
+                      lat: { type: "number", example: -7.6079 },
+                      lng: { type: "number", example: 110.2037 },
+                      tier: {
+                        nullable: true,
+                        description: "Density tier of the point's cluster; null for noise.",
+                        allOf: [{ $ref: "#/components/schemas/DensityLevel" }],
+                      },
+                    },
+                  },
                 },
               },
             },

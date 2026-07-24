@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { MapContainer, TileLayer, ZoomControl, useMap } from "react-leaflet";
 import HeatLayer from "./HeatLayer";
 import HotspotLayer from "./HotspotLayer";
+import ClusterPointsLayer from "./ClusterPointsLayer";
 import {
   BOROBUDUR_CENTER,
   DEFAULT_ZOOM,
@@ -14,13 +15,22 @@ import {
   TILE_URL_SATELLITE,
 } from "../lib/map";
 import type { BasemapId, HeatPoint } from "../lib/map";
-import type { Hotspot } from "../types/hotspot";
+import type { ClusterPoint, Hotspot } from "../types/hotspot";
 
 interface MapViewProps {
   heatPoints: HeatPoint[];
   showHeatmap: boolean;
   hotspots: Hotspot[];
   showHotspots: boolean;
+  /** DBSCAN scatter points (colored by tier); shown when showClusterPoints. */
+  clusterPoints?: ClusterPoint[];
+  showClusterPoints?: boolean;
+  /** Selected cluster id (highlighted on the map), or null. */
+  selectedHotspotId?: string | null;
+  /** Called when a cluster marker is clicked. */
+  onSelectHotspot?: (id: string) => void;
+  /** When set, shows a top-center "aggregating…" pill over the map. */
+  aggregatingLabel?: string | null;
   /** Absolutely-positioned overlays (controls, legend) drawn above the map. */
   children?: ReactNode;
 }
@@ -183,6 +193,11 @@ export default function MapView({
   showHeatmap,
   hotspots,
   showHotspots,
+  clusterPoints,
+  showClusterPoints,
+  selectedHotspotId,
+  onSelectHotspot,
+  aggregatingLabel,
   children,
 }: MapViewProps) {
   // Basemap state — default is OpenStreetMap; satellite is opt-in.
@@ -213,6 +228,7 @@ export default function MapView({
         maxZoom={20}
         scrollWheelZoom
         zoomControl={false}
+        preferCanvas
         className="h-full w-full"
         style={{ height: "100%", width: "100%" }}
       >
@@ -229,7 +245,13 @@ export default function MapView({
         <ZoomControl position="bottomright" />
         <ResizeHandler />
         <HeatLayer points={heatPoints} visible={showHeatmap} />
-        <HotspotLayer hotspots={hotspots} visible={showHotspots} />
+        <ClusterPointsLayer points={clusterPoints ?? []} visible={!!showClusterPoints} />
+        <HotspotLayer
+          hotspots={hotspots}
+          visible={showHotspots}
+          selectedId={selectedHotspotId}
+          onSelect={onSelectHotspot}
+        />
       </MapContainer>
 
       {/* Layer picker — rendered outside MapContainer so it stays in React
@@ -237,6 +259,23 @@ export default function MapView({
       <LayerPicker basemap={basemap} onChange={setBasemap} />
 
       {children}
+
+      {/* Aggregating / source-switch pill — fades in over the map. */}
+      {aggregatingLabel && (
+        <div className="pointer-events-none absolute left-1/2 top-3 z-[650] -translate-x-1/2">
+          <div
+            role="status"
+            aria-live="polite"
+            className="map-aggregating flex items-center gap-2 rounded-full border border-gray-200 bg-white/95 px-3 py-1.5 text-xs font-medium text-gray-700 shadow-md backdrop-blur dark:border-gray-700 dark:bg-gray-900/95 dark:text-gray-200"
+          >
+            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 animate-spin text-gray-400 dark:text-gray-500" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
+              <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            {aggregatingLabel}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

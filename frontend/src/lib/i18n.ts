@@ -41,6 +41,16 @@ const en = {
   "chart.title": "Visitor Points by Area",
   "chart.densityTitle": "Density Mix",
 
+  // Hotspot detail card + DBSCAN controls
+  "common.close": "Close",
+  "hotspot.points": "Visitor points",
+  "hotspot.share": "Share of total",
+  "hotspot.radius": "Approx radius",
+  "hotspot.id": "Cluster id",
+  "dbscan.title": "Cluster settings",
+  "dbscan.eps": "Radius",
+  "dbscan.minSamples": "Min points",
+
   // Hotspot table
   "table.title": "Hotspot Summary",
   "table.filterAll": "All Areas",
@@ -141,6 +151,16 @@ const id: Record<TranslationKey, string> = {
   // Hotspot charts
   "chart.title": "Poin Pengunjung per Area",
   "chart.densityTitle": "Komposisi Kepadatan",
+
+  // Hotspot detail card + DBSCAN controls
+  "common.close": "Tutup",
+  "hotspot.points": "Poin pengunjung",
+  "hotspot.share": "Porsi dari total",
+  "hotspot.radius": "Perkiraan radius",
+  "hotspot.id": "ID klaster",
+  "dbscan.title": "Pengaturan klaster",
+  "dbscan.eps": "Radius",
+  "dbscan.minSamples": "Poin minimum",
 
   // Hotspot table
   "table.title": "Ringkasan Hotspot",

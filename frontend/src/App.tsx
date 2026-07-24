@@ -15,7 +15,7 @@ import { useAuth } from "./context/auth";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
 import { toHeatPoints } from "./lib/map";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
-import type { Hotspot } from "./types/hotspot";
+import type { ClusterPoint, Hotspot } from "./types/hotspot";
 import type { Page } from "./types/nav";
 
 const POLL_INTERVAL_MS = 30_000;
@@ -89,6 +89,8 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [timeWindow, setTimeWindow] = useState<TimeWindow>({ kind: "preset", value: "15m" });
   const [source, setSource] = useState<DataSource>(readStoredSource);
+  // DBSCAN tuning (Hotspots page sliders). Defaults mirror the backend.
+  const [dbscanParams, setDbscanParams] = useState({ eps: 8, minSamples: 5 });
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   // Dashboard layer toggles (full-map pages force their own layer state).
@@ -98,6 +100,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [heatmap, setHeatmap] = useState<HeatmapFeatureCollection | null>(null);
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [hotspots, setHotspots] = useState<Hotspot[]>([]);
+  const [clusterPoints, setClusterPoints] = useState<ClusterPoint[]>([]);
 
   const [firstLoad, setFirstLoad] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -163,8 +166,19 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
 
     async function loadHotspots() {
       try {
-        const hs = await getHotspots({ source }, controller.signal);
-        if (!cancelled) setHotspots(hs);
+        const result = await getHotspots(
+          {
+            source,
+            window: timeWindow,
+            eps: dbscanParams.eps,
+            minSamples: dbscanParams.minSamples,
+          },
+          controller.signal
+        );
+        if (!cancelled) {
+          setHotspots(result.hotspots);
+          setClusterPoints(result.points);
+        }
       } catch {
         /* hotspots are optional — ignore errors silently */
       } finally {
@@ -181,7 +195,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       controller.abort();
       clearInterval(id);
     };
-  }, [source]);
+  }, [source, timeWindow, dbscanParams]);
 
   const status: "live" | "refreshing" | "error" = error
     ? "error"
@@ -247,6 +261,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 summary={summary}
                 loading={refreshing}
                 hotspotsLoading={hotspotsLoading}
+                aggregatingLabel={firstLoad ? t("tl.processing") : null}
                 sidebarCollapsed={!showSidebar}
               />
             )}
@@ -266,6 +281,10 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 timeWindow={timeWindow}
                 onTimeChange={setTimeWindow}
                 hotspots={hotspots}
+                clusterPoints={clusterPoints}
+                dbscanParams={dbscanParams}
+                onDbscanChange={setDbscanParams}
+                aggregatingLabel={hotspotsLoading ? t("tl.processing") : null}
                 sidebarCollapsed={!showSidebar}
               />
             )}

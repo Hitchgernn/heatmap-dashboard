@@ -32,3 +32,4 @@ ml/venv/
 graphify-out/
 ml/output/hotspots_preview.json
 ml/sample/
+.graphifyignore

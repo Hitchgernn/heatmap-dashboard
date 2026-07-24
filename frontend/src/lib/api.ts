@@ -7,7 +7,7 @@
  */
 
 import type { HeatmapFeatureCollection, DashboardSummary, TimeWindow } from "../types/heatmap";
-import type { Hotspot } from "../types/hotspot";
+import type { ClusterPoint, Hotspot } from "../types/hotspot";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001";
 
@@ -107,12 +107,34 @@ export function getDashboardSummary(
   return fetchData<DashboardSummary>(url, signal);
 }
 
+export interface HotspotParams {
+  source?: string;
+  window?: TimeWindow;
+  /** DBSCAN neighbourhood radius in metres. */
+  eps?: number;
+  /** DBSCAN minimum neighbours to seed a cluster. */
+  minSamples?: number;
+}
+
+export interface HotspotsResult {
+  hotspots: Hotspot[];
+  points: ClusterPoint[];
+}
+
 export function getHotspots(
-  params: { source?: string } = {},
+  params: HotspotParams = {},
   signal?: AbortSignal
-): Promise<Hotspot[]> {
-  const url = buildUrl("/api/hotspots", { source: params.source ?? "all" });
-  return fetchData<{ hotspots: Hotspot[] }>(url, signal).then((d) => d.hotspots);
+): Promise<HotspotsResult> {
+  const url = buildUrl("/api/hotspots", {
+    ...(params.window ? windowParams(params.window) : {}),
+    source: params.source ?? "all",
+    eps: params.eps !== undefined ? String(params.eps) : undefined,
+    minSamples: params.minSamples !== undefined ? String(params.minSamples) : undefined,
+  });
+  return fetchData<{ hotspots: Hotspot[]; points?: ClusterPoint[] }>(url, signal).then((d) => ({
+    hotspots: d.hotspots,
+    points: d.points ?? [],
+  }));
 }
 
 export interface GenerateMockParams {
