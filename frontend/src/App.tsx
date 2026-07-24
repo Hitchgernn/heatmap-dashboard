@@ -9,6 +9,7 @@ import MockGeneratorView from "./components/MockGeneratorView";
 import SettingsView from "./components/SettingsView";
 import Modal from "./components/Modal";
 import ShowSidebarButton from "./components/ShowSidebarButton";
+import ErrorBoundary from "./components/ErrorBoundary";
 import LoginPage from "./components/LoginPage";
 import { useLanguage } from "./context/language";
 import { useAuth } from "./context/auth";
@@ -248,6 +249,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
           {/* Keyed by page so React remounts on navigation, replaying the
               page-enter animation for a smooth transition between views. */}
           <div key={page} className="page-enter flex min-h-0 flex-1 flex-col">
+           <ErrorBoundary>
             {page === "dashboard" && (
               <DashboardView
                 timeWindow={timeWindow}
@@ -290,6 +292,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
             )}
 
             {page === "mock" && <MockGeneratorView />}
+           </ErrorBoundary>
           </div>
         </main>
       </div>

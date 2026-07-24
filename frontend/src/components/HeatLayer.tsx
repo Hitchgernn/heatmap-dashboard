@@ -18,6 +18,10 @@ interface HeatLayerProps {
 export default function HeatLayer({ points, visible }: HeatLayerProps) {
   const map = useMap();
   const layerRef = useRef<L.HeatLayer | null>(null);
+  // Latest points, so re-showing the layer can paint them without re-adding
+  // on every poll (which `points` in the visibility deps would cause).
+  const pointsRef = useRef(points);
+  pointsRef.current = points;
 
   // Create the heat layer once.
   useEffect(() => {
@@ -35,17 +39,25 @@ export default function HeatLayer({ points, visible }: HeatLayerProps) {
     };
   }, [map]);
 
-  // Push new points into the existing layer (no layer recreation).
+  // Push new points into the layer — but only while it is attached to the map.
+  // leaflet.heat's setLatLngs -> redraw dereferences this._map, which is null
+  // when the layer is detached (visible=false); calling it then throws and
+  // unmounts the whole tree. Guard with hasLayer.
   useEffect(() => {
-    layerRef.current?.setLatLngs(points);
-  }, [points]);
+    const layer = layerRef.current;
+    if (layer && map.hasLayer(layer)) layer.setLatLngs(points);
+  }, [points, map]);
 
   // Toggle visibility by adding/removing from the map.
   useEffect(() => {
     const layer = layerRef.current;
     if (!layer) return;
-    if (visible) layer.addTo(map);
-    else layer.remove();
+    if (visible) {
+      layer.addTo(map);
+      layer.setLatLngs(pointsRef.current); // paint current points on (re)show
+    } else {
+      layer.remove();
+    }
   }, [visible, map]);
 
   return null;

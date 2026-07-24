@@ -61,18 +61,25 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
   const dark = resolvedTheme === "dark";
 
   const max = useMemo(() => maxPoints(hotspots), [hotspots]);
-  const data = useMemo(
-    () =>
-      [...hotspots]
-        .sort((a, b) => b.total_points - a.total_points)
-        .slice(0, MAX_BARS)
-        .map((h) => ({
-          label: h.label,
+  const data = useMemo(() => {
+    // Several clusters can share a nearest-area name; disambiguate so axis
+    // categories (and React keys) stay unique — otherwise Recharts warns and
+    // may drop/duplicate bars.
+    const seen = new Map<string, number>();
+    return [...hotspots]
+      .sort((a, b) => b.total_points - a.total_points)
+      .slice(0, MAX_BARS)
+      .map((h) => {
+        const n = (seen.get(h.label) ?? 0) + 1;
+        seen.set(h.label, n);
+        return {
+          id: h.cluster_id,
+          label: n > 1 ? `${h.label} ${n}` : h.label,
           points: h.total_points,
           color: TIER_META[hotspotTier(h.total_points, max)].color,
-        })),
-    [hotspots, max]
-  );
+        };
+      });
+  }, [hotspots, max]);
 
   const axisColor = dark ? "#9ca3af" : "#6b7280"; // gray-400 / gray-500
   const empty = !loading && data.length === 0;
@@ -130,7 +137,7 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
               />
               <Bar dataKey="points" radius={[0, 4, 4, 0]} isAnimationActive={false}>
                 {data.map((d) => (
-                  <Cell key={d.label} fill={d.color} />
+                  <Cell key={d.id} fill={d.color} />
                 ))}
               </Bar>
             </BarChart>
