@@ -21,6 +21,10 @@ interface MapViewProps {
   showHeatmap: boolean;
   hotspots: Hotspot[];
   showHotspots: boolean;
+  /** Selected cluster id (highlighted on the map), or null. */
+  selectedHotspotId?: string | null;
+  /** Called when a cluster marker is clicked. */
+  onSelectHotspot?: (id: string) => void;
   /** Absolutely-positioned overlays (controls, legend) drawn above the map. */
   children?: ReactNode;
 }
@@ -183,6 +187,8 @@ export default function MapView({
   showHeatmap,
   hotspots,
   showHotspots,
+  selectedHotspotId,
+  onSelectHotspot,
   children,
 }: MapViewProps) {
   // Basemap state — default is OpenStreetMap; satellite is opt-in.
@@ -229,7 +235,12 @@ export default function MapView({
         <ZoomControl position="bottomright" />
         <ResizeHandler />
         <HeatLayer points={heatPoints} visible={showHeatmap} />
-        <HotspotLayer hotspots={hotspots} visible={showHotspots} />
+        <HotspotLayer
+          hotspots={hotspots}
+          visible={showHotspots}
+          selectedId={selectedHotspotId}
+          onSelect={onSelectHotspot}
+        />
       </MapContainer>
 
       {/* Layer picker — rendered outside MapContainer so it stays in React

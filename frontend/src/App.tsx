@@ -89,6 +89,8 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [timeWindow, setTimeWindow] = useState<TimeWindow>({ kind: "preset", value: "15m" });
   const [source, setSource] = useState<DataSource>(readStoredSource);
+  // DBSCAN tuning (Hotspots page sliders). Defaults mirror the backend.
+  const [dbscanParams, setDbscanParams] = useState({ eps: 8, minSamples: 5 });
   const [sidebarVisible, setSidebarVisible] = useState(true);
 
   // Dashboard layer toggles (full-map pages force their own layer state).
@@ -163,7 +165,15 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
 
     async function loadHotspots() {
       try {
-        const hs = await getHotspots({ source }, controller.signal);
+        const hs = await getHotspots(
+          {
+            source,
+            window: timeWindow,
+            eps: dbscanParams.eps,
+            minSamples: dbscanParams.minSamples,
+          },
+          controller.signal
+        );
         if (!cancelled) setHotspots(hs);
       } catch {
         /* hotspots are optional — ignore errors silently */
@@ -181,7 +191,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       controller.abort();
       clearInterval(id);
     };
-  }, [source]);
+  }, [source, timeWindow, dbscanParams]);
 
   const status: "live" | "refreshing" | "error" = error
     ? "error"
@@ -266,6 +276,8 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 timeWindow={timeWindow}
                 onTimeChange={setTimeWindow}
                 hotspots={hotspots}
+                dbscanParams={dbscanParams}
+                onDbscanChange={setDbscanParams}
                 sidebarCollapsed={!showSidebar}
               />
             )}

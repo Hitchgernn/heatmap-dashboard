@@ -1,8 +1,10 @@
+import { useState } from "react";
 import MapView from "./MapView";
 import DashboardCards from "./DashboardCards";
 import HotspotTable from "./HotspotTable";
 import HotspotBarChart from "./HotspotBarChart";
 import DensityDonut from "./DensityDonut";
+import HotspotDetailCard from "./HotspotDetailCard";
 import TimeFilter from "./TimeFilter";
 import LayerToggle from "./LayerToggle";
 import DensityLegend from "./DensityLegend";
@@ -47,6 +49,11 @@ export default function DashboardView({
   hotspotsLoading,
   sidebarCollapsed,
 }: DashboardViewProps) {
+  // Selected hotspot, kept in sync between the table and the map markers.
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const selected = hotspots.find((h) => h.cluster_id === selectedId) ?? null;
+  const toggleSelect = (id: string) => setSelectedId((cur) => (cur === id ? null : id));
+
   return (
     <div className="space-y-5 p-6">
       {/* Summary cards across the top */}
@@ -64,17 +71,22 @@ export default function DashboardView({
             showHeatmap={showHeatmap}
             hotspots={hotspots}
             showHotspots={showHotspots}
+            selectedHotspotId={selectedId}
+            onSelectHotspot={toggleSelect}
           >
             <div className={"absolute top-3 z-[600] " + (sidebarCollapsed ? "left-14" : "left-3")}>
               <TimeFilter value={timeWindow} onChange={onTimeChange} />
             </div>
-            <div className="absolute right-3 top-3 z-[600]">
+            <div className="absolute right-3 top-3 z-[600] flex flex-col items-end gap-2">
               <LayerToggle
                 showHeatmap={showHeatmap}
                 showHotspots={showHotspots}
                 onToggleHeatmap={onToggleHeatmap}
                 onToggleHotspots={onToggleHotspots}
               />
+              {selected && showHotspots && (
+                <HotspotDetailCard hotspot={selected} hotspots={hotspots} onClose={() => setSelectedId(null)} />
+              )}
             </div>
             <div className="absolute bottom-3 left-3 z-[600]">
               <DensityLegend />
@@ -89,7 +101,12 @@ export default function DashboardView({
             <HotspotBarChart hotspots={hotspots} loading={hotspotsLoading} />
             <DensityDonut hotspots={hotspots} loading={hotspotsLoading} />
           </div>
-          <HotspotTable hotspots={hotspots} loading={hotspotsLoading} />
+          <HotspotTable
+            hotspots={hotspots}
+            loading={hotspotsLoading}
+            selectedId={selectedId}
+            onSelect={toggleSelect}
+          />
         </div>
       </div>
     </div>

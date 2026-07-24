@@ -107,11 +107,25 @@ export function getDashboardSummary(
   return fetchData<DashboardSummary>(url, signal);
 }
 
+export interface HotspotParams {
+  source?: string;
+  window?: TimeWindow;
+  /** DBSCAN neighbourhood radius in metres. */
+  eps?: number;
+  /** DBSCAN minimum neighbours to seed a cluster. */
+  minSamples?: number;
+}
+
 export function getHotspots(
-  params: { source?: string } = {},
+  params: HotspotParams = {},
   signal?: AbortSignal
 ): Promise<Hotspot[]> {
-  const url = buildUrl("/api/hotspots", { source: params.source ?? "all" });
+  const url = buildUrl("/api/hotspots", {
+    ...(params.window ? windowParams(params.window) : {}),
+    source: params.source ?? "all",
+    eps: params.eps !== undefined ? String(params.eps) : undefined,
+    minSamples: params.minSamples !== undefined ? String(params.minSamples) : undefined,
+  });
   return fetchData<{ hotspots: Hotspot[] }>(url, signal).then((d) => d.hotspots);
 }
 
