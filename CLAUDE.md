@@ -10,7 +10,7 @@ Status: the backend (`backend/`, all six data endpoints plus admin auth) and the
 
 ## Code intelligence
 
-This repo ships a graphify knowledge graph at `graphify-out/` (not gitignored). For codebase questions, run `graphify query "<question>"` first — it returns a scoped subgraph (code **and** docs, ~700 nodes) far smaller than grepping or reading `GRAPH_REPORT.md` wholesale; `graphify path "<A>" "<B>"` for relationships, `graphify explain "<concept>"` for one concept. After changing code, run `graphify update .` (AST-only, no API cost) to keep it current. `graphify-out/obsidian/` is a human-navigable vault of the same graph for Obsidian's graph view. A `.codegraph/` index also exists locally (gitignored, personal) — when present, `codegraph_explore` / `codegraph explore "<symbols>"` returns verbatim source plus callers for a symbol before editing.
+This repo uses a graphify knowledge graph at `graphify-out/` — **gitignored**, so a fresh clone has none until you run `graphify update .` (AST-only, no API cost). For codebase questions, run `graphify query "<question>"` first — it returns a scoped subgraph (code **and** docs, ~700 nodes) far smaller than grepping or reading `GRAPH_REPORT.md` wholesale; `graphify path "<A>" "<B>"` for relationships, `graphify explain "<concept>"` for one concept. After changing code, re-run `graphify update .` to keep it current. `graphify-out/obsidian/` is a human-navigable vault of the same graph for Obsidian's graph view — note it is **not** produced by `graphify update`; it came from a one-off script, so it is local-only and does not regenerate. A `.codegraph/` index also exists locally (gitignored, personal) — when present, `codegraph_explore` / `codegraph explore "<symbols>"` returns verbatim source plus callers for a symbol before editing.
 
 ## Commands
 
@@ -39,9 +39,25 @@ There is no lint step in either package. Verify changes with `npm run build` (or
 
 The memory repository auto-seeds ~97 clustered sample points on boot, so backend endpoints return data immediately without Hyperbase credentials. Seeded timestamps are anchored at boot and span the prior ~14 min, so they age out of the default 15m window once the server has run a while — regenerate with `POST /api/mock/generate` to repopulate. Running a single backend test once tests exist: `node --test --import tsx ./src/path/to/file.test.ts`.
 
-The frontend map is Leaflet with theme-aware OpenStreetMap tiles — no map token needed (CARTO Voyager in light mode, Esri World Imagery satellite in dark mode). `frontend/.env` only needs `VITE_API_BASE_URL` (gitignored; defaults to `http://localhost:3001`).
+The frontend map is Leaflet with standard OpenStreetMap tiles — no map token needed. The basemap is **theme-independent** (it does not change with light/dark) and deliberately matches `tiles="OpenStreetMap"` in the DBSCAN notebook so the dashboard and the notebook's folium maps look like the same place. Esri World Imagery satellite is opt-in via the in-map layer picker. `frontend/.env` only needs `VITE_API_BASE_URL` (gitignored; defaults to `http://localhost:3001`).
 
 Commits follow Conventional Commits scoped to this project (`feat(frontend):`, `chore(repo):`, etc.); see git history for the established style.
+
+### Gotcha: no Postgres = every login 500s
+
+Admin auth needs Postgres running. With nothing on 5432, `POST /api/auth/admin/signin` returns 500 `"Authentication service unavailable"` (the catch-all in `routes/auth/admin.routes.ts`) — the message names auth, not the DB, so it reads like a frontend or credentials problem when it is neither. Check `ss -ltnp | grep :5432` first.
+
+`docker compose up -d postgres` is the intended path, but fails with `permission denied ... /var/run/docker.sock` unless the user is in the `docker` group. Fallback with no Docker and no sudo — a user-owned cluster:
+
+```bash
+initdb -D ~/.local/pgdata -U borobudur --auth=trust
+pg_ctl -D ~/.local/pgdata -l ~/.local/pgdata/server.log \
+  -o "-c listen_addresses=127.0.0.1 -p 5432 -c unix_socket_directories=/home/$USER/.local/pgdata" start
+createdb -h 127.0.0.1 -U borobudur borobudur_auth
+cd backend && npm run db:init
+```
+
+The `unix_socket_directories` override is required: Postgres defaults to the root-owned `/var/run/postgresql` and dies with `could not create lock file ... Permission denied`. Those `initdb` values match the `env.database` defaults in `config/env.ts` exactly, so no `PG*`/`DATABASE_URL` entries are needed in `backend/.env`. The cluster does not survive a reboot (re-run `pg_ctl ... start`), but its data does. Finally, register an admin — `POST /api/auth/admin/signup` with the `ADMIN_REGISTRATION_SECRET` from `backend/.env`; without one, correct credentials still fail.
 
 ### Gotcha: stale dev server
 
@@ -67,24 +83,33 @@ Layered Express + TypeScript. Dependencies point inward: `routes → services �
 
 **Hotspots** (`GET /api/hotspots`) read a precomputed `ml/output/hotspots.json` (DBSCAN runs out-of-band; the Python script isn't built yet). Path overridable via `ML_HOTSPOTS_PATH`.
 
+**API docs (Swagger)** — Swagger UI at `GET /api/docs`, raw spec at `GET /api/docs.json`. Both are mounted in `index.ts` **before** the `requireAuth`-gated routers, so the docs themselves are public while every endpoint they document is not; "Try it out" only works once you hold a session cookie. `config/swagger.ts` builds the OpenAPI 3.0.3 spec with `swagger-jsdoc`: reusable component schemas + the `cookieAuth` security scheme live there, while per-endpoint detail lives in `@openapi` JSDoc blocks above each route handler. Two consequences worth knowing:
+
+- The `apis:` glob covers **both** `routes/**/*.ts` and `routes/**/*.js` relative to `__dirname`, because the annotations are read from source comments at runtime — dev reads the `.ts`, production reads the compiled `.js` (tsc keeps comments by default; stripping them would silently empty the docs).
+- Enum values in the annotations (windows, sources) are hand-mirrored from `utils/parseQuery.ts`. Nothing type-checks that mirror — if you add a time-window preset, update both. `docs/API.md` remains the authoritative contract.
+
 ## Frontend architecture
 
 React 18 + Vite 6 + TypeScript + Tailwind v4 + Leaflet (`leaflet` + `react-leaflet` v4 + `leaflet.heat`). Client-side only. `App.tsx` owns page/data state and fetching; components are presentational. Two React contexts wrap the app in `main.tsx`: `ThemeProvider` and `LanguageProvider`.
 
-- **The map is created exactly once.** `MapView.tsx` renders a react-leaflet `<MapContainer>` (created once) + `<TileLayer>`, with `HeatLayer` and `HotspotLayer` as children that get the map via react-leaflet context. The `<TileLayer>` is keyed by `resolvedTheme` so switching light/dark remounts just the layer (the map stays put); a `ResizeHandler` child calls `invalidateSize` on container resize (sidebar collapse animates width).
+- **The map is created exactly once.** `MapView.tsx` renders a react-leaflet `<MapContainer>` (created once) + `<TileLayer>`, with `HeatLayer` and `HotspotLayer` as children that get the map via react-leaflet context. The `<TileLayer>` is keyed by the selected basemap id (`"osm"` / `"satellite"`) so switching basemaps remounts just the layer (the map stays put) — it is **not** keyed by theme, since the basemap no longer changes with light/dark. A `ResizeHandler` child calls `invalidateSize` on container resize (sidebar collapse animates width). `LayerPicker` (the floating basemap switcher) lives in `MapView.tsx` but renders *outside* `<MapContainer>`, absolutely positioned, so Leaflet never owns it.
 - **`HeatLayer.tsx`** wraps `leaflet.heat`: creates one `L.heatLayer` and calls `setLatLngs` to update points in place; toggles visibility by add/remove from the map (never recreated on poll).
 - **`HotspotLayer.tsx`** renders declarative `<CircleMarker>` children (one per hotspot), returning `null` when hidden.
-- **`lib/map.ts`** holds center/zoom, light/dark tile URLs + attributions + native-zoom, the heat gradient, and `toHeatPoints()` — the GeoJSON→heat conversion.
+- **`lib/map.ts`** holds center/zoom, the `BasemapId` union plus per-basemap tile URL + attribution + `maxNativeZoom` (OSM tops out at z19, satellite at z19; the map's `maxZoom` is 20, so Leaflet upscales past that instead of going gray), the heat gradient, and `toHeatPoints()` — the GeoJSON→heat conversion.
 - **Polling:** `App.tsx` polls heatmap + summary together every 30s (`POLL_INTERVAL_MS`); changing the time window tears down and restarts the interval. First load shows a prominent loader, later polls a subtle status pill.
 - **Time window is a discriminated union** (`types/heatmap.ts`): `{ kind: "preset", value }` or `{ kind: "custom", amount, unit: "hours" | "days" }`. `TimeFilter.tsx` renders the preset pills plus a Custom popover (capped at the backend's 90-day limit). `lib/api.ts` `windowParams()` maps presets to `window=` and computes a **fresh `from`/`to` pair on every fetch** for custom windows so the range rolls forward with polling.
-- **Heatmap page has Live/Timelapse modes** (`HeatmapView.tsx`): Timelapse replays a chosen date or from/to range in fixed steps (5m–1h). Each frame is one absolute slice fetched via `lib/api.ts` `getHeatmapSlice(from, to)` (same raw-GeoJSON endpoint); `hooks/useTimelapse.ts` caches frames by index as promises (no double-fetch, failed fetches self-evict for retry), prefetches 3 ahead, and auto-plays at 800ms/frame. Frame math + validation (288-frame cap, 90-day span mirror) in `lib/timelapse.ts`; UI in `TimelapseSetup.tsx`/`TimelapseBar.tsx`. The Heatmap page renders **no hotspot markers** — those live on Dashboard/Hotspots pages only.
+- **Heatmap page has Live/Timelapse modes** (`HeatmapView.tsx`): Timelapse replays a chosen date or from/to range in fixed steps (5m–1h). Each frame is one absolute slice fetched via `lib/api.ts` `getHeatmapSlice(from, to)` (same raw-GeoJSON endpoint); `hooks/useTimelapse.ts` caches frames by index as promises (no double-fetch, failed fetches self-evict for retry), prefetches 3 ahead, and auto-plays at 800ms/frame. Frame math + validation (288-frame cap, 90-day span mirror) in `lib/timelapse.ts`; UI in `TimelapseSetup.tsx`/`TimelapseBar.tsx`. While a frame is in flight, `tl.loading` drives a spinner + `t("tl.processing")` in **two** places — inline in `TimelapseBar.tsx` and as a top-center pill overlaying the map in `HeatmapView.tsx` — so the aggregation is visible without looking at the scrubber. The Heatmap page renders **no hotspot markers** — those live on Dashboard/Hotspots pages only.
+
+  `TimelapseSetup.tsx` gotcha: native `datetime-local` inputs have a ~220px min-content width and will **not** shrink inside a flex row, so they must stay stacked under their labels at `w-full` (with `min-w-0` on the shared input class). Putting them beside a label in a `justify-between` row overflows the panel.
 - **`lib/api.ts` handles two response styles:** the heatmap endpoint returns raw GeoJSON; summary/hotspots use the `{ success, data }` envelope; `POST /api/mock/generate` returns a bare `{ success, inserted, source }` (no envelope). Reads `VITE_API_BASE_URL` (default `http://localhost:3001`; behind Nginx, `/api`). Data fetches default to `source=all` — not `mock`, which would short-circuit to empty on the hyperbase driver.
+
+**Typography — three fonts, three roles** (wired as Tailwind v4 theme vars in `index.css`): **Instrument Serif** (`font-display`) for the wordmark, page/panel headings, and prominent named values; **DM Sans** for everything you'd read as a sentence — it is the document default, so most elements need **no** font class; **Fira Code** (`font-mono`) for all numbers, metrics, IDs, status-pill text, and tiny uppercase eyebrow labels. Rule of thumb: a number or status → mono; a prominent heading or name → display; otherwise no class.
 
 **Theme system (`context/theme.tsx`):** light / dark / system, persisted to `localStorage` (`borobudur.theme`), applied via Tailwind class-based dark mode — toggles `.dark` on `<html>`, tracks the OS preference live via `matchMedia` in system mode. `index.css` enables it with `@custom-variant dark (&:where(.dark, .dark *))`. An inline script in `index.html` applies the stored theme (and language) before React mounts to avoid a flash. Components carry `dark:` variants throughout.
 
 **i18n (`context/language.tsx` + `lib/i18n.ts`):** English (`en`) / Indonesian (`id`), persisted to `localStorage` (`borobudur.lang`). `useLanguage()` exposes `t(key, vars?)`. `en` is the source of truth (its keys define `TranslationKey`; `id` must cover the same keys — type-enforced). **Section/product names stay English in both locales** (Dashboard, Heatmap, Hotspots, Borobudur, Settings, Mock Generator) — they read as proper nouns and sound off when localized, so they live as literals in components, not in the dictionary.
 
-**Pages & navigation:** `Sidebar.tsx` switches between `dashboard` / `heatmap` / `hotspots` / `mock` views (page content is keyed by page in `App.tsx` to replay a `page-enter` transition). The active page persists to `localStorage` (`borobudur.page`) so a refresh restores it. **Settings is a modal, not a page** — opened from a gear button beside the profile at the sidebar bottom, rendered via `Modal.tsx` (centered, blurred backdrop, Escape/backdrop-click to close). `SettingsView.tsx` has Appearance + Language pickers and a Logout button (no auth backend yet — clears the persisted page and reloads).
+**Pages & navigation:** `Sidebar.tsx` switches between `dashboard` / `heatmap` / `hotspots` / `mock` views (page content is keyed by page in `App.tsx` to replay a `page-enter` transition). The active page persists to `localStorage` (`borobudur.page`) so a refresh restores it. **Settings is a modal, not a page** — opened from a gear button beside the profile at the sidebar bottom, rendered via `Modal.tsx` (centered, blurred backdrop, Escape/backdrop-click to close). `SettingsView.tsx` has Appearance + Language pickers and a Logout button, wired through `App.tsx` to `signout` from the auth context (clears the persisted page, then calls `POST /api/auth/admin/logout`).
 
 ### Frontend gotchas
 
