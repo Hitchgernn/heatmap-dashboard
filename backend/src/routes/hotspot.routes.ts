@@ -90,8 +90,8 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const repository = getLocationRepository();
     const locations = await repository.getLocations(parsed.value);
-    const hotspots = detectHotspots(locations, { epsM, minSamples });
-    return successResponse(res, { hotspots });
+    const { hotspots, points } = detectHotspots(locations, { epsM, minSamples });
+    return successResponse(res, { hotspots, points });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     return errorResponse(res, 500, "INTERNAL_SERVER_ERROR", `Failed to detect hotspots: ${message}`);

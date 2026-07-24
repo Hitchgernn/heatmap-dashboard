@@ -159,6 +159,22 @@ const options: swaggerJSDoc.Options = {
                   type: "array",
                   items: { $ref: "#/components/schemas/Hotspot" },
                 },
+                points: {
+                  type: "array",
+                  description: "Clustered scatter points: position + density tier only (no visitor_id).",
+                  items: {
+                    type: "object",
+                    properties: {
+                      lat: { type: "number", example: -7.6079 },
+                      lng: { type: "number", example: 110.2037 },
+                      tier: {
+                        nullable: true,
+                        description: "Density tier of the point's cluster; null for noise.",
+                        allOf: [{ $ref: "#/components/schemas/DensityLevel" }],
+                      },
+                    },
+                  },
+                },
               },
             },
           },
