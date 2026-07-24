@@ -22,8 +22,31 @@ interface HotspotBarChartProps {
 const MAX_BARS = 8;
 
 /** Truncate long area labels so the vertical axis stays readable. */
-function truncate(label: string, max = 22): string {
+function truncate(label: string, max = 18): string {
   return label.length > max ? label.slice(0, max - 1) + "…" : label;
+}
+
+/**
+ * Single-line Y-axis tick. Recharts' default tick wraps long category labels
+ * onto multiple lines; rendering our own <text> keeps every label on one line
+ * (truncated with an ellipsis) so the chart stays tidy.
+ */
+function AreaTick({
+  x,
+  y,
+  payload,
+  fill,
+}: {
+  x?: number;
+  y?: number;
+  payload?: { value: string };
+  fill: string;
+}) {
+  return (
+    <text x={x} y={y} dy={4} textAnchor="end" fontSize={11} fill={fill}>
+      {truncate(payload?.value ?? "")}
+    </text>
+  );
 }
 
 /**
@@ -60,7 +83,7 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
         <h2 className="font-display text-lg text-gray-900 dark:text-white">{t("chart.title")}</h2>
       </header>
 
-      <div className="px-2 py-3">
+      <div className="py-3 pl-1 pr-2">
         {loading && hotspots.length === 0 ? (
           <p className="px-3 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
             {t("table.loading")}
@@ -75,7 +98,7 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
               layout="vertical"
               data={data}
               barCategoryGap="28%"
-              margin={{ top: 4, right: 16, bottom: 4, left: 4 }}
+              margin={{ top: 4, right: 16, bottom: 4, left: 0 }}
             >
               <XAxis
                 type="number"
@@ -87,9 +110,8 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
               <YAxis
                 type="category"
                 dataKey="label"
-                width={140}
-                tick={{ fontSize: 11, fill: axisColor }}
-                tickFormatter={(value: string) => truncate(value)}
+                width={112}
+                tick={<AreaTick fill={axisColor} />}
                 stroke={axisColor}
                 tickLine={false}
                 axisLine={false}
