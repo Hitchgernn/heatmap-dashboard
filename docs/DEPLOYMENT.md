@@ -18,19 +18,22 @@ Browser
    │
    └── https://api.your-domain.ac.id      College server
                                              │
-                                             ├── Nginx (TLS termination, on host)
-                                             │      └── proxies to 127.0.0.1:3001
+                                             ├── cloudflared (TLS + public hostname)
+                                             │      └── reaches 127.0.0.1:3001
                                              │
-                                             └── docker compose
+                                             └── docker compose "borobudur-dashboard"
                                                     ├── backend    :3001 → loopback
-                                                    └── postgres   :5432 → loopback
+                                                    └── postgres   :5433 → loopback
                                                            │
                                                   Hyperbase (external, over REST)
 ```
 
-The backend and database run as containers; only Nginx runs on the host. Both container ports
-are published to **loopback only** — nothing but Nginx can reach them, and Postgres is not
-reachable from outside the compose network at all.
+Everything runs in containers. Both published ports are bound to **loopback only** — nothing
+outside the host can reach them directly, and the backend talks to Postgres over the compose
+network rather than through the published port.
+
+Cloudflare Tunnel provides the public hostname and certificate, so no inbound port is opened and
+no certificate is managed on the server.
 
 The frontend and backend are on **different sites**. The session cookie must therefore travel
 cross-site, and browsers only allow that when the cookie is `SameSite=None; Secure`. `Secure`
@@ -38,21 +41,46 @@ means HTTPS is **mandatory** — not a nice-to-have.
 
 ### Prerequisite: the backend must be publicly reachable over HTTPS
 
-Vercel serves your frontend from the public internet, so the browser must be able to reach your
-backend from the public internet too. Before going further, confirm the college server has:
+Vercel serves your frontend from the public internet, so the browser must be able to reach the
+backend from the public internet too — and over HTTPS, because the session cookie is `Secure`.
 
-- a **public IP or hostname** (not only a campus-internal address),
-- inbound **443** open,
-- a **DNS record** you control pointing at it,
-- permission from your IT department to run a public service.
+**Cloudflare Tunnel** satisfies both without a public IP, an open port, or a certificate on the
+server: `cloudflared` makes an outbound connection to Cloudflare, which then serves your
+hostname over HTTPS and forwards traffic down that connection. This is the approach used
+throughout section 4.
 
-If any of those is missing, this topology cannot work. Two alternatives:
+The alternative, if you would rather not use Vercel at all, is to **serve the frontend from the
+same origin as the API** — let a reverse proxy serve the built `dist/` alongside `/api`. Same
+origin means `SameSite=Strict` keeps working and none of the settings in section 3 are needed.
+Simplest and most secure option when Vercel is not a requirement.
 
-- **Cloudflare Tunnel** — gives a public HTTPS hostname with no inbound ports and no public IP.
-  Usually the fastest path on a locked-down campus network.
-- **Serve the frontend from the same server** — drop Vercel, let Nginx serve the built `dist/`
-  alongside the API. Same origin, so `SameSite=Strict` keeps working and none of the settings in
-  section 3 are needed. Simplest and most secure option if you don't specifically need Vercel.
+### Deploying onto a shared server
+
+If the host already runs other people's containers, read this before running anything.
+
+- **Namespacing is handled.** `docker-compose.yml` sets `name: borobudur-dashboard`, so every
+  container, network, and volume it creates is prefixed with that. A container called
+  `borobudur_backend` or `borobudur_db` on the same host belongs to something else — most likely
+  the mobile app — and nothing here touches it.
+- **Published host ports are the one shared resource.** Both are overridable and neither
+  defaults to a commonly occupied value: `PG_PUBLISH_PORT` (default 5433, *not* 5432, which is
+  usually taken by another Postgres) and `BACKEND_PUBLISH_PORT` (default 3001). Check before
+  starting:
+
+  ```bash
+  sudo ss -ltnp | grep -E ':(3001|5433)\b' || echo "both free"
+  ```
+
+  A `0.0.0.0` binding by another container blocks a loopback binding here, so a port that looks
+  free in `docker ps` may still conflict — trust `ss`, not the port column.
+- **Never run pruning commands.** `docker system prune`, `docker volume prune`, and
+  `docker image prune -a` operate host-wide and will destroy unrelated projects. Likewise never
+  `docker compose down -v` here: `-v` deletes the volume holding your admin accounts.
+- **Scope every command to this project.** Run compose from the repository directory, and prefer
+  `docker compose ps` / `docker compose logs` over bare `docker ps` / `docker logs`, which show
+  every container on the host.
+- If your user is not yet in the `docker` group, prefix commands with `sudo` — or add yourself
+  and reconnect (section 2.1).
 
 ---
 
@@ -245,9 +273,10 @@ HYPERBASE_TOKEN_SECRET=...
 
 # --- PostgreSQL (admin auth) ---
 # PGHOST/PGPORT are overridden to postgres:5432 by docker-compose.yml; these
-# values are what `npm run dev` uses locally against a published port.
+# values are what `npm run dev` uses locally against the published port, which
+# defaults to 5433 (see PG_PUBLISH_PORT in docker-compose.yml).
 PGHOST=127.0.0.1
-PGPORT=5432
+PGPORT=5433
 PGUSER=borobudur
 PGPASSWORD=$(openssl rand -base64 24 | tr -d '/+=')
 PGDATABASE=borobudur_auth
@@ -300,39 +329,45 @@ devDependencies. One consequence worth knowing: `npm run db:init` is **not** ava
 the container, because it runs through `tsx`, a devDependency. Use the `psql` route in section
 2.5 instead.
 
-### 4.3 Nginx and TLS
+### 4.3 Public HTTPS via Cloudflare Tunnel
 
-```nginx
-server {
-    listen 443 ssl;
-    server_name api.your-domain.ac.id;
+`cloudflared` dials out to Cloudflare and receives traffic over that connection, so the server
+needs no public IP, no inbound firewall rule, and no certificate of its own. Cloudflare
+terminates TLS at its edge, which is what satisfies the `Secure` cookie requirement.
 
-    ssl_certificate     /etc/letsencrypt/live/api.your-domain.ac.id/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.your-domain.ac.id/privkey.pem;
-
-    location / {
-        proxy_pass http://127.0.0.1:3001;
-        proxy_set_header Host              $host;
-        proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-
-server {
-    listen 80;
-    server_name api.your-domain.ac.id;
-    return 301 https://$host$request_uri;
-}
-```
+Create the tunnel in the Cloudflare dashboard (Zero Trust → Networks → Tunnels), add a public
+hostname pointing at `http://127.0.0.1:3001`, and copy the connector token. Then run it:
 
 ```bash
-sudo certbot --nginx -d api.your-domain.ac.id
-sudo nginx -t && sudo systemctl reload nginx
+sudo docker run -d --name tunnel-borobudur-dashboard \
+  --restart unless-stopped \
+  --network host \
+  cloudflare/cloudflared:latest \
+  tunnel --no-autoupdate run --token <YOUR_TOKEN>
 ```
 
-Do not skip TLS. Without it the browser rejects the `Secure` cookie and authentication cannot
-work at all in this topology.
+`--network host` is what lets the connector reach `127.0.0.1:3001`, the loopback port the
+backend publishes. Without it the container's own loopback is a different namespace and the
+tunnel resolves nothing.
+
+The token grants control of the tunnel — treat it like a password. Keep it out of the shell
+history (`docker run` arguments are visible in `ps` while running), and out of the repository.
+
+Verify from anywhere:
+
+```bash
+curl -s https://api.your-domain.ac.id/health     # {"status":"ok"}
+```
+
+> On a host that already runs tunnels, name yours distinctly. A neighbour named `tunnel-5001`
+> belongs to a different service; do not reuse or repoint it.
+
+**Do not skip TLS.** Over plain HTTP the browser rejects the `Secure` cookie outright and
+authentication cannot work in this topology at all.
+
+Using an existing reverse proxy instead? Point it at `127.0.0.1:3001` and forward `Host`,
+`X-Real-IP`, `X-Forwarded-For`, and `X-Forwarded-Proto` as usual — the requirement is only that
+the public endpoint is HTTPS.
 
 ### 4.4 Remove the debug route
 
@@ -454,6 +489,12 @@ PostgreSQL instead. See Appendix A.
 initialised. Changing the file does not change the database. Rotate it with the `ALTER ROLE`
 command in section 4.1, or destroy the volume with `docker compose down -v` — which also
 deletes every admin account.
+
+**`docker compose up` fails with `port is already allocated` / `address already in use`**
+Another container or host service holds that port. A `0.0.0.0` binding elsewhere blocks a
+loopback binding here, so check with `sudo ss -ltnp | grep :<port>` rather than reading the
+port column of `docker ps`. Set `PG_PUBLISH_PORT` or `BACKEND_PUBLISH_PORT` to something free —
+neither affects how the backend reaches Postgres, which goes over the compose network.
 
 **Backend cannot reach the database at `127.0.0.1:5432`**
 `PGHOST` reached the container instead of the compose network. Inside a container `127.0.0.1`

@@ -10,6 +10,15 @@
 #
 # The schema in backend/src/db/schema.sql is auto-applied on first init (empty
 # volume). For an existing volume, apply it manually — see docs/DEPLOYMENT.md.
+#
+# SHARED HOSTS: an explicit project name namespaces every container, network and
+# volume created here, so this stack cannot collide with unrelated ones. On the
+# deployment server there are already `borobudur_backend` and `borobudur_db`
+# containers belonging to the mobile app and another project — nothing below
+# touches them. Published host ports are the one genuinely shared resource, so
+# both are overridable and neither uses a default that is commonly taken.
+
+name: borobudur-dashboard
 
 services:
   postgres:
@@ -19,11 +28,14 @@ services:
       POSTGRES_USER: ${PGUSER:-borobudur}
       POSTGRES_PASSWORD: ${PGPASSWORD:-borobudur}
       POSTGRES_DB: ${PGDATABASE:-borobudur_auth}
-    # Bound to loopback deliberately: the backend reaches Postgres over the
-    # compose network, so the published port exists only for local psql access.
-    # Publishing on 0.0.0.0 would expose the database to the whole network.
+    # Loopback only, and NOT on 5432: that port is frequently already taken by
+    # another Postgres, and a 0.0.0.0 binding elsewhere blocks a loopback one
+    # here (EADDRINUSE). The backend does not use this mapping at all — it
+    # reaches Postgres by service name over the compose network. It exists
+    # solely so `psql`/`npm run dev` on the host can connect; override with
+    # PG_PUBLISH_PORT, or delete these two lines if you never need that.
     ports:
-      - "127.0.0.1:${PGPORT:-5432}:5432"
+      - "127.0.0.1:${PG_PUBLISH_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/src/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
@@ -49,9 +61,10 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    # Loopback again: Nginx on the host terminates TLS and proxies to this port.
+    # Loopback only — a cloudflared tunnel (or reverse proxy) reaches this port
+    # and terminates TLS. Override with BACKEND_PUBLISH_PORT if 3001 is taken.
     ports:
-      - "127.0.0.1:${PORT:-3001}:3001"
+      - "127.0.0.1:${BACKEND_PUBLISH_PORT:-3001}:3001"
 
 volumes:
   postgres_data:
