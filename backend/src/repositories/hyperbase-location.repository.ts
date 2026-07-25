@@ -180,17 +180,23 @@ export class HyperbaseLocationRepository implements LocationRepository {
 }
 
 /**
- * Map an internal LocationLog to a Hyperbase `coordinate data` record body.
+ * Map an internal LocationLog to a Hyperbase record body.
  * Only the dashboard-relevant fields are written; Hyperbase sets `_id` (UUIDv7)
  * and `_updated_at` itself, so mock rows are timestamped at insert time (the
  * backdated LocationLog.timestamp is not persisted — fine for spatial
  * clustering observation within the current window).
+ *
+ * `source` is required (non-nullable) by the mock collection's schema — omitting
+ * it makes Hyperbase reject the insert with 400 "Value for 'source' is required".
+ * Only the mock collection is ever written to (the mobile-app collection throws
+ * before reaching here), so sending it unconditionally is safe.
  */
 function toRecordBody(location: LocationLog): Record<string, unknown> {
   return {
     client_id: location.visitor_id,
     latitude: location.latitude,
     longitude: location.longitude,
+    source: location.source,
   };
 }
 
