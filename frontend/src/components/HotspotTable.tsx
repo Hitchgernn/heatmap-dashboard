@@ -1,7 +1,14 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Hotspot } from "../types/hotspot";
 import { hotspotTier, maxPoints, TIER_META } from "../lib/hotspots";
 import { useLanguage } from "../context/language";
+
+/**
+ * Rows shown per page. The table renders exactly this many row slots at all
+ * times (short pages are padded with blank rows) so the panel height is static
+ * and the dashboard layout never reflows as you page through.
+ */
+const PAGE_SIZE = 4;
 
 interface HotspotTableProps {
   hotspots: Hotspot[];
@@ -22,6 +29,7 @@ type Filter = "all" | "high";
 export default function HotspotTable({ hotspots, loading, selectedId, onSelect }: HotspotTableProps) {
   const { t } = useLanguage();
   const [filter, setFilter] = useState<Filter>("all");
+  const [page, setPage] = useState(0);
   const max = useMemo(() => maxPoints(hotspots), [hotspots]);
 
   const rows = useMemo(() => {
@@ -30,6 +38,18 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
       .sort((a, b) => b.h.total_points - a.h.total_points);
     return filter === "high" ? ranked.filter((r) => r.tier === "high") : ranked;
   }, [hotspots, max, filter]);
+
+  const pageCount = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  // A poll or filter change can shrink the set out from under the current page.
+  // Clamp rather than reset so paging survives a refresh that keeps the page valid.
+  useEffect(() => {
+    setPage((p) => Math.min(p, pageCount - 1));
+  }, [pageCount]);
+
+  const start = page * PAGE_SIZE;
+  const pageRows = rows.slice(start, start + PAGE_SIZE);
+  // Blank filler rows keep the panel height fixed on the last (short) page.
+  const filler = Math.max(0, PAGE_SIZE - pageRows.length);
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
@@ -40,7 +60,10 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
             <button
               key={f}
               type="button"
-              onClick={() => setFilter(f)}
+              onClick={() => {
+                setFilter(f);
+                setPage(0);
+              }}
               aria-pressed={filter === f}
               className={
                 "rounded-md px-3 py-1 text-xs font-medium transition-colors " +
@@ -67,19 +90,11 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
           </thead>
           <tbody>
             {loading && hotspots.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="px-5 py-8 text-center text-gray-400 dark:text-gray-500">
-                  {t("table.loading")}
-                </td>
-              </tr>
+              <MessageRows text={t("table.loading")} />
             ) : rows.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="px-5 py-8 text-center text-gray-400 dark:text-gray-500">
-                  {t("table.empty")}
-                </td>
-              </tr>
+              <MessageRows text={t("table.empty")} />
             ) : (
-              rows.map(({ h, tier }) => {
+              pageRows.map(({ h, tier }) => {
                 const meta = TIER_META[tier];
                 const isSelected = selectedId === h.cluster_id;
                 return (
@@ -117,9 +132,95 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
                 );
               })
             )}
+            {rows.length > 0 &&
+              Array.from({ length: filler }, (_, i) => <FillerRow key={`filler-${i}`} />)}
           </tbody>
         </table>
       </div>
+
+      <footer className="flex items-center justify-between gap-3 border-t border-gray-100 px-5 py-3 dark:border-gray-800">
+        <p className="font-mono text-xs text-gray-400 dark:text-gray-500">
+          {rows.length === 0
+            ? t("table.pageStatus", { from: 0, to: 0, total: 0 })
+            : t("table.pageStatus", {
+                from: start + 1,
+                to: start + pageRows.length,
+                total: rows.length,
+              })}
+        </p>
+        <div className="inline-flex items-center gap-1.5">
+          <PageButton
+            label={t("table.pagePrev")}
+            disabled={page === 0}
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+          />
+          <span className="font-mono text-xs tabular-nums text-gray-500 dark:text-gray-400">
+            {page + 1}/{pageCount}
+          </span>
+          <PageButton
+            label={t("table.pageNext")}
+            disabled={page >= pageCount - 1}
+            onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+          />
+        </div>
+      </footer>
     </section>
+  );
+}
+
+/**
+ * Blank row occupying one data-row slot. Mirrors the two-line cell structure of
+ * a real row so the padded height matches exactly.
+ */
+function FillerRow() {
+  return (
+    <tr aria-hidden="true" className="border-b border-gray-50 last:border-0 dark:border-gray-800/60">
+      <td className="px-5 py-3">
+        <p className="font-medium">&nbsp;</p>
+        <p className="font-mono text-xs">&nbsp;</p>
+      </td>
+      <td className="px-5 py-3" />
+      <td className="px-5 py-3" />
+      <td className="px-5 py-3" />
+    </tr>
+  );
+}
+
+/** Loading / empty message in the first slot, padded out to the full PAGE_SIZE. */
+function MessageRows({ text }: { text: string }) {
+  return (
+    <>
+      <tr className="border-b border-gray-50 dark:border-gray-800/60">
+        <td colSpan={4} className="px-5 py-3 text-center text-gray-400 dark:text-gray-500">
+          <p className="font-medium">{text}</p>
+          <p className="font-mono text-xs">&nbsp;</p>
+        </td>
+      </tr>
+      {Array.from({ length: PAGE_SIZE - 1 }, (_, i) => (
+        <FillerRow key={`msg-filler-${i}`} />
+      ))}
+    </>
+  );
+}
+
+/** Compact prev/next control for the table footer. */
+function PageButton({
+  label,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 transition-colors hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white"
+    >
+      {label}
+    </button>
   );
 }

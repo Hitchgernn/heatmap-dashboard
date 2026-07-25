@@ -61,6 +61,9 @@ const en = {
   "table.colStatus": "Status",
   "table.loading": "Loading hotspots…",
   "table.empty": "No hotspots detected in this view.",
+  "table.pageStatus": "{from}–{to} of {total}",
+  "table.pagePrev": "Previous",
+  "table.pageNext": "Next",
 
   // Density tiers + status badges (shared by table, legend, markers)
   "density.high": "High",
@@ -172,6 +175,9 @@ const id: Record<TranslationKey, string> = {
   "table.colStatus": "Status",
   "table.loading": "Memuat hotspot…",
   "table.empty": "Tidak ada hotspot terdeteksi pada tampilan ini.",
+  "table.pageStatus": "{from}–{to} dari {total}",
+  "table.pagePrev": "Sebelumnya",
+  "table.pageNext": "Berikutnya",
 
   // Density tiers + status badges
   "density.high": "Tinggi",
