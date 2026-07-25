@@ -27,10 +27,13 @@ declare global {
 
 /** Cookie options shared between set and clear. */
 function cookieOptions() {
+  // A frontend on another origin (e.g. Vercel) needs SameSite=None, which
+  // browsers only honour together with Secure — so that mode implies HTTPS.
+  const crossSite = env.auth.crossSiteCookie;
   return {
     httpOnly: true,
-    secure: env.isProduction,
-    sameSite: "strict" as const,
+    secure: env.isProduction || crossSite,
+    sameSite: crossSite ? ("none" as const) : ("strict" as const),
     path: "/",
     maxAge: env.auth.cookieMaxAgeMs,
   };

@@ -19,7 +19,16 @@ import { requireAuth } from "./middleware/auth.middleware";
 export function createApp() {
   const app = express();
 
-  app.use(cors({ origin: true, credentials: true }));
+  // An empty allowlist reflects whichever origin asks, which keeps local
+  // development frictionless. Public deployments set CORS_ORIGINS so only the
+  // deployed frontend can make credentialed requests — with SameSite=None the
+  // cookie no longer blocks cross-site calls, so this is the control that does.
+  app.use(
+    cors({
+      origin: env.corsOrigins.length > 0 ? env.corsOrigins : true,
+      credentials: true,
+    })
+  );
   app.use(express.json());
   app.use(cookieParser(env.auth.cookieSecret));
 

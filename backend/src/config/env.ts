@@ -95,6 +95,12 @@ export const env = {
     cookieName: "borobudur_session",
     /** Cookie max-age in milliseconds (default 24h). */
     cookieMaxAgeMs: num(process.env.COOKIE_MAX_AGE_MS, 86_400_000),
+    /**
+     * Send the session cookie cross-site (frontend served from another origin,
+     * e.g. Vercel). Switches SameSite from "strict" to "none", which browsers
+     * only honour together with Secure — so this requires HTTPS.
+     */
+    crossSiteCookie: process.env.CROSS_SITE_COOKIE === "true",
   },
 
   /**
@@ -119,6 +125,16 @@ export const env = {
 
   /** Whether the app is running in production. */
   isProduction: process.env.NODE_ENV === "production",
+
+  /**
+   * Origins allowed to make credentialed (cookie-bearing) requests, as a
+   * comma-separated list. Empty reflects whichever origin asks, which is fine
+   * for local development but must not be left empty on a public deployment.
+   */
+  corsOrigins: (process.env.CORS_ORIGINS || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean),
 
   /** Machine learning module settings. */
   ml: {

@@ -51,9 +51,8 @@ If any of those is missing, this topology cannot work. Two alternatives:
 - **Cloudflare Tunnel** — gives a public HTTPS hostname with no inbound ports and no public IP.
   Usually the fastest path on a locked-down campus network.
 - **Serve the frontend from the same server** — drop Vercel, let Nginx serve the built `dist/`
-  alongside the API. Same origin, so `SameSite=Strict` keeps working and none of the code
-  changes in section 3 are needed. Simplest and most secure option if you don't specifically
-  need Vercel.
+  alongside the API. Same origin, so `SameSite=Strict` keeps working and none of the settings in
+  section 3 are needed. Simplest and most secure option if you don't specifically need Vercel.
 
 ---
 
@@ -156,69 +155,45 @@ with it.
 
 ---
 
-## 3. Code changes required for the cross-site split
+## 3. Cross-site configuration
 
 Skip this entire section if you serve the frontend from the same origin as the API.
 
-Both changes default to today's behaviour, so local development is unaffected.
+The backend ships with both switches already implemented. Deployment only sets two environment
+variables — no code changes are needed. Both default to same-origin behaviour, so local
+development and a same-origin deployment are unaffected.
 
-### 3.1 Session cookie must be `SameSite=None; Secure`
+| Variable | Effect |
+| --- | --- |
+| `CROSS_SITE_COOKIE=true` | Session cookie becomes `SameSite=None; Secure` instead of `SameSite=Strict`. |
+| `CORS_ORIGINS=https://a,https://b` | Only these origins may make credentialed requests. |
 
-`backend/src/middleware/auth.middleware.ts` currently hardcodes `sameSite: "strict"`, which
-prevents the cookie from ever being sent from a Vercel origin.
+### 3.1 `CROSS_SITE_COOKIE`
 
-```diff
- function cookieOptions() {
-+  // Cross-site (frontend on another origin, e.g. Vercel) requires SameSite=None,
-+  // which browsers only honour together with Secure — so HTTPS is mandatory there.
-+  const crossSite = env.auth.crossSiteCookie;
-   return {
-     httpOnly: true,
--    secure: env.isProduction,
--    sameSite: "strict" as const,
-+    secure: env.isProduction || crossSite,
-+    sameSite: crossSite ? ("none" as const) : ("strict" as const),
-     path: "/",
-     maxAge: env.auth.cookieMaxAgeMs,
-   };
- }
+A cookie with `SameSite=Strict` is never sent from a Vercel origin to your API, so login
+succeeds and every subsequent request returns 401. Setting this to `true` switches the cookie to
+`SameSite=None`, which browsers only honour together with `Secure` — so the flag also forces
+`Secure` on, and **the API must be served over HTTPS**. Over plain HTTP the browser discards the
+cookie and you are no better off.
+
+Implemented in `cookieOptions()` (`backend/src/middleware/auth.middleware.ts`), which both the
+signin and logout paths use, so the cookie is cleared with the same attributes it was set with.
+
+### 3.2 `CORS_ORIGINS`
+
+Left empty, the API reflects whichever `Origin` header arrives and allows credentials — fine on
+localhost, but it means **any website could make authenticated requests to your API** once it is
+publicly reachable.
+
+`SameSite=Strict` was quietly mitigating that. Turning on `CROSS_SITE_COOKIE` removes the
+mitigation, so this allowlist becomes the control that stops it. Set it to your deployed
+frontend origin, comma-separated if there is more than one:
+
+```bash
+CORS_ORIGINS=https://your-app.vercel.app
 ```
 
-Add to the `auth` block in `backend/src/config/env.ts`:
-
-```ts
-crossSiteCookie: process.env.CROSS_SITE_COOKIE === "true",
-```
-
-### 3.2 CORS must use an explicit allowlist
-
-`backend/src/index.ts` currently uses `cors({ origin: true, credentials: true })`. `origin: true`
-reflects whichever `Origin` header arrives, and combined with `credentials: true` that means
-**any website can make authenticated requests to your API** once it is publicly reachable.
-
-`SameSite=Strict` was quietly mitigating this. Moving to `SameSite=None` removes that mitigation,
-so the allowlist becomes load-bearing rather than optional.
-
-```diff
--  app.use(cors({ origin: true, credentials: true }));
-+  // Empty allowlist keeps the permissive local-dev behaviour; production sets
-+  // CORS_ORIGINS so only the deployed frontend can make credentialed requests.
-+  app.use(
-+    cors({
-+      origin: env.corsOrigins.length > 0 ? env.corsOrigins : true,
-+      credentials: true,
-+    })
-+  );
-```
-
-Add to `backend/src/config/env.ts`:
-
-```ts
-corsOrigins: (process.env.CORS_ORIGINS || "")
-  .split(",")
-  .map((s) => s.trim())
-  .filter(Boolean),
-```
+Origins must match exactly — scheme and host, no trailing slash, no path.
 
 > **Vercel preview deployments** get a fresh random hostname per commit
 > (`your-app-abc123-team.vercel.app`), so they will not match a fixed allowlist and their logins
@@ -226,6 +201,26 @@ corsOrigins: (process.env.CORS_ORIGINS || "")
 > Either test previews against a separate backend, or accept that only the production domain
 > authenticates.
 
+### 3.3 Verifying before you deploy
+
+```bash
+# expect: Secure; SameSite=None
+curl -si -X POST https://api.your-domain.ac.id/api/auth/admin/logout | grep -i set-cookie
+
+# expect: the origin echoed back
+curl -si -X OPTIONS https://api.your-domain.ac.id/api/auth/admin/signin \
+  -H "Origin: https://your-app.vercel.app" \
+  -H "Access-Control-Request-Method: POST" | grep -i access-control-allow-origin
+
+# expect: NO access-control-allow-origin header at all
+curl -si -X OPTIONS https://api.your-domain.ac.id/api/auth/admin/signin \
+  -H "Origin: https://evil.example.com" \
+  -H "Access-Control-Request-Method: POST" | grep -i access-control-allow-origin
+```
+
+The third check is the one that matters: it proves the allowlist rejects unlisted origins rather
+than silently reflecting them. `logout` is used for the cookie check because it emits the same
+attributes as `signin` without needing valid credentials.
 ---
 
 ## 4. Backend deployment
