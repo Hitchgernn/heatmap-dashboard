@@ -176,7 +176,14 @@ router.post("/signup", async (req: Request, res: Response) => {
  *         description: Logged out.
  */
 router.post("/logout", (_req: Request, res: Response) => {
-  res.clearCookie(env.auth.cookieName, { path: "/" });
+  // The clearing Set-Cookie must carry the same attributes the cookie was set
+  // with, or the browser ignores it and the session survives logout. This
+  // matters once crossSiteCookie flips Secure/SameSite on.
+  //
+  // maxAge is dropped deliberately: express derives `expires` from it, which
+  // would override clearCookie's epoch expiry and re-issue a live cookie.
+  const { maxAge: _maxAge, ...clearOptions } = cookieOptions();
+  res.clearCookie(env.auth.cookieName, clearOptions);
   return successResponse(res, { message: "Logged out" });
 });
 
