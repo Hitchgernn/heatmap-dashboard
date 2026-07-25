@@ -1,0 +1,15 @@
+# Keep secrets out of the image — .env is supplied at runtime via env_file.
+.env
+.env.*
+
+node_modules
+dist
+*.tsbuildinfo
+
+npm-debug.log*
+*.log
+
+.git
+.gitignore
+Dockerfile
+.dockerignore

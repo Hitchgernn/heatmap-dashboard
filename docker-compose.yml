@@ -1,12 +1,15 @@
-# Local infrastructure for the Borobudur dashboard.
+# Infrastructure for the Borobudur dashboard.
 #
-# Currently provides the PostgreSQL admin-auth database only. Location data
-# stays in Hyperbase (external BaaS), and the backend/frontend containers are
-# part of the not-yet-built deployment layer — add them here later.
+# PostgreSQL holds admin auth only; location data stays in Hyperbase (external
+# BaaS), reached by the backend over REST. The frontend is not here — it is a
+# static Vite build deployed separately (see docs/DEPLOYMENT.md).
 #
-# Bring up:   docker compose up -d postgres
+# Bring up everything:  docker compose up -d --build
+# Database only (local dev against `npm run dev`):
+#                       docker compose up -d postgres
+#
 # The schema in backend/src/db/schema.sql is auto-applied on first init (empty
-# volume). For an existing volume, run `npm run db:init` from backend/ instead.
+# volume). For an existing volume, apply it manually — see docs/DEPLOYMENT.md.
 
 services:
   postgres:
@@ -16,8 +19,11 @@ services:
       POSTGRES_USER: ${PGUSER:-borobudur}
       POSTGRES_PASSWORD: ${PGPASSWORD:-borobudur}
       POSTGRES_DB: ${PGDATABASE:-borobudur_auth}
+    # Bound to loopback deliberately: the backend reaches Postgres over the
+    # compose network, so the published port exists only for local psql access.
+    # Publishing on 0.0.0.0 would expose the database to the whole network.
     ports:
-      - "${PGPORT:-5432}:5432"
+      - "127.0.0.1:${PGPORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./backend/src/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
@@ -26,6 +32,26 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    environment:
+      # Overrides whatever backend/.env says, because inside the container
+      # 127.0.0.1 is the container itself, not the host. `postgres` resolves to
+      # the service above over the compose network. Compose gives `environment`
+      # precedence over `env_file`, so one .env serves both local dev and here.
+      PGHOST: postgres
+      PGPORT: 5432
+    depends_on:
+      postgres:
+        condition: service_healthy
+    # Loopback again: Nginx on the host terminates TLS and proxies to this port.
+    ports:
+      - "127.0.0.1:${PORT:-3001}:3001"
 
 volumes:
   postgres_data:
