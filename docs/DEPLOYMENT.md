@@ -63,11 +63,20 @@ apt-cache policy postgresql 2>/dev/null || dnf info postgresql-server 2>/dev/nul
 ```
 
 `db/schema.sql` uses `gen_random_uuid()` as a **core** function, which requires **PostgreSQL 13
-or newer**. Ubuntu 22.04/24.04 (14/16), Debian 12 (15) and Rocky 9 (13) all qualify. Ubuntu
-20.04 ships PostgreSQL 12 and will fail on `CREATE TABLE` — use the PGDG apt repository there
-instead of the distro package.
+or newer**. Ubuntu 22.04/24.04 (14/16), Debian 12 (15) and Rocky 9 (13) all qualify and can use
+the distro package directly (section 2.2).
 
-### 2.2 Install
+**Ubuntu 20.04 "focal" ships PostgreSQL 12**, where `gen_random_uuid()` lives in the `pgcrypto`
+extension rather than in core. Installing the distro package there fails at `npm run db:init`
+with:
+
+```
+error: function gen_random_uuid() does not exist
+```
+
+Focal needs section 2.2b instead.
+
+### 2.2 Install (PostgreSQL 13+ available)
 
 **Debian / Ubuntu** (creates and starts a cluster automatically):
 
@@ -90,6 +99,61 @@ Verify:
 psql --version
 sudo systemctl status postgresql --no-pager
 ```
+
+### 2.2b Install on Ubuntu 20.04 (focal)
+
+Two options. Prefer A; fall back to B when A is unavailable.
+
+#### Option A — PostgreSQL 16 from the PGDG repository
+
+```bash
+sudo apt install -y curl ca-certificates gnupg lsb-release
+curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+  | sudo gpg --dearmor -o /usr/share/keyrings/postgresql.gpg
+echo "deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt focal-pgdg main" \
+  | sudo tee /etc/apt/sources.list.d/pgdg.list
+sudo apt update
+apt-cache policy postgresql-16
+```
+
+**Check that last command before installing.** Focal reached end of standard support in April
+2025, so PGDG may no longer publish builds for it. If a candidate version is listed:
+
+```bash
+sudo apt install -y postgresql-16 postgresql-contrib-16
+```
+
+If it reports `Candidate: (none)`, try `postgresql-15`, `postgresql-14`, then `postgresql-13` —
+any release ≥ 13 works unmodified. If none resolve, PGDG has dropped focal; use Option B.
+
+Then continue from section 2.3. Nothing else differs.
+
+#### Option B — PostgreSQL 12 with the pgcrypto extension
+
+```bash
+sudo apt update
+sudo apt install -y postgresql postgresql-contrib
+```
+
+Create the role and database as in section 2.3, then enable the extension **before**
+`npm run db:init`:
+
+```bash
+sudo -u postgres psql -d borobudur_auth -c 'CREATE EXTENSION IF NOT EXISTS pgcrypto;'
+```
+
+Two details that cause silent failures if missed:
+
+- It must run as the `postgres` superuser — the `borobudur` role cannot create extensions.
+- Extensions are **per-database**, not per-cluster, so `-d borobudur_auth` is required.
+  Installing it into the default `postgres` database has no effect on this project.
+
+With pgcrypto present, `gen_random_uuid()` resolves normally and `db/schema.sql` runs unchanged
+— **no repository changes are needed**.
+
+The cost is one undocumented setup step: anyone rebuilding this database on PostgreSQL 12
+without the extension gets the `function gen_random_uuid() does not exist` error above, and the
+comment in `db/schema.sql` ("no pgcrypto needed") no longer applies to their cluster.
 
 ### 2.3 Create the role and database
 
@@ -433,3 +497,8 @@ and kill it, or use `sudo systemctl restart borobudur-api`.
 
 **Admin credentials are correct but rejected**
 No admin row exists yet. Register one via section 4.5.
+
+**`npm run db:init` fails with `function gen_random_uuid() does not exist`**
+The cluster is PostgreSQL 12 or older, where that function is not in core. Confirm with
+`psql --version`, then either move to 13+ (section 2.2b, Option A) or enable pgcrypto against
+the project database (Option B).
