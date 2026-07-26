@@ -1,58 +1,54 @@
 # Deployment
 
-Deploying the Borobudur Aggregated Heatmap Dashboard with the **frontend on Vercel** and the
-**backend + PostgreSQL on a self-managed server** (e.g. a college/university machine reached
-over SSH).
+Deploying the Borobudur Aggregated Heatmap Dashboard — frontend, backend, and PostgreSQL — as
+containers on a single self-managed server (e.g. a college machine reached over SSH).
 
-Location data stays in Hyperbase — nothing about that changes here. Only admin auth lives in
+Location data stays in Hyperbase; nothing about that changes here. Only admin auth lives in
 PostgreSQL, and only the backend talks to either.
 
 ---
 
-## 1. Topology and the constraint that drives everything
+## 1. Topology
 
 ```
 Browser
    │
-   ├── https://your-app.vercel.app        Vercel — static Vite build
-   │
-   └── https://api.your-domain.ac.id      College server
-                                             │
-                                             ├── cloudflared (TLS + public hostname)
-                                             │      └── reaches 127.0.0.1:3001
-                                             │
-                                             └── docker compose "borobudur-dashboard"
-                                                    ├── backend    :3001 → loopback
-                                                    └── postgres   :5433 → loopback
-                                                           │
-                                                  Hyperbase (external, over REST)
+   └── https://dashboard.your-domain.ac.id     jarkom1 (10.42.28.70)
+                                                  │
+                                                  ├── cloudflared (TLS + public hostname)
+                                                  │      └── reaches 127.0.0.1:8090
+                                                  │
+                                                  └── docker compose "borobudur-dashboard"
+                                                         ├── frontend  :8090 → loopback
+                                                         │     ├── serves the built dashboard
+                                                         │     └── proxies /api → backend:3001
+                                                         ├── backend   :3001 → loopback
+                                                         └── postgres  :5433 → loopback
+                                                                │
+                                                       Hyperbase (same network, over REST)
 ```
 
-Everything runs in containers. Both published ports are bound to **loopback only** — nothing
-outside the host can reach them directly, and the backend talks to Postgres over the compose
-network rather than through the published port.
+**One origin for everything.** The browser loads the app and calls `/api/...` on the same
+hostname; the frontend container's nginx proxies those calls to the backend over the compose
+network. Consequences worth stating plainly:
 
-Cloudflare Tunnel provides the public hostname and certificate, so no inbound port is opened and
-no certificate is managed on the server.
+- The session cookie stays `SameSite=Strict` — the strongest setting, and no `Secure`/HTTPS
+  gymnastics are required for it to work.
+- **CORS never applies.** Same-origin requests are not cross-origin requests.
+- Only **one** port needs to be reachable from outside the host: the frontend's. The backend and
+  database are not exposed beyond loopback at all.
 
-The frontend and backend are on **different sites**. The session cookie must therefore travel
-cross-site, and browsers only allow that when the cookie is `SameSite=None; Secure`. `Secure`
-means HTTPS is **mandatory** — not a nice-to-have.
+All three published ports bind to `127.0.0.1`. Cloudflare Tunnel provides the public hostname
+and certificate, so no inbound port is opened and no certificate is managed on the server.
 
-### Prerequisite: the backend must be publicly reachable over HTTPS
+### Prerequisite
 
-Vercel serves your frontend from the public internet, so the browser must be able to reach the
-backend from the public internet too — and over HTTPS, because the session cookie is `Secure`.
+The server must be able to reach Hyperbase, which it does natively — `10.42.28.71` is on the
+same subnet as `10.42.28.70`. No VPN is involved in production; the VPN exists only so a
+developer laptop can join that network from outside.
 
-**Cloudflare Tunnel** satisfies both without a public IP, an open port, or a certificate on the
-server: `cloudflared` makes an outbound connection to Cloudflare, which then serves your
-hostname over HTTPS and forwards traffic down that connection. This is the approach used
-throughout section 4.
-
-The alternative, if you would rather not use Vercel at all, is to **serve the frontend from the
-same origin as the API** — let a reverse proxy serve the built `dist/` alongside `/api`. Same
-origin means `SameSite=Strict` keeps working and none of the settings in section 3 are needed.
-Simplest and most secure option when Vercel is not a requirement.
+Public reachability for *users* is handled by the tunnel (section 4.3), which needs no public IP
+and no open inbound port.
 
 ### Deploying onto a shared server
 
@@ -62,13 +58,14 @@ If the host already runs other people's containers, read this before running any
   container, network, and volume it creates is prefixed with that. A container called
   `borobudur_backend` or `borobudur_db` on the same host belongs to something else — most likely
   the mobile app — and nothing here touches it.
-- **Published host ports are the one shared resource.** Both are overridable and neither
+- **Published host ports are the one shared resource.** All are overridable and none
   defaults to a commonly occupied value: `PG_PUBLISH_PORT` (default 5433, *not* 5432, which is
-  usually taken by another Postgres) and `BACKEND_PUBLISH_PORT` (default 3001). Check before
-  starting:
+  usually taken by another Postgres), `BACKEND_PUBLISH_PORT` (default 3001), and
+  `FRONTEND_PUBLISH_PORT` (default 8090 — the only one that needs to be reachable by the
+  tunnel). Check before starting:
 
   ```bash
-  sudo ss -ltnp | grep -E ':(3001|5433)\b' || echo "both free"
+  sudo ss -ltnp | grep -E ':(3001|5433|8090)\b' || echo "all three free"
   ```
 
   A `0.0.0.0` binding by another container blocks a loopback binding here, so a port that looks
@@ -183,75 +180,34 @@ with it.
 
 ---
 
-## 3. Cross-site configuration
+## 3. Cross-origin settings — not needed here
 
-Skip this entire section if you serve the frontend from the same origin as the API.
+This deployment serves the frontend and the API from **one origin**, so neither of the
+cross-origin switches applies. Both default to off; leave them unset.
 
-The backend ships with both switches already implemented. Deployment only sets two environment
-variables — no code changes are needed. Both default to same-origin behaviour, so local
-development and a same-origin deployment are unaffected.
-
-| Variable | Effect |
+| Variable | Leave unset because |
 | --- | --- |
-| `CROSS_SITE_COOKIE=true` | Session cookie becomes `SameSite=None; Secure` instead of `SameSite=Strict`. |
-| `CORS_ORIGINS=https://a,https://b` | Only these origins may make credentialed requests. |
+| `CROSS_SITE_COOKIE` | The cookie stays `SameSite=Strict`, which is stronger. Setting it to `true` would force `SameSite=None; Secure` and weaken CSRF protection for no benefit. |
+| `CORS_ORIGINS` | Same-origin requests are not cross-origin requests, so no CORS headers are consulted at all. |
 
-### 3.1 `CROSS_SITE_COOKIE`
+They exist for a split deployment (frontend on Vercel or another host). If you ever move to
+that, `git log` has the details — but the same-origin arrangement here is both simpler and more
+secure, so treat moving away from it as a decision that needs a reason.
 
-A cookie with `SameSite=Strict` is never sent from a Vercel origin to your API, so login
-succeeds and every subsequent request returns 401. Setting this to `true` switches the cookie to
-`SameSite=None`, which browsers only honour together with `Secure` — so the flag also forces
-`Secure` on, and **the API must be served over HTTPS**. Over plain HTTP the browser discards the
-cookie and you are no better off.
-
-Implemented in `cookieOptions()` (`backend/src/middleware/auth.middleware.ts`), which both the
-signin and logout paths use, so the cookie is cleared with the same attributes it was set with.
-
-### 3.2 `CORS_ORIGINS`
-
-Left empty, the API reflects whichever `Origin` header arrives and allows credentials — fine on
-localhost, but it means **any website could make authenticated requests to your API** once it is
-publicly reachable.
-
-`SameSite=Strict` was quietly mitigating that. Turning on `CROSS_SITE_COOKIE` removes the
-mitigation, so this allowlist becomes the control that stops it. Set it to your deployed
-frontend origin, comma-separated if there is more than one:
+**Verify it really is same-origin** after deploying. The browser must never see a cross-origin
+request:
 
 ```bash
-CORS_ORIGINS=https://your-app.vercel.app
+# both must return the SAME host, and the second must not be a different port
+curl -sI https://dashboard.your-domain.ac.id/          | head -1
+curl -sI https://dashboard.your-domain.ac.id/api/docs  | head -1
 ```
 
-Origins must match exactly — scheme and host, no trailing slash, no path.
+In DevTools, `borobudur_session` should show `HttpOnly` and `SameSite=Strict`, and the Network
+tab should show no CORS preflight (`OPTIONS`) requests before the API calls.
 
-> **Vercel preview deployments** get a fresh random hostname per commit
-> (`your-app-abc123-team.vercel.app`), so they will not match a fixed allowlist and their logins
-> will fail. That is the correct default — do not widen the allowlist to a wildcard to fix it.
-> Either test previews against a separate backend, or accept that only the production domain
-> authenticates.
 
-### 3.3 Verifying before you deploy
-
-```bash
-# expect: Secure; SameSite=None
-curl -si -X POST https://api.your-domain.ac.id/api/auth/admin/logout | grep -i set-cookie
-
-# expect: the origin echoed back
-curl -si -X OPTIONS https://api.your-domain.ac.id/api/auth/admin/signin \
-  -H "Origin: https://your-app.vercel.app" \
-  -H "Access-Control-Request-Method: POST" | grep -i access-control-allow-origin
-
-# expect: NO access-control-allow-origin header at all
-curl -si -X OPTIONS https://api.your-domain.ac.id/api/auth/admin/signin \
-  -H "Origin: https://evil.example.com" \
-  -H "Access-Control-Request-Method: POST" | grep -i access-control-allow-origin
-```
-
-The third check is the one that matters: it proves the allowlist rejects unlisted origins rather
-than silently reflecting them. `logout` is used for the cookie check because it emits the same
-attributes as `signin` without needing valid credentials.
----
-
-## 4. Backend deployment
+## 4. Deploying the stack
 
 ### 4.1 Environment
 
@@ -286,9 +242,8 @@ JWT_SECRET=$(openssl rand -hex 32)
 COOKIE_SECRET=$(openssl rand -hex 32)
 ADMIN_REGISTRATION_SECRET=$(openssl rand -hex 16)
 
-# --- Cross-site frontend (section 3) ---
-CROSS_SITE_COOKIE=true
-CORS_ORIGINS=https://your-app.vercel.app
+# Cross-origin switches are deliberately absent — this deployment is
+# same-origin. See section 3.
 EOF
 chmod 600 .env
 ```
@@ -346,9 +301,12 @@ sudo docker run -d --name tunnel-borobudur-dashboard \
   tunnel --no-autoupdate run --token <YOUR_TOKEN>
 ```
 
-`--network host` is what lets the connector reach `127.0.0.1:3001`, the loopback port the
-backend publishes. Without it the container's own loopback is a different namespace and the
-tunnel resolves nothing.
+Point the public hostname at **`http://127.0.0.1:8090`** — the frontend container. Not the
+backend: the frontend serves the app *and* proxies `/api` to the backend, so routing the tunnel
+at 3001 would expose a bare API with no dashboard and break the same-origin arrangement.
+
+`--network host` is what lets the connector reach that loopback port. Without it the container's
+own loopback is a separate namespace and the tunnel resolves nothing.
 
 The token grants control of the tunnel — treat it like a password. Keep it out of the shell
 history (`docker run` arguments are visible in `ps` while running), and out of the repository.
@@ -356,18 +314,18 @@ history (`docker run` arguments are visible in `ps` while running), and out of t
 Verify from anywhere:
 
 ```bash
-curl -s https://api.your-domain.ac.id/health     # {"status":"ok"}
+curl -s  https://dashboard.your-domain.ac.id/health   # {"status":"ok"}  (proxied to backend)
+curl -sI https://dashboard.your-domain.ac.id/        | head -1   # 200 — the dashboard itself
 ```
 
 > On a host that already runs tunnels, name yours distinctly. A neighbour named `tunnel-5001`
 > belongs to a different service; do not reuse or repoint it.
 
-**Do not skip TLS.** Over plain HTTP the browser rejects the `Secure` cookie outright and
-authentication cannot work in this topology at all.
+TLS is not strictly required for authentication here — a same-origin `SameSite=Strict` cookie
+works over plain HTTP — but serve it over HTTPS anyway. Admin credentials cross this connection.
 
-Using an existing reverse proxy instead? Point it at `127.0.0.1:3001` and forward `Host`,
-`X-Real-IP`, `X-Forwarded-For`, and `X-Forwarded-Proto` as usual — the requirement is only that
-the public endpoint is HTTPS.
+Using an existing reverse proxy instead? Point it at `127.0.0.1:8090` and forward `Host`,
+`X-Real-IP`, `X-Forwarded-For`, and `X-Forwarded-Proto` as usual.
 
 ### 4.4 Remove the debug route
 
@@ -381,74 +339,101 @@ No admin exists until you create one; correct credentials fail without this step
 
 ```bash
 set -a; . .env; set +a
-curl -s -X POST https://api.your-domain.ac.id/api/auth/admin/signup \
+curl -s -X POST http://localhost:3001/api/auth/admin/signup \
   -H 'Content-Type: application/json' \
   -d "{\"email\":\"you@campus.ac.id\",\"password\":\"<pick-one>\",\"secret\":\"$ADMIN_REGISTRATION_SECRET\"}"
 ```
 
 ---
 
-## 5. Frontend on Vercel
+## 5. The frontend container
 
-### 5.1 Project settings
+`frontend/Dockerfile` builds the Vite bundle and serves it with nginx. The same nginx proxies
+`/api` to the backend, which is what makes the whole deployment same-origin. There is no
+separate hosting provider and no second domain.
 
-| Setting | Value |
-| --- | --- |
-| Framework preset | Vite |
-| Root directory | `frontend` |
-| Build command | `npm run build` |
-| Output directory | `dist` |
-| Install command | `npm install` |
+### 5.1 The API base URL must be empty
 
-### 5.2 Environment variable
+`VITE_API_BASE_URL` is baked in as `""` by the Dockerfile's build arg. That is deliberate and
+easy to get wrong in both directions:
 
-Add under **Settings → Environment Variables**:
+- **Not `/api`.** The request paths in `frontend/src/lib/api.ts` already start with `/api`
+  (`buildUrl("/api/heatmap/aggregate", …)`), so a `/api` base produces `/api/api/heatmap/...`
+  and every request 404s.
+- **Not unset.** The code falls back to `http://localhost:3001` when the variable is absent
+  (`import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001"`), which would make every
+  browser call its *own* machine and fail for everyone but you.
 
-```
-VITE_API_BASE_URL = https://api.your-domain.ac.id
-```
+Empty means requests go to `/api/...` on whatever origin served the page — exactly what the
+nginx proxy handles.
 
-Vite inlines `VITE_*` variables at **build time**, not runtime. Changing this value requires a
-**redeploy** — restarting nothing will pick it up.
+Vite inlines this at **build** time. Changing it requires `docker compose up -d --build
+frontend`; restarting the container does nothing.
 
-Set it for the Production environment at minimum. If you also set it for Preview, remember the
-preview hostnames will not be in `CORS_ORIGINS` (section 3.2), so preview logins will fail.
+### 5.2 Verify the built bundle
 
-### 5.3 Deploy
-
-Push to the branch Vercel tracks, or `vercel --prod`. Once deployed, add the resulting domain to
-`CORS_ORIGINS` on the backend and restart it:
+Worth checking after a build, because the failure is silent — the app loads and then every
+request fails:
 
 ```bash
-docker compose up -d backend
+docker compose exec frontend grep -c "localhost:3001" /usr/share/nginx/html/assets/*.js
 ```
 
----
+`0` (or "no match") is correct. Any hits mean the build arg did not reach Vite.
+
+### 5.3 nginx behaviour worth knowing
+
+`frontend/nginx.conf` handles three things beyond the proxy:
+
+- **SPA routing** — unknown paths fall back to `index.html`, so a refresh on any in-app view
+  works rather than 404ing.
+- **Cache policy** — hashed files under `/assets/` are cached for a year (`immutable`);
+  `index.html` is explicitly never cached. Without that split, browsers keep requesting the
+  previous build's asset filenames after a redeploy and the page fails to boot.
+- **Runtime DNS** — the proxy target is resolved through Docker's embedded resolver every 10s
+  rather than once at startup. Otherwise recreating the backend container gives it a new IP and
+  nginx keeps proxying to the dead one, returning 502 until nginx is restarted too.
+
 
 ## 6. Verification
 
-Work down this list — each step isolates a different layer.
+Work down the list — each step isolates a different layer, so the first failure tells you where
+to look.
 
 ```bash
-# 1. Backend is up
-curl -s https://api.your-domain.ac.id/health
+# 1. Containers up, postgres healthy
+docker compose ps
 
-# 2. CORS allows the Vercel origin (expect access-control-allow-origin + -credentials)
-curl -si -X OPTIONS https://api.your-domain.ac.id/api/auth/admin/signin \
-  -H "Origin: https://your-app.vercel.app" \
-  -H "Access-Control-Request-Method: POST" | grep -i access-control
+# 2. Backend alive on the compose network
+curl -s localhost:3001/health                      # {"status":"ok"}
 
-# 3. Cookie is issued with the cross-site attributes (expect: Secure; SameSite=None)
-curl -si -X POST https://api.your-domain.ac.id/api/auth/admin/signin \
+# 3. nginx serves the dashboard
+curl -sI localhost:8090/ | head -1                 # HTTP/1.1 200 OK
+
+# 4. nginx proxies /api to the backend — the same-origin path
+curl -s localhost:8090/health                      # {"status":"ok"}
+curl -s localhost:8090/api/auth/admin/me           # 401 unauthenticated (correct: it reached the API)
+
+# 5. Login sets the cookie with Strict, and the session works through the proxy
+curl -s -c /tmp/c.txt -X POST localhost:8090/api/auth/admin/signin \
   -H 'Content-Type: application/json' \
-  -d '{"email":"you@campus.ac.id","password":"<pw>"}' | grep -i set-cookie
+  -d '{"email":"you@campus.ac.id","password":"<pw>"}' -i | grep -i set-cookie
+curl -s -b /tmp/c.txt "localhost:8090/api/dashboard/summary?window=1h" | head -c 200
+
+# 6. Publicly, through the tunnel
+curl -sI https://dashboard.your-domain.ac.id/ | head -1
 ```
 
-Then in the browser: open the Vercel URL, log in, and confirm the dashboard loads data. In
-DevTools → Application → Cookies, `borobudur_session` should be present with `HttpOnly`,
-`Secure`, and `SameSite=None`.
+Step 4 is the one that proves the architecture: a `401` means nginx routed the request to the
+backend and the backend answered. A `404` from nginx means the proxy block is not matching.
 
----
+The cookie in step 5 should read `HttpOnly; SameSite=Strict` — and **no** `Secure` unless
+`NODE_ENV=production`. If you see `SameSite=None`, `CROSS_SITE_COOKIE` is set and should not be.
+
+Finally, in the browser: open the tunnel URL, log in, and confirm the dashboard renders data.
+DevTools → Network should show **no** `OPTIONS` preflight requests — their absence is the proof
+that this is genuinely same-origin.
+
 
 ## 7. Troubleshooting
 
@@ -463,12 +448,24 @@ is still `Strict`), the API served over HTTP instead of HTTPS (so `Secure` cooki
 rejected), or a `VITE_API_BASE_URL` that does not match `CORS_ORIGINS`.
 
 **CORS error in the browser console**
-The Vercel domain is missing from `CORS_ORIGINS`, or the backend was not restarted after the
-variable changed. Preview deployments have different hostnames than production.
+Something is not same-origin. Either the page was loaded directly from the backend port (3001)
+instead of the frontend port, or `VITE_API_BASE_URL` was baked in as an absolute URL. In this
+deployment no CORS should ever be involved.
 
-**Frontend calls `localhost:3001` in production**
-`VITE_API_BASE_URL` was missing at build time, so the default was inlined. Set it in Vercel and
-**redeploy** — this value cannot change without a rebuild.
+**Every API call goes to `localhost:3001` from the user's browser**
+`VITE_API_BASE_URL` was absent at build time, so `lib/api.ts` fell back to its localhost default
+and baked that in. Rebuild: `docker compose up -d --build frontend`, then confirm with the grep
+in section 5.2. Restarting the container cannot fix it — the value is inlined at build time.
+
+**Dashboard loads but every request 404s**
+`VITE_API_BASE_URL` was built as `/api`, producing `/api/api/...`. It must be empty (section 5.1).
+
+**Refreshing an in-app view returns 404**
+nginx is not falling back to `index.html`. Check the `try_files` line in `frontend/nginx.conf`.
+
+**API calls return 502 after redeploying the backend**
+nginx is holding a stale container IP. The shipped config re-resolves through Docker's DNS every
+10s, so this should self-heal — if it persists, `docker compose restart frontend`.
 
 **New routes return 404 after a deploy**
 The container is running an older image. `docker compose restart` reuses the existing image —

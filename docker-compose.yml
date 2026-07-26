@@ -1,8 +1,12 @@
 # Infrastructure for the Borobudur dashboard.
 #
 # PostgreSQL holds admin auth only; location data stays in Hyperbase (external
-# BaaS), reached by the backend over REST. The frontend is not here — it is a
-# static Vite build deployed separately (see docs/DEPLOYMENT.md).
+# BaaS), reached by the backend over REST.
+#
+# The frontend container serves the built dashboard AND proxies /api to the
+# backend, so the browser sees a single origin. That keeps the session cookie
+# SameSite=Strict and removes CORS from the picture entirely — only the frontend
+# port needs to be reachable from outside.
 #
 # Bring up everything:  docker compose up -d --build
 # Database only (local dev against `npm run dev`):
@@ -61,10 +65,28 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    # Loopback only — a cloudflared tunnel (or reverse proxy) reaches this port
-    # and terminates TLS. Override with BACKEND_PUBLISH_PORT if 3001 is taken.
+    # Loopback only, and not strictly required: the frontend container reaches
+    # the backend over the compose network. Published for direct curl access
+    # during setup and debugging. Override with BACKEND_PUBLISH_PORT.
     ports:
       - "127.0.0.1:${BACKEND_PUBLISH_PORT:-3001}:3001"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Empty on purpose — the client calls /api on whatever origin served the
+        # page, which this same container proxies to the backend. Baked in at
+        # build time, so changing it needs `up -d --build frontend`.
+        VITE_API_BASE_URL: ""
+    restart: unless-stopped
+    depends_on:
+      - backend
+    # The only port that needs to be reachable from outside the host: point the
+    # cloudflared tunnel (or an existing reverse proxy) here. 8090 avoids the
+    # ports commonly taken on a shared host; override with FRONTEND_PUBLISH_PORT.
+    ports:
+      - "127.0.0.1:${FRONTEND_PUBLISH_PORT:-8090}:80"
 
 volumes:
   postgres_data:

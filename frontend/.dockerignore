@@ -1,0 +1,16 @@
+# .env is build-time only and must not be baked in; the image takes
+# VITE_API_BASE_URL as a build arg instead.
+.env
+.env.*
+
+node_modules
+dist
+*.tsbuildinfo
+
+npm-debug.log*
+*.log
+
+.git
+.gitignore
+Dockerfile
+.dockerignore
