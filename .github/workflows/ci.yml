@@ -90,3 +90,21 @@ jobs:
         run: |
           docker run --rm --entrypoint sh borobudur-backend:ci \
             -c 'test -f dist/db/schema.sql && test -f dist/index.js && echo "runtime layout OK"'
+
+      # The frontend image bakes VITE_API_BASE_URL at build time. If the build arg
+      # fails to reach Vite the bundle silently falls back to localhost:3001 and
+      # every user's browser calls its own machine, so assert it is absent.
+      - name: Build frontend image
+        run: docker build -t borobudur-frontend:ci ./frontend
+
+      - name: Verify the bundle has no absolute API base
+        run: |
+          docker run --rm --entrypoint sh borobudur-frontend:ci -c '
+            grep -rq "localhost:3001" /usr/share/nginx/html/assets/ && {
+              echo "FAIL: bundle contains localhost:3001"; exit 1; }
+            grep -rq "/api/heatmap/aggregate" /usr/share/nginx/html/assets/ || {
+              echo "FAIL: API paths missing from bundle"; exit 1; }
+            echo "bundle API base OK"'
+
+      - name: Verify nginx config parses
+        run: docker run --rm borobudur-frontend:ci nginx -t
