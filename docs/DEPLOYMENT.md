@@ -288,10 +288,10 @@ the container, because it runs through `tsx`, a devDependency. Use the `psql` ro
 
 `cloudflared` dials out to Cloudflare and receives traffic over that connection, so the server
 needs no public IP, no inbound firewall rule, and no certificate of its own. Cloudflare
-terminates TLS at its edge, which is what satisfies the `Secure` cookie requirement.
+terminates TLS at its edge.
 
 Create the tunnel in the Cloudflare dashboard (Zero Trust → Networks → Tunnels), add a public
-hostname pointing at `http://127.0.0.1:3001`, and copy the connector token. Then run it:
+hostname pointing at **`http://127.0.0.1:8090`**, and copy the connector token. Then run it:
 
 ```bash
 sudo docker run -d --name tunnel-borobudur-dashboard \
@@ -301,9 +301,9 @@ sudo docker run -d --name tunnel-borobudur-dashboard \
   tunnel --no-autoupdate run --token <YOUR_TOKEN>
 ```
 
-Point the public hostname at **`http://127.0.0.1:8090`** — the frontend container. Not the
-backend: the frontend serves the app *and* proxies `/api` to the backend, so routing the tunnel
-at 3001 would expose a bare API with no dashboard and break the same-origin arrangement.
+**8090 is the frontend, not the backend.** The frontend container serves the dashboard *and*
+proxies `/api` to the backend, so pointing the tunnel at 3001 would publish a bare API with no
+dashboard and break the same-origin arrangement.
 
 `--network host` is what lets the connector reach that loopback port. Without it the container's
 own loopback is a separate namespace and the tunnel resolves nothing.
