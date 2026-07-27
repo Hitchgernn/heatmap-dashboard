@@ -341,7 +341,7 @@ No admin exists until you create one; correct credentials fail without this step
 set -a; . .env; set +a
 curl -s -X POST http://localhost:3001/api/auth/admin/signup \
   -H 'Content-Type: application/json' \
-  -d "{\"email\":\"you@campus.ac.id\",\"password\":\"<pick-one>\",\"secret\":\"$ADMIN_REGISTRATION_SECRET\"}"
+  -d "{\"email\":\"you@campus.ac.id\",\"password\":\"<at-least-8-chars>\",\"registration_secret\":\"$ADMIN_REGISTRATION_SECRET\"}"
 ```
 
 ---
