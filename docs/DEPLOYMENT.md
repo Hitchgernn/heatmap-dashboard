@@ -38,8 +38,9 @@ network. Consequences worth stating plainly:
 - Only **one** port needs to be reachable from outside the host: the frontend's. The backend and
   database are not exposed beyond loopback at all.
 
-All three published ports bind to `127.0.0.1`. Cloudflare Tunnel provides the public hostname
-and certificate, so no inbound port is opened and no certificate is managed on the server.
+All three published ports bind to `127.0.0.1` by default; only the frontend's is meant to be
+opened up, via `FRONTEND_BIND` (see below). Cloudflare Tunnel provides the public hostname and
+certificate, so no inbound port is opened and no certificate is managed on the server.
 
 ### Prerequisite
 
@@ -58,6 +59,10 @@ If the host already runs other people's containers, read this before running any
   container, network, and volume it creates is prefixed with that. A container called
   `borobudur_backend` or `borobudur_db` on the same host belongs to something else — most likely
   the mobile app — and nothing here touches it.
+- **The dashboard is loopback-only by default.** `FRONTEND_BIND` defaults to `127.0.0.1`, so
+  the tunnel can reach it but nothing on the local network can. Set `FRONTEND_BIND=0.0.0.0` to
+  expose it to the LAN — reasonable for an on-campus demo, but it puts the login page in front
+  of everyone on that network. Prefer the tunnel where you can.
 - **Published host ports are the one shared resource.** All are overridable and none
   defaults to a commonly occupied value: `PG_PUBLISH_PORT` (default 5433, *not* 5432, which is
   usually taken by another Postgres), `BACKEND_PUBLISH_PORT` (default 3001), and

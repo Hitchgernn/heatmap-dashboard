@@ -82,11 +82,18 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
-    # The only port that needs to be reachable from outside the host: point the
-    # cloudflared tunnel (or an existing reverse proxy) here. 8090 avoids the
-    # ports commonly taken on a shared host; override with FRONTEND_PUBLISH_PORT.
+    # The only port that needs to be reachable from outside the host.
+    #
+    # Defaults to loopback, which is all a cloudflared tunnel needs (it runs on
+    # the host with --network host) and means nothing on the local network can
+    # reach the dashboard directly. Set FRONTEND_BIND=0.0.0.0 to expose it to
+    # the LAN instead — useful for a demo on the campus network, but it puts the
+    # login page in front of everyone on that network, so make it a choice.
+    #
+    # 8090 avoids the ports commonly taken on a shared host; override with
+    # FRONTEND_PUBLISH_PORT.
     ports:
-      - "127.0.0.1:${FRONTEND_PUBLISH_PORT:-8090}:80"
+      - "${FRONTEND_BIND:-127.0.0.1}:${FRONTEND_PUBLISH_PORT:-8090}:80"
 
 volumes:
   postgres_data:
