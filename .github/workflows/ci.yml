@@ -75,15 +75,15 @@ jobs:
         run: npm run build
 
   docker:
-    name: Backend image builds
+    name: Container images build and pass their runtime checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # Catches Dockerfile-only breakage that the backend job cannot see —
-      # notably the runtime stage copying src/db/schema.sql into dist/, which tsc
-      # does not carry across and which fails at runtime rather than at build.
-      - name: Build image
+      # Catches Dockerfile-only breakage the backend job cannot see — notably the
+      # runtime stage copying src/db/schema.sql into dist/, which tsc does not
+      # carry across and which fails at container start rather than at build.
+      - name: Build backend image
         run: docker build -t borobudur-backend:ci ./backend
 
       - name: Verify schema.sql reached the image
