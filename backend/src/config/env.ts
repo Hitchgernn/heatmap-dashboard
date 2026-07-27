@@ -101,6 +101,17 @@ export const env = {
      * only honour together with Secure — so this requires HTTPS.
      */
     crossSiteCookie: process.env.CROSS_SITE_COOKIE === "true",
+    /**
+     * Explicit override for the cookie's Secure flag. Unset means "derive it"
+     * (production or cross-site). Set it to "false" to serve over plain HTTP
+     * without turning the whole app out of production mode — browsers discard
+     * Secure cookies on http://, which presents as a successful login followed
+     * by "Authentication required" on every later request.
+     */
+    cookieSecure:
+      process.env.COOKIE_SECURE === undefined || process.env.COOKIE_SECURE === ""
+        ? undefined
+        : process.env.COOKIE_SECURE === "true",
   },
 
   /**

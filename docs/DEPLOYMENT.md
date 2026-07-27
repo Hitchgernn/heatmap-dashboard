@@ -221,13 +221,13 @@ Create `backend/.env` (gitignored — `chmod 600` it, since a shared machine has
 ```bash
 cd backend
 cat > .env <<EOF
-# Set this ONLY once the dashboard is served over HTTPS. NODE_ENV=production
-# makes the session cookie Secure, and browsers silently discard Secure cookies
-# delivered over http:// — login succeeds, the cookie is dropped, and every
-# request afterwards fails with "Authentication required". Leave it out while
-# testing over plain HTTP (e.g. http://10.42.28.70:8090), then add it when the
-# tunnel from section 4.3 is in front.
-# NODE_ENV=production
+# backend/Dockerfile already sets NODE_ENV=production in the image, so the app
+# runs in production mode whether or not this file mentions it. Deleting the
+# line here does NOT turn it off — only setting it to another value would.
+#
+# While serving over plain HTTP, set COOKIE_SECURE=false (below). Browsers
+# discard Secure cookies on http://, which looks like a successful login
+# followed by "Authentication required" on every later request.
 PORT=3001
 
 # --- Hyperbase (location data) ---
@@ -249,6 +249,9 @@ PGPASSWORD=$(openssl rand -base64 24 | tr -d '/+=')
 PGDATABASE=borobudur_auth
 
 # --- Auth ---
+# Leave unset once HTTPS is in front (section 4.3) — the cookie should be Secure
+# there. Set to false only while testing over plain http://.
+COOKIE_SECURE=false
 JWT_SECRET=$(openssl rand -hex 32)
 COOKIE_SECRET=$(openssl rand -hex 32)
 ADMIN_REGISTRATION_SECRET=$(openssl rand -hex 16)
@@ -463,8 +466,13 @@ curl -si -X POST localhost:8090/api/auth/admin/signin \
   -d '{"email":"...","password":"..."}' | grep -i set-cookie
 ```
 
-If `Secure` appears, either drop `NODE_ENV` from `backend/.env` (then
-`docker compose up -d backend` — `restart` will not reload env) or put the site behind HTTPS.
+If `Secure` appears, set `COOKIE_SECURE=false` in `backend/.env` and run
+`docker compose up -d backend` (`restart` will not reload env). Remove it again once HTTPS is in
+front.
+
+Do **not** try to fix this by deleting `NODE_ENV` from `.env`: `backend/Dockerfile` sets
+`ENV NODE_ENV=production` in the image, so removing the override leaves production mode active.
+Check what the container actually sees with `docker compose exec backend printenv NODE_ENV`.
 
 Note curl **ignores** `Secure` while browsers enforce it, so a curl end-to-end test passes while
 the browser fails. Reproduce cookie problems in a browser, not with curl.

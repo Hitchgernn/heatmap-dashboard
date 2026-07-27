@@ -30,9 +30,13 @@ function cookieOptions() {
   // A frontend on another origin (e.g. Vercel) needs SameSite=None, which
   // browsers only honour together with Secure — so that mode implies HTTPS.
   const crossSite = env.auth.crossSiteCookie;
+  // COOKIE_SECURE wins when set. Otherwise derive it, which is right for the
+  // common cases but wrong when serving production builds over plain HTTP —
+  // the browser then discards the cookie and login appears to fail.
+  const secure = env.auth.cookieSecure ?? (env.isProduction || crossSite);
   return {
     httpOnly: true,
-    secure: env.isProduction || crossSite,
+    secure,
     sameSite: crossSite ? ("none" as const) : ("strict" as const),
     path: "/",
     maxAge: env.auth.cookieMaxAgeMs,
