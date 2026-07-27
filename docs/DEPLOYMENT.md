@@ -221,7 +221,13 @@ Create `backend/.env` (gitignored — `chmod 600` it, since a shared machine has
 ```bash
 cd backend
 cat > .env <<EOF
-NODE_ENV=production
+# Set this ONLY once the dashboard is served over HTTPS. NODE_ENV=production
+# makes the session cookie Secure, and browsers silently discard Secure cookies
+# delivered over http:// — login succeeds, the cookie is dropped, and every
+# request afterwards fails with "Authentication required". Leave it out while
+# testing over plain HTTP (e.g. http://10.42.28.70:8090), then add it when the
+# tunnel from section 4.3 is in front.
+# NODE_ENV=production
 PORT=3001
 
 # --- Hyperbase (location data) ---
@@ -446,6 +452,22 @@ that this is genuinely same-origin.
 PostgreSQL is not reachable. The message names auth, not the database. Check
 `docker compose ps` — the postgres service should be `running (healthy)` — then
 `docker compose logs postgres`.
+
+**Login succeeds, then everything says "Authentication required"**
+The cookie was issued `Secure` but served over plain HTTP, so the browser discarded it without
+warning. Caused by `NODE_ENV=production` while the site is on `http://`. Confirm with:
+
+```bash
+curl -si -X POST localhost:8090/api/auth/admin/signin \
+  -H 'Content-Type: application/json' \
+  -d '{"email":"...","password":"..."}' | grep -i set-cookie
+```
+
+If `Secure` appears, either drop `NODE_ENV` from `backend/.env` (then
+`docker compose up -d backend` — `restart` will not reload env) or put the site behind HTTPS.
+
+Note curl **ignores** `Secure` while browsers enforce it, so a curl end-to-end test passes while
+the browser fails. Reproduce cookie problems in a browser, not with curl.
 
 **Login returns 200 but every later request returns 401**
 The cookie was not stored. Almost always one of: `CROSS_SITE_COOKIE` not set (so `SameSite`
