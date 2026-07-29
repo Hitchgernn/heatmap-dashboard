@@ -1,8 +1,8 @@
 # Verification that runs on every push and pull request.
 #
-# Nothing here deploys. Vercel builds and ships the frontend on its own, and the
-# backend is updated by hand on the server (see docs/DEPLOYMENT.md). The point of
-# these jobs is to fail *before* either of those happens.
+# Nothing here deploys. The whole stack — frontend, backend, postgres — is brought
+# up by hand with docker compose on the campus server (see docs/DEPLOYMENT.md).
+# The point of these jobs is to fail *before* that happens.
 #
 # Each job installs from a clean checkout with `npm ci`, so a dependency that
 # only works locally because it is already sitting in node_modules is caught here
@@ -69,7 +69,7 @@ jobs:
         run: npm ci
 
       # `npm run build` is `tsc --noEmit && vite build`, so this covers
-      # typechecking too. It mirrors what Vercel runs on deploy.
+      # typechecking too. It mirrors the build stage of frontend/Dockerfile.
       - name: Build
         working-directory: frontend
         run: npm run build
