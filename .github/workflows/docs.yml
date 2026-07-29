@@ -1,0 +1,62 @@
+# Builds the MkDocs site and publishes it to the gh-pages branch.
+#
+# This is separate from ci.yml on purpose: ci.yml verifies the application and
+# must stay read-only, while this job writes a branch. Keeping them apart means a
+# docs-only change never runs the Docker build, and a code change never triggers
+# a deploy.
+#
+# One-time repository setting: Settings → Pages → Source = "Deploy from a branch",
+# branch `gh-pages`, folder `/`. The workflow creates the branch on first run but
+# cannot flip that setting.
+
+name: Docs
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "requirements-docs.txt"
+      - ".github/workflows/docs.yml"
+  # Lets you republish without pushing (e.g. after changing the Pages setting).
+  workflow_dispatch:
+
+# `mkdocs gh-deploy` pushes the built site to the gh-pages branch, so unlike
+# ci.yml this job needs write access to repository contents.
+permissions:
+  contents: write
+
+# A newer push supersedes an in-flight deploy; never let two racing runs both
+# force-push gh-pages.
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and publish to GitHub Pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # gh-deploy needs the full history to push to gh-pages.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-docs.txt
+
+      - name: Install
+        run: pip install -r requirements-docs.txt
+
+      # --strict turns broken internal links and unrecognised nav entries into
+      # failures. Running it before gh-deploy means a bad link fails the job
+      # instead of quietly shipping.
+      - name: Build (strict)
+        run: mkdocs build --strict
+
+      - name: Publish
+        run: mkdocs gh-deploy --force

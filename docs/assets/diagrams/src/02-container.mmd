@@ -1,0 +1,19 @@
+flowchart TB
+    Browser["Browser Admin"]
+
+    subgraph Server["Server kampus — jarkom1 (10.42.28.70)"]
+        Tunnel["cloudflared<br/>TLS + hostname publik"]
+        subgraph Compose["docker compose: borobudur-dashboard"]
+            FE["frontend :8090<br/>nginx — melayani build statis,<br/>mem-proxy /api ke backend"]
+            BE["backend :3001<br/>Express + TypeScript"]
+            PG[("postgres :5433<br/>tabel admins")]
+        end
+    end
+
+    HB[("Hyperbase<br/>10.42.28.71")]
+
+    Browser --> Tunnel
+    Tunnel --> FE
+    FE -->|"/api/*"| BE
+    BE -->|"autentikasi admin"| PG
+    BE -->|"REST, baca data lokasi"| HB

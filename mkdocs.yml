@@ -1,0 +1,100 @@
+site_name: Borobudur Heatmap Dashboard
+site_description: >-
+  Dokumentasi dan blueprint proyek dashboard heatmap kepadatan pengunjung
+  Candi Borobudur.
+site_url: https://hitchgernn.github.io/heatmap-dashboard/
+repo_url: https://github.com/Hitchgernn/heatmap-dashboard
+repo_name: Hitchgernn/heatmap-dashboard
+edit_uri: edit/master/docs/
+
+docs_dir: docs
+
+# docs/superpowers/ holds agent plans and specs — working notes, not project
+# documentation. Without this they would be published alongside the real docs.
+exclude_docs: |
+  superpowers/
+
+theme:
+  name: material
+  language: id
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-night
+        name: Mode gelap
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: amber
+      toggle:
+        icon: material/weather-sunny
+        name: Mode terang
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  # Mermaid blocks are handed to mermaid.js instead of being highlighted as code.
+  # Material ships the mermaid loader itself — no extra plugin or CDN tag needed.
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  # lunr has no Indonesian stemmer, so 'id' is not a supported search language —
+  # passing it only produces a fallback notice. English tokenisation handles the
+  # Latin-script Indonesian text acceptably.
+  - search:
+      lang: en
+
+nav:
+  - Beranda: index.md
+  - Blueprint Proyek: BLUEPRINT.md
+  - Spesifikasi:
+      - Product Requirements: PRD.md
+      - Architecture: ARCHITECTURE.md
+      - Implementation Plan: IMPLEMENTATION_PLAN.md
+  - Referensi Teknis:
+      - API Contract: API.md
+      - Data Flows: DATA_FLOWS.md
+      - Hyperbase Schema: HYPERBASE_SCHEMA.md
+      - Hyperbase Integration: HYPERBASE_INTEGRATION.md
+      - Hyperbase Auth (arsip): HYPERBASE_AUTH_INTEGRATION.md
+  - Operasional:
+      - Deployment: DEPLOYMENT.md
+      - Pengembangan Lanjutan: FURTHER_DEVELOPMENT.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Hitchgernn/heatmap-dashboard

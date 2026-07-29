@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant UI as MockGeneratorView.tsx
+    participant API as lib/api.ts
+    participant Route as mock.routes.ts
+    participant Gen as mock-data.service.ts
+    participant Repo as LocationRepository
+
+    UI->>UI: validasi visitor_count (1-5000),<br/>points_per_visitor (1-500)
+    UI->>API: generateMockData({visitorCount, pointsPerVisitor, source})
+    API->>Route: POST /api/mock/generate
+    Route->>Route: validasi ulang di server<br/>(server yang menjadi acuan)
+    Route->>Gen: generateMockLocations(...)
+
+    loop tiap pengunjung
+        loop tiap titik
+            Gen->>Gen: pickArea() — undian berbobot atas NAMED_AREAS
+            Gen->>Gen: jitter di sekitar pusat area,<br/>atau acak merata bila jatuh ke "Other Area"
+            Gen->>Gen: waktu acak dalam 1 jam terakhir
+        end
+    end
+
+    Gen-->>Route: LocationLog[]
+    Route->>Repo: insertManyLocations(locations)
+    Repo-->>Route: ok
+    Route-->>API: 201 {success, inserted, source}
+    API-->>UI: Toast berhasil

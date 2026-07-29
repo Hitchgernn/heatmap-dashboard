@@ -20,6 +20,10 @@ npm-debug.log*
 .idea/
 .vscode/
 
+# Docs site build output (mkdocs build). The rendered PNGs under
+# docs/assets/diagrams/ stay tracked — they are committed artifacts.
+/site/
+
 # ML
 ml/__pycache__/
 ml/.venv/
@@ -33,3 +37,4 @@ graphify-out/
 ml/output/hotspots_preview.json
 ml/sample/
 .graphifyignore
+.obsidian

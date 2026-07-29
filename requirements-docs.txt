@@ -1,0 +1,7 @@
+# Documentation site only — not a runtime dependency of the backend or frontend.
+# Install with: pip install -r requirements-docs.txt
+# Build with:   mkdocs build --strict
+# Serve with:   mkdocs serve
+
+mkdocs==1.6.1
+mkdocs-material==9.6.14
