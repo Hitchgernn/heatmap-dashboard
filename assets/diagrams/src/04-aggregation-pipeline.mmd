@@ -1,0 +1,14 @@
+flowchart LR
+    A["Permintaan HTTP<br/>window / from / to / source"]
+    B["parseLocationQuery()<br/>validasi parameter"]
+    C["LocationRepository<br/>.getLocations()"]
+    D["cleanLocations()<br/>validasi lat/lng/waktu"]
+    E["Saring BOROBUDUR_BOUNDS<br/>titik luar kawasan dibuang"]
+    F["snapToGrid()<br/>GRID_SIZE = 0.0001°"]
+    G["Cacah titik per sel"]
+    H["Normalisasi weight<br/>count / maxCount"]
+    I["densityFromWeight()<br/>low / medium / high"]
+    J["toFeatureCollection()<br/>[longitude, latitude]"]
+    K["GeoJSON<br/>tanpa visitor_id"]
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I --> J --> K

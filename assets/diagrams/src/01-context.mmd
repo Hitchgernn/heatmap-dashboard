@@ -1,0 +1,12 @@
+flowchart LR
+    Visitor["Pengunjung<br/>(membawa aplikasi mobile)"]
+    MobileApp["Aplikasi Mobile<br/>(sistem terpisah)"]
+    Hyperbase[("Hyperbase<br/>ScyllaDB BaaS<br/>koleksi: coordinate data")]
+    System["Borobudur Heatmap Dashboard<br/>(sistem yang dibangun)"]
+    Admin["Admin / Pengelola"]
+
+    Visitor -->|"bergerak di kawasan"| MobileApp
+    MobileApp -->|"tulis titik GPS"| Hyperbase
+    Hyperbase -->|"baca titik mentah (REST)"| System
+    System -->|"GeoJSON teragregasi"| Admin
+    Admin -->|"login, pilih jendela waktu"| System

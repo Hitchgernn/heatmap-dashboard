@@ -1,0 +1,50 @@
+erDiagram
+    COORDINATE_DATA {
+        uuid  _id PK "UUIDv7 — bit tinggi memuat unix-ms"
+        timestamp _updated_at "waktu rekam, diisi Hyperbase"
+        double latitude
+        double longitude
+        double altitude_m
+        string client_id "identitas perangkat, pseudonim"
+        int    floor
+    }
+
+    ADMINS {
+        uuid   id PK
+        text   email UK
+        text   password_hash "bcrypt"
+        text   role "default: admin"
+        timestamptz created_at
+    }
+
+    LOCATION_LOG {
+        string id_data
+        string timestamp "ISO 8601"
+        string visitor_id "internal saja"
+        string visitor_key "cerminan client_id, internal saja"
+        number latitude
+        number longitude
+        string source "mobile_app | mock"
+    }
+
+    AGGREGATED_GRID_CELL {
+        string grid_id
+        number center_lat
+        number center_lng
+        number visitor_count
+        number weight "0..1"
+        string density_level "low | medium | high"
+        string time_window
+    }
+
+    HEATMAP_FEATURE {
+        string type "Feature"
+        array  coordinates "[longitude, latitude]"
+        number visitor_count
+        number weight
+        string density_level
+    }
+
+    COORDINATE_DATA ||--o{ LOCATION_LOG : "dipetakan menjadi"
+    LOCATION_LOG    ||--o{ AGGREGATED_GRID_CELL : "diagregasi menjadi"
+    AGGREGATED_GRID_CELL ||--|| HEATMAP_FEATURE : "diubah menjadi"

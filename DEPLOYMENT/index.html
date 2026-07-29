@@ -1,0 +1,1976 @@
+
+<!doctype html>
+<html lang="id" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Dokumentasi dan blueprint proyek dashboard heatmap kepadatan pengunjung Candi Borobudur.">
+      
+      
+      
+        <link rel="canonical" href="https://hitchgernn.github.io/heatmap-dashboard/DEPLOYMENT/">
+      
+      
+        <link rel="prev" href="../HYPERBASE_AUTH_INTEGRATION/">
+      
+      
+        <link rel="next" href="../FURTHER_DEVELOPMENT/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Deployment - Borobudur Heatmap Dashboard</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deployment" class="md-skip">
+          Lewati ke isi
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Borobudur Heatmap Dashboard" class="md-header__button md-logo" aria-label="Borobudur Heatmap Dashboard" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Borobudur Heatmap Dashboard
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deployment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode gelap"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Mode gelap" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode terang"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Mode terang" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Cari" placeholder="Cari" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Cari">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Kosongkan" aria-label="Kosongkan" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Mempersiapkan pencarian
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Hitchgernn/heatmap-dashboard
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigasi" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Borobudur Heatmap Dashboard" class="md-nav__button md-logo" aria-label="Borobudur Heatmap Dashboard" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Borobudur Heatmap Dashboard
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Hitchgernn/heatmap-dashboard
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Beranda
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BLUEPRINT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blueprint Proyek
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Spesifikasi
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Spesifikasi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Product Requirements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementation Plan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Referensi Teknis
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Referensi Teknis
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../API/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Contract
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DATA_FLOWS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Data Flows
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_SCHEMA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Schema
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Auth (arsip)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Operasional
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Operasional
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deployment
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Daftar isi
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Topology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Topology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisite
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-onto-a-shared-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying onto a shared server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-docker-and-the-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Docker and the containers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Docker and the containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-install-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Install Docker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-why-this-sidesteps-the-host-postgresql-version-entirely" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Why this sidesteps the host PostgreSQL version entirely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-environment-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Environment file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-bring-it-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Bring it up
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-the-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 The schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-restarts-and-reboots" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 Restarts and reboots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cross-origin-settings-not-needed-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Cross-origin settings — not needed here
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-deploying-the-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Deploying the stack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Deploying the stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-build-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Build and run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-public-https-via-cloudflare-tunnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Public HTTPS via Cloudflare Tunnel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-remove-the-debug-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Remove the debug route
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-register-the-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Register the admin
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-frontend-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. The frontend container
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The frontend container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-the-api-base-url-must-be-empty" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 The API base URL must be empty
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-verify-the-built-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Verify the built bundle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-nginx-behaviour-worth-knowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 nginx behaviour worth knowing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-postgresql-on-the-host-instead-of-a-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix A — PostgreSQL on the host instead of a container
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix A — PostgreSQL on the host instead of a container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-check-the-available-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.1 Check the available version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.2 Install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-ubuntu-2004-focal-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.3 Ubuntu 20.04 (focal) only
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4-role-database-and-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.4 Role, database, and access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-apply-the-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.5 Apply the schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a6-connecting-a-containerised-backend-to-a-host-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.6 Connecting a containerised backend to a host database
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FURTHER_DEVELOPMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pengembangan Lanjutan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Daftar isi
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Topology
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Topology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisite" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisite
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploying-onto-a-shared-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploying onto a shared server
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-docker-and-the-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Docker and the containers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Docker and the containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-install-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Install Docker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-why-this-sidesteps-the-host-postgresql-version-entirely" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Why this sidesteps the host PostgreSQL version entirely
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-environment-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Environment file
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-bring-it-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Bring it up
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-the-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 The schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-restarts-and-reboots" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 Restarts and reboots
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cross-origin-settings-not-needed-here" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Cross-origin settings — not needed here
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-deploying-the-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Deploying the stack
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Deploying the stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-build-and-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Build and run
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-public-https-via-cloudflare-tunnel" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Public HTTPS via Cloudflare Tunnel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-remove-the-debug-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Remove the debug route
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-register-the-admin" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Register the admin
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-the-frontend-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. The frontend container
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. The frontend container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-the-api-base-url-must-be-empty" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 The API base URL must be empty
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-verify-the-built-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Verify the built bundle
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-nginx-behaviour-worth-knowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 nginx behaviour worth knowing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Verification
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Troubleshooting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-postgresql-on-the-host-instead-of-a-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      Appendix A — PostgreSQL on the host instead of a container
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix A — PostgreSQL on the host instead of a container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-check-the-available-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.1 Check the available version
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.2 Install
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-ubuntu-2004-focal-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.3 Ubuntu 20.04 (focal) only
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4-role-database-and-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.4 Role, database, and access
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-apply-the-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.5 Apply the schema
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a6-connecting-a-containerised-backend-to-a-host-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      A.6 Connecting a containerised backend to a host database
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/DEPLOYMENT.md" title="Ubah halaman ini" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">&para;</a></h1>
+<p>Deploying the Borobudur Aggregated Heatmap Dashboard — frontend, backend, and PostgreSQL — as
+containers on a single self-managed server (e.g. a college machine reached over SSH).</p>
+<p>Location data stays in Hyperbase; nothing about that changes here. Only admin auth lives in
+PostgreSQL, and only the backend talks to either.</p>
+<hr />
+<h2 id="1-topology">1. Topology<a class="headerlink" href="#1-topology" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Browser
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>   │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>   └── https://dashboard.your-domain.ac.id     jarkom1 (10.42.28.70)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                                                  │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                  ├── cloudflared (TLS + public hostname)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                                  │      └── reaches 127.0.0.1:8090
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                                  │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                                  └── docker compose &quot;borobudur-dashboard&quot;
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                                                         ├── frontend  :8090 → loopback
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                                         │     ├── serves the built dashboard
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                                         │     └── proxies /api → backend:3001
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                                                         ├── backend   :3001 → loopback
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                                                         └── postgres  :5433 → loopback
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                                                                │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                                                       Hyperbase (same network, over REST)
+</code></pre></div>
+<p><strong>One origin for everything.</strong> The browser loads the app and calls <code>/api/...</code> on the same
+hostname; the frontend container's nginx proxies those calls to the backend over the compose
+network. Consequences worth stating plainly:</p>
+<ul>
+<li>The session cookie stays <code>SameSite=Strict</code> — the strongest setting, and no <code>Secure</code>/HTTPS
+  gymnastics are required for it to work.</li>
+<li><strong>CORS never applies.</strong> Same-origin requests are not cross-origin requests.</li>
+<li>Only <strong>one</strong> port needs to be reachable from outside the host: the frontend's. The backend and
+  database are not exposed beyond loopback at all.</li>
+</ul>
+<p>All three published ports bind to <code>127.0.0.1</code> by default; only the frontend's is meant to be
+opened up, via <code>FRONTEND_BIND</code> (see below). Cloudflare Tunnel provides the public hostname and
+certificate, so no inbound port is opened and no certificate is managed on the server.</p>
+<h3 id="prerequisite">Prerequisite<a class="headerlink" href="#prerequisite" title="Permanent link">&para;</a></h3>
+<p>The server must be able to reach Hyperbase, which it does natively — <code>10.42.28.71</code> is on the
+same subnet as <code>10.42.28.70</code>. No VPN is involved in production; the VPN exists only so a
+developer laptop can join that network from outside.</p>
+<p>Public reachability for <em>users</em> is handled by the tunnel (section 4.3), which needs no public IP
+and no open inbound port.</p>
+<h3 id="deploying-onto-a-shared-server">Deploying onto a shared server<a class="headerlink" href="#deploying-onto-a-shared-server" title="Permanent link">&para;</a></h3>
+<p>If the host already runs other people's containers, read this before running anything.</p>
+<ul>
+<li><strong>Namespacing is handled.</strong> <code>docker-compose.yml</code> sets <code>name: borobudur-dashboard</code>, so every
+  container, network, and volume it creates is prefixed with that. A container called
+  <code>borobudur_backend</code> or <code>borobudur_db</code> on the same host belongs to something else — most likely
+  the mobile app — and nothing here touches it.</li>
+<li><strong>The dashboard is loopback-only by default.</strong> <code>FRONTEND_BIND</code> defaults to <code>127.0.0.1</code>, so
+  the tunnel can reach it but nothing on the local network can. Set <code>FRONTEND_BIND=0.0.0.0</code> to
+  expose it to the LAN — reasonable for an on-campus demo, but it puts the login page in front
+  of everyone on that network. Prefer the tunnel where you can.</li>
+<li><strong>Published host ports are the one shared resource.</strong> All are overridable and none
+  defaults to a commonly occupied value: <code>PG_PUBLISH_PORT</code> (default 5433, <em>not</em> 5432, which is
+  usually taken by another Postgres), <code>BACKEND_PUBLISH_PORT</code> (default 3001), and
+  <code>FRONTEND_PUBLISH_PORT</code> (default 8090 — the only one that needs to be reachable by the
+  tunnel). Check before starting:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-ltnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;:(3001|5433|8090)\b&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;all three free&quot;</span>
+</code></pre></div>
+<p>A <code>0.0.0.0</code> binding by another container blocks a loopback binding here, so a port that looks
+  free in <code>docker ps</code> may still conflict — trust <code>ss</code>, not the port column.
+- <strong>Never run pruning commands.</strong> <code>docker system prune</code>, <code>docker volume prune</code>, and
+  <code>docker image prune -a</code> operate host-wide and will destroy unrelated projects. Likewise never
+  <code>docker compose down -v</code> here: <code>-v</code> deletes the volume holding your admin accounts.
+- <strong>Scope every command to this project.</strong> Run compose from the repository directory, and prefer
+  <code>docker compose ps</code> / <code>docker compose logs</code> over bare <code>docker ps</code> / <code>docker logs</code>, which show
+  every container on the host.
+- If your user is not yet in the <code>docker</code> group, prefix commands with <code>sudo</code> — or add yourself
+  and reconnect (section 2.1).</p>
+<hr />
+<h2 id="2-docker-and-the-containers">2. Docker and the containers<a class="headerlink" href="#2-docker-and-the-containers" title="Permanent link">&para;</a></h2>
+<p>The backend and PostgreSQL both run under <code>docker compose</code>. <code>docker-compose.yml</code> at the
+repository root defines both services; <code>backend/Dockerfile</code> builds the API image.</p>
+<h3 id="21-install-docker">2.1 Install Docker<a class="headerlink" href="#21-install-docker" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.docker.com<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>sh
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Log out and back in for the group change to apply, then verify <strong>without</strong> sudo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>version
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>hello-world
+</code></pre></div>
+<p>If you get <code>permission denied while trying to connect to the Docker daemon socket</code>, the group
+change has not taken effect in your current shell — reconnect over SSH rather than prefixing
+everything with <code>sudo</code>.</p>
+<h3 id="22-why-this-sidesteps-the-host-postgresql-version-entirely">2.2 Why this sidesteps the host PostgreSQL version entirely<a class="headerlink" href="#22-why-this-sidesteps-the-host-postgresql-version-entirely" title="Permanent link">&para;</a></h3>
+<p>The compose file pins <code>postgres:16-alpine</code>. The host distribution's PostgreSQL version is
+irrelevant — nothing is installed on the host and <code>apt</code> is never involved.</p>
+<p>This matters on <strong>Ubuntu 20.04 (focal)</strong>, whose only packaged PostgreSQL is 12. There
+<code>gen_random_uuid()</code> lives in the <code>pgcrypto</code> extension rather than in core, so <code>db/schema.sql</code>
+fails with <code>function gen_random_uuid() does not exist</code>. Running PostgreSQL 16 in a container
+removes that problem rather than working around it.</p>
+<p>Appendix A covers installing PostgreSQL directly on the host, for the case where a container is
+not an option.</p>
+<h3 id="23-environment-file">2.3 Environment file<a class="headerlink" href="#23-environment-file" title="Permanent link">&para;</a></h3>
+<p>Create <code>backend/.env</code> — see section 4.1 for the full contents. Two notes specific to compose:</p>
+<ul>
+<li>The <code>PGUSER</code> / <code>PGPASSWORD</code> / <code>PGDATABASE</code> values are read by <strong>both</strong> services: Postgres
+  creates the role and database from them on first boot, and the backend connects with them.
+  They only agree if they come from one place, so set them once here.</li>
+<li>Leave <code>PGHOST</code> alone. <code>docker-compose.yml</code> overrides it to <code>postgres</code> (the service name),
+  because inside a container <code>127.0.0.1</code> is the container itself, not the host. Compose gives
+  <code>environment</code> precedence over <code>env_file</code>, so the same file still works for local development.</li>
+</ul>
+<p>Compose reads <code>${PGUSER}</code> and friends from a <code>.env</code> <strong>at the repository root</strong>, not from
+<code>backend/.env</code>. Symlink it so the two stay in sync:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>ln<span class="w"> </span>-sf<span class="w"> </span>backend/.env<span class="w"> </span>.env
+</code></pre></div>
+<h3 id="24-bring-it-up">2.4 Bring it up<a class="headerlink" href="#24-bring-it-up" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>backend
+</code></pre></div>
+<p><code>depends_on: condition: service_healthy</code> holds the backend until Postgres passes <code>pg_isready</code>,
+so a cold start cannot produce the 500 described below.</p>
+<h3 id="25-the-schema">2.5 The schema<a class="headerlink" href="#25-the-schema" title="Permanent link">&para;</a></h3>
+<p>On a <strong>fresh volume</strong>, Postgres applies <code>backend/src/db/schema.sql</code> automatically through
+<code>/docker-entrypoint-initdb.d</code>. Nothing to run.</p>
+<p>That hook only fires when the data directory is empty. On an <strong>existing volume</strong> it is skipped
+silently, so apply the schema yourself:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>&lt;<span class="w"> </span>backend/src/db/schema.sql
+</code></pre></div>
+<p>Either way, verify:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;\d admins&#39;</span>
+</code></pre></div>
+<h3 id="26-restarts-and-reboots">2.6 Restarts and reboots<a class="headerlink" href="#26-restarts-and-reboots" title="Permanent link">&para;</a></h3>
+<p>Both services carry <code>restart: unless-stopped</code>, so they return after a crash and after a host
+reboot once Docker itself starts on boot:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>docker
+</code></pre></div>
+<p>Data lives in the <code>postgres_data</code> named volume and survives <code>docker compose down</code>. It does
+<strong>not</strong> survive <code>docker compose down -v</code> — that flag deletes volumes, taking your admin accounts
+with it.</p>
+<hr />
+<h2 id="3-cross-origin-settings-not-needed-here">3. Cross-origin settings — not needed here<a class="headerlink" href="#3-cross-origin-settings-not-needed-here" title="Permanent link">&para;</a></h2>
+<p>This deployment serves the frontend and the API from <strong>one origin</strong>, so neither of the
+cross-origin switches applies. Both default to off; leave them unset.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Leave unset because</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CROSS_SITE_COOKIE</code></td>
+<td>The cookie stays <code>SameSite=Strict</code>, which is stronger. Setting it to <code>true</code> would force <code>SameSite=None; Secure</code> and weaken CSRF protection for no benefit.</td>
+</tr>
+<tr>
+<td><code>CORS_ORIGINS</code></td>
+<td>Same-origin requests are not cross-origin requests, so no CORS headers are consulted at all.</td>
+</tr>
+</tbody>
+</table>
+<p>They exist for a split deployment (frontend on Vercel or another host). If you ever move to
+that, <code>git log</code> has the details — but the same-origin arrangement here is both simpler and more
+secure, so treat moving away from it as a decision that needs a reason.</p>
+<p><strong>Verify it really is same-origin</strong> after deploying. The browser must never see a cross-origin
+request:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># both must return the SAME host, and the second must not be a different port</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>curl<span class="w"> </span>-sI<span class="w"> </span>https://dashboard.your-domain.ac.id/<span class="w">          </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>curl<span class="w"> </span>-sI<span class="w"> </span>https://dashboard.your-domain.ac.id/api/docs<span class="w">  </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</code></pre></div>
+<p>In DevTools, <code>borobudur_session</code> should show <code>HttpOnly</code> and <code>SameSite=Strict</code>, and the Network
+tab should show no CORS preflight (<code>OPTIONS</code>) requests before the API calls.</p>
+<h2 id="4-deploying-the-stack">4. Deploying the stack<a class="headerlink" href="#4-deploying-the-stack" title="Permanent link">&para;</a></h2>
+<h3 id="41-environment">4.1 Environment<a class="headerlink" href="#41-environment" title="Permanent link">&para;</a></h3>
+<p>Create <code>backend/.env</code> (gitignored — <code>chmod 600</code> it, since a shared machine has other users):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>backend
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>.env<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="s"># backend/Dockerfile already sets NODE_ENV=production in the image, so the app</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="s"># runs in production mode whether or not this file mentions it. Deleting the</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="s"># line here does NOT turn it off — only setting it to another value would.</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="s">#</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="s"># While serving over plain HTTP, set COOKIE_SECURE=false (below). Browsers</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="s"># discard Secure cookies on http://, which looks like a successful login</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="s"># followed by &quot;Authentication required&quot; on every later request.</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="s">PORT=3001</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="s"># --- Hyperbase (location data) ---</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s">REPOSITORY_DRIVER=hyperbase</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s">HYPERBASE_BASE_URL=...</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s">HYPERBASE_PROJECT_ID=...</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="s">HYPERBASE_LOCATION_COLLECTION_ID=...</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="s">HYPERBASE_TOKEN_ID=...</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="s">HYPERBASE_TOKEN_SECRET=...</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="s"># --- PostgreSQL (admin auth) ---</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="s"># PGHOST/PGPORT are overridden to postgres:5432 by docker-compose.yml; these</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="s"># values are what `npm run dev` uses locally against the published port, which</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="s"># defaults to 5433 (see PG_PUBLISH_PORT in docker-compose.yml).</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="s">PGHOST=127.0.0.1</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="s">PGPORT=5433</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="s">PGUSER=borobudur</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="s">PGPASSWORD=$(openssl rand -base64 24 | tr -d &#39;/+=&#39;)</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="s">PGDATABASE=borobudur_auth</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="s"># --- Auth ---</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="s"># Leave unset once HTTPS is in front (section 4.3) — the cookie should be Secure</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="s"># there. Set to false only while testing over plain http://.</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="s">COOKIE_SECURE=false</span>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="s">JWT_SECRET=$(openssl rand -hex 32)</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="s">COOKIE_SECRET=$(openssl rand -hex 32)</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="s">ADMIN_REGISTRATION_SECRET=$(openssl rand -hex 16)</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="s"># Cross-origin switches are deliberately absent — this deployment is</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="s"># same-origin. See section 3.</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="s">EOF</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>.env
+</code></pre></div>
+<p><code>JWT_SECRET</code> falls back to <code>"dev-jwt-secret-change-me"</code> when unset. Anyone who has read this
+repository could then forge a valid admin session — generating it is not optional on a
+publicly reachable server.</p>
+<p><code>PGPASSWORD</code> is generated on first write and then <strong>fixed</strong>: Postgres stores it in the volume
+when the database is initialised. Changing it in <code>.env</code> later does not change the database, and
+the backend will fail to authenticate. To rotate it, change it in both places:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-c<span class="w"> </span><span class="s2">&quot;ALTER ROLE borobudur PASSWORD &#39;new-password&#39;;&quot;</span>
+</code></pre></div>
+<h3 id="42-build-and-run">4.2 Build and run<a class="headerlink" href="#42-build-and-run" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps<span class="w">                    </span><span class="c1"># both services &quot;running&quot;, postgres &quot;healthy&quot;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3001/health<span class="w">        </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}</span>
+</code></pre></div>
+<p><code>restart: unless-stopped</code> on both services covers crashes and host reboots — no systemd unit is
+needed for the application itself, only <code>sudo systemctl enable docker</code>.</p>
+<p>Redeploying after a code change:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>git<span class="w"> </span>pull
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build<span class="w"> </span>backend
+</code></pre></div>
+<p>The image is built in two stages, so the runtime layer carries no TypeScript compiler and no
+devDependencies. One consequence worth knowing: <code>npm run db:init</code> is <strong>not</strong> available inside
+the container, because it runs through <code>tsx</code>, a devDependency. Use the <code>psql</code> route in section
+2.5 instead.</p>
+<h3 id="43-public-https-via-cloudflare-tunnel">4.3 Public HTTPS via Cloudflare Tunnel<a class="headerlink" href="#43-public-https-via-cloudflare-tunnel" title="Permanent link">&para;</a></h3>
+<p><code>cloudflared</code> dials out to Cloudflare and receives traffic over that connection, so the server
+needs no public IP, no inbound firewall rule, and no certificate of its own. Cloudflare
+terminates TLS at its edge.</p>
+<p>Create the tunnel in the Cloudflare dashboard (Zero Trust → Networks → Tunnels), add a public
+hostname pointing at <strong><code>http://127.0.0.1:8090</code></strong>, and copy the connector token. Then run it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>tunnel-borobudur-dashboard<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>--network<span class="w"> </span>host<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>cloudflare/cloudflared:latest<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span>tunnel<span class="w"> </span>--no-autoupdate<span class="w"> </span>run<span class="w"> </span>--token<span class="w"> </span>&lt;YOUR_TOKEN&gt;
+</code></pre></div>
+<p><strong>8090 is the frontend, not the backend.</strong> The frontend container serves the dashboard <em>and</em>
+proxies <code>/api</code> to the backend, so pointing the tunnel at 3001 would publish a bare API with no
+dashboard and break the same-origin arrangement.</p>
+<p><code>--network host</code> is what lets the connector reach that loopback port. Without it the container's
+own loopback is a separate namespace and the tunnel resolves nothing.</p>
+<p>The token grants control of the tunnel — treat it like a password. Keep it out of the shell
+history (<code>docker run</code> arguments are visible in <code>ps</code> while running), and out of the repository.</p>
+<p>Verify from anywhere:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>-s<span class="w">  </span>https://dashboard.your-domain.ac.id/health<span class="w">   </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}  (proxied to backend)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>curl<span class="w"> </span>-sI<span class="w"> </span>https://dashboard.your-domain.ac.id/<span class="w">        </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w">   </span><span class="c1"># 200 — the dashboard itself</span>
+</code></pre></div>
+<blockquote>
+<p>On a host that already runs tunnels, name yours distinctly. A neighbour named <code>tunnel-5001</code>
+belongs to a different service; do not reuse or repoint it.</p>
+</blockquote>
+<p>TLS is not strictly required for authentication here — a same-origin <code>SameSite=Strict</code> cookie
+works over plain HTTP — but serve it over HTTPS anyway. Admin credentials cross this connection.</p>
+<p>Using an existing reverse proxy instead? Point it at <code>127.0.0.1:8090</code> and forward <code>Host</code>,
+<code>X-Real-IP</code>, <code>X-Forwarded-For</code>, and <code>X-Forwarded-Proto</code> as usual.</p>
+<h3 id="44-remove-the-debug-route">4.4 Remove the debug route<a class="headerlink" href="#44-remove-the-debug-route" title="Permanent link">&para;</a></h3>
+<p><code>GET /api/debug/hyperbase</code> (<code>routes/debug.routes.ts</code>, mounted in <code>index.ts</code>) exists to verify
+Hyperbase connectivity during development. Remove it — along with its <code>app.use</code> line — before
+exposing the server publicly.</p>
+<h3 id="45-register-the-admin">4.5 Register the admin<a class="headerlink" href="#45-register-the-admin" title="Permanent link">&para;</a></h3>
+<p>No admin exists until you create one; correct credentials fail without this step.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">set</span><span class="w"> </span>-a<span class="p">;</span><span class="w"> </span>.<span class="w"> </span>.env<span class="p">;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>+a
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3001/api/auth/admin/signup<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;{\&quot;email\&quot;:\&quot;you@campus.ac.id\&quot;,\&quot;password\&quot;:\&quot;&lt;at-least-8-chars&gt;\&quot;,\&quot;registration_secret\&quot;:\&quot;</span><span class="nv">$ADMIN_REGISTRATION_SECRET</span><span class="s2">\&quot;}&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="5-the-frontend-container">5. The frontend container<a class="headerlink" href="#5-the-frontend-container" title="Permanent link">&para;</a></h2>
+<p><code>frontend/Dockerfile</code> builds the Vite bundle and serves it with nginx. The same nginx proxies
+<code>/api</code> to the backend, which is what makes the whole deployment same-origin. There is no
+separate hosting provider and no second domain.</p>
+<h3 id="51-the-api-base-url-must-be-empty">5.1 The API base URL must be empty<a class="headerlink" href="#51-the-api-base-url-must-be-empty" title="Permanent link">&para;</a></h3>
+<p><code>VITE_API_BASE_URL</code> is baked in as <code>""</code> by the Dockerfile's build arg. That is deliberate and
+easy to get wrong in both directions:</p>
+<ul>
+<li><strong>Not <code>/api</code>.</strong> The request paths in <code>frontend/src/lib/api.ts</code> already start with <code>/api</code>
+  (<code>buildUrl("/api/heatmap/aggregate", …)</code>), so a <code>/api</code> base produces <code>/api/api/heatmap/...</code>
+  and every request 404s.</li>
+<li><strong>Not unset.</strong> The code falls back to <code>http://localhost:3001</code> when the variable is absent
+  (<code>import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001"</code>), which would make every
+  browser call its <em>own</em> machine and fail for everyone but you.</li>
+</ul>
+<p>Empty means requests go to <code>/api/...</code> on whatever origin served the page — exactly what the
+nginx proxy handles.</p>
+<p>Vite inlines this at <strong>build</strong> time. Changing it requires <code>docker compose up -d --build
+frontend</code>; restarting the container does nothing.</p>
+<h3 id="52-verify-the-built-bundle">5.2 Verify the built bundle<a class="headerlink" href="#52-verify-the-built-bundle" title="Permanent link">&para;</a></h3>
+<p>Worth checking after a build, because the failure is silent — the app loads and then every
+request fails:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>frontend<span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;localhost:3001&quot;</span><span class="w"> </span>/usr/share/nginx/html/assets/*.js
+</code></pre></div>
+<p><code>0</code> (or "no match") is correct. Any hits mean the build arg did not reach Vite.</p>
+<h3 id="53-nginx-behaviour-worth-knowing">5.3 nginx behaviour worth knowing<a class="headerlink" href="#53-nginx-behaviour-worth-knowing" title="Permanent link">&para;</a></h3>
+<p><code>frontend/nginx.conf</code> handles three things beyond the proxy:</p>
+<ul>
+<li><strong>SPA routing</strong> — unknown paths fall back to <code>index.html</code>, so a refresh on any in-app view
+  works rather than 404ing.</li>
+<li><strong>Cache policy</strong> — hashed files under <code>/assets/</code> are cached for a year (<code>immutable</code>);
+  <code>index.html</code> is explicitly never cached. Without that split, browsers keep requesting the
+  previous build's asset filenames after a redeploy and the page fails to boot.</li>
+<li><strong>Runtime DNS</strong> — the proxy target is resolved through Docker's embedded resolver every 10s
+  rather than once at startup. Otherwise recreating the backend container gives it a new IP and
+  nginx keeps proxying to the dead one, returning 502 until nginx is restarted too.</li>
+</ul>
+<h2 id="6-verification">6. Verification<a class="headerlink" href="#6-verification" title="Permanent link">&para;</a></h2>
+<p>Work down the list — each step isolates a different layer, so the first failure tells you where
+to look.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># 1. Containers up, postgres healthy</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># 2. Backend alive on the compose network</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3001/health<span class="w">                      </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># 3. nginx serves the dashboard</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>curl<span class="w"> </span>-sI<span class="w"> </span>localhost:8090/<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w">                 </span><span class="c1"># HTTP/1.1 200 OK</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="c1"># 4. nginx proxies /api to the backend — the same-origin path</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:8090/health<span class="w">                      </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:8090/api/auth/admin/me<span class="w">           </span><span class="c1"># 401 unauthenticated (correct: it reached the API)</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="c1"># 5. Login sets the cookie with Strict, and the session works through the proxy</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>curl<span class="w"> </span>-s<span class="w"> </span>-c<span class="w"> </span>/tmp/c.txt<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>localhost:8090/api/auth/admin/signin<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;you@campus.ac.id&quot;,&quot;password&quot;:&quot;&lt;pw&gt;&quot;}&#39;</span><span class="w"> </span>-i<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>set-cookie
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>curl<span class="w"> </span>-s<span class="w"> </span>-b<span class="w"> </span>/tmp/c.txt<span class="w"> </span><span class="s2">&quot;localhost:8090/api/dashboard/summary?window=1h&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">200</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="c1"># 6. Publicly, through the tunnel</span>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>curl<span class="w"> </span>-sI<span class="w"> </span>https://dashboard.your-domain.ac.id/<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
+</code></pre></div>
+<p>Step 4 is the one that proves the architecture: a <code>401</code> means nginx routed the request to the
+backend and the backend answered. A <code>404</code> from nginx means the proxy block is not matching.</p>
+<p>The cookie in step 5 should read <code>HttpOnly; SameSite=Strict</code> — and <strong>no</strong> <code>Secure</code> unless
+<code>NODE_ENV=production</code>. If you see <code>SameSite=None</code>, <code>CROSS_SITE_COOKIE</code> is set and should not be.</p>
+<p>Finally, in the browser: open the tunnel URL, log in, and confirm the dashboard renders data.
+DevTools → Network should show <strong>no</strong> <code>OPTIONS</code> preflight requests — their absence is the proof
+that this is genuinely same-origin.</p>
+<h2 id="7-troubleshooting">7. Troubleshooting<a class="headerlink" href="#7-troubleshooting" title="Permanent link">&para;</a></h2>
+<p><strong>Login returns 500 <code>"Authentication service unavailable"</code></strong>
+PostgreSQL is not reachable. The message names auth, not the database. Check
+<code>docker compose ps</code> — the postgres service should be <code>running (healthy)</code> — then
+<code>docker compose logs postgres</code>.</p>
+<p><strong>Login succeeds, then everything says "Authentication required"</strong>
+The cookie was issued <code>Secure</code> but served over plain HTTP, so the browser discarded it without
+warning. Caused by <code>NODE_ENV=production</code> while the site is on <code>http://</code>. Confirm with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>localhost:8090/api/auth/admin/signin<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;...&quot;,&quot;password&quot;:&quot;...&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>set-cookie
+</code></pre></div>
+<p>If <code>Secure</code> appears, set <code>COOKIE_SECURE=false</code> in <code>backend/.env</code> and run
+<code>docker compose up -d backend</code> (<code>restart</code> will not reload env). Remove it again once HTTPS is in
+front.</p>
+<p>Do <strong>not</strong> try to fix this by deleting <code>NODE_ENV</code> from <code>.env</code>: <code>backend/Dockerfile</code> sets
+<code>ENV NODE_ENV=production</code> in the image, so removing the override leaves production mode active.
+Check what the container actually sees with <code>docker compose exec backend printenv NODE_ENV</code>.</p>
+<p>Note curl <strong>ignores</strong> <code>Secure</code> while browsers enforce it, so a curl end-to-end test passes while
+the browser fails. Reproduce cookie problems in a browser, not with curl.</p>
+<p><strong>Login returns 200 but every later request returns 401</strong>
+The cookie was not stored. Almost always one of: <code>CROSS_SITE_COOKIE</code> not set (so <code>SameSite</code>
+is still <code>Strict</code>), the API served over HTTP instead of HTTPS (so <code>Secure</code> cookies are
+rejected), or a <code>VITE_API_BASE_URL</code> that does not match <code>CORS_ORIGINS</code>.</p>
+<p><strong>CORS error in the browser console</strong>
+Something is not same-origin. Either the page was loaded directly from the backend port (3001)
+instead of the frontend port, or <code>VITE_API_BASE_URL</code> was baked in as an absolute URL. In this
+deployment no CORS should ever be involved.</p>
+<p><strong>Every API call goes to <code>localhost:3001</code> from the user's browser</strong>
+<code>VITE_API_BASE_URL</code> was absent at build time, so <code>lib/api.ts</code> fell back to its localhost default
+and baked that in. Rebuild: <code>docker compose up -d --build frontend</code>, then confirm with the grep
+in section 5.2. Restarting the container cannot fix it — the value is inlined at build time.</p>
+<p><strong>Dashboard loads but every request 404s</strong>
+<code>VITE_API_BASE_URL</code> was built as <code>/api</code>, producing <code>/api/api/...</code>. It must be empty (section 5.1).</p>
+<p><strong>Refreshing an in-app view returns 404</strong>
+nginx is not falling back to <code>index.html</code>. Check the <code>try_files</code> line in <code>frontend/nginx.conf</code>.</p>
+<p><strong>API calls return 502 after redeploying the backend</strong>
+nginx is holding a stale container IP. The shipped config re-resolves through Docker's DNS every
+10s, so this should self-heal — if it persists, <code>docker compose restart frontend</code>.</p>
+<p><strong>New routes return 404 after a deploy</strong>
+The container is running an older image. <code>docker compose restart</code> reuses the existing image —
+rebuild instead: <code>docker compose up -d --build backend</code>. If a non-container process from an
+earlier setup still holds the port, note that Node appears as <code>node-22</code> in <code>pgrep</code>, so
+<code>pkill -f "dist/index.js"</code> does <strong>not</strong> match it; find the real PID with <code>ss -ltnp | grep :3001</code>.</p>
+<p><strong>Admin credentials are correct but rejected</strong>
+No admin row exists yet. Register one via section 4.5.</p>
+<p><strong>Schema fails with <code>function gen_random_uuid() does not exist</code></strong>
+The cluster is PostgreSQL 12 or older, where that function is not in core. This cannot happen
+with the compose setup (it pins <code>postgres:16-alpine</code>) — it means you are pointing at a host
+PostgreSQL instead. See Appendix A.</p>
+<p><strong>Backend logs <code>password authentication failed for user "borobudur"</code></strong>
+<code>PGPASSWORD</code> in <code>backend/.env</code> no longer matches what Postgres stored when the volume was
+initialised. Changing the file does not change the database. Rotate it with the <code>ALTER ROLE</code>
+command in section 4.1, or destroy the volume with <code>docker compose down -v</code> — which also
+deletes every admin account.</p>
+<p><strong><code>docker compose up</code> fails with <code>port is already allocated</code> / <code>address already in use</code></strong>
+Another container or host service holds that port. A <code>0.0.0.0</code> binding elsewhere blocks a
+loopback binding here, so check with <code>sudo ss -ltnp | grep :&lt;port&gt;</code> rather than reading the
+port column of <code>docker ps</code>. Set <code>PG_PUBLISH_PORT</code> or <code>BACKEND_PUBLISH_PORT</code> to something free —
+neither affects how the backend reaches Postgres, which goes over the compose network.</p>
+<p><strong>Backend cannot reach the database at <code>127.0.0.1:5432</code></strong>
+<code>PGHOST</code> reached the container instead of the compose network. Inside a container <code>127.0.0.1</code>
+is that container. <code>docker-compose.yml</code> sets <code>PGHOST=postgres</code>; confirm with
+<code>docker compose exec backend printenv PGHOST</code>.</p>
+<hr />
+<h2 id="appendix-a-postgresql-on-the-host-instead-of-a-container">Appendix A — PostgreSQL on the host instead of a container<a class="headerlink" href="#appendix-a-postgresql-on-the-host-instead-of-a-container" title="Permanent link">&para;</a></h2>
+<p>Only needed when Docker is unavailable or your administrators require a host-managed database.
+The compose setup in section 2 is the supported path and avoids everything below.</p>
+<h3 id="a1-check-the-available-version">A.1 Check the available version<a class="headerlink" href="#a1-check-the-available-version" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>cat<span class="w"> </span>/etc/os-release<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-2
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>apt-cache<span class="w"> </span>policy<span class="w"> </span>postgresql<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>dnf<span class="w"> </span>info<span class="w"> </span>postgresql-server<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+</code></pre></div>
+<p><code>db/schema.sql</code> uses <code>gen_random_uuid()</code> as a <strong>core</strong> function, requiring <strong>PostgreSQL 13 or
+newer</strong>. Ubuntu 22.04/24.04 (14/16), Debian 12 (15) and Rocky 9 (13) all qualify. Ubuntu 20.04
+ships PostgreSQL 12 and needs section A.3.</p>
+<h3 id="a2-install">A.2 Install<a class="headerlink" href="#a2-install" title="Permanent link">&para;</a></h3>
+<p><strong>Debian / Ubuntu</strong> (creates and starts a cluster automatically):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>postgresql<span class="w"> </span>postgresql-contrib
+</code></pre></div>
+<p><strong>RHEL / Rocky / Alma</strong> (no cluster is created for you — <code>--initdb</code> is required):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>postgresql-server<span class="w"> </span>postgresql-contrib
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>sudo<span class="w"> </span>postgresql-setup<span class="w"> </span>--initdb
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>postgresql
+</code></pre></div>
+<h3 id="a3-ubuntu-2004-focal-only">A.3 Ubuntu 20.04 (focal) only<a class="headerlink" href="#a3-ubuntu-2004-focal-only" title="Permanent link">&para;</a></h3>
+<p><strong>Option A — PostgreSQL 16 from PGDG:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>ca-certificates<span class="w"> </span>gnupg<span class="w"> </span>lsb-release
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://www.postgresql.org/media/keys/ACCC4CF8.asc<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/postgresql.gpg
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt focal-pgdg main&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/pgdg.list
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>apt-cache<span class="w"> </span>policy<span class="w"> </span>postgresql-16
+</code></pre></div>
+<p>Check that last command before installing — focal reached end of standard support in April 2025,
+so PGDG may no longer publish builds for it. If a candidate is listed, install
+<code>postgresql-16 postgresql-contrib-16</code>. Otherwise try 15, 14, then 13.</p>
+<p><strong>Option B — PostgreSQL 12 with pgcrypto</strong>, if PGDG has dropped focal. Create the role and
+database first (A.4), then:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;CREATE EXTENSION IF NOT EXISTS pgcrypto;&#39;</span>
+</code></pre></div>
+<p>Must run as the <code>postgres</code> superuser, and extensions are <strong>per-database</strong>, so <code>-d borobudur_auth</code>
+is required — installing into the default <code>postgres</code> database has no effect here. With pgcrypto
+present, <code>gen_random_uuid()</code> resolves and <code>db/schema.sql</code> runs unchanged.</p>
+<h3 id="a4-role-database-and-access">A.4 Role, database, and access<a class="headerlink" href="#a4-role-database-and-access" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nv">DBPASS</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">24</span><span class="k">)</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;SAVE THIS: </span><span class="nv">$DBPASS</span><span class="s2">&quot;</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="s">CREATE ROLE borobudur LOGIN PASSWORD &#39;$DBPASS&#39;;</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="s">CREATE DATABASE borobudur_auth OWNER borobudur;</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="s">EOF</span>
+</code></pre></div>
+<p>Confirm password authentication over loopback:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;^(local|host)&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-tAc<span class="w"> </span><span class="s1">&#39;SHOW hba_file;&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>You want <code>host all all 127.0.0.1/32 scram-sha-256</code>. Debian and Ubuntu ship this by default.
+RHEL and Rocky default to <code>ident</code>, which rejects password logins — change the <code>127.0.0.1/32</code> and
+<code>::1/128</code> lines to <code>scram-sha-256</code>, then <code>sudo systemctl reload postgresql</code>.</p>
+<p><strong>Leave <code>listen_addresses</code> at its default (<code>localhost</code>).</strong></p>
+<h3 id="a5-apply-the-schema">A.5 Apply the schema<a class="headerlink" href="#a5-apply-the-schema" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nb">cd</span><span class="w"> </span>backend
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>npm<span class="w"> </span>install
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>npm<span class="w"> </span>run<span class="w"> </span>db:init
+</code></pre></div>
+<h3 id="a6-connecting-a-containerised-backend-to-a-host-database">A.6 Connecting a containerised backend to a host database<a class="headerlink" href="#a6-connecting-a-containerised-backend-to-a-host-database" title="Permanent link">&para;</a></h3>
+<p>If the backend still runs in a container, <code>PGHOST=127.0.0.1</code> points at the container, not the
+host. Remove the <code>PGHOST</code> override from <code>docker-compose.yml</code> and add:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">      </span><span class="nt">PGHOST</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host.docker.internal</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="nt">extra_hosts</span><span class="p">:</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;host.docker.internal:host-gateway&quot;</span>
+</code></pre></div>
+<p>This also requires PostgreSQL to accept connections from the Docker bridge — <code>listen_addresses</code>
+must include the bridge address and <code>pg_hba.conf</code> must permit <code>172.17.0.0/16</code>. That widens the
+database's exposure, which is precisely what the compose setup in section 2 avoids.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Kembali ke atas
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-footer__link md-footer__link--prev" aria-label="Sebelumnya: Hyperbase Auth (arsip)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Sebelumnya
+              </span>
+              <div class="md-ellipsis">
+                Hyperbase Auth (arsip)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../FURTHER_DEVELOPMENT/" class="md-footer__link md-footer__link--next" aria-label="Selanjutnya: Pengembangan Lanjutan">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Selanjutnya
+              </span>
+              <div class="md-ellipsis">
+                Pengembangan Lanjutan
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Hitchgernn/heatmap-dashboard" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Tersalin ke clipboard", "clipboard.copy": "Salin ke clipboard", "search.result.more.one": "1 lagi di halaman ini", "search.result.more.other": "# lagi di halaman ini", "search.result.none": "Tidak ada dokumen yang sesuai", "search.result.one": "1 dokumen ditemukan", "search.result.other": "# dokumen ditemukan", "search.result.placeholder": "Ketik untuk mulai pencarian", "search.result.term.missing": "Tidak ada", "select.version": "Pilih versi"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>

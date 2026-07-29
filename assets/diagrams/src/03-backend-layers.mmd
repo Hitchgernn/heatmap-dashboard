@@ -1,0 +1,45 @@
+flowchart TB
+    subgraph Routes["routes/ — lapisan HTTP"]
+        R1["heatmap.routes.ts"]
+        R2["dashboard.routes.ts"]
+        R3["hotspot.routes.ts"]
+        R4["mock.routes.ts"]
+        R5["auth/admin.routes.ts"]
+    end
+
+    subgraph Services["services/ — logika murni"]
+        S1["aggregation.service.ts"]
+        S2["geojson.service.ts"]
+        S3["dashboard.service.ts"]
+        S4["dbscan.service.ts"]
+        S5["hotspot-detection.service.ts"]
+        S6["mock-data.service.ts"]
+        S7["auth.service.ts"]
+    end
+
+    subgraph Repos["repositories/ — abstraksi penyimpanan"]
+        I["LocationRepository<br/>(antarmuka)"]
+        M["MemoryLocationRepository"]
+        H["HyperbaseLocationRepository"]
+    end
+
+    subgraph Shared["utils/ · config/ · types/"]
+        U["parseQuery · validateLocation<br/>timeWindow · density · geo"]
+        C["bounds · areas · dbscan · env"]
+    end
+
+    R1 --> S1 --> S2
+    R2 --> S3
+    R3 --> S5 --> S4
+    R4 --> S6
+    R5 --> S7
+
+    R1 --> I
+    R2 --> I
+    R3 --> I
+    R4 --> I
+    I -.implementasi.-> M
+    I -.implementasi.-> H
+
+    Services --> Shared
+    Routes --> Shared

@@ -1,0 +1,11 @@
+flowchart LR
+    A["Log lokasi jendela berjalan"]
+    B["cleanLocations()<br/>pipeline yang sama"]
+    C["dbscan(points, epsM, minSamples)<br/>jarak haversine"]
+    D["Kelompokkan per label<br/>NOISE dibuang"]
+    E["Reduksi tiap klaster:<br/>centroid, cacah, radius"]
+    F["nearestAreaName()<br/>label area terdekat"]
+    G["Urutkan per ukuran,<br/>beri tier relatif terbesar"]
+    H["Hotspot[] + ClusterPoint[]<br/>maksimum 4000 titik sebar"]
+
+    A --> B --> C --> D --> E --> F --> G --> H

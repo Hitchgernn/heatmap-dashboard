@@ -1,0 +1,33 @@
+sequenceDiagram
+    participant UI as LoginPage.tsx
+    participant Auth as context/auth.tsx
+    participant API as lib/auth.ts
+    participant Route as auth/admin.routes.ts
+    participant Svc as auth.service.ts
+    participant PG as PostgreSQL
+
+    Note over UI,PG: Saat aplikasi dimuat — pemulihan sesi
+    Auth->>API: getCurrentAdmin()
+    API->>Route: GET /api/auth/admin/me (credentials: include)
+    Route->>Route: requireAuth — baca cookie borobudur_session
+    Route->>Svc: validateSession(jwt)
+    Svc->>Svc: jwt.verify(token, JWT_SECRET)
+    Svc->>PG: SELECT admin WHERE id = sub
+    PG-->>Svc: baris admin
+    Svc->>Svc: pastikan role === "admin"
+    Svc-->>Route: AdminUser
+    Route-->>Auth: 200 {success, data} — atau 401 bila tidak ada sesi
+
+    Note over UI,PG: Masuk
+    UI->>Auth: signin(email, password)
+    Auth->>API: POST /api/auth/admin/signin
+    API->>Route: {email, password}
+    Route->>Svc: signinAdmin(email, password)
+    Svc->>PG: SELECT password_hash WHERE email
+    PG-->>Svc: hash
+    Svc->>Svc: bcrypt.compare(password, hash)
+    Svc->>Svc: jwt.sign({sub, role}, JWT_SECRET)
+    Svc-->>Route: {token, admin}
+    Route->>Route: res.cookie("borobudur_session", token,<br/>{httpOnly, sameSite: "strict", secure})
+    Route-->>Auth: 200 {success, data: admin}
+    Auth-->>UI: render DashboardShell
