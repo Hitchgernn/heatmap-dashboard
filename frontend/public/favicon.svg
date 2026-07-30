@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!--
+    Borobudur stupa mark — the same silhouette as the boot splash (index.html)
+    and StupaMark.tsx, retuned for tab-strip sizes: the terrace gaps are widened
+    to 1.6 units and the spire to 5, and the mark fills more of the tile than the
+    in-app mark does. Sits on a dark tile so it reads against both light and dark
+    browser chrome. The 16px slice of favicon.ico is drawn separately (see
+    scripts/favicon-16.svg) because these gaps close up below ~24px.
+  -->
+  <rect width="64" height="64" rx="14" fill="#111827"/>
+  <g transform="translate(3.84 2.33) scale(0.88)" fill="#e8973a">
+    <polygon points="6,58 58,58 55,50.6 9,50.6"/>
+    <polygon points="11,49 53,49 50,41.4 14,41.4"/>
+    <polygon points="16,39.8 48,39.8 46,34 18,34"/>
+    <path d="M21 32.4 C21 18.9 43 18.9 43 32.4 Z"/>
+    <rect x="29.5" y="9.4" width="5" height="13" rx="2.5"/>
+  </g>
+</svg>
