@@ -4,9 +4,116 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Borobudur Heatmap Dashboard</title>
+
+    <!--
+      Boot splash styles are inlined here on purpose. Vite emits src/index.css as a
+      linked stylesheet whose first line is a Google Fonts @import, so it is not
+      guaranteed to have applied on the first painted frame. Inlining is the only
+      way the splash is styled from the very first byte.
+    -->
+    <style>
+      #boot-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background: #f9fafb; /* gray-50 — matches the app shell */
+        transition: opacity 320ms ease-out;
+      }
+      html.dark #boot-splash {
+        background: #030712; /* gray-950 */
+      }
+      #boot-splash.boot-leaving {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Stupa mark — terraces rise base to spire. Geometry is duplicated in
+         src/components/StupaMark.tsx because raw HTML is the only thing that can
+         paint before React mounts; edit the two together. */
+      #boot-splash .boot-part {
+        fill: #c9781f; /* amber, drawn from the middle of the density ramp */
+        opacity: 0.16;
+        transform-box: fill-box;
+        transform-origin: center bottom;
+        animation: boot-stupa-rise 1500ms cubic-bezier(0.33, 0.9, 0.35, 1) infinite;
+      }
+      html.dark #boot-splash .boot-part {
+        fill: #e8973a;
+      }
+      @keyframes boot-stupa-rise {
+        0% {
+          opacity: 0.16;
+          transform: translateY(1.5px);
+        }
+        16% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        46% {
+          opacity: 0.16;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0.16;
+          transform: translateY(1.5px);
+        }
+      }
+
+      /* The webfonts may not have loaded on the first frame, so the fallbacks
+         in these stacks are what actually renders at boot. */
+      #boot-splash .boot-wordmark {
+        font-family: "Instrument Serif", Georgia, ui-serif, serif;
+        font-size: 28px;
+        line-height: 1.15;
+        color: #1f2937; /* gray-800 */
+      }
+      #boot-splash .boot-sub {
+        font-family: "Instrument Serif", Georgia, ui-serif, serif;
+        font-style: italic;
+        font-size: 16px;
+        line-height: 1.3;
+        color: #6b7280; /* gray-500 */
+      }
+      #boot-splash .boot-status {
+        font-family: "Fira Code", ui-monospace, SFMono-Regular, monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #9ca3af; /* gray-400 */
+      }
+      html.dark #boot-splash .boot-wordmark {
+        color: #e5e7eb;
+      }
+      html.dark #boot-splash .boot-sub {
+        color: #9ca3af;
+      }
+      html.dark #boot-splash .boot-status {
+        color: #4b5563;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #boot-splash {
+          transition: none;
+        }
+        #boot-splash .boot-part {
+          animation: none;
+          opacity: 0.9;
+          transform: none;
+        }
+      }
+    </style>
+
     <script>
-      // Apply the stored theme before React mounts to avoid a light/dark flash.
+      // Runs before the splash paints: applies the stored theme (avoiding a
+      // light/dark flash) and stamps the boot time that the splash's
+      // minimum-display floor is measured from.
       (function () {
+        var lang = null;
         try {
           var stored = localStorage.getItem("borobudur.theme") || "system";
           var dark =
@@ -14,13 +121,53 @@
             (stored === "system" &&
               window.matchMedia("(prefers-color-scheme: dark)").matches);
           document.documentElement.classList.toggle("dark", dark);
-          var lang = localStorage.getItem("borobudur.lang");
+          lang = localStorage.getItem("borobudur.lang");
           if (lang === "en" || lang === "id") document.documentElement.lang = lang;
         } catch (e) {}
+
+        window.__bootAt = Date.now();
+
+        // The i18n context does not exist this early in the boot, so these two
+        // strings are hardcoded. They mirror the "loading.loading" key in
+        // src/lib/i18n.ts — keep them in sync by hand.
+        window.__bootStrings = {
+          loading: lang === "id" ? "Memuat…" : "Loading…",
+          stalled: lang === "id" ? "Masih menghubungkan…" : "Still connecting…",
+        };
+
+        // A stalled API should say so rather than loop silently forever.
+        // Cleared by dismissBootSplash() in src/lib/splash.ts.
+        window.__bootStallTimer = window.setTimeout(function () {
+          var el = document.getElementById("boot-status");
+          if (el) el.textContent = window.__bootStrings.stalled;
+        }, 8000);
       })();
     </script>
   </head>
   <body>
+    <div id="boot-splash">
+      <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <polygon class="boot-part" style="animation-delay: 0ms" points="6,58 58,58 55,50 9,50" />
+        <polygon class="boot-part" style="animation-delay: 110ms" points="11,49 53,49 50,41.5 14,41.5" />
+        <polygon class="boot-part" style="animation-delay: 220ms" points="16,40.5 48,40.5 46,34 18,34" />
+        <path class="boot-part" style="animation-delay: 330ms" d="M21 33 C21 19.5 43 19.5 43 33 Z" />
+        <rect class="boot-part" style="animation-delay: 440ms" x="30.5" y="10" width="3" height="13" rx="1.5" />
+      </svg>
+      <div style="text-align: center">
+        <div class="boot-wordmark">Borobudur</div>
+        <div class="boot-sub">Heatmap Dashboard</div>
+      </div>
+      <div class="boot-status" id="boot-status">Loading…</div>
+    </div>
+    <script>
+      // Localize the status line synchronously during parse — before the first
+      // paint — so an Indonesian boot never flashes the English string.
+      (function () {
+        var el = document.getElementById("boot-status");
+        if (el && window.__bootStrings) el.textContent = window.__bootStrings.loading;
+      })();
+    </script>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

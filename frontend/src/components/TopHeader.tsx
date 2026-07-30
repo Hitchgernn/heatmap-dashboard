@@ -1,4 +1,5 @@
 import { useLanguage } from "../context/language";
+import StupaMark from "./StupaMark";
 
 export type DataSource = "mobile_app" | "mock";
 
@@ -63,13 +64,19 @@ function StatusPill({ status }: { status: TopHeaderProps["status"] }) {
   const { t } = useLanguage();
   const config = {
     live: { dot: "bg-emerald-500", text: t("status.live"), tone: "text-emerald-600 dark:text-emerald-400" },
-    refreshing: { dot: "bg-gray-400 animate-pulse", text: t("status.refreshing"), tone: "text-gray-500 dark:text-gray-400" },
+    refreshing: { dot: "bg-gray-400", text: t("status.refreshing"), tone: "text-gray-500 dark:text-gray-400" },
     error: { dot: "bg-red-500", text: t("status.disconnected"), tone: "text-red-600 dark:text-red-400" },
   }[status];
 
   return (
     <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-1 font-mono text-xs font-medium dark:border-gray-700 dark:bg-gray-800">
-      <span className={"h-2 w-2 rounded-full " + config.dot} />
+      {/* Refreshing shows the stupa — the same mark as the boot splash, so the
+          two read as one object. Live and error keep their semantic dots. */}
+      {status === "refreshing" ? (
+        <StupaMark size={14} className="-my-0.5 shrink-0" />
+      ) : (
+        <span className={"h-2 w-2 rounded-full " + config.dot} />
+      )}
       <span className={config.tone}>{config.text}</span>
     </span>
   );

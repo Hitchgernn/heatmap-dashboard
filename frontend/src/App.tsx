@@ -15,6 +15,7 @@ import { useLanguage } from "./context/language";
 import { useAuth } from "./context/auth";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
 import { toHeatPoints } from "./lib/map";
+import { dismissBootSplash } from "./lib/splash";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
 import type { ClusterPoint, Hotspot } from "./types/hotspot";
 import type { Page } from "./types/nav";
@@ -58,26 +59,23 @@ function readStoredSource(): DataSource {
  */
 export default function App() {
   const { status: authStatus, signout } = useAuth();
+  const resolved = authStatus !== "loading";
 
-  if (authStatus === "loading") {
-    return (
-      <div className="flex h-full items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <div className="flex flex-col items-center gap-3">
-          <svg className="h-8 w-8 animate-spin text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-          </svg>
-          <span className="text-sm text-gray-500 dark:text-gray-400">Loading…</span>
-        </div>
-      </div>
-    );
-  }
+  // The boot splash from index.html is still covering the viewport until this
+  // fires — it spans both the bundle-parse gap and the session check.
+  useEffect(() => {
+    if (resolved) dismissBootSplash();
+  }, [resolved]);
 
-  if (authStatus === "unauthenticated") {
-    return <LoginPage />;
-  }
+  // Render nothing behind the splash rather than a second, redundant spinner.
+  if (!resolved) return null;
 
-  return <DashboardShell onLogout={signout} />;
+  return (
+    // Fades up as the splash fades out, so the handoff isn't a hard cut.
+    <div className="page-enter h-full">
+      {authStatus === "unauthenticated" ? <LoginPage /> : <DashboardShell onLogout={signout} />}
+    </div>
+  );
 }
 
 /**
