@@ -9,8 +9,9 @@
  */
 
 import { Router, type Request, type Response } from "express";
+import type { AggregatedGridCell } from "../types/location";
 import { getLocationRepository } from "../repositories";
-import { aggregateToGrid } from "../services/aggregation.service";
+import { aggregateToGrid, cellsFromCounts } from "../services/aggregation.service";
 import { toFeatureCollection } from "../services/geojson.service";
 import { resolveTimeRange } from "../utils/timeWindow";
 import { parseLocationQuery } from "../utils/parseQuery";
@@ -70,9 +71,28 @@ router.get("/aggregate", async (req: Request, res: Response) => {
 
   try {
     const repository = getLocationRepository();
-    const locations = await repository.getLocations(query);
     const range = resolveTimeRange(query);
-    const { cells } = aggregateToGrid(locations, range.label);
+    let cells: AggregatedGridCell[] | undefined;
+
+    // Prefer server-side SQL aggregation when the driver supports it and it's
+    // enabled; fall back to fetch-then-aggregate if it's unavailable (null) or
+    // the query fails, so a flaky endpoint degrades rather than breaks.
+    if (repository.getAggregatedCells) {
+      try {
+        const counts = await repository.getAggregatedCells(query);
+        if (counts) cells = cellsFromCounts(counts, range.label);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Unknown error";
+        // eslint-disable-next-line no-console
+        console.warn(`[heatmap] SQL aggregation failed, falling back to pagination: ${message}`);
+      }
+    }
+
+    if (!cells) {
+      const locations = await repository.getLocations(query);
+      cells = aggregateToGrid(locations, range.label).cells;
+    }
+
     return res.status(200).json(toFeatureCollection(cells));
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";

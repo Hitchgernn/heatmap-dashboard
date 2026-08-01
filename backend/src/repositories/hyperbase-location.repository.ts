@@ -24,8 +24,10 @@
  * GeoJSON/summary transforms have no field for it).
  */
 
+import { BOROBUDUR_BOUNDS, GRID_SIZE } from "../config/bounds";
 import type { LocationLog, LocationQuery } from "../types/location";
 import { resolveTimeRange } from "../utils/timeWindow";
+import type { GridCount } from "../services/aggregation.service";
 import type { LocationRepository } from "./location.repository";
 import {
   HyperbaseError,
@@ -46,6 +48,11 @@ export interface HyperbaseConfigShape extends HyperbaseClientConfig {
    * short-circuited for source=mock, and mapped rows are labeled source "mock".
    */
   mockCollection?: boolean;
+  /**
+   * When true, getAggregatedCells runs a server-side SQL GROUP BY instead of
+   * returning null. Requires the Hyperbase instance to expose /records/query.
+   */
+  sqlAggregation?: boolean;
 }
 
 /** Bounded concurrency for bulk inserts (Hyperbase has no native batch endpoint). */
@@ -80,6 +87,17 @@ interface QueryResponse {
   pagination?: { count?: number; total?: number };
 }
 
+/** One row of the SQL GROUP BY aggregation: grid indices + count. */
+interface AggregateRow {
+  gy?: unknown;
+  gx?: unknown;
+  c?: unknown;
+}
+
+interface AggregateQueryResponse {
+  data?: AggregateRow[];
+}
+
 interface RecordFilter {
   field: string;
   op: string;
@@ -93,6 +111,7 @@ export class HyperbaseLocationRepository implements LocationRepository {
   private readonly pageSize: number;
   private readonly writable: boolean;
   private readonly mockCollection: boolean;
+  private readonly sqlAggregation: boolean;
 
   constructor(config: HyperbaseConfigShape) {
     HyperbaseHttpClient.assertConfigured(config);
@@ -103,6 +122,7 @@ export class HyperbaseLocationRepository implements LocationRepository {
     this.pageSize = Math.min(Math.max(Math.floor(config.pageSize) || 500, 1), 1000);
     this.writable = config.writable ?? false;
     this.mockCollection = config.mockCollection ?? false;
+    this.sqlAggregation = config.sqlAggregation ?? false;
   }
 
   private get recordsPath(): string {
@@ -159,6 +179,56 @@ export class HyperbaseLocationRepository implements LocationRepository {
     }
 
     return results;
+  }
+
+  /**
+   * Server-side grid aggregation via Hyperbase SQL (`POST /records/query`),
+   * returning the same per-cell counts `aggregateToGrid` would compute in Node
+   * without shipping raw rows. Returns null when SQL aggregation is disabled, so
+   * the caller falls back. Throws on transport/query error so the caller can
+   * likewise fall back rather than serve an empty heatmap.
+   */
+  async getAggregatedCells(params: LocationQuery): Promise<GridCount[] | null> {
+    if (!this.sqlAggregation) return null;
+
+    const source = params.source ?? "all";
+    // Same short-circuit as getLocations: the real collection has no mock rows.
+    if (!this.mockCollection && source === "mock") return [];
+
+    const range = resolveTimeRange(params);
+    const lowerBound = uuidV7Bound(range.from);
+    const upperBound = uuidV7Bound(range.to);
+    const b = BOROBUDUR_BOUNDS;
+
+    // ROUND (not CAST): Hyperbase CAST-to-int happens to round, but that is
+    // undocumented, so make the rounding explicit. The lat/lng bounds replicate
+    // cleanLocations' bounds filtering — required for parity with the Node path,
+    // which drops out-of-bounds points before snapping.
+    const query =
+      `SELECT ROUND(latitude / ${GRID_SIZE}) AS gy, ` +
+      `ROUND(longitude / ${GRID_SIZE}) AS gx, COUNT(*) AS c ` +
+      `FROM 'data' WHERE _id >= '${lowerBound}' AND _id < '${upperBound}' ` +
+      `AND latitude >= ${b.minLat} AND latitude <= ${b.maxLat} ` +
+      `AND longitude >= ${b.minLng} AND longitude <= ${b.maxLng} ` +
+      `GROUP BY gy, gx`;
+
+    const res = await this.client.authedRequest<AggregateQueryResponse>(
+      `${this.recordsPath}/query`,
+      "POST",
+      { query }
+    );
+
+    const rows = Array.isArray(res.data) ? res.data : [];
+    const counts: GridCount[] = [];
+    for (const row of rows) {
+      const gy = Number(row.gy);
+      const gx = Number(row.gx);
+      const count = Number(row.c);
+      if (!Number.isFinite(gy) || !Number.isFinite(gx) || !Number.isFinite(count)) continue;
+      // ROUND returns a float (e.g. -77674.0); snap to the integer grid index.
+      counts.push({ gy: Math.round(gy), gx: Math.round(gx), count });
+    }
+    return counts;
   }
 
   async insertLocation(location: LocationLog): Promise<void> {
