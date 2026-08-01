@@ -1,12 +1,12 @@
 
 <!doctype html>
-<html lang="id" class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Dokumentasi dan blueprint proyek dashboard heatmap kepadatan pengunjung Candi Borobudur.">
+        <meta name="description" content="Documentation and project blueprint for the Borobudur visitor-density heatmap dashboard.">
       
       
       
@@ -16,7 +16,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../PRD/">
+        <link rel="next" href="../ARCHITECTURE/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -24,7 +24,7 @@
     
     
       
-        <title>Blueprint Proyek - Borobudur Heatmap Dashboard</title>
+        <title>Project Blueprint - Borobudur Heatmap Dashboard</title>
       
     
     
@@ -76,8 +76,8 @@
     <div data-md-component="skip">
       
         
-        <a href="#blueprint-proyek" class="md-skip">
-          Lewati ke isi
+        <a href="#project-blueprint" class="md-skip">
+          Skip to content
         </a>
       
     </div>
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Blueprint Proyek
+              Project Blueprint
             
           </span>
         </div>
@@ -125,9 +125,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode gelap"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Mode gelap" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
       </label>
     
@@ -135,9 +135,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode terang"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Mode terang" for="__palette_0" hidden>
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
       </label>
     
@@ -160,16 +160,16 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Cari" placeholder="Cari" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Cari">
+      <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" title="Kosongkan" aria-label="Kosongkan" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -182,7 +182,7 @@
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Mempersiapkan pencarian
+            Initializing search
           </div>
           <ol class="md-search-result__list" role="presentation"></ol>
         </div>
@@ -194,7 +194,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -228,7 +228,7 @@
 
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigasi" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Borobudur Heatmap Dashboard" class="md-nav__button md-logo" aria-label="Borobudur Heatmap Dashboard" data-md-component="logo">
       
@@ -240,7 +240,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -265,7 +265,7 @@
   
   
   <span class="md-ellipsis">
-    Beranda
+    Home
     
   </span>
   
@@ -291,17 +291,760 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Project Blueprint
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    Blueprint Proyek
+    Project Blueprint
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-background-and-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Background and Problem Statement
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Background and Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Problem statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-the-approach-taken" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 The approach taken
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-goals-and-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Goals and Objectives
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Goals and Objectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-general-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 General goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-specific-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Specific objectives
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-scope-and-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Scope and Constraints
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Scope and Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-in-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 In scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-out-of-scope-non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Out of scope (non-goals)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-binding-technical-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Binding technical constraints
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-technology-choices-and-rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Technology Choices and Rationale
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Technology Choices and Rationale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-frontend" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Frontend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Databases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Machine learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-requirements-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Requirements Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Requirements Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Functional requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Non-functional requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. System Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. System Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-context-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Context diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-container-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Container diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-backend-component-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Backend component diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-repository-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Repository pattern
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-data-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Data Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Data Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-data-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Data model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-the-coordinate-data-collection-hyperbase" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 The coordinate data collection (Hyperbase)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-the-admins-table-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 The admins table (PostgreSQL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-geographic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4 Geographic configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. API Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. API Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-endpoint-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Endpoint list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-time-window-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Time window parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-response-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Response shapes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-interactive-api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Interactive API documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-core-process-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Core Process Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Core Process Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-the-aggregation-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 The aggregation pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-hotspot-detection-dbscan" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 Hotspot detection (DBSCAN)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-admin-authentication-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 Admin authentication flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-mock-data-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.4 Mock data generator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-interface-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Interface Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Interface Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-page-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Page structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-timelapse-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Timelapse mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-the-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 The map
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-typography" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4 Typography
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-theme-and-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.5 Theme and language
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-machine-learning-module-hotspot-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Machine Learning Module — Hotspot Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Machine Learning Module — Hotspot Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 The algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-security-and-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Security and Privacy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Security and Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-privacy-by-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1 Privacy by construction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-authentication-and-authorisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2 Authentication and authorisation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-things-worth-stating-honestly" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3 Things worth stating honestly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-deployment-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Deployment and Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Deployment and Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.1 Topology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-operational-decisions-and-their-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.2 Operational decisions and their reasons
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-operational-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.3 Operational warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-key-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.4 Key environment variables
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-testing-and-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. Testing and Verification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Testing and Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.1 Continuous integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-local-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.2 Local verification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-manual-post-deployment-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.3 Manual post-deployment verification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144-automated-test-status-stated-plainly" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.4 Automated test status — stated plainly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-results-and-implementation-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Results and Implementation Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-further-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      16. Further Development
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-appendices" class="md-nav__link">
+    <span class="md-ellipsis">
+      17. Appendices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. Appendices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.1 Glossary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.2 Related documentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#173-image-versions-of-the-diagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.3 Image versions of the diagrams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -335,7 +1078,7 @@
   
   
   <span class="md-ellipsis">
-    Spesifikasi
+    Technical Reference
     
   </span>
   
@@ -346,32 +1089,9 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Spesifikasi
+            Technical Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PRD/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Product Requirements
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -403,85 +1123,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Implementation Plan
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    Referensi Teknis
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            Referensi Teknis
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../API/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    API Contract
+    API Reference
     
   </span>
   
@@ -538,6 +1185,56 @@
 
               
             
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Operations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
                 
   
@@ -545,12 +1242,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Hyperbase Integration
+    Deployment
     
   </span>
   
@@ -568,12 +1265,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
+      <a href="../FURTHER_DEVELOPMENT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Hyperbase Auth (arsip)
+    Further Development
     
   </span>
   
@@ -619,7 +1316,7 @@
   
   
   <span class="md-ellipsis">
-    Operasional
+    Archive
     
   </span>
   
@@ -630,7 +1327,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            Operasional
+            Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -641,12 +1338,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../DEPLOYMENT/" class="md-nav__link">
+      <a href="../PRD/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Deployment
+    Original PRD
     
   </span>
   
@@ -664,12 +1361,58 @@
   
   
     <li class="md-nav__item">
-      <a href="../FURTHER_DEVELOPMENT/" class="md-nav__link">
+      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Pengembangan Lanjutan
+    Implementation Plan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Auth
     
   </span>
   
@@ -700,12 +1443,731 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-background-and-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Background and Problem Statement
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Background and Problem Statement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-background" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Problem statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-the-approach-taken" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 The approach taken
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-goals-and-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Goals and Objectives
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Goals and Objectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-general-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 General goal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-specific-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Specific objectives
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-scope-and-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Scope and Constraints
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Scope and Constraints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-in-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 In scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-out-of-scope-non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Out of scope (non-goals)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-binding-technical-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Binding technical constraints
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-technology-choices-and-rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Technology Choices and Rationale
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Technology Choices and Rationale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-frontend" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Frontend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-databases" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Databases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Machine learning
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-requirements-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Requirements Analysis
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Requirements Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 Functional requirements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 Non-functional requirements
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. System Architecture
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. System Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-context-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Context diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-container-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 Container diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-backend-component-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Backend component diagram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-repository-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Repository pattern
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-data-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Data Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Data Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-data-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 Data model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-the-coordinate-data-collection-hyperbase" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 The coordinate data collection (Hyperbase)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-the-admins-table-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 The admins table (PostgreSQL)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-geographic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4 Geographic configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-api-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. API Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. API Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-endpoint-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 Endpoint list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-time-window-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Time window parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-response-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 Response shapes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-interactive-api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.4 Interactive API documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-core-process-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Core Process Flows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Core Process Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-the-aggregation-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 The aggregation pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-hotspot-detection-dbscan" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 Hotspot detection (DBSCAN)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-admin-authentication-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.3 Admin authentication flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#94-mock-data-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.4 Mock data generator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-interface-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Interface Design
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Interface Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-page-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 Page structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-timelapse-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 Timelapse mode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-the-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 The map
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-typography" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4 Typography
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105-theme-and-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.5 Theme and language
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-machine-learning-module-hotspot-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Machine Learning Module — Hotspot Detection
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Machine Learning Module — Hotspot Detection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-the-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 The algorithm
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 Implementation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-security-and-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. Security and Privacy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Security and Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-privacy-by-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.1 Privacy by construction
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-authentication-and-authorisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.2 Authentication and authorisation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-things-worth-stating-honestly" class="md-nav__link">
+    <span class="md-ellipsis">
+      12.3 Things worth stating honestly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-deployment-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      13. Deployment and Operations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Deployment and Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.1 Topology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-operational-decisions-and-their-reasons" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.2 Operational decisions and their reasons
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-operational-warning" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.3 Operational warning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-key-environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      13.4 Key environment variables
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-testing-and-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      14. Testing and Verification
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Testing and Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-continuous-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.1 Continuous integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-local-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.2 Local verification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-manual-post-deployment-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.3 Manual post-deployment verification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#144-automated-test-status-stated-plainly" class="md-nav__link">
+    <span class="md-ellipsis">
+      14.4 Automated test status — stated plainly
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-results-and-implementation-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      15. Results and Implementation Status
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-further-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      16. Further Development
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-appendices" class="md-nav__link">
+    <span class="md-ellipsis">
+      17. Appendices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. Appendices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.1 Glossary
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-related-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.2 Related documentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#173-image-versions-of-the-diagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      17.3 Image versions of the diagrams
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -721,7 +2183,7 @@
 
 
   
-    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/BLUEPRINT.md" title="Ubah halaman ini" class="md-content__button md-icon">
+    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/BLUEPRINT.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -729,15 +2191,11 @@
   
 
 
-<h1 id="blueprint-proyek">Blueprint Proyek<a class="headerlink" href="#blueprint-proyek" title="Permanent link">&para;</a></h1>
-<h1 id="borobudur-aggregated-heatmap-dashboard">Borobudur Aggregated Heatmap Dashboard<a class="headerlink" href="#borobudur-aggregated-heatmap-dashboard" title="Permanent link">&para;</a></h1>
-<p>Dokumen ini adalah blueprint proyek: satu naskah yang merangkum latar belakang,
-tujuan, ruang lingkup, rancangan, implementasi, pengujian, dan status akhir
-sistem. Dokumen teknis yang lebih dalam tetap berdiri sendiri dan dirujuk di
-akhir tiap bab lewat baris <strong>Rujukan detail</strong>.</p>
-<p>Dokumen teknis rujukan ditulis dalam bahasa Inggris. Istilah teknis, nama kode,
-nama endpoint, dan pesan galat sengaja <strong>tidak</strong> diterjemahkan agar cocok persis
-dengan yang ada di dalam kode.</p>
+<h1 id="project-blueprint">Project Blueprint<a class="headerlink" href="#project-blueprint" title="Permanent link">&para;</a></h1>
+<p>This is the single document that covers the whole project: background, goals,
+scope, design, implementation, testing, and final status. Deeper technical
+documents stand on their own and are linked at the end of each chapter under
+<strong>See also</strong>.</p>
 <table>
 <thead>
 <tr>
@@ -747,498 +2205,489 @@ dengan yang ada di dalam kode.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>Nama sistem</strong></td>
+<td><strong>System name</strong></td>
 <td>Borobudur Aggregated Heatmap Dashboard</td>
 </tr>
 <tr>
-<td><strong>Repositori</strong></td>
+<td><strong>Repository</strong></td>
 <td><a href="https://github.com/Hitchgernn/heatmap-dashboard">https://github.com/Hitchgernn/heatmap-dashboard</a></td>
 </tr>
 <tr>
-<td><strong>Dokumentasi</strong></td>
+<td><strong>Documentation</strong></td>
 <td><a href="https://hitchgernn.github.io/heatmap-dashboard/">https://hitchgernn.github.io/heatmap-dashboard/</a></td>
 </tr>
 <tr>
-<td><strong>Jenis sistem</strong></td>
-<td>Dashboard monitoring geospasial berbasis web</td>
+<td><strong>System type</strong></td>
+<td>Web-based geospatial monitoring dashboard</td>
 </tr>
 <tr>
 <td><strong>Status</strong></td>
-<td>Berjalan (deployed) di server kampus <code>jarkom1</code></td>
+<td>Deployed and running on the campus server <code>jarkom1</code></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="1-latar-belakang-dan-rumusan-masalah">1. Latar Belakang dan Rumusan Masalah<a class="headerlink" href="#1-latar-belakang-dan-rumusan-masalah" title="Permanent link">&para;</a></h2>
-<h3 id="11-latar-belakang">1.1 Latar belakang<a class="headerlink" href="#11-latar-belakang" title="Permanent link">&para;</a></h3>
-<p>Candi Borobudur adalah situs warisan dunia dengan kepadatan pengunjung yang
-tidak merata, baik secara ruang maupun waktu. Sebagian zona (misalnya area stupa
-utama) jauh lebih padat daripada zona lain pada jam yang sama. Pengelola
-membutuhkan gambaran kepadatan itu untuk keperluan pemantauan dan pengaturan
-alur pengunjung.</p>
-<p>Sebuah aplikasi mobile yang sudah ada merekam data lokasi pengunjung berupa
-<code>latitude</code>, <code>longitude</code>, <code>client_id</code>, dan waktu perekaman. Data tersebut
-tersimpan di <strong>Hyperbase</strong>, sebuah Backend-as-a-Service berbasis ScyllaDB.
-Data mentah itu sudah ada, tetapi belum bisa dibaca sebagai informasi.</p>
-<h3 id="12-rumusan-masalah">1.2 Rumusan masalah<a class="headerlink" href="#12-rumusan-masalah" title="Permanent link">&para;</a></h3>
+<h2 id="1-background-and-problem-statement">1. Background and Problem Statement<a class="headerlink" href="#1-background-and-problem-statement" title="Permanent link">&para;</a></h2>
+<h3 id="11-background">1.1 Background<a class="headerlink" href="#11-background" title="Permanent link">&para;</a></h3>
+<p>Borobudur is a world heritage site, and its visitors are not spread evenly —
+neither across the grounds nor across the day. Some zones, the main stupa in
+particular, are far busier than others at the same hour. Site managers need to
+see that distribution in order to monitor it and to direct visitor flow.</p>
+<p>An existing mobile app already records visitor positions: <code>latitude</code>,
+<code>longitude</code>, <code>client_id</code>, and a recording time. Those records sit in
+<strong>Hyperbase</strong>, a Backend-as-a-Service built on ScyllaDB. The raw data exists.
+It just cannot be read as information.</p>
+<h3 id="12-problem-statement">1.2 Problem statement<a class="headerlink" href="#12-problem-statement" title="Permanent link">&para;</a></h3>
 <ol>
-<li>Data lokasi tersimpan sebagai titik GPS mentah — tidak ada representasi
-   visual yang bisa langsung dibaca pengelola.</li>
-<li>Mengirim setiap titik GPS mentah ke browser secara real-time tidak efisien:
-   beban jaringan besar, beban rendering Leaflet berat, dan nilainya rendah
-   karena yang dibutuhkan adalah pola kepadatan, bukan titik individual.</li>
-<li>Menyiarkan titik mentah per pengunjung berarti menyiarkan <strong>jejak pergerakan
-   individu</strong>. Itu masalah privasi, bukan sekadar masalah teknis.</li>
-<li>Data mentah mengandung koordinat tidak valid dan koordinat di luar kawasan
-   candi yang akan merusak visualisasi jika tidak disaring.</li>
+<li>Location data is stored as raw GPS points. There is no visual form a manager
+   can read directly.</li>
+<li>Streaming every raw point to the browser in real time is wasteful — heavy on
+   the network, heavy on Leaflet — and it answers the wrong question. What is
+   needed is the density pattern, not the individual points.</li>
+<li>Broadcasting per-visitor points means broadcasting <strong>individual movement
+   traces</strong>. That is a privacy problem, not merely a technical one.</li>
+<li>Raw data contains invalid coordinates and coordinates far outside the temple
+   grounds. Left unfiltered, they wreck the visualisation.</li>
 </ol>
-<h3 id="13-pendekatan-yang-diambil">1.3 Pendekatan yang diambil<a class="headerlink" href="#13-pendekatan-yang-diambil" title="Permanent link">&para;</a></h3>
-<p>Sistem tidak menyiarkan titik mentah. Backend mengambil data mentah dari
-Hyperbase, membersihkannya, menyaring titik di luar batas kawasan,
-<strong>mengagregasinya ke dalam grid tetap</strong>, lalu menyajikan hasil agregat itu
-sebagai GeoJSON. Frontend melakukan <em>polling</em> REST atas GeoJSON tersebut dan
-menggambarnya sebagai layer heatmap Leaflet.</p>
-<p>Konsekuensinya, privasi terjaga <strong>secara konstruksi</strong>, bukan secara kebijakan:
-yang keluar dari backend hanyalah sel grid berisi cacah titik. Tidak ada
-<code>visitor_id</code>, tidak ada urutan waktu per orang, sehingga jejak individu tidak
-dapat direkonstruksi dari respons API.</p>
+<h3 id="13-the-approach-taken">1.3 The approach taken<a class="headerlink" href="#13-the-approach-taken" title="Permanent link">&para;</a></h3>
+<p>The system does not broadcast raw points. The backend fetches raw data from
+Hyperbase, cleans it, drops points outside the site bounds, <strong>aggregates the
+rest onto a fixed grid</strong>, and serves that aggregate as GeoJSON. The frontend
+polls the GeoJSON over REST and draws it as a Leaflet heat layer.</p>
+<p>The consequence is that privacy holds <strong>by construction</strong>, not by policy. Only
+grid cells carrying point counts leave the backend. There is no <code>visitor_id</code> and
+no per-person time ordering, so no individual trace can be reconstructed from an
+API response.</p>
 <hr />
-<h2 id="2-tujuan-dan-sasaran">2. Tujuan dan Sasaran<a class="headerlink" href="#2-tujuan-dan-sasaran" title="Permanent link">&para;</a></h2>
-<h3 id="21-tujuan-umum">2.1 Tujuan umum<a class="headerlink" href="#21-tujuan-umum" title="Permanent link">&para;</a></h3>
-<p>Membangun dashboard web yang memvisualisasikan kepadatan pengunjung Candi
-Borobudur secara <em>near real-time</em> dalam bentuk heatmap teragregasi, tanpa pernah
-mengekspos data lokasi individual.</p>
-<h3 id="22-sasaran-spesifik">2.2 Sasaran spesifik<a class="headerlink" href="#22-sasaran-spesifik" title="Permanent link">&para;</a></h3>
+<h2 id="2-goals-and-objectives">2. Goals and Objectives<a class="headerlink" href="#2-goals-and-objectives" title="Permanent link">&para;</a></h2>
+<h3 id="21-general-goal">2.1 General goal<a class="headerlink" href="#21-general-goal" title="Permanent link">&para;</a></h3>
+<p>Build a web dashboard that shows visitor density at Borobudur in near real time
+as an aggregated heatmap, without ever exposing individual location data.</p>
+<h3 id="22-specific-objectives">2.2 Specific objectives<a class="headerlink" href="#22-specific-objectives" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>No</th>
-<th>Sasaran</th>
+<th>Objective</th>
 <th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>Menampilkan peta interaktif kawasan Borobudur menggunakan Leaflet</td>
-<td>Tercapai</td>
+<td>Display an interactive Leaflet map of the Borobudur area</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Mengambil data lokasi mentah dari Hyperbase melalui backend</td>
-<td>Tercapai</td>
+<td>Fetch raw location data from Hyperbase through the backend</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Membersihkan dan memvalidasi <code>latitude</code> / <code>longitude</code> mentah</td>
-<td>Tercapai</td>
+<td>Clean and validate raw <code>latitude</code> / <code>longitude</code></td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>4</td>
-<td>Menyaring koordinat tidak valid atau di luar batas kawasan</td>
-<td>Tercapai</td>
+<td>Filter out invalid and out-of-bounds coordinates</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>5</td>
-<td>Mengagregasi data lokasi berdasarkan grid</td>
-<td>Tercapai</td>
+<td>Aggregate location data onto a grid</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>6</td>
-<td>Mengembalikan GeoJSON teragregasi dari backend</td>
-<td>Tercapai</td>
+<td>Return aggregated GeoJSON from the backend</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>7</td>
-<td>Menampilkan layer heatmap berwarna di frontend</td>
-<td>Tercapai</td>
+<td>Render a coloured heat layer in the frontend</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>8</td>
-<td>Menyediakan filter waktu (5 menit, 15 menit, 1 jam, hari ini, rentang kustom)</td>
-<td>Tercapai</td>
+<td>Provide time filters (5 min, 15 min, 1 hour, today, custom range)</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>9</td>
-<td>Menyegarkan data secara berkala lewat <em>polling</em> REST</td>
-<td>Tercapai</td>
+<td>Refresh data periodically via REST polling</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>10</td>
-<td>Menyediakan generator data tiruan (<em>mock</em>) untuk pengujian alur</td>
-<td>Tercapai</td>
+<td>Provide a mock data generator for testing the flow</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>11</td>
-<td>Menguji alur penuh Hyperbase → backend → frontend dengan data tiruan</td>
-<td>Tercapai</td>
+<td>Test the full Hyperbase → backend → frontend flow with mock data</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>12</td>
-<td>Mengimplementasikan Hotspot Detection dengan DBSCAN</td>
-<td>Tercapai</td>
+<td>Implement hotspot detection with DBSCAN</td>
+<td>Achieved</td>
 </tr>
 <tr>
 <td>13</td>
-<td>Tidak pernah mengekspos <code>visitor_id</code> atau riwayat pergerakan individu</td>
-<td>Tercapai</td>
+<td>Never expose <code>visitor_id</code> or individual movement history</td>
+<td>Achieved</td>
 </tr>
 </tbody>
 </table>
-<p>Sasaran ini diambil langsung dari daftar <em>Main Goals</em> pada PRD dan diverifikasi
-ulang terhadap kode yang berjalan.</p>
-<p><strong>Rujukan detail:</strong> <a href="../PRD/">PRD.md</a> bab 3.</p>
+<p>These objectives come from the Main Goals list in the original PRD, re-verified
+against the running code.</p>
+<p><strong>See also:</strong> <a href="../PRD/">PRD.md</a> chapter 3.</p>
 <hr />
-<h2 id="3-ruang-lingkup-dan-batasan">3. Ruang Lingkup dan Batasan<a class="headerlink" href="#3-ruang-lingkup-dan-batasan" title="Permanent link">&para;</a></h2>
-<h3 id="31-termasuk-dalam-ruang-lingkup">3.1 Termasuk dalam ruang lingkup<a class="headerlink" href="#31-termasuk-dalam-ruang-lingkup" title="Permanent link">&para;</a></h3>
+<h2 id="3-scope-and-constraints">3. Scope and Constraints<a class="headerlink" href="#3-scope-and-constraints" title="Permanent link">&para;</a></h2>
+<h3 id="31-in-scope">3.1 In scope<a class="headerlink" href="#31-in-scope" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Backend REST API dengan pembersihan data, agregasi grid, transformasi GeoJSON,
-  ringkasan dashboard, deteksi hotspot, dan generator data tiruan.</li>
-<li>Frontend dashboard: halaman Dashboard, Heatmap (mode Live dan Timelapse),
-  Hotspots, dan Mock Generator.</li>
-<li>Autentikasi admin (satu peran saja).</li>
-<li>Deteksi hotspot dengan DBSCAN.</li>
-<li>Deployment berbasis Docker Compose di server kampus.</li>
+<li>A backend REST API with data cleaning, grid aggregation, GeoJSON
+  transformation, dashboard summary, hotspot detection, and a mock generator.</li>
+<li>A frontend dashboard: Dashboard, Heatmap (Live and Timelapse modes), Hotspots,
+  and Mock Generator pages.</li>
+<li>Admin authentication (a single role).</li>
+<li>Hotspot detection with DBSCAN.</li>
+<li>Docker Compose deployment on the campus server.</li>
 </ul>
-<h3 id="32-di-luar-ruang-lingkup-non-goals">3.2 Di luar ruang lingkup (Non-Goals)<a class="headerlink" href="#32-di-luar-ruang-lingkup-non-goals" title="Permanent link">&para;</a></h3>
-<p>Berikut sengaja <strong>tidak</strong> dibangun, dan keputusan ini bersifat mengikat:</p>
+<h3 id="32-out-of-scope-non-goals">3.2 Out of scope (non-goals)<a class="headerlink" href="#32-out-of-scope-non-goals" title="Permanent link">&para;</a></h3>
+<p>These were deliberately <strong>not</strong> built, and the decision is binding:</p>
 <table>
 <thead>
 <tr>
-<th>Tidak dibangun</th>
-<th>Alasan</th>
+<th>Not built</th>
+<th>Reason</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Streaming GPS mentah secara penuh</td>
-<td>Bertentangan dengan prinsip agregat dan privasi</td>
+<td>Full raw GPS streaming</td>
+<td>Contradicts the aggregate-and-privacy principle</td>
 </tr>
 <tr>
-<td>WebSocket untuk tiap pembaruan lokasi</td>
-<td><em>Polling</em> REST cukup untuk laju pembaruan 30 detik</td>
+<td>WebSockets for every location update</td>
+<td>REST polling is enough at a 30-second refresh rate</td>
 </tr>
 <tr>
 <td>Deep learning</td>
-<td>Di luar lingkup ML yang disepakati</td>
+<td>Outside the agreed ML scope</td>
 </tr>
 <tr>
-<td>Prediksi kepadatan, analisis trajektori, prediksi zona berikutnya, rekomendasi rute</td>
-<td>Semuanya membutuhkan data pergerakan individual</td>
+<td>Crowd prediction, trajectory analysis, next-zone prediction, route recommendation</td>
+<td>All of them require individual movement data</td>
 </tr>
 <tr>
-<td>Prediksi kerusakan struktur</td>
-<td>Bukan domain sistem ini</td>
+<td>Structural damage prediction</td>
+<td>Not this system's domain</td>
 </tr>
 <tr>
-<td>Autentikasi kompleks dan RBAC</td>
-<td>Hanya ada satu peran, yaitu <code>admin</code></td>
+<td>Complex authentication and RBAC</td>
+<td>There is exactly one role, <code>admin</code></td>
 </tr>
 <tr>
-<td>Visualisasi peta 3D</td>
-<td>Tidak menambah nilai untuk pembacaan kepadatan</td>
+<td>3D map visualisation</td>
+<td>Adds nothing to reading density</td>
 </tr>
 <tr>
-<td><em>Monitoring stack</em> skala produksi</td>
-<td>Berlebihan untuk deployment satu server</td>
+<td>A production-scale monitoring stack</td>
+<td>Overkill for a single-server deployment</td>
 </tr>
 <tr>
-<td>Arsitektur microservices</td>
-<td>Berlebihan untuk cakupan MVP</td>
+<td>Microservices</td>
+<td>Overkill for the MVP scope</td>
 </tr>
 </tbody>
 </table>
-<h3 id="33-batasan-teknis-yang-mengikat">3.3 Batasan teknis yang mengikat<a class="headerlink" href="#33-batasan-teknis-yang-mengikat" title="Permanent link">&para;</a></h3>
-<p>Batasan ini dijaga di tingkat kode, bukan sekadar konvensi:</p>
+<h3 id="33-binding-technical-constraints">3.3 Binding technical constraints<a class="headerlink" href="#33-binding-technical-constraints" title="Permanent link">&para;</a></h3>
+<p>These are enforced in code, not merely by convention:</p>
 <ol>
-<li><strong>Koordinat GeoJSON adalah <code>[longitude, latitude]</code></strong>, bukan <code>[lat, lng]</code>.
-   Leaflet menggunakan urutan kebalikannya, sehingga konversi hanya boleh
-   dilakukan di batas antarmuka (<code>frontend/src/lib/map.ts</code>), bukan dengan
-   membalik GeoJSON-nya.</li>
-<li><strong><code>visitor_id</code> tidak pernah muncul di respons apa pun.</strong> Tipe
-   <code>HeatmapFeature</code> tidak memiliki <em>field</em> untuk itu, sehingga aturan ini
-   dijamin oleh sistem tipe.</li>
-<li><strong>Hanya data teragregasi yang disajikan.</strong></li>
-<li><strong>Frontend tidak pernah menghubungi Hyperbase secara langsung</strong> — semua data
-   melewati backend.</li>
-<li><strong>Tidak menggunakan Next.js.</strong> Ini aplikasi geospasial sisi klien; SSR dan SEO
-   tidak relevan.</li>
-<li><strong>Lingkup ML terbatas pada deteksi hotspot dengan DBSCAN.</strong></li>
-<li><strong>Konfigurasi geografis tidak boleh ditulis langsung (<em>hardcode</em>)</strong> di luar
+<li><strong>GeoJSON coordinates are <code>[longitude, latitude]</code></strong>, never <code>[lat, lng]</code>.
+   Leaflet uses the opposite order, so conversion happens only at the boundary
+   (<code>frontend/src/lib/map.ts</code>) — never by reordering the GeoJSON itself.</li>
+<li><strong><code>visitor_id</code> never appears in any response.</strong> The <code>HeatmapFeature</code> type has
+   no field for it, so the type system guarantees the rule.</li>
+<li><strong>Only aggregated data is served.</strong></li>
+<li><strong>The frontend never contacts Hyperbase directly</strong> — all data passes through
+   the backend.</li>
+<li><strong>No Next.js.</strong> This is a client-side geospatial application; SSR and SEO are
+   irrelevant.</li>
+<li><strong>ML scope is limited to DBSCAN hotspot detection.</strong></li>
+<li><strong>Geographic configuration is never hardcoded</strong> outside
    <code>backend/src/config/</code>.</li>
 </ol>
-<p><strong>Rujukan detail:</strong> <a href="../PRD/">PRD.md</a> bab 4.</p>
+<p><strong>See also:</strong> <a href="../PRD/">PRD.md</a> chapter 4.</p>
 <hr />
-<h2 id="4-justifikasi-pemilihan-teknologi">4. Justifikasi Pemilihan Teknologi<a class="headerlink" href="#4-justifikasi-pemilihan-teknologi" title="Permanent link">&para;</a></h2>
-<p>Tabel berikut menyatakan pilihan beserta alasannya. Alasan lebih penting daripada
-daftar teknologinya.</p>
+<h2 id="4-technology-choices-and-rationale">4. Technology Choices and Rationale<a class="headerlink" href="#4-technology-choices-and-rationale" title="Permanent link">&para;</a></h2>
+<p>The reasoning matters more than the list.</p>
 <h3 id="41-frontend">4.1 Frontend<a class="headerlink" href="#41-frontend" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Teknologi</th>
-<th>Versi</th>
-<th>Alasan pemilihan</th>
+<th>Technology</th>
+<th>Version</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>React</td>
 <td>18.3</td>
-<td>Model komponen deklaratif; ekosistem Leaflet matang</td>
+<td>Declarative component model; mature Leaflet ecosystem</td>
 </tr>
 <tr>
 <td>Vite</td>
 <td>6.0</td>
-<td><em>Dev server</em> cepat, keluaran <em>build</em> berupa berkas statis yang mudah dilayani nginx</td>
+<td>Fast dev server; the build output is static files nginx can serve directly</td>
 </tr>
 <tr>
 <td>TypeScript</td>
 <td>5.6</td>
-<td>Kontrak data (GeoJSON, <code>Hotspot</code>) dijaga kompilator, bukan oleh disiplin manual</td>
+<td>Data contracts (GeoJSON, <code>Hotspot</code>) are held by the compiler, not by discipline</td>
 </tr>
 <tr>
 <td>Tailwind CSS</td>
 <td>4.0</td>
-<td>Penataan konsisten tanpa berkas CSS terpisah yang menumpuk</td>
+<td>Consistent styling without a growing pile of separate CSS files</td>
 </tr>
 <tr>
 <td>Leaflet + react-leaflet</td>
 <td>1.9 / 4.2</td>
-<td>Peta raster ringan; <code>leaflet.heat</code> memberi layer heatmap siap pakai</td>
+<td>Lightweight raster maps; <code>leaflet.heat</code> gives a ready heat layer</td>
 </tr>
 <tr>
 <td>Recharts</td>
 <td>3.10</td>
-<td>Grafik dashboard dari data yang sudah diambil, tanpa permintaan tambahan</td>
+<td>Dashboard charts from data already fetched, with no extra request</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Mengapa bukan Next.js.</strong> Beban kerja utama aplikasi ini adalah rendering
-Leaflet, pembaruan layer heat dari GeoJSON, <em>polling</em> API, dan interaksi UI —
-semuanya di sisi klien. SSR dan SEO tidak memberi nilai, sementara React + Vite
-lebih sederhana dan menghasilkan berkas statis yang bisa dilayani nginx apa
-adanya.</p>
-<p><strong>Mengapa Leaflet + OpenStreetMap.</strong> Tidak memerlukan <em>map token</em>, sehingga tidak
-ada rahasia yang harus dikelola dan tidak ada kuota yang bisa habis. Basemap
-sengaja dibuat <strong>tidak bergantung tema</strong> (tetap OpenStreetMap baik pada mode
-terang maupun gelap) agar tampilan dashboard sama dengan peta folium di notebook
-DBSCAN. Citra satelit Esri World Imagery tersedia sebagai pilihan opsional lewat
-pemilih layer di dalam peta.</p>
+<p><strong>Why not Next.js.</strong> The workload here is Leaflet rendering, updating the heat
+layer from GeoJSON, polling the API, and UI interaction — all client-side. SSR
+and SEO add nothing, while React + Vite is simpler and produces static files
+nginx serves as they are.</p>
+<p><strong>Why Leaflet + OpenStreetMap.</strong> No map token is needed, so there is no secret to
+manage and no quota to exhaust. The basemap is deliberately
+<strong>theme-independent</strong> — plain OpenStreetMap in both light and dark mode — so the
+dashboard looks like the same place as the folium maps in the DBSCAN notebook.
+Esri World Imagery satellite is available as an opt-in layer.</p>
 <h3 id="42-backend">4.2 Backend<a class="headerlink" href="#42-backend" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Teknologi</th>
-<th>Versi</th>
-<th>Alasan pemilihan</th>
+<th>Technology</th>
+<th>Version</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Node.js + Express</td>
 <td>4.19</td>
-<td>Ringan, cukup untuk lapisan REST dan agregasi ini</td>
+<td>Light, and sufficient for this REST and aggregation layer</td>
 </tr>
 <tr>
 <td>TypeScript</td>
 <td>5.5</td>
-<td>Tipe domain bersama dengan frontend; aturan privasi dijaga tipe</td>
+<td>Domain types shared with the frontend; the privacy rule is held by types</td>
 </tr>
 <tr>
 <td><code>pg</code></td>
 <td>8.22</td>
-<td>Klien PostgreSQL untuk penyimpanan akun admin</td>
+<td>PostgreSQL client for admin account storage</td>
 </tr>
 <tr>
 <td><code>bcryptjs</code> + <code>jsonwebtoken</code></td>
 <td>3.0 / 9.0</td>
-<td><em>Hashing</em> kata sandi dan penerbitan JWT sesi sendiri</td>
+<td>Password hashing and issuing our own session JWTs</td>
 </tr>
 <tr>
 <td><code>swagger-jsdoc</code> + <code>swagger-ui-express</code></td>
 <td>6.3 / 5.0</td>
-<td>Dokumentasi API dihasilkan dari komentar di sebelah kode rutenya</td>
+<td>API docs generated from comments next to the route they describe</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Mengapa agregasi di backend, bukan di frontend.</strong> Agregasi di backend menjaga
-data mentah tidak pernah meninggalkan server. Jika frontend yang mengagregasi,
-titik mentah harus dikirim lebih dulu — dan seluruh alasan proyek ini gugur.</p>
-<h3 id="43-basis-data">4.3 Basis data<a class="headerlink" href="#43-basis-data" title="Permanent link">&para;</a></h3>
-<p>Sistem menggunakan <strong>dua</strong> penyimpanan dengan peran berbeda:</p>
+<p><strong>Why aggregate in the backend rather than the frontend.</strong> Backend aggregation
+keeps raw data on the server. If the frontend aggregated, the raw points would
+have to be shipped first — and the entire premise of the project collapses.</p>
+<h3 id="43-databases">4.3 Databases<a class="headerlink" href="#43-databases" title="Permanent link">&para;</a></h3>
+<p>The system uses <strong>two</strong> stores with different jobs:</p>
 <table>
 <thead>
 <tr>
-<th>Penyimpanan</th>
-<th>Isi</th>
-<th>Alasan</th>
+<th>Store</th>
+<th>Contents</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Hyperbase (ScyllaDB BaaS)</td>
-<td>Data lokasi (<code>coordinate data</code>)</td>
-<td>Sudah menjadi penyimpanan aplikasi mobile; dashboard hanya membaca</td>
+<td>Location data (<code>coordinate data</code>)</td>
+<td>Already the mobile app's store; the dashboard only reads</td>
 </tr>
 <tr>
-<td>PostgreSQL (mandiri)</td>
-<td>Akun admin (tabel <code>admins</code>)</td>
-<td>Autentikasi butuh keunikan email dan relasi sederhana; tidak perlu memaksakannya ke BaaS</td>
+<td>PostgreSQL (self-hosted)</td>
+<td>Admin accounts (<code>admins</code> table)</td>
+<td>Auth needs email uniqueness and simple relations; no reason to force that into a BaaS</td>
 </tr>
 </tbody>
 </table>
-<h3 id="44-machine-learning">4.4 Machine Learning<a class="headerlink" href="#44-machine-learning" title="Permanent link">&para;</a></h3>
-<p>DBSCAN dipilih karena cocok dengan bentuk masalahnya: jumlah klaster tidak
-diketahui sebelumnya (berbeda dengan K-Means yang menuntut <em>k</em>), klaster bisa
-berbentuk tidak beraturan mengikuti bentuk pelataran candi, dan titik yang
-tersebar sendirian memang seharusnya diperlakukan sebagai <em>noise</em>, bukan
-dipaksa masuk klaster.</p>
-<p>Python + Pandas + scikit-learn dipakai pada tahap <strong>eksplorasi parameter</strong>
-(notebook). Implementasi yang berjalan di produksi ditulis ulang dalam TypeScript
-di dalam backend — lihat bab 11 untuk alasannya.</p>
-<p><strong>Rujukan detail:</strong> <a href="../PRD/">PRD.md</a> bab 2.</p>
+<h3 id="44-machine-learning">4.4 Machine learning<a class="headerlink" href="#44-machine-learning" title="Permanent link">&para;</a></h3>
+<p>DBSCAN fits the shape of the problem. The number of clusters is not known in
+advance (unlike K-Means, which demands <em>k</em>), clusters can be irregular and follow
+the shape of the temple grounds, and isolated points genuinely should be treated
+as <em>noise</em> rather than forced into a cluster.</p>
+<p>Python, Pandas, and scikit-learn were used for <strong>parameter exploration</strong> in a
+notebook. The implementation that runs in production was rewritten in TypeScript
+inside the backend — chapter 11 explains why.</p>
+<p><strong>See also:</strong> <a href="../PRD/">PRD.md</a> chapter 2.</p>
 <hr />
-<h2 id="5-analisis-kebutuhan">5. Analisis Kebutuhan<a class="headerlink" href="#5-analisis-kebutuhan" title="Permanent link">&para;</a></h2>
-<h3 id="51-kebutuhan-fungsional">5.1 Kebutuhan fungsional<a class="headerlink" href="#51-kebutuhan-fungsional" title="Permanent link">&para;</a></h3>
+<h2 id="5-requirements-analysis">5. Requirements Analysis<a class="headerlink" href="#5-requirements-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="51-functional-requirements">5.1 Functional requirements<a class="headerlink" href="#51-functional-requirements" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Kode</th>
-<th>Kebutuhan</th>
+<th>Code</th>
+<th>Requirement</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>KF-01</td>
-<td>Sistem menampilkan peta kawasan Borobudur dengan layer heatmap teragregasi</td>
+<td>FR-01</td>
+<td>Display a map of the Borobudur area with an aggregated heat layer</td>
 </tr>
 <tr>
-<td>KF-02</td>
-<td>Sistem menyediakan filter jendela waktu preset: <code>5m</code>, <code>15m</code>, <code>1h</code>, <code>today</code>, <code>3d</code>, <code>7d</code>, <code>30d</code></td>
+<td>FR-02</td>
+<td>Provide preset time windows: <code>5m</code>, <code>15m</code>, <code>1h</code>, <code>today</code>, <code>3d</code>, <code>7d</code>, <code>30d</code></td>
 </tr>
 <tr>
-<td>KF-03</td>
-<td>Sistem menerima rentang waktu kustom <code>from</code>/<code>to</code> dengan rentang maksimum 90 hari</td>
+<td>FR-03</td>
+<td>Accept custom <code>from</code>/<code>to</code> ranges up to 90 days</td>
 </tr>
 <tr>
-<td>KF-04</td>
-<td>Sistem menyegarkan data heatmap dan ringkasan setiap 30 detik</td>
+<td>FR-04</td>
+<td>Refresh heatmap and summary data every 30 seconds</td>
 </tr>
 <tr>
-<td>KF-05</td>
-<td>Sistem menampilkan kartu ringkasan: perkiraan pengunjung aktif, total titik lokasi, area terpadat, waktu pembaruan terakhir</td>
+<td>FR-05</td>
+<td>Show summary cards: estimated active visitors, total location points, busiest area, last update time</td>
 </tr>
 <tr>
-<td>KF-06</td>
-<td>Sistem menjalankan DBSCAN atas jendela waktu berjalan dan menampilkan klaster sebagai hotspot</td>
+<td>FR-06</td>
+<td>Run DBSCAN over the current time window and show clusters as hotspots</td>
 </tr>
 <tr>
-<td>KF-07</td>
-<td>Parameter DBSCAN (<code>eps</code>, <code>minSamples</code>) dapat diubah pengguna dan dibatasi rentangnya oleh server</td>
+<td>FR-07</td>
+<td>Let the user tune the DBSCAN parameters (<code>eps</code>, <code>minSamples</code>), with server-side bounds</td>
 </tr>
 <tr>
-<td>KF-08</td>
-<td>Sistem menyediakan mode Timelapse yang memutar ulang rentang waktu dalam langkah tetap</td>
+<td>FR-08</td>
+<td>Provide a Timelapse mode that replays a time range in fixed steps</td>
 </tr>
 <tr>
-<td>KF-09</td>
-<td>Sistem menyediakan generator data tiruan dengan sebaran menyerupai kondisi nyata</td>
+<td>FR-09</td>
+<td>Provide a mock data generator with a realistic distribution</td>
 </tr>
 <tr>
-<td>KF-10</td>
-<td>Sistem membatasi seluruh rute data di balik sesi admin yang tervalidasi</td>
+<td>FR-10</td>
+<td>Keep every data route behind a validated admin session</td>
 </tr>
 <tr>
-<td>KF-11</td>
-<td>Sistem menyediakan pengalih sumber data antara Mobile App dan Mock</td>
+<td>FR-11</td>
+<td>Provide a data-source switch between Mobile App and Mock</td>
 </tr>
 <tr>
-<td>KF-12</td>
-<td>Antarmuka tersedia dalam bahasa Inggris dan Indonesia, serta tema terang/gelap/sistem</td>
+<td>FR-12</td>
+<td>Offer the interface in English and Indonesian, with light/dark/system themes</td>
 </tr>
 </tbody>
 </table>
-<h3 id="52-kebutuhan-non-fungsional">5.2 Kebutuhan non-fungsional<a class="headerlink" href="#52-kebutuhan-non-fungsional" title="Permanent link">&para;</a></h3>
+<h3 id="52-non-functional-requirements">5.2 Non-functional requirements<a class="headerlink" href="#52-non-functional-requirements" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Kode</th>
-<th>Kebutuhan</th>
-<th>Cara pemenuhan</th>
+<th>Code</th>
+<th>Requirement</th>
+<th>How it is met</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>KNF-01</td>
-<td><strong>Privasi</strong> — data individual tidak boleh keluar</td>
-<td>Tipe respons tidak memiliki <em>field</em> <code>visitor_id</code>; keluaran berupa sel grid</td>
+<td>NFR-01</td>
+<td><strong>Privacy</strong> — individual data must not leave the server</td>
+<td>Response types have no <code>visitor_id</code> field; output is grid cells</td>
 </tr>
 <tr>
-<td>KNF-02</td>
-<td><strong>Kesegaran data</strong> — pembaruan mendekati real-time</td>
-<td><em>Polling</em> REST 30 detik; jendela waktu terpendek 5 menit</td>
+<td>NFR-02</td>
+<td><strong>Freshness</strong> — updates close to real time</td>
+<td>30-second REST polling; shortest window is 5 minutes</td>
 </tr>
 <tr>
-<td>KNF-03</td>
-<td><strong>Batas beban kueri</strong></td>
-<td>Rentang kustom dibatasi 90 hari; Timelapse dibatasi 288 <em>frame</em>; titik sebar hotspot dibatasi 4000</td>
+<td>NFR-03</td>
+<td><strong>Bounded query cost</strong></td>
+<td>Custom ranges capped at 90 days; Timelapse capped at 288 frames; hotspot scatter capped at 4000 points</td>
 </tr>
 <tr>
-<td>KNF-04</td>
-<td><strong>Ketahanan tanpa kredensial</strong></td>
-<td>Driver <code>memory</code> menyemai data contoh sehingga sistem dapat dijalankan tanpa akses Hyperbase</td>
+<td>NFR-04</td>
+<td><strong>Runs without credentials</strong></td>
+<td>The <code>memory</code> driver seeds sample data, so the system runs with no Hyperbase access</td>
 </tr>
 <tr>
-<td>KNF-05</td>
-<td><strong>Kemudahan penggantian sumber data</strong></td>
-<td>Pola <em>repository</em>: layanan hanya bergantung pada antarmuka <code>LocationRepository</code></td>
+<td>NFR-05</td>
+<td><strong>Swappable data source</strong></td>
+<td>Repository pattern: services depend only on the <code>LocationRepository</code> interface</td>
 </tr>
 <tr>
-<td>KNF-06</td>
-<td><strong>Keamanan sesi</strong></td>
-<td>JWT di dalam cookie <code>httpOnly</code>, <code>SameSite=Strict</code></td>
+<td>NFR-06</td>
+<td><strong>Session security</strong></td>
+<td>JWT inside an <code>httpOnly</code>, <code>SameSite=Strict</code> cookie</td>
 </tr>
 <tr>
-<td>KNF-07</td>
-<td><strong>Kemudahan deployment</strong></td>
-<td>Docker Compose tiga kontainer, satu perintah</td>
+<td>NFR-07</td>
+<td><strong>Simple deployment</strong></td>
+<td>Three Docker Compose containers, one command</td>
 </tr>
 <tr>
-<td>KNF-08</td>
-<td><strong>Konsistensi konfigurasi geografis</strong></td>
-<td>Semua batas dan ukuran grid terpusat di <code>config/bounds.ts</code></td>
+<td>NFR-08</td>
+<td><strong>Consistent geographic configuration</strong></td>
+<td>All bounds and grid size centralised in <code>config/bounds.ts</code></td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="6-arsitektur-sistem">6. Arsitektur Sistem<a class="headerlink" href="#6-arsitektur-sistem" title="Permanent link">&para;</a></h2>
-<h3 id="61-diagram-konteks">6.1 Diagram konteks<a class="headerlink" href="#61-diagram-konteks" title="Permanent link">&para;</a></h3>
-<p>Batas sistem dan pihak yang berinteraksi dengannya.</p>
+<h2 id="6-system-architecture">6. System Architecture<a class="headerlink" href="#6-system-architecture" title="Permanent link">&para;</a></h2>
+<h3 id="61-context-diagram">6.1 Context diagram<a class="headerlink" href="#61-context-diagram" title="Permanent link">&para;</a></h3>
+<p>The system boundary and everything that interacts with it.</p>
 <pre class="mermaid"><code>flowchart LR
-    Visitor["Pengunjung&lt;br/&gt;(membawa aplikasi mobile)"]
-    MobileApp["Aplikasi Mobile&lt;br/&gt;(sistem terpisah)"]
-    Hyperbase[("Hyperbase&lt;br/&gt;ScyllaDB BaaS&lt;br/&gt;koleksi: coordinate data")]
-    System["Borobudur Heatmap Dashboard&lt;br/&gt;(sistem yang dibangun)"]
-    Admin["Admin / Pengelola"]
+    Visitor["Visitor&lt;br/&gt;(carrying the mobile app)"]
+    MobileApp["Mobile App&lt;br/&gt;(separate system)"]
+    Hyperbase[("Hyperbase&lt;br/&gt;ScyllaDB BaaS&lt;br/&gt;collection: coordinate data")]
+    System["Borobudur Heatmap Dashboard&lt;br/&gt;(the system built here)"]
+    Admin["Admin / Site manager"]
 
-    Visitor --&gt;|"bergerak di kawasan"| MobileApp
-    MobileApp --&gt;|"tulis titik GPS"| Hyperbase
-    Hyperbase --&gt;|"baca titik mentah (REST)"| System
-    System --&gt;|"GeoJSON teragregasi"| Admin
-    Admin --&gt;|"login, pilih jendela waktu"| System</code></pre>
-<p>Perhatikan arah panah antara Hyperbase dan sistem: <strong>hanya membaca</strong>. Dashboard
-tidak pernah menulis ke koleksi milik aplikasi mobile.</p>
-<h3 id="62-diagram-kontainer">6.2 Diagram kontainer<a class="headerlink" href="#62-diagram-kontainer" title="Permanent link">&para;</a></h3>
+    Visitor --&gt;|"moves around the site"| MobileApp
+    MobileApp --&gt;|"writes GPS points"| Hyperbase
+    Hyperbase --&gt;|"reads raw points (REST)"| System
+    System --&gt;|"aggregated GeoJSON"| Admin
+    Admin --&gt;|"logs in, picks a time window"| System</code></pre>
+<p>Note the direction of the arrow between Hyperbase and the system: <strong>read only</strong>.
+The dashboard never writes to the mobile app's collection.</p>
+<h3 id="62-container-diagram">6.2 Container diagram<a class="headerlink" href="#62-container-diagram" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>flowchart TB
-    Browser["Browser Admin"]
+    Browser["Admin browser"]
 
-    subgraph Server["Server kampus — jarkom1 (10.42.28.70)"]
-        Tunnel["cloudflared&lt;br/&gt;TLS + hostname publik"]
+    subgraph Server["Campus server — jarkom1 (10.42.28.70)"]
+        Tunnel["cloudflared&lt;br/&gt;TLS + public hostname"]
         subgraph Compose["docker compose: borobudur-dashboard"]
-            FE["frontend :8090&lt;br/&gt;nginx — melayani build statis,&lt;br/&gt;mem-proxy /api ke backend"]
+            FE["frontend :8090&lt;br/&gt;nginx — serves the static build,&lt;br/&gt;proxies /api to the backend"]
             BE["backend :3001&lt;br/&gt;Express + TypeScript"]
-            PG[("postgres :5433&lt;br/&gt;tabel admins")]
+            PG[("postgres :5433&lt;br/&gt;admins table")]
         end
     end
 
@@ -1247,18 +2696,18 @@ tidak pernah menulis ke koleksi milik aplikasi mobile.</p>
     Browser --&gt; Tunnel
     Tunnel --&gt; FE
     FE --&gt;|"/api/*"| BE
-    BE --&gt;|"autentikasi admin"| PG
-    BE --&gt;|"REST, baca data lokasi"| HB</code></pre>
-<p>Satu hal yang menentukan banyak keputusan lain: <strong>semuanya satu origin</strong>. Browser
-memuat aplikasi dan memanggil <code>/api/...</code> pada <em>hostname</em> yang sama, lalu nginx di
-kontainer frontend meneruskannya ke backend melalui jaringan compose.
-Akibatnya cookie sesi dapat tetap <code>SameSite=Strict</code>, dan CORS tidak pernah
-berlaku karena permintaan satu origin bukan permintaan lintas origin.</p>
-<h3 id="63-diagram-komponen-backend">6.3 Diagram komponen backend<a class="headerlink" href="#63-diagram-komponen-backend" title="Permanent link">&para;</a></h3>
-<p>Lapisan backend dan arah ketergantungannya. Ketergantungan selalu mengarah ke
-dalam; lapisan <code>services</code> tidak pernah mengimpor <em>repository</em> konkret.</p>
+    BE --&gt;|"admin authentication"| PG
+    BE --&gt;|"REST, reads location data"| HB</code></pre>
+<p>One fact drives many other decisions: <strong>everything is one origin</strong>. The browser
+loads the app and calls <code>/api/...</code> on the same hostname; nginx in the frontend
+container forwards that to the backend over the compose network. Because of
+this, the session cookie can stay <code>SameSite=Strict</code>, and CORS never applies —
+a same-origin request is not a cross-origin request.</p>
+<h3 id="63-backend-component-diagram">6.3 Backend component diagram<a class="headerlink" href="#63-backend-component-diagram" title="Permanent link">&para;</a></h3>
+<p>The backend layers and the direction of their dependencies. Dependencies always
+point inward; the <code>services</code> layer never imports a concrete repository.</p>
 <pre class="mermaid"><code>flowchart TB
-    subgraph Routes["routes/ — lapisan HTTP"]
+    subgraph Routes["routes/ — HTTP layer"]
         R1["heatmap.routes.ts"]
         R2["dashboard.routes.ts"]
         R3["hotspot.routes.ts"]
@@ -1266,7 +2715,7 @@ dalam; lapisan <code>services</code> tidak pernah mengimpor <em>repository</em> 
         R5["auth/admin.routes.ts"]
     end
 
-    subgraph Services["services/ — logika murni"]
+    subgraph Services["services/ — pure logic"]
         S1["aggregation.service.ts"]
         S2["geojson.service.ts"]
         S3["dashboard.service.ts"]
@@ -1276,8 +2725,8 @@ dalam; lapisan <code>services</code> tidak pernah mengimpor <em>repository</em> 
         S7["auth.service.ts"]
     end
 
-    subgraph Repos["repositories/ — abstraksi penyimpanan"]
-        I["LocationRepository&lt;br/&gt;(antarmuka)"]
+    subgraph Repos["repositories/ — storage abstraction"]
+        I["LocationRepository&lt;br/&gt;(interface)"]
         M["MemoryLocationRepository"]
         H["HyperbaseLocationRepository"]
     end
@@ -1297,39 +2746,39 @@ dalam; lapisan <code>services</code> tidak pernah mengimpor <em>repository</em> 
     R2 --&gt; I
     R3 --&gt; I
     R4 --&gt; I
-    I -.implementasi.-&gt; M
-    I -.implementasi.-&gt; H
+    I -.implements.-&gt; M
+    I -.implements.-&gt; H
 
     Services --&gt; Shared
     Routes --&gt; Shared</code></pre>
-<h3 id="64-pola-repository">6.4 Pola repository<a class="headerlink" href="#64-pola-repository" title="Permanent link">&para;</a></h3>
-<p>Layanan hanya bergantung pada antarmuka berikut:</p>
+<h3 id="64-repository-pattern">6.4 Repository pattern<a class="headerlink" href="#64-repository-pattern" title="Permanent link">&para;</a></h3>
+<p>Services depend only on this interface:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nx">getLocations</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">LocationLog</span><span class="p">[]</span><span class="o">&gt;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nx">insertLocation</span><span class="p">(</span><span class="nx">location</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nx">insertManyLocations</span><span class="p">(</span><span class="nx">locations</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="nb">Promise</span><span class="o">&lt;</span><span class="ow">void</span><span class="o">&gt;</span>
 </code></pre></div>
 <ul>
-<li><code>MemoryLocationRepository</code> — penyimpanan dalam proses, menyemai sekitar 97
-  titik contoh saat <em>boot</em>. Dipilih dengan <code>REPOSITORY_DRIVER=memory</code> (bawaan).
-  Berkatnya, sistem bisa dijalankan dan dinilai tanpa kredensial Hyperbase.</li>
-<li><code>HyperbaseLocationRepository</code> — integrasi REST ke Hyperbase: klien HTTP sisi
-  server, JWT layanan yang di-<em>cache</em>, pembacaan berpaginasi, satu kali percobaan
-  <em>login</em> ulang saat menerima 401/403. Dipilih dengan <code>REPOSITORY_DRIVER=hyperbase</code>.</li>
+<li><code>MemoryLocationRepository</code> — an in-process store that seeds about 97 sample
+  points at boot. Selected with <code>REPOSITORY_DRIVER=memory</code> (the default). Because
+  of it, the system can be run and assessed without Hyperbase credentials.</li>
+<li><code>HyperbaseLocationRepository</code> — REST integration with Hyperbase: a server-side
+  HTTP client, a cached service JWT, paginated reads, and one re-login retry on
+  401/403. Selected with <code>REPOSITORY_DRIVER=hyperbase</code>.</li>
 </ul>
-<p>Menukar driver tidak menuntut perubahan apa pun di lapisan layanan. Inilah yang
-membuat pengujian menyeluruh mungkin dilakukan tanpa menyentuh data produksi.</p>
-<p><strong>Rujukan detail:</strong> <a href="../ARCHITECTURE/">ARCHITECTURE.md</a>, <a href="../HYPERBASE_INTEGRATION/">HYPERBASE_INTEGRATION.md</a>.</p>
+<p>Swapping drivers requires no change anywhere in the service layer. That is what
+makes end-to-end testing possible without touching production data.</p>
+<p><strong>See also:</strong> <a href="../ARCHITECTURE/">ARCHITECTURE.md</a>, <a href="../HYPERBASE_INTEGRATION/">HYPERBASE_INTEGRATION.md</a>.</p>
 <hr />
-<h2 id="7-desain-data">7. Desain Data<a class="headerlink" href="#7-desain-data" title="Permanent link">&para;</a></h2>
-<h3 id="71-model-data">7.1 Model data<a class="headerlink" href="#71-model-data" title="Permanent link">&para;</a></h3>
+<h2 id="7-data-design">7. Data Design<a class="headerlink" href="#7-data-design" title="Permanent link">&para;</a></h2>
+<h3 id="71-data-model">7.1 Data model<a class="headerlink" href="#71-data-model" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>erDiagram
     COORDINATE_DATA {
-        uuid  _id PK "UUIDv7 — bit tinggi memuat unix-ms"
-        timestamp _updated_at "waktu rekam, diisi Hyperbase"
+        uuid  _id PK "UUIDv7 — high bits carry unix-ms"
+        timestamp _updated_at "record time, set by Hyperbase"
         double latitude
         double longitude
         double altitude_m
-        string client_id "identitas perangkat, pseudonim"
+        string client_id "device identity, pseudonymous"
         int    floor
     }
 
@@ -1344,8 +2793,8 @@ membuat pengujian menyeluruh mungkin dilakukan tanpa menyentuh data produksi.</p
     LOCATION_LOG {
         string id_data
         string timestamp "ISO 8601"
-        string visitor_id "internal saja"
-        string visitor_key "cerminan client_id, internal saja"
+        string visitor_id "internal only"
+        string visitor_key "mirrors client_id, internal only"
         number latitude
         number longitude
         string source "mobile_app | mock"
@@ -1369,28 +2818,28 @@ membuat pengujian menyeluruh mungkin dilakukan tanpa menyentuh data produksi.</p
         string density_level
     }
 
-    COORDINATE_DATA ||--o{ LOCATION_LOG : "dipetakan menjadi"
-    LOCATION_LOG    ||--o{ AGGREGATED_GRID_CELL : "diagregasi menjadi"
-    AGGREGATED_GRID_CELL ||--|| HEATMAP_FEATURE : "diubah menjadi"</code></pre>
-<p>Titik penting privasi ada pada transisi terakhir. <code>LOCATION_LOG</code> memiliki
-<code>visitor_id</code> dan <code>visitor_key</code>; <code>AGGREGATED_GRID_CELL</code> sudah tidak memilikinya;
-<code>HEATMAP_FEATURE</code> bahkan tidak menyediakan tempat untuk menampungnya. Kebocoran
-tidak dicegah oleh kehati-hatian penulis kode, melainkan oleh bentuk tipenya.</p>
-<h3 id="72-koleksi-coordinate-data-hyperbase">7.2 Koleksi <code>coordinate data</code> (Hyperbase)<a class="headerlink" href="#72-koleksi-coordinate-data-hyperbase" title="Permanent link">&para;</a></h3>
-<p>Koleksi ini milik aplikasi mobile. Dashboard hanya membacanya, dan tidak boleh
-mengubah skemanya.</p>
-<p>Dua konsekuensi penting dari skema tersebut:</p>
+    COORDINATE_DATA ||--o{ LOCATION_LOG : "maps to"
+    LOCATION_LOG    ||--o{ AGGREGATED_GRID_CELL : "aggregates into"
+    AGGREGATED_GRID_CELL ||--|| HEATMAP_FEATURE : "converts to"</code></pre>
+<p>The privacy boundary sits at the last transition. <code>LOCATION_LOG</code> has
+<code>visitor_id</code> and <code>visitor_key</code>; <code>AGGREGATED_GRID_CELL</code> no longer does; and
+<code>HEATMAP_FEATURE</code> has nowhere to put one. A leak is prevented by the shape of
+the type, not by the care of whoever writes the next line of code.</p>
+<h3 id="72-the-coordinate-data-collection-hyperbase">7.2 The <code>coordinate data</code> collection (Hyperbase)<a class="headerlink" href="#72-the-coordinate-data-collection-hyperbase" title="Permanent link">&para;</a></h3>
+<p>This collection belongs to the mobile app. The dashboard only reads it and must
+not change its schema.</p>
+<p>Two consequences follow from that schema:</p>
 <ol>
-<li><strong>Tidak ada kolom <code>timestamp</code> khusus.</strong> Waktu rekam adalah <code>_updated_at</code> yang
-   diisi Hyperbase saat penyisipan.</li>
-<li><strong>Tidak ada kolom <code>source</code>.</strong> Karena itu seluruh baris dipetakan menjadi
-   <code>source: "mobile_app"</code> di sisi backend.</li>
+<li><strong>There is no dedicated <code>timestamp</code> column.</strong> The recording time is
+   <code>_updated_at</code>, which Hyperbase sets on insert.</li>
+<li><strong>There is no <code>source</code> column.</strong> Every row therefore maps to
+   <code>source: "mobile_app"</code> on the backend side.</li>
 </ol>
-<p>Jendela waktu dinyatakan sebagai <strong>rentang <code>_id</code> UUIDv7</strong>, bukan penyaringan
-kolom waktu: karena bit tinggi UUIDv7 memuat unix-ms, kueri dapat memakai
-<code>_id &gt;= bound(from)</code> dan <code>_id &lt; bound(to)</code>. Paginasi mempersempit batas atas
-memakai <code>_id</code> terakhir yang terbaca.</p>
-<h3 id="73-tabel-admins-postgresql">7.3 Tabel <code>admins</code> (PostgreSQL)<a class="headerlink" href="#73-tabel-admins-postgresql" title="Permanent link">&para;</a></h3>
+<p>Time windows are expressed as <strong>UUIDv7 <code>_id</code> ranges</strong> rather than as filters on a
+time column. Because the high bits of a UUIDv7 carry unix-ms, a query can use
+<code>_id &gt;= bound(from)</code> and <code>_id &lt; bound(to)</code>. Pagination tightens the upper bound
+using the last <code>_id</code> read.</p>
+<h3 id="73-the-admins-table-postgresql">7.3 The <code>admins</code> table (PostgreSQL)<a class="headerlink" href="#73-the-admins-table-postgresql" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">admins</span><span class="w"> </span><span class="p">(</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="n">id</span><span class="w">            </span><span class="n">uuid</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">gen_random_uuid</span><span class="p">(),</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="n">email</span><span class="w">         </span><span class="nb">text</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">UNIQUE</span><span class="p">,</span>
@@ -1399,44 +2848,44 @@ memakai <code>_id</code> terakhir yang terbaca.</p>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="n">created_at</span><span class="w">    </span><span class="n">timestamptz</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">now</span><span class="p">()</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">);</span>
 </code></pre></div>
-<p>Hanya akun admin yang tinggal di sini. Data lokasi tetap di Hyperbase.</p>
-<h3 id="74-konfigurasi-geografis">7.4 Konfigurasi geografis<a class="headerlink" href="#74-konfigurasi-geografis" title="Permanent link">&para;</a></h3>
-<p>Nilai berikut terpusat di <code>backend/src/config/</code> dan tidak boleh ditulis ulang
-di tempat lain:</p>
+<p>Only admin accounts live here. Location data stays in Hyperbase.</p>
+<h3 id="74-geographic-configuration">7.4 Geographic configuration<a class="headerlink" href="#74-geographic-configuration" title="Permanent link">&para;</a></h3>
+<p>These values are centralised in <code>backend/src/config/</code> and must not be rewritten
+anywhere else:</p>
 <table>
 <thead>
 <tr>
-<th>Konstanta</th>
-<th>Nilai</th>
-<th>Keterangan</th>
+<th>Constant</th>
+<th>Value</th>
+<th>Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>BOROBUDUR_BOUNDS</code></td>
 <td>lat −7.615 … −7.600, lng 110.195 … 110.215</td>
-<td>Titik di luar rentang ini dibuang saat pembersihan</td>
+<td>Points outside this box are dropped during cleaning</td>
 </tr>
 <tr>
 <td><code>BOROBUDUR_CENTER</code></td>
-<td>titik tengah dari bounds</td>
-<td>Pusat peta di frontend</td>
+<td>midpoint of the bounds</td>
+<td>Map centre in the frontend</td>
 </tr>
 <tr>
 <td><code>GRID_SIZE</code></td>
-<td>0.0001 derajat (± 11 meter)</td>
-<td>Ukuran sel grid agregasi</td>
+<td>0.0001 degrees (about 11 metres)</td>
+<td>Aggregation grid cell size</td>
 </tr>
 </tbody>
 </table>
-<p>Area bernama pada <code>config/areas.ts</code> dipakai oleh dua hal sekaligus — generator
-data tiruan (agar sebarannya realistis) dan pelabelan <code>most_crowded_area</code>:</p>
+<p>The named areas in <code>config/areas.ts</code> serve two purposes at once — the mock
+generator (so its distribution is realistic) and the <code>most_crowded_area</code> label:</p>
 <table>
 <thead>
 <tr>
 <th>Area</th>
-<th>Bobot</th>
-<th>Sebaran</th>
+<th>Weight</th>
+<th>Spread</th>
 </tr>
 </thead>
 <tbody>
@@ -1461,213 +2910,211 @@ data tiruan (agar sebarannya realistis) dan pelabelan <code>most_crowded_area</c
 <td>0.0005</td>
 </tr>
 <tr>
-<td>Other Area (sisa)</td>
-<td>± 5%</td>
-<td>tersebar merata di dalam bounds</td>
+<td>Other Area (remainder)</td>
+<td>about 5%</td>
+<td>spread evenly inside the bounds</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Rujukan detail:</strong> <a href="../HYPERBASE_SCHEMA/">HYPERBASE_SCHEMA.md</a>, <a href="../API/">API.md</a> bab 11.</p>
+<p><strong>See also:</strong> <a href="../HYPERBASE_SCHEMA/">HYPERBASE_SCHEMA.md</a>, <a href="../API/">API.md</a> chapter 10.</p>
 <hr />
-<h2 id="8-desain-api">8. Desain API<a class="headerlink" href="#8-desain-api" title="Permanent link">&para;</a></h2>
-<h3 id="81-daftar-endpoint">8.1 Daftar endpoint<a class="headerlink" href="#81-daftar-endpoint" title="Permanent link">&para;</a></h3>
+<h2 id="8-api-design">8. API Design<a class="headerlink" href="#8-api-design" title="Permanent link">&para;</a></h2>
+<h3 id="81-endpoint-list">8.1 Endpoint list<a class="headerlink" href="#81-endpoint-list" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Metode</th>
+<th>Method</th>
 <th>Path</th>
-<th>Kegunaan</th>
-<th>Autentikasi</th>
+<th>Purpose</th>
+<th>Auth</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>GET</code></td>
 <td><code>/health</code></td>
-<td>Pemeriksaan kesehatan untuk infrastruktur</td>
-<td>Tidak</td>
+<td>Health check for infrastructure</td>
+<td>No</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/docs</code></td>
 <td>Swagger UI</td>
-<td>Tidak</td>
+<td>No</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/docs.json</code></td>
-<td>Spesifikasi OpenAPI mentah</td>
-<td>Tidak</td>
+<td>Raw OpenAPI spec</td>
+<td>No</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
 <td><code>/api/auth/admin/signin</code></td>
-<td>Masuk, menerbitkan cookie sesi</td>
-<td>Tidak</td>
+<td>Sign in, issues the session cookie</td>
+<td>No</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
 <td><code>/api/auth/admin/signup</code></td>
-<td>Mendaftarkan admin, dijaga <code>ADMIN_REGISTRATION_SECRET</code></td>
-<td>Tidak</td>
+<td>Register an admin, gated by <code>ADMIN_REGISTRATION_SECRET</code></td>
+<td>No</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
 <td><code>/api/auth/admin/logout</code></td>
-<td>Menghapus cookie sesi</td>
-<td>Tidak</td>
+<td>Clear the session cookie</td>
+<td>No</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/auth/admin/me</code></td>
-<td>Mengembalikan admin dari sesi berjalan</td>
-<td>Ya</td>
+<td>Return the admin of the current session</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/heatmap/aggregate</code></td>
-<td>GeoJSON teragregasi</td>
-<td>Ya</td>
+<td>Aggregated GeoJSON</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/dashboard/summary</code></td>
-<td>Statistik ringkasan</td>
-<td>Ya</td>
+<td>Summary statistics</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/hotspots</code></td>
-<td>Klaster DBSCAN langsung</td>
-<td>Ya</td>
+<td>Live DBSCAN clusters</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
 <td><code>/api/mock/location</code></td>
-<td>Menyisipkan satu titik tiruan</td>
-<td>Ya</td>
+<td>Insert one mock point</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td><code>POST</code></td>
 <td><code>/api/mock/generate</code></td>
-<td>Menghasilkan data tiruan massal</td>
-<td>Ya</td>
+<td>Generate mock data in bulk</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td><code>GET</code></td>
 <td><code>/api/debug/hyperbase</code></td>
-<td>Verifikasi autentikasi Hyperbase — <strong>sementara</strong></td>
-<td>Ya</td>
+<td>Verify Hyperbase authentication — <strong>temporary</strong></td>
+<td>Yes</td>
 </tr>
 </tbody>
 </table>
-<p><code>GET /api/debug/hyperbase</code> ditandai sementara di dalam kode dan harus dilepas
-sebelum penggunaan produksi jangka panjang.</p>
-<h3 id="82-parameter-jendela-waktu">8.2 Parameter jendela waktu<a class="headerlink" href="#82-parameter-jendela-waktu" title="Permanent link">&para;</a></h3>
-<p>Seluruh rute data memakai satu fungsi validasi bersama,
-<code>utils/parseQuery.ts</code> <code>parseLocationQuery()</code>. Tidak ada rute yang boleh menulis
-validasinya sendiri — pernah terjadi salinan usang <code>VALID_WINDOWS</code> di rute
-heatmap, dan kompilator tidak bisa menangkapnya karena <em>array</em> bagian tetap
-memenuhi tipe <code>TimeWindowPreset[]</code>.</p>
+<p><code>GET /api/debug/hyperbase</code> is marked temporary in the code and should be removed
+before long-term production use.</p>
+<h3 id="82-time-window-parameters">8.2 Time window parameters<a class="headerlink" href="#82-time-window-parameters" title="Permanent link">&para;</a></h3>
+<p>Every data route uses one shared validation function, <code>parseLocationQuery()</code> in
+<code>utils/parseQuery.ts</code>. No route may write its own. This has gone wrong before: a
+stale copy of <code>VALID_WINDOWS</code> once lived in the heatmap route, and the compiler
+could not catch it because a subset array still satisfies <code>TimeWindowPreset[]</code>.</p>
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
-<th>Nilai</th>
-<th>Keterangan</th>
+<th>Values</th>
+<th>Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>window</code></td>
 <td><code>5m</code>, <code>15m</code>, <code>1h</code>, <code>today</code>, <code>3d</code>, <code>7d</code>, <code>30d</code></td>
-<td>Preset jendela waktu</td>
+<td>Time window presets</td>
 </tr>
 <tr>
 <td><code>from</code> / <code>to</code></td>
 <td>ISO 8601</td>
-<td>Rentang kustom; wajib <code>from &lt; to</code> dan rentang ≤ 90 hari</td>
+<td>Custom range; requires <code>from &lt; to</code> and a span of 90 days or less</td>
 </tr>
 <tr>
 <td><code>source</code></td>
 <td><code>mobile_app</code>, <code>mock</code>, <code>all</code></td>
-<td>Penyaring sumber data</td>
+<td>Data source filter</td>
 </tr>
 <tr>
 <td><code>eps</code></td>
-<td>2 … 200 (bawaan 8)</td>
-<td>Radius ketetanggaan DBSCAN, dalam meter</td>
+<td>2 … 200 (default 8)</td>
+<td>DBSCAN neighbourhood radius, in metres</td>
 </tr>
 <tr>
 <td><code>minSamples</code></td>
-<td>2 … 50 (bawaan 5)</td>
-<td>Tetangga minimum pembentuk klaster</td>
+<td>2 … 50 (default 5)</td>
+<td>Minimum neighbours to seed a cluster</td>
 </tr>
 </tbody>
 </table>
-<h3 id="83-bentuk-respons">8.3 Bentuk respons<a class="headerlink" href="#83-bentuk-respons" title="Permanent link">&para;</a></h3>
-<p>Ada <strong>dua</strong> gaya respons, dan perbedaannya disengaja:</p>
+<h3 id="83-response-shapes">8.3 Response shapes<a class="headerlink" href="#83-response-shapes" title="Permanent link">&para;</a></h3>
+<p>There are <strong>two</strong> response styles, and the difference is deliberate:</p>
 <ol>
-<li><strong>Endpoint GeoJSON</strong> (<code>/api/heatmap/aggregate</code>) mengembalikan GeoJSON mentah
-   tanpa pembungkus, agar tetap patuh spesifikasi GeoJSON dan bisa dikonsumsi
-   pustaka peta apa pun.</li>
-<li><strong>Endpoint lain</strong> memakai pembungkus baku:</li>
+<li><strong>GeoJSON endpoints</strong> (<code>/api/heatmap/aggregate</code>) return raw GeoJSON with no
+   wrapper, so they stay spec-compliant and any mapping library can consume them.</li>
+<li><strong>Everything else</strong> uses the standard envelope:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VALIDATION_ERROR&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
-<p>Kode galat yang dipakai: <code>VALIDATION_ERROR</code>, <code>INVALID_TIME_WINDOW</code>,
-<code>INVALID_COORDINATE</code>, <code>NOT_FOUND</code>, <code>INTERNAL_SERVER_ERROR</code>.</p>
-<h3 id="84-dokumentasi-api-interaktif">8.4 Dokumentasi API interaktif<a class="headerlink" href="#84-dokumentasi-api-interaktif" title="Permanent link">&para;</a></h3>
-<p>Swagger UI tersedia di <code>GET /api/docs</code>. Spesifikasi dibangun <code>swagger-jsdoc</code>
-dari komentar <code>@openapi</code> di atas tiap <em>handler</em>, sehingga dokumentasi tinggal
-bersebelahan dengan kodenya. Swagger dipasang <strong>sebelum</strong> rute yang dijaga
-<code>requireAuth</code>, sehingga halaman dokumentasinya publik sementara setiap endpoint
-yang didokumentasikannya tetap tertutup — tombol "Try it out" baru berfungsi
-setelah memegang cookie sesi.</p>
-<p><strong>Rujukan detail:</strong> <a href="../API/">API.md</a> — dokumen ini adalah kontrak yang mengikat.</p>
+<p>Error codes in use: <code>VALIDATION_ERROR</code>, <code>INVALID_TIME_WINDOW</code>,
+<code>INVALID_COORDINATE</code>, <code>NOT_FOUND</code>, <code>UNAUTHORIZED</code>, <code>FORBIDDEN</code>, <code>AUTH_FAILED</code>,
+<code>SIGNUP_FAILED</code>, <code>REGISTRATION_DISABLED</code>, <code>INTERNAL_SERVER_ERROR</code>.</p>
+<h3 id="84-interactive-api-documentation">8.4 Interactive API documentation<a class="headerlink" href="#84-interactive-api-documentation" title="Permanent link">&para;</a></h3>
+<p>Swagger UI is served at <code>GET /api/docs</code>. The spec is built by <code>swagger-jsdoc</code>
+from <code>@openapi</code> comments above each handler, so the documentation lives next to
+the code it describes. Swagger is mounted <strong>before</strong> the <code>requireAuth</code>-gated
+routers, which makes the docs page public while every endpoint it documents stays
+closed — "Try it out" only works once you hold a session cookie.</p>
+<p><strong>See also:</strong> <a href="../API/">API.md</a> — that document is the binding contract.</p>
 <hr />
-<h2 id="9-alur-proses-utama">9. Alur Proses Utama<a class="headerlink" href="#9-alur-proses-utama" title="Permanent link">&para;</a></h2>
-<h3 id="91-pipeline-agregasi">9.1 Pipeline agregasi<a class="headerlink" href="#91-pipeline-agregasi" title="Permanent link">&para;</a></h3>
-<p>Ini inti sistem. Setiap permintaan heatmap menempuh jalur berikut.</p>
+<h2 id="9-core-process-flows">9. Core Process Flows<a class="headerlink" href="#9-core-process-flows" title="Permanent link">&para;</a></h2>
+<h3 id="91-the-aggregation-pipeline">9.1 The aggregation pipeline<a class="headerlink" href="#91-the-aggregation-pipeline" title="Permanent link">&para;</a></h3>
+<p>This is the heart of the system. Every heatmap request follows this path.</p>
 <pre class="mermaid"><code>flowchart LR
-    A["Permintaan HTTP&lt;br/&gt;window / from / to / source"]
-    B["parseLocationQuery()&lt;br/&gt;validasi parameter"]
+    A["HTTP request&lt;br/&gt;window / from / to / source"]
+    B["parseLocationQuery()&lt;br/&gt;parameter validation"]
     C["LocationRepository&lt;br/&gt;.getLocations()"]
-    D["cleanLocations()&lt;br/&gt;validasi lat/lng/waktu"]
-    E["Saring BOROBUDUR_BOUNDS&lt;br/&gt;titik luar kawasan dibuang"]
+    D["cleanLocations()&lt;br/&gt;validate lat/lng/time"]
+    E["Filter BOROBUDUR_BOUNDS&lt;br/&gt;out-of-area points dropped"]
     F["snapToGrid()&lt;br/&gt;GRID_SIZE = 0.0001°"]
-    G["Cacah titik per sel"]
-    H["Normalisasi weight&lt;br/&gt;count / maxCount"]
+    G["Count points per cell"]
+    H["Normalise weight&lt;br/&gt;count / maxCount"]
     I["densityFromWeight()&lt;br/&gt;low / medium / high"]
     J["toFeatureCollection()&lt;br/&gt;[longitude, latitude]"]
-    K["GeoJSON&lt;br/&gt;tanpa visitor_id"]
+    K["GeoJSON&lt;br/&gt;no visitor_id"]
 
     A --&gt; B --&gt; C --&gt; D --&gt; E --&gt; F --&gt; G --&gt; H --&gt; I --&gt; J --&gt; K</code></pre>
-<p>Rincian yang menentukan hasil:</p>
+<p>Three details determine the result:</p>
 <ul>
-<li><strong>Pembersihan dan penyaringan batas terjadi di satu tempat</strong>
-  (<code>utils/validateLocation.ts</code>), dan dipakai ulang oleh heatmap, ringkasan
-  dashboard, maupun deteksi hotspot. Karena itu ketiganya selalu bekerja atas
-  himpunan titik yang sama persis.</li>
-<li><strong><code>weight</code> bersifat relatif, bukan absolut.</strong> Nilainya <code>count / maxCount</code>
-  dalam jendela waktu itu, sehingga selalu ada sel bernilai 1.0. Heatmap
-  menunjukkan <em>di mana</em> paling padat, bukan berapa nilai kepadatan mutlaknya.</li>
-<li><strong>Ambang kepadatan:</strong> <code>low</code> &lt; 0.33 ≤ <code>medium</code> &lt; 0.66 ≤ <code>high</code>.</li>
+<li><strong>Cleaning and bounds filtering happen in one place</strong>
+  (<code>utils/validateLocation.ts</code>), reused by the heatmap, the dashboard summary,
+  and hotspot detection alike. All three therefore always work on exactly the
+  same set of points.</li>
+<li><strong><code>weight</code> is relative, not absolute.</strong> It is <code>count / maxCount</code> within that
+  time window, so some cell always reads 1.0. The heatmap shows <em>where</em> it is
+  busiest, not what the absolute density is.</li>
+<li><strong>Density thresholds:</strong> <code>low</code> &lt; 0.33 ≤ <code>medium</code> &lt; 0.66 ≤ <code>high</code>.</li>
 </ul>
-<h3 id="92-deteksi-hotspot-dbscan">9.2 Deteksi hotspot (DBSCAN)<a class="headerlink" href="#92-deteksi-hotspot-dbscan" title="Permanent link">&para;</a></h3>
+<h3 id="92-hotspot-detection-dbscan">9.2 Hotspot detection (DBSCAN)<a class="headerlink" href="#92-hotspot-detection-dbscan" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>flowchart LR
-    A["Log lokasi jendela berjalan"]
-    B["cleanLocations()&lt;br/&gt;pipeline yang sama"]
-    C["dbscan(points, epsM, minSamples)&lt;br/&gt;jarak haversine"]
-    D["Kelompokkan per label&lt;br/&gt;NOISE dibuang"]
-    E["Reduksi tiap klaster:&lt;br/&gt;centroid, cacah, radius"]
-    F["nearestAreaName()&lt;br/&gt;label area terdekat"]
-    G["Urutkan per ukuran,&lt;br/&gt;beri tier relatif terbesar"]
-    H["Hotspot[] + ClusterPoint[]&lt;br/&gt;maksimum 4000 titik sebar"]
+    A["Location logs for the current window"]
+    B["cleanLocations()&lt;br/&gt;the same pipeline"]
+    C["dbscan(points, epsM, minSamples)&lt;br/&gt;haversine distance"]
+    D["Group by label&lt;br/&gt;NOISE discarded"]
+    E["Reduce each cluster:&lt;br/&gt;centroid, count, radius"]
+    F["nearestAreaName()&lt;br/&gt;nearest area label"]
+    G["Sort by size,&lt;br/&gt;tier relative to the largest"]
+    H["Hotspot[] + ClusterPoint[]&lt;br/&gt;max 4000 scatter points"]
 
     A --&gt; B --&gt; C --&gt; D --&gt; E --&gt; F --&gt; G --&gt; H</code></pre>
-<h3 id="93-alur-autentikasi-admin">9.3 Alur autentikasi admin<a class="headerlink" href="#93-alur-autentikasi-admin" title="Permanent link">&para;</a></h3>
+<h3 id="93-admin-authentication-flow">9.3 Admin authentication flow<a class="headerlink" href="#93-admin-authentication-flow" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
     participant UI as LoginPage.tsx
     participant Auth as context/auth.tsx
@@ -1676,19 +3123,19 @@ setelah memegang cookie sesi.</p>
     participant Svc as auth.service.ts
     participant PG as PostgreSQL
 
-    Note over UI,PG: Saat aplikasi dimuat — pemulihan sesi
+    Note over UI,PG: On app load — session restore
     Auth-&gt;&gt;API: getCurrentAdmin()
     API-&gt;&gt;Route: GET /api/auth/admin/me (credentials: include)
-    Route-&gt;&gt;Route: requireAuth — baca cookie borobudur_session
+    Route-&gt;&gt;Route: requireAuth — read borobudur_session cookie
     Route-&gt;&gt;Svc: validateSession(jwt)
     Svc-&gt;&gt;Svc: jwt.verify(token, JWT_SECRET)
     Svc-&gt;&gt;PG: SELECT admin WHERE id = sub
-    PG--&gt;&gt;Svc: baris admin
-    Svc-&gt;&gt;Svc: pastikan role === "admin"
+    PG--&gt;&gt;Svc: admin row
+    Svc-&gt;&gt;Svc: assert role === "admin"
     Svc--&gt;&gt;Route: AdminUser
-    Route--&gt;&gt;Auth: 200 {success, data} — atau 401 bila tidak ada sesi
+    Route--&gt;&gt;Auth: 200 {success, data} — or 401 when there is no session
 
-    Note over UI,PG: Masuk
+    Note over UI,PG: Sign in
     UI-&gt;&gt;Auth: signin(email, password)
     Auth-&gt;&gt;API: POST /api/auth/admin/signin
     API-&gt;&gt;Route: {email, password}
@@ -1701,9 +3148,9 @@ setelah memegang cookie sesi.</p>
     Route-&gt;&gt;Route: res.cookie("borobudur_session", token,&lt;br/&gt;{httpOnly, sameSite: "strict", secure})
     Route--&gt;&gt;Auth: 200 {success, data: admin}
     Auth--&gt;&gt;UI: render DashboardShell</code></pre>
-<p>Kata sandi tidak pernah tersimpan dalam bentuk aslinya, dan token tidak pernah
-dapat dibaca JavaScript karena cookie-nya <code>httpOnly</code>.</p>
-<h3 id="94-generator-data-tiruan">9.4 Generator data tiruan<a class="headerlink" href="#94-generator-data-tiruan" title="Permanent link">&para;</a></h3>
+<p>Passwords are never stored in their original form, and the token is never
+readable by JavaScript because the cookie is <code>httpOnly</code>.</p>
+<h3 id="94-mock-data-generator">9.4 Mock data generator<a class="headerlink" href="#94-mock-data-generator" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
     participant UI as MockGeneratorView.tsx
     participant API as lib/api.ts
@@ -1711,17 +3158,17 @@ dapat dibaca JavaScript karena cookie-nya <code>httpOnly</code>.</p>
     participant Gen as mock-data.service.ts
     participant Repo as LocationRepository
 
-    UI-&gt;&gt;UI: validasi visitor_count (1-5000),&lt;br/&gt;points_per_visitor (1-500)
+    UI-&gt;&gt;UI: validate visitor_count (1-5000),&lt;br/&gt;points_per_visitor (1-500)
     UI-&gt;&gt;API: generateMockData({visitorCount, pointsPerVisitor, source})
     API-&gt;&gt;Route: POST /api/mock/generate
-    Route-&gt;&gt;Route: validasi ulang di server&lt;br/&gt;(server yang menjadi acuan)
+    Route-&gt;&gt;Route: re-validate on the server&lt;br/&gt;(the server is the authority)
     Route-&gt;&gt;Gen: generateMockLocations(...)
 
-    loop tiap pengunjung
-        loop tiap titik
-            Gen-&gt;&gt;Gen: pickArea() — undian berbobot atas NAMED_AREAS
-            Gen-&gt;&gt;Gen: jitter di sekitar pusat area,&lt;br/&gt;atau acak merata bila jatuh ke "Other Area"
-            Gen-&gt;&gt;Gen: waktu acak dalam 1 jam terakhir
+    loop each visitor
+        loop each point
+            Gen-&gt;&gt;Gen: pickArea() — weighted draw over NAMED_AREAS
+            Gen-&gt;&gt;Gen: jitter around the area centre,&lt;br/&gt;or spread evenly if it falls to "Other Area"
+            Gen-&gt;&gt;Gen: random time within the last hour
         end
     end
 
@@ -1729,122 +3176,120 @@ dapat dibaca JavaScript karena cookie-nya <code>httpOnly</code>.</p>
     Route-&gt;&gt;Repo: insertManyLocations(locations)
     Repo--&gt;&gt;Route: ok
     Route--&gt;&gt;API: 201 {success, inserted, source}
-    API--&gt;&gt;UI: Toast berhasil</code></pre>
-<p>Dua hal yang membuat generator ini berguna sebagai alat uji:</p>
+    API--&gt;&gt;UI: success toast</code></pre>
+<p>Two things make this generator useful as a test tool:</p>
 <ul>
-<li><strong>Sebarannya tidak merata.</strong> Undian berbobot atas <code>NAMED_AREAS</code> menghasilkan
-  gumpalan yang menyerupai kondisi nyata, sehingga DBSCAN benar-benar punya
-  sesuatu untuk dikelompokkan.</li>
-<li><strong>Data tiruan melewati antarmuka <code>LocationRepository</code> yang sama</strong> dengan data
-  produksi, sehingga menempuh pipeline agregasi yang persis sama. Itulah maksud
-  sasaran nomor 11 — menguji alur penuh, bukan menguji jalur khusus.</li>
+<li><strong>Its distribution is uneven.</strong> The weighted draw over <code>NAMED_AREAS</code> produces
+  clumps that resemble real conditions, so DBSCAN actually has something to
+  cluster.</li>
+<li><strong>Mock data goes through the same <code>LocationRepository</code> interface</strong> as
+  production data, and therefore through the exact same aggregation pipeline.
+  That is what objective 11 means — testing the full flow, not a special path.</li>
 </ul>
-<p><strong>Rujukan detail:</strong> <a href="../DATA_FLOWS/">DATA_FLOWS.md</a>.</p>
+<p><strong>See also:</strong> <a href="../DATA_FLOWS/">DATA_FLOWS.md</a>.</p>
 <hr />
-<h2 id="10-desain-antarmuka">10. Desain Antarmuka<a class="headerlink" href="#10-desain-antarmuka" title="Permanent link">&para;</a></h2>
-<h3 id="101-struktur-halaman">10.1 Struktur halaman<a class="headerlink" href="#101-struktur-halaman" title="Permanent link">&para;</a></h3>
-<p>Navigasi ditangani <code>Sidebar.tsx</code>; halaman aktif disimpan di <code>localStorage</code>
-sehingga <em>refresh</em> tidak memindahkan pengguna.</p>
+<h2 id="10-interface-design">10. Interface Design<a class="headerlink" href="#10-interface-design" title="Permanent link">&para;</a></h2>
+<h3 id="101-page-structure">10.1 Page structure<a class="headerlink" href="#101-page-structure" title="Permanent link">&para;</a></h3>
+<p><code>Sidebar.tsx</code> handles navigation. The active page is stored in <code>localStorage</code>,
+so a refresh does not move the user.</p>
 <table>
 <thead>
 <tr>
-<th>Halaman</th>
-<th>Isi</th>
+<th>Page</th>
+<th>Contents</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Dashboard</strong></td>
-<td>Kartu ringkasan, peta heatmap dengan penanda hotspot, dua grafik Recharts (batang per area dan donat per tingkat kepadatan), tabel hotspot</td>
+<td>Summary cards, heatmap with hotspot markers, two Recharts charts (bars per area, donut per density tier), hotspot table</td>
 </tr>
 <tr>
 <td><strong>Heatmap</strong></td>
-<td>Peta penuh dengan mode Live dan Timelapse; tanpa penanda hotspot</td>
+<td>Full map with Live and Timelapse modes; no hotspot markers</td>
 </tr>
 <tr>
 <td><strong>Hotspots</strong></td>
-<td>Klaster DBSCAN dengan kendali <code>eps</code> / <code>minSamples</code>, tabel, kartu detail</td>
+<td>DBSCAN clusters with <code>eps</code> / <code>minSamples</code> controls, a table, and detail cards</td>
 </tr>
 <tr>
 <td><strong>Mock Generator</strong></td>
-<td>Formulir pembangkitan data tiruan</td>
+<td>The mock data generation form</td>
 </tr>
 <tr>
 <td><strong>Settings</strong></td>
-<td>Modal, bukan halaman — pemilih tema, bahasa, dan tombol keluar</td>
+<td>A modal, not a page — theme picker, language picker, and logout</td>
 </tr>
 </tbody>
 </table>
-<h3 id="102-mode-timelapse">10.2 Mode Timelapse<a class="headerlink" href="#102-mode-timelapse" title="Permanent link">&para;</a></h3>
-<p>Timelapse memutar ulang tanggal atau rentang tertentu dalam langkah tetap (5
-menit hingga 1 jam). Tiap <em>frame</em> adalah satu irisan waktu absolut yang diambil
-lewat endpoint yang sama. <code>hooks/useTimelapse.ts</code> menyimpan <em>frame</em> sebagai
-<em>promise</em> terindeks (sehingga tidak ada permintaan ganda dan <em>frame</em> gagal
-menyingkir sendiri agar bisa diulang), mengambil 3 <em>frame</em> di depan, dan
-memutar otomatis pada 800 milidetik per <em>frame</em>. Jumlah <em>frame</em> dibatasi 288.</p>
-<h3 id="103-peta">10.3 Peta<a class="headerlink" href="#103-peta" title="Permanent link">&para;</a></h3>
+<h3 id="102-timelapse-mode">10.2 Timelapse mode<a class="headerlink" href="#102-timelapse-mode" title="Permanent link">&para;</a></h3>
+<p>Timelapse replays a chosen date or range in fixed steps (5 minutes to 1 hour).
+Each frame is one absolute time slice fetched through the same endpoint.
+<code>hooks/useTimelapse.ts</code> caches frames as indexed promises — so nothing is
+fetched twice, and a failed frame evicts itself so it can be retried — prefetches
+3 frames ahead, and auto-plays at 800 ms per frame. Frames are capped at 288.</p>
+<h3 id="103-the-map">10.3 The map<a class="headerlink" href="#103-the-map" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Peta dibuat <strong>tepat satu kali</strong>. <code>HeatLayer</code> memperbarui titik di tempat lewat
-  <code>setLatLngs</code>, bukan dengan membuat ulang layer setiap <em>polling</em>.</li>
-<li>Basemap tidak bergantung tema: OpenStreetMap standar, dengan citra satelit
-  Esri sebagai pilihan opsional lewat pemilih layer.</li>
-<li><strong>Leaflet memakai <code>[latitude, longitude]</code>, sedangkan GeoJSON memakai
-  <code>[longitude, latitude]</code>.</strong> Konversi dilakukan di <code>lib/map.ts</code> <code>toHeatPoints()</code>.</li>
+<li>The map is created <strong>exactly once</strong>. <code>HeatLayer</code> updates its points in place
+  through <code>setLatLngs</code> rather than recreating the layer on every poll.</li>
+<li>The basemap is theme-independent: standard OpenStreetMap, with Esri satellite
+  imagery as an opt-in choice in the layer picker.</li>
+<li><strong>Leaflet takes <code>[latitude, longitude]</code> while GeoJSON uses
+  <code>[longitude, latitude]</code>.</strong> The conversion lives in <code>lib/map.ts</code>
+  <code>toHeatPoints()</code>.</li>
 </ul>
-<h3 id="104-tipografi">10.4 Tipografi<a class="headerlink" href="#104-tipografi" title="Permanent link">&para;</a></h3>
-<p>Tiga huruf dengan tiga peran, terpasang sebagai variabel tema Tailwind v4:
-<strong>Instrument Serif</strong> untuk <em>wordmark</em>, judul halaman, dan nilai bernama yang
-menonjol; <strong>DM Sans</strong> untuk segala yang dibaca sebagai kalimat (huruf bawaan
-dokumen); <strong>Fira Code</strong> untuk semua angka, metrik, ID, teks pil status, dan
-label kecil huruf besar.</p>
-<h3 id="105-tema-dan-bahasa">10.5 Tema dan bahasa<a class="headerlink" href="#105-tema-dan-bahasa" title="Permanent link">&para;</a></h3>
-<p>Tema terang/gelap/sistem disimpan di <code>localStorage</code> dan diterapkan lewat kelas
-<code>.dark</code> pada elemen <code>&lt;html&gt;</code>. Sebuah skrip sebaris di <code>index.html</code> menerapkan
-tema dan bahasa tersimpan <strong>sebelum</strong> React ter-<em>mount</em>, supaya tidak ada kedipan
-tampilan.</p>
-<p>Antarmuka tersedia dalam bahasa Inggris dan Indonesia. Nama bagian dan nama
-produk (Dashboard, Heatmap, Hotspots, Borobudur, Settings, Mock Generator) tetap
-berbahasa Inggris pada kedua lokal — semuanya terbaca sebagai nama diri dan
-terasa janggal bila diterjemahkan.</p>
+<h3 id="104-typography">10.4 Typography<a class="headerlink" href="#104-typography" title="Permanent link">&para;</a></h3>
+<p>Three typefaces with three roles, wired as Tailwind v4 theme variables:
+<strong>Instrument Serif</strong> for the wordmark, page headings, and prominent named
+values; <strong>DM Sans</strong> for anything read as a sentence (the document default);
+<strong>Fira Code</strong> for all numbers, metrics, IDs, status-pill text, and small
+uppercase labels.</p>
+<h3 id="105-theme-and-language">10.5 Theme and language<a class="headerlink" href="#105-theme-and-language" title="Permanent link">&para;</a></h3>
+<p>Light / dark / system themes are stored in <code>localStorage</code> and applied through a
+<code>.dark</code> class on the <code>&lt;html&gt;</code> element. An inline script in <code>index.html</code> applies
+the stored theme and language <strong>before</strong> React mounts, so there is no flash.</p>
+<p>The interface is available in English and Indonesian. Section and product names
+(Dashboard, Heatmap, Hotspots, Borobudur, Settings, Mock Generator) stay English
+in both locales — they read as proper nouns and sound wrong when translated.</p>
 <hr />
-<h2 id="11-modul-machine-learning-deteksi-hotspot">11. Modul Machine Learning — Deteksi Hotspot<a class="headerlink" href="#11-modul-machine-learning-deteksi-hotspot" title="Permanent link">&para;</a></h2>
-<h3 id="111-algoritma">11.1 Algoritma<a class="headerlink" href="#111-algoritma" title="Permanent link">&para;</a></h3>
-<p>DBSCAN (<em>Density-Based Spatial Clustering of Applications with Noise</em>) bekerja
-dengan dua parameter:</p>
+<h2 id="11-machine-learning-module-hotspot-detection">11. Machine Learning Module — Hotspot Detection<a class="headerlink" href="#11-machine-learning-module-hotspot-detection" title="Permanent link">&para;</a></h2>
+<h3 id="111-the-algorithm">11.1 The algorithm<a class="headerlink" href="#111-the-algorithm" title="Permanent link">&para;</a></h3>
+<p>DBSCAN (<em>Density-Based Spatial Clustering of Applications with Noise</em>) works from
+two parameters:</p>
 <ul>
-<li><strong><code>eps</code></strong> — radius ketetanggaan. Dua titik yang berjarak kurang dari nilai ini
-  dianggap bertetangga. Dinyatakan dalam <strong>meter</strong>, dengan jarak dihitung
-  memakai rumus haversine, bukan jarak Euclidean atas derajat.</li>
-<li><strong><code>minSamples</code></strong> — jumlah tetangga minimum untuk menjadikan sebuah titik
-  sebagai inti klaster. Kelompok yang lebih kecil dari ini menjadi <em>noise</em>.</li>
+<li><strong><code>eps</code></strong> — the neighbourhood radius. Two points closer than this are
+  neighbours. It is expressed in <strong>metres</strong>, with distance computed by the
+  haversine formula rather than Euclidean distance over degrees.</li>
+<li><strong><code>minSamples</code></strong> — the minimum number of neighbours needed for a point to seed
+  a cluster. Groups smaller than this become <em>noise</em>.</li>
 </ul>
-<p>Nilai bawaan: <code>eps = 8</code> meter, <code>minSamples = 5</code>. Keduanya diambil dari hasil
-penyetelan di notebook eksplorasi. Pengguna dapat mengubahnya lewat parameter
-kueri, dan server membatasinya pada rentang <code>eps</code> 2–200 serta <code>minSamples</code> 2–50
-agar <code>eps</code> yang terlalu besar tidak melumat semuanya menjadi satu gumpalan dan
-<code>minSamples</code> yang terlalu besar tidak menolak segalanya.</p>
-<h3 id="112-implementasi">11.2 Implementasi<a class="headerlink" href="#112-implementasi" title="Permanent link">&para;</a></h3>
-<p>Perlu dinyatakan terang, karena berbeda dari rancangan awal: <strong>DBSCAN berjalan
-langsung di dalam backend, ditulis dalam TypeScript.</strong></p>
+<p>Defaults: <code>eps = 8</code> metres, <code>minSamples = 5</code>. Both come from tuning in the
+exploration notebook. Users can change them through query parameters, and the
+server clamps them to <code>eps</code> 2–200 and <code>minSamples</code> 2–50 — so an oversized <code>eps</code>
+cannot melt everything into one blob, and an oversized <code>minSamples</code> cannot reject
+everything.</p>
+<h3 id="112-implementation">11.2 Implementation<a class="headerlink" href="#112-implementation" title="Permanent link">&para;</a></h3>
+<p>This needs stating plainly, because it differs from the original design:
+<strong>DBSCAN runs directly inside the backend, written in TypeScript.</strong></p>
 <table>
 <thead>
 <tr>
-<th>Berkas</th>
-<th>Peran</th>
+<th>File</th>
+<th>Role</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>backend/src/services/dbscan.service.ts</code></td>
-<td>Implementasi algoritma DBSCAN</td>
+<td>The DBSCAN implementation</td>
 </tr>
 <tr>
 <td><code>backend/src/services/hotspot-detection.service.ts</code></td>
-<td>Reduksi klaster menjadi agregat</td>
+<td>Reduces clusters to aggregates</td>
 </tr>
 <tr>
 <td><code>backend/src/config/dbscan.ts</code></td>
-<td>Parameter bawaan dan batas penjepitan</td>
+<td>Default parameters and clamping bounds</td>
 </tr>
 <tr>
 <td><code>backend/src/utils/geo.ts</code></td>
@@ -1852,244 +3297,243 @@ langsung di dalam backend, ditulis dalam TypeScript.</strong></p>
 </tr>
 </tbody>
 </table>
-<p>Rancangan awal menempatkan DBSCAN sebagai skrip Python yang berjalan di luar
-jalur permintaan dan menuliskan hasilnya ke <code>ml/output/hotspots.json</code>, lalu
-dibaca backend. Pendekatan itu ditinggalkan karena hasilnya tidak pernah bisa
-mengikuti jendela waktu yang sedang dilihat pengguna — berkas praperhitungan
-selalu menggambarkan potret masa lalu, sementara pengguna mengganti jendela
-waktu dan parameter secara interaktif. Menjalankan DBSCAN langsung membuat
-klaster selalu berpadanan dengan heatmap di layar yang sama.</p>
-<p><code>ml/notebooks/dbscan_exploration.ipynb</code> (Python, Pandas, scikit-learn, folium)
-tetap disimpan sebagai catatan eksplorasi parameter — di situlah nilai <code>eps</code> dan
-<code>minSamples</code> bawaan ditentukan. Notebook itu <strong>bukan</strong> kebergantungan runtime;
-tidak ada satu pun bagian sistem yang membacanya saat berjalan.</p>
-<h3 id="113-keluaran">11.3 Keluaran<a class="headerlink" href="#113-keluaran" title="Permanent link">&para;</a></h3>
-<p>Tiap klaster direduksi menjadi agregat berikut, dan hanya agregat inilah yang
-meninggalkan server:</p>
+<p>The original design placed DBSCAN in a Python script running outside the request
+path, writing results to <code>ml/output/hotspots.json</code> for the backend to read. That
+was abandoned because the results could never follow the time window the user was
+actually looking at — a precomputed file always describes a past snapshot, while
+the user changes windows and parameters interactively. Running DBSCAN live keeps
+the clusters consistent with the heatmap on the same screen.</p>
+<p><code>ml/notebooks/dbscan_exploration.ipynb</code> (Python, Pandas, scikit-learn, folium) is
+kept as a record of the parameter exploration — it is where the default <code>eps</code> and
+<code>minSamples</code> were decided. It is <strong>not</strong> a runtime dependency; nothing in the
+system reads it while running.</p>
+<h3 id="113-output">11.3 Output<a class="headerlink" href="#113-output" title="Permanent link">&para;</a></h3>
+<p>Each cluster is reduced to these aggregates, and only the aggregates leave the
+server:</p>
 <table>
 <thead>
 <tr>
 <th>Field</th>
-<th>Arti</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>cluster_id</code></td>
-<td>Pengenal klaster dalam satu hasil</td>
+<td>Cluster identifier within one result set</td>
 </tr>
 <tr>
 <td><code>center_lat</code> / <code>center_lng</code></td>
-<td>Centroid klaster</td>
+<td>Cluster centroid</td>
 </tr>
 <tr>
 <td><code>total_points</code></td>
-<td>Cacah titik anggota</td>
+<td>Number of member points</td>
 </tr>
 <tr>
 <td><code>label</code></td>
-<td>Nama area terdekat (<code>nearestAreaName()</code>)</td>
+<td>Nearest area name (<code>nearestAreaName()</code>)</td>
 </tr>
 <tr>
 <td><code>density_level</code></td>
-<td>Tingkat relatif terhadap klaster terbesar</td>
+<td>Tier relative to the largest cluster</td>
 </tr>
 <tr>
 <td><code>radius_m</code></td>
-<td>Jarak terjauh anggota dari centroid</td>
+<td>Distance from the centroid to the furthest member</td>
 </tr>
 <tr>
 <td><code>share</code></td>
-<td>Porsi (0..1) terhadap seluruh titik terklaster</td>
+<td>Fraction (0..1) of all clustered points</td>
 </tr>
 </tbody>
 </table>
-<p>Titik sebar (<code>ClusterPoint</code>) yang dikirim untuk visualisasi hanya memuat posisi
-dan tingkat kepadatan — tanpa <code>visitor_id</code>, tanpa waktu, dan tanpa urutan.
-Ketiadaan urutan itu penting: tanpa urutan, kumpulan titik bukanlah trajektori.</p>
+<p>The scatter points (<code>ClusterPoint</code>) sent for visualisation carry only position
+and density tier — no <code>visitor_id</code>, no timestamp, and no ordering. That last
+absence matters: without ordering, a set of points is not a trajectory.</p>
 <hr />
-<h2 id="12-keamanan-dan-privasi">12. Keamanan dan Privasi<a class="headerlink" href="#12-keamanan-dan-privasi" title="Permanent link">&para;</a></h2>
-<h3 id="121-privasi-secara-konstruksi">12.1 Privasi secara konstruksi<a class="headerlink" href="#121-privasi-secara-konstruksi" title="Permanent link">&para;</a></h3>
-<p>Empat lapis yang saling menguatkan:</p>
+<h2 id="12-security-and-privacy">12. Security and Privacy<a class="headerlink" href="#12-security-and-privacy" title="Permanent link">&para;</a></h2>
+<h3 id="121-privacy-by-construction">12.1 Privacy by construction<a class="headerlink" href="#121-privacy-by-construction" title="Permanent link">&para;</a></h3>
+<p>Four layers reinforce each other:</p>
 <ol>
-<li><strong>Tipe respons tidak memiliki tempat untuk <code>visitor_id</code>.</strong> <code>HeatmapFeature</code>
-   dan <code>Hotspot</code> tidak mendefinisikan <em>field</em> tersebut, sehingga kebocoran akan
-   gagal kompilasi, bukan lolos diam-diam.</li>
-<li><strong>Keluaran selalu agregat</strong> — sel grid atau klaster, tidak pernah titik per
-   pengunjung.</li>
-<li><strong>Hitungan pengunjung unik dikerjakan di dalam server</strong> dan hanya
-   kardinalitasnya (<code>estimated_active_visitors</code>) yang keluar.</li>
-<li><strong>Titik sebar hotspot tidak berurut</strong>, sehingga tidak dapat disusun ulang
-   menjadi lintasan.</li>
+<li><strong>The response types have nowhere to put a <code>visitor_id</code>.</strong> <code>HeatmapFeature</code>
+   and <code>Hotspot</code> do not define the field, so a leak fails to compile rather than
+   slipping through silently.</li>
+<li><strong>Output is always aggregate</strong> — grid cells or clusters, never per-visitor
+   points.</li>
+<li><strong>Distinct visitor counting happens inside the server</strong>, and only the
+   cardinality (<code>estimated_active_visitors</code>) leaves it.</li>
+<li><strong>Hotspot scatter points are unordered</strong>, so they cannot be reassembled into
+   a path.</li>
 </ol>
-<h3 id="122-autentikasi-dan-otorisasi">12.2 Autentikasi dan otorisasi<a class="headerlink" href="#122-autentikasi-dan-otorisasi" title="Permanent link">&para;</a></h3>
+<h3 id="122-authentication-and-authorisation">12.2 Authentication and authorisation<a class="headerlink" href="#122-authentication-and-authorisation" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Aspek</th>
-<th>Penerapan</th>
+<th>Aspect</th>
+<th>Implementation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Penyimpanan kata sandi</td>
-<td><code>bcryptjs</code>, tidak pernah disimpan sebagai teks biasa</td>
+<td>Password storage</td>
+<td><code>bcryptjs</code>; never stored as plain text</td>
 </tr>
 <tr>
-<td>Sesi</td>
-<td>JWT yang diterbitkan sistem sendiri, masa berlaku bawaan 24 jam</td>
+<td>Session</td>
+<td>A JWT this system issues itself, 24-hour default lifetime</td>
 </tr>
 <tr>
-<td>Transport token</td>
-<td>Cookie <code>borobudur_session</code>: <code>httpOnly</code>, <code>SameSite=Strict</code>, <code>Secure</code> di produksi</td>
+<td>Token transport</td>
+<td>The <code>borobudur_session</code> cookie: <code>httpOnly</code>, <code>SameSite=Strict</code>, <code>Secure</code> in production</td>
 </tr>
 <tr>
-<td>Penjagaan rute</td>
-<td><code>requireAuth</code> pada <code>/api/heatmap</code>, <code>/api/dashboard</code>, <code>/api/mock</code>, <code>/api/hotspots</code>, <code>/api/debug</code></td>
+<td>Route protection</td>
+<td><code>requireAuth</code> on <code>/api/heatmap</code>, <code>/api/dashboard</code>, <code>/api/mock</code>, <code>/api/hotspots</code>, <code>/api/debug</code></td>
 </tr>
 <tr>
-<td>Otorisasi peran</td>
-<td><code>validateSession</code> memuat ulang baris admin dan mewajibkan <code>role === "admin"</code></td>
+<td>Role authorisation</td>
+<td><code>validateSession</code> reloads the admin row and requires <code>role === "admin"</code></td>
 </tr>
 <tr>
-<td>Pendaftaran</td>
-<td><code>POST /api/auth/admin/signup</code> dijaga <code>ADMIN_REGISTRATION_SECRET</code></td>
+<td>Registration</td>
+<td><code>POST /api/auth/admin/signup</code>, gated by <code>ADMIN_REGISTRATION_SECRET</code></td>
 </tr>
 </tbody>
 </table>
-<p>Cookie <code>httpOnly</code> berarti token tidak dapat dibaca JavaScript, sehingga XSS
-tidak dapat mencurinya. <code>SameSite=Strict</code> dimungkinkan justru karena deployment
-ini satu origin, dan itu adalah pengaturan terkuat yang tersedia.</p>
-<h3 id="123-catatan-yang-jujur-perlu-dicantumkan">12.3 Catatan yang jujur perlu dicantumkan<a class="headerlink" href="#123-catatan-yang-jujur-perlu-dicantumkan" title="Permanent link">&para;</a></h3>
+<p>An <code>httpOnly</code> cookie cannot be read by JavaScript, so XSS cannot steal the token.
+<code>SameSite=Strict</code> is possible precisely because this deployment is single-origin,
+and it is the strongest setting available.</p>
+<h3 id="123-things-worth-stating-honestly">12.3 Things worth stating honestly<a class="headerlink" href="#123-things-worth-stating-honestly" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>GET /api/debug/hyperbase</code> masih terpasang. Rute ini tidak membocorkan JWT,
-  tetapi memang ditandai sementara di dalam kode dan sebaiknya dilepas.</li>
-<li>Saat melayani lewat HTTP polos (misalnya demo LAN), <code>COOKIE_SECURE</code> harus
-  disetel <code>false</code>, karena browser membuang cookie <code>Secure</code> pada <code>http://</code>.
-  Gejalanya menyesatkan: login tampak berhasil, lalu setiap permintaan
-  berikutnya menjawab "Authentication required".</li>
+<li><code>GET /api/debug/hyperbase</code> is still mounted. It does not leak the JWT, but it
+  is marked temporary in the code and should be removed.</li>
+<li>When serving over plain HTTP (a LAN demo, for instance), <code>COOKIE_SECURE</code> must
+  be set to <code>false</code>, because browsers discard <code>Secure</code> cookies on <code>http://</code>. The
+  symptom is misleading: login appears to succeed, then every later request
+  answers "Authentication required".</li>
 </ul>
 <hr />
-<h2 id="13-deployment-dan-operasional">13. Deployment dan Operasional<a class="headerlink" href="#13-deployment-dan-operasional" title="Permanent link">&para;</a></h2>
-<h3 id="131-topologi">13.1 Topologi<a class="headerlink" href="#131-topologi" title="Permanent link">&para;</a></h3>
-<p>Deployment berjalan di server kampus <code>jarkom1</code> (<code>10.42.28.70</code>) memakai Docker
-Compose dengan tiga kontainer.</p>
+<h2 id="13-deployment-and-operations">13. Deployment and Operations<a class="headerlink" href="#13-deployment-and-operations" title="Permanent link">&para;</a></h2>
+<h3 id="131-topology">13.1 Topology<a class="headerlink" href="#131-topology" title="Permanent link">&para;</a></h3>
+<p>The deployment runs on the campus server <code>jarkom1</code> (<code>10.42.28.70</code>) using Docker
+Compose with three containers.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Browser
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>   │
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>   └── https://dashboard.your-domain.ac.id     jarkom1 (10.42.28.70)
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>                                                  │
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                                                  ├── cloudflared (TLS + hostname publik)
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>                                                  │      └── menuju 127.0.0.1:8090
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                                                  ├── cloudflared (TLS + public hostname)
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>                                                  │      └── to 127.0.0.1:8090
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>                                                  │
 <a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>                                                  └── docker compose &quot;borobudur-dashboard&quot;
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>                                                         ├── frontend  :8090 → loopback
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>                                                         │     ├── melayani build dashboard
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>                                                         │     └── proxy /api → backend:3001
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>                                                         │     ├── serves the dashboard build
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>                                                         │     └── proxies /api → backend:3001
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>                                                         ├── backend   :3001 → loopback
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>                                                         └── postgres  :5433 → loopback
 <a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>                                                                │
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>                                                       Hyperbase (satu jaringan, lewat REST)
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>                                                       Hyperbase (same network, over REST)
 </code></pre></div>
-<h3 id="132-keputusan-operasional-dan-alasannya">13.2 Keputusan operasional dan alasannya<a class="headerlink" href="#132-keputusan-operasional-dan-alasannya" title="Permanent link">&para;</a></h3>
+<h3 id="132-operational-decisions-and-their-reasons">13.2 Operational decisions and their reasons<a class="headerlink" href="#132-operational-decisions-and-their-reasons" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Keputusan</th>
-<th>Alasan</th>
+<th>Decision</th>
+<th>Reason</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Satu origin untuk semua</td>
-<td>Cookie tetap <code>SameSite=Strict</code>; CORS tidak pernah berlaku</td>
+<td>One origin for everything</td>
+<td>The cookie stays <code>SameSite=Strict</code>; CORS never applies</td>
 </tr>
 <tr>
-<td>Semua port terikat <code>127.0.0.1</code> secara bawaan</td>
-<td>Hanya port frontend yang perlu dibuka; backend dan basis data tidak terjangkau dari luar host</td>
+<td>All ports bound to <code>127.0.0.1</code> by default</td>
+<td>Only the frontend port needs opening; backend and database are unreachable from outside the host</td>
 </tr>
 <tr>
-<td>Cloudflare Tunnel untuk akses publik</td>
-<td>Tidak perlu IP publik, tidak ada port masuk yang dibuka, sertifikat tidak dikelola sendiri</td>
+<td>Cloudflare Tunnel for public access</td>
+<td>No public IP needed, no inbound port opened, no certificate to manage</td>
 </tr>
 <tr>
-<td><code>name: borobudur-dashboard</code> pada compose</td>
-<td>Server dipakai bersama; penamaan mencegah tabrakan dengan kontainer proyek lain</td>
+<td><code>name: borobudur-dashboard</code> in compose</td>
+<td>The server is shared; naming prevents collisions with other projects' containers</td>
 </tr>
 <tr>
-<td><code>PG_PUBLISH_PORT</code> bawaan 5433, bukan 5432</td>
-<td>Port 5432 biasanya sudah terpakai Postgres lain di host bersama</td>
+<td><code>PG_PUBLISH_PORT</code> defaults to 5433, not 5432</td>
+<td>Port 5432 is usually already taken by another Postgres on a shared host</td>
 </tr>
 <tr>
-<td>Skema diterapkan otomatis saat inisialisasi pertama</td>
-<td>Lewat <code>/docker-entrypoint-initdb.d</code></td>
+<td>Schema applied automatically on first init</td>
+<td>Via <code>/docker-entrypoint-initdb.d</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="133-peringatan-operasional">13.3 Peringatan operasional<a class="headerlink" href="#133-peringatan-operasional" title="Permanent link">&para;</a></h3>
+<h3 id="133-operational-warning">13.3 Operational warning<a class="headerlink" href="#133-operational-warning" title="Permanent link">&para;</a></h3>
 <blockquote>
-<p><strong>Peringatan — perintah yang tidak boleh dijalankan di server bersama.</strong>
-<code>docker system prune</code>, <code>docker volume prune</code>, dan <code>docker image prune -a</code>
-bekerja pada seluruh host dan akan merusak proyek milik orang lain.
-Demikian pula <code>docker compose down -v</code> — opsi <code>-v</code> menghapus volume yang
-menyimpan akun admin.</p>
+<p><strong>Warning — commands never to run on a shared server.</strong>
+<code>docker system prune</code>, <code>docker volume prune</code>, and <code>docker image prune -a</code>
+operate host-wide and will destroy other people's projects. The same goes for
+<code>docker compose down -v</code> — the <code>-v</code> flag deletes the volume holding the admin
+accounts.</p>
 </blockquote>
-<h3 id="134-variabel-lingkungan-utama">13.4 Variabel lingkungan utama<a class="headerlink" href="#134-variabel-lingkungan-utama" title="Permanent link">&para;</a></h3>
+<h3 id="134-key-environment-variables">13.4 Key environment variables<a class="headerlink" href="#134-key-environment-variables" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Variabel</th>
-<th>Kegunaan</th>
+<th>Variable</th>
+<th>Purpose</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>REPOSITORY_DRIVER</code></td>
-<td><code>memory</code> (bawaan) atau <code>hyperbase</code></td>
+<td><code>memory</code> (default) or <code>hyperbase</code></td>
 </tr>
 <tr>
 <td><code>HYPERBASE_BASE_URL</code>, <code>HYPERBASE_PROJECT_ID</code>, <code>HYPERBASE_LOCATION_COLLECTION_ID</code>, <code>HYPERBASE_TOKEN_ID</code>, <code>HYPERBASE_TOKEN_SECRET</code></td>
-<td>Akses koleksi data lokasi</td>
+<td>Access to the location data collection</td>
 </tr>
 <tr>
-<td><code>DATABASE_URL</code> atau <code>PGHOST</code>/<code>PGPORT</code>/<code>PGUSER</code>/<code>PGPASSWORD</code>/<code>PGDATABASE</code></td>
-<td>Koneksi PostgreSQL</td>
+<td><code>DATABASE_URL</code>, or <code>PGHOST</code>/<code>PGPORT</code>/<code>PGUSER</code>/<code>PGPASSWORD</code>/<code>PGDATABASE</code></td>
+<td>PostgreSQL connection</td>
 </tr>
 <tr>
 <td><code>JWT_SECRET</code>, <code>JWT_EXPIRES_IN</code></td>
-<td>Penerbitan dan masa berlaku token sesi</td>
+<td>Session token issuing and lifetime</td>
 </tr>
 <tr>
 <td><code>ADMIN_REGISTRATION_SECRET</code></td>
-<td>Penjaga endpoint pendaftaran admin</td>
+<td>Gate on the admin registration endpoint</td>
 </tr>
 <tr>
 <td><code>COOKIE_SECRET</code>, <code>COOKIE_MAX_AGE_MS</code>, <code>COOKIE_SECURE</code></td>
-<td>Perilaku cookie sesi</td>
+<td>Session cookie behaviour</td>
 </tr>
 <tr>
 <td><code>FRONTEND_BIND</code>, <code>FRONTEND_PUBLISH_PORT</code>, <code>BACKEND_PUBLISH_PORT</code>, <code>PG_PUBLISH_PORT</code></td>
-<td>Pengikatan dan penerbitan port</td>
+<td>Port binding and publishing</td>
 </tr>
 <tr>
 <td><code>VITE_API_BASE_URL</code> (frontend)</td>
-<td>Basis URL API; di balik nginx cukup <code>/api</code></td>
+<td>API base URL; behind nginx, just <code>/api</code></td>
 </tr>
 </tbody>
 </table>
-<p><code>config/env.ts</code> adalah <strong>satu-satunya</strong> tempat yang membaca <code>process.env</code>, dan
-memanggil <code>import "dotenv/config"</code> pada baris pertamanya — tanpa itu berkas
-<code>.env</code> tidak pernah terbaca dan driver diam-diam jatuh kembali ke <code>memory</code>.</p>
-<p><strong>Rujukan detail:</strong> <a href="../DEPLOYMENT/">DEPLOYMENT.md</a>.</p>
+<p><code>config/env.ts</code> is the <strong>only</strong> place that reads <code>process.env</code>, and it calls
+<code>import "dotenv/config"</code> on its first line. Without that, the <code>.env</code> file is
+never read and the driver silently falls back to <code>memory</code>.</p>
+<p><strong>See also:</strong> <a href="../DEPLOYMENT/">DEPLOYMENT.md</a>.</p>
 <hr />
-<h2 id="14-pengujian-dan-verifikasi">14. Pengujian dan Verifikasi<a class="headerlink" href="#14-pengujian-dan-verifikasi" title="Permanent link">&para;</a></h2>
-<h3 id="141-integrasi-berkelanjutan">14.1 Integrasi berkelanjutan<a class="headerlink" href="#141-integrasi-berkelanjutan" title="Permanent link">&para;</a></h3>
-<p><code>.github/workflows/ci.yml</code> berjalan pada setiap <em>push</em> ke <code>master</code> dan setiap
-<em>pull request</em>, dengan tiga pekerjaan:</p>
+<h2 id="14-testing-and-verification">14. Testing and Verification<a class="headerlink" href="#14-testing-and-verification" title="Permanent link">&para;</a></h2>
+<h3 id="141-continuous-integration">14.1 Continuous integration<a class="headerlink" href="#141-continuous-integration" title="Permanent link">&para;</a></h3>
+<p><code>.github/workflows/ci.yml</code> runs on every push to <code>master</code> and every pull request,
+with three jobs:</p>
 <table>
 <thead>
 <tr>
-<th>Pekerjaan</th>
-<th>Isi</th>
+<th>Job</th>
+<th>Contents</th>
 </tr>
 </thead>
 <tbody>
@@ -2099,21 +3543,21 @@ memanggil <code>import "dotenv/config"</code> pada baris pertamanya — tanpa it
 </tr>
 <tr>
 <td><strong>Frontend</strong></td>
-<td><code>npm ci</code>, <code>npm run build</code> (yaitu <code>tsc --noEmit &amp;&amp; vite build</code>, sehingga mencakup pemeriksaan tipe)</td>
+<td><code>npm ci</code>, <code>npm run build</code> (that is <code>tsc --noEmit &amp;&amp; vite build</code>, so type checking is included)</td>
 </tr>
 <tr>
 <td><strong>Docker</strong></td>
-<td>Membangun kedua <em>image</em>, lalu memverifikasi bahwa <code>dist/db/schema.sql</code> benar-benar sampai ke <em>image</em> backend dan bahwa <em>bundle</em> frontend tidak memuat <code>localhost:3001</code></td>
+<td>Builds both images, then verifies that <code>dist/db/schema.sql</code> actually reaches the backend image and that the frontend bundle does not contain <code>localhost:3001</code></td>
 </tr>
 </tbody>
 </table>
-<p>Pekerjaan Docker menangkap kerusakan yang tidak terlihat oleh pekerjaan backend.
-Contohnya <code>schema.sql</code>: tsc tidak menyalin berkas non-TypeScript ke <code>dist/</code>,
-sehingga kelalaian di <code>Dockerfile</code> baru akan gagal saat kontainer dijalankan,
-bukan saat dibangun. Demikian pula pemeriksaan <code>localhost:3001</code> — bila
-<em>build arg</em> <code>VITE_API_BASE_URL</code> gagal mencapai Vite, <em>bundle</em> diam-diam kembali
-ke <code>localhost:3001</code> dan setiap browser pengguna akan memanggil mesinnya sendiri.</p>
-<h3 id="142-verifikasi-lokal">14.2 Verifikasi lokal<a class="headerlink" href="#142-verifikasi-lokal" title="Permanent link">&para;</a></h3>
+<p>The Docker job catches breakage the backend job cannot see. <code>schema.sql</code> is one
+example: tsc does not copy non-TypeScript files into <code>dist/</code>, so an oversight in
+the <code>Dockerfile</code> would only fail when the container runs, not when it builds. The
+<code>localhost:3001</code> check is another — if the <code>VITE_API_BASE_URL</code> build arg fails to
+reach Vite, the bundle silently falls back to <code>localhost:3001</code> and every user's
+browser calls their own machine.</p>
+<h3 id="142-local-verification">14.2 Local verification<a class="headerlink" href="#142-local-verification" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Backend</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">cd</span><span class="w"> </span>backend<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>typecheck<span class="w">   </span><span class="c1"># tsc --noEmit</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">cd</span><span class="w"> </span>backend<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w">       </span><span class="c1"># tsc -&gt; dist/</span>
@@ -2121,275 +3565,280 @@ ke <code>localhost:3001</code> dan setiap browser pengguna akan memanggil mesinn
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Frontend</span>
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="nb">cd</span><span class="w"> </span>frontend<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npm<span class="w"> </span>run<span class="w"> </span>build<span class="w">      </span><span class="c1"># tsc --noEmit &amp;&amp; vite build</span>
 </code></pre></div>
-<p>Tidak ada tahap <em>lint</em> pada kedua paket; <code>build</code> dan <code>typecheck</code> adalah gerbang
-verifikasinya.</p>
-<h3 id="143-verifikasi-manual-pasca-deployment">14.3 Verifikasi manual pasca-deployment<a class="headerlink" href="#143-verifikasi-manual-pasca-deployment" title="Permanent link">&para;</a></h3>
-<p>Diambil dari <a href="../DEPLOYMENT/">DEPLOYMENT.md</a> bab 6:</p>
+<p>Neither package has a lint step; <code>build</code> and <code>typecheck</code> are the verification
+gates.</p>
+<h3 id="143-manual-post-deployment-verification">14.3 Manual post-deployment verification<a class="headerlink" href="#143-manual-post-deployment-verification" title="Permanent link">&para;</a></h3>
+<p>Taken from <a href="../DEPLOYMENT/">DEPLOYMENT.md</a> chapter 6:</p>
 <ol>
-<li>Kontainer menyala dan <code>postgres</code> berstatus <em>healthy</em>.</li>
-<li><code>GET /health</code> menjawab <code>{"status":"ok"}</code>.</li>
-<li>Pendaftaran admin berhasil lewat <code>POST /api/auth/admin/signup</code>.</li>
-<li>Login mengembalikan cookie sesi, dan <code>GET /api/auth/admin/me</code> mengenalinya.</li>
-<li><code>GET /api/heatmap/aggregate</code> mengembalikan GeoJSON berisi <em>feature</em>.</li>
-<li>Dashboard memuat dan heatmap tergambar di browser.</li>
+<li>Containers are up and <code>postgres</code> reports healthy.</li>
+<li><code>GET /health</code> answers <code>{"status":"ok"}</code>.</li>
+<li>Admin registration succeeds via <code>POST /api/auth/admin/signup</code>.</li>
+<li>Login returns a session cookie, and <code>GET /api/auth/admin/me</code> recognises it.</li>
+<li><code>GET /api/heatmap/aggregate</code> returns GeoJSON containing features.</li>
+<li>The dashboard loads and the heatmap draws in the browser.</li>
 </ol>
-<h3 id="144-status-pengujian-otomatis-dinyatakan-apa-adanya">14.4 Status pengujian otomatis — dinyatakan apa adanya<a class="headerlink" href="#144-status-pengujian-otomatis-dinyatakan-apa-adanya" title="Permanent link">&para;</a></h3>
-<p><strong>Belum ada uji otomatis di kedua paket.</strong> Skrip <code>npm test</code> sudah terpasang di
-backend (<code>node --test</code> dengan <code>tsx</code>), tetapi belum ada satu pun berkas uji.
-Frontend belum memiliki <em>test runner</em>.</p>
-<p>Verifikasi saat ini bertumpu pada tiga hal: pemeriksaan tipe TypeScript, CI yang
-membangun <em>image</em> dan memeriksa kelengkapan runtime-nya, serta pengujian manual
-alur penuh memakai generator data tiruan. Ini cukup untuk menangkap kerusakan
-struktural, tetapi tidak menangkap regresi logika. Menambahkan uji unit untuk
-<code>aggregation.service</code>, <code>validateLocation</code>, <code>parseQuery</code>, dan <code>dbscan.service</code>
-adalah pekerjaan yang paling bernilai berikutnya — keempatnya adalah fungsi
-murni, sehingga paling mudah diuji.</p>
+<h3 id="144-automated-test-status-stated-plainly">14.4 Automated test status — stated plainly<a class="headerlink" href="#144-automated-test-status-stated-plainly" title="Permanent link">&para;</a></h3>
+<p><strong>There are no automated tests in either package.</strong> The <code>npm test</code> script exists
+in the backend (<code>node --test</code> with <code>tsx</code>), but no test file does. The frontend
+has no test runner.</p>
+<p>Verification currently rests on three things: TypeScript type checking, CI that
+builds the images and checks their runtime completeness, and manual end-to-end
+testing with the mock data generator. That is enough to catch structural
+breakage, but it does not catch logic regressions. Adding unit tests for
+<code>aggregation.service</code>, <code>validateLocation</code>, <code>parseQuery</code>, and <code>dbscan.service</code> is
+the most valuable next piece of work — all four are pure functions, so they are
+the easiest to test.</p>
 <hr />
-<h2 id="15-hasil-dan-status-implementasi">15. Hasil dan Status Implementasi<a class="headerlink" href="#15-hasil-dan-status-implementasi" title="Permanent link">&para;</a></h2>
+<h2 id="15-results-and-implementation-status">15. Results and Implementation Status<a class="headerlink" href="#15-results-and-implementation-status" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Komponen</th>
+<th>Component</th>
 <th>Status</th>
-<th>Keterangan</th>
+<th>Note</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Backend REST API</td>
-<td><strong>Selesai</strong></td>
-<td>Enam endpoint data ditambah autentikasi admin</td>
+<td><strong>Done</strong></td>
+<td>Six data endpoints plus admin authentication</td>
 </tr>
 <tr>
-<td>Pipeline agregasi grid</td>
-<td><strong>Selesai</strong></td>
-<td>Pembersihan, penyaringan batas, snap grid, normalisasi, pelabelan</td>
+<td>Grid aggregation pipeline</td>
+<td><strong>Done</strong></td>
+<td>Cleaning, bounds filtering, grid snapping, normalisation, labelling</td>
 </tr>
 <tr>
-<td>Transformasi GeoJSON</td>
-<td><strong>Selesai</strong></td>
-<td><code>[longitude, latitude]</code>, tanpa <code>visitor_id</code></td>
+<td>GeoJSON transformation</td>
+<td><strong>Done</strong></td>
+<td><code>[longitude, latitude]</code>, no <code>visitor_id</code></td>
 </tr>
 <tr>
-<td>Integrasi Hyperbase</td>
-<td><strong>Selesai</strong></td>
-<td>Baca-saja atas koleksi <code>coordinate data</code>, jendela waktu lewat batas UUIDv7</td>
+<td>Hyperbase integration</td>
+<td><strong>Done</strong></td>
+<td>Read-only over the <code>coordinate data</code> collection, time windows via UUIDv7 bounds</td>
 </tr>
 <tr>
-<td>Repository memori</td>
-<td><strong>Selesai</strong></td>
-<td>Menyemai ± 97 titik contoh saat <em>boot</em></td>
+<td>Memory repository</td>
+<td><strong>Done</strong></td>
+<td>Seeds about 97 sample points at boot</td>
 </tr>
 <tr>
-<td>Autentikasi admin</td>
-<td><strong>Selesai</strong></td>
-<td>PostgreSQL, bcrypt, JWT dalam cookie <code>httpOnly</code></td>
+<td>Admin authentication</td>
+<td><strong>Done</strong></td>
+<td>PostgreSQL, bcrypt, JWT in an <code>httpOnly</code> cookie</td>
 </tr>
 <tr>
-<td>Dokumentasi API (Swagger)</td>
-<td><strong>Selesai</strong></td>
-<td><code>/api/docs</code> dan <code>/api/docs.json</code></td>
+<td>API documentation (Swagger)</td>
+<td><strong>Done</strong></td>
+<td><code>/api/docs</code> and <code>/api/docs.json</code></td>
 </tr>
 <tr>
 <td>Frontend dashboard</td>
-<td><strong>Selesai</strong></td>
-<td>Empat halaman, tema terang/gelap/sistem, i18n Inggris/Indonesia</td>
+<td><strong>Done</strong></td>
+<td>Four pages, light/dark/system themes, English/Indonesian i18n</td>
 </tr>
 <tr>
-<td>Mode Timelapse</td>
-<td><strong>Selesai</strong></td>
-<td><em>Cache frame</em>, <em>prefetch</em>, putar otomatis, batas 288 <em>frame</em></td>
+<td>Timelapse mode</td>
+<td><strong>Done</strong></td>
+<td>Frame cache, prefetch, auto-play, 288-frame cap</td>
 </tr>
 <tr>
-<td>Deteksi hotspot DBSCAN</td>
-<td><strong>Selesai</strong></td>
-<td>Berjalan langsung di backend, parameter dapat disetel</td>
+<td>DBSCAN hotspot detection</td>
+<td><strong>Done</strong></td>
+<td>Runs live in the backend, parameters tunable</td>
 </tr>
 <tr>
-<td>Grafik dashboard</td>
-<td><strong>Selesai</strong></td>
-<td>Grafik batang dan donat dari data yang sudah diambil</td>
+<td>Dashboard charts</td>
+<td><strong>Done</strong></td>
+<td>Bar and donut charts from already-fetched data</td>
 </tr>
 <tr>
-<td>Generator data tiruan</td>
-<td><strong>Selesai</strong></td>
-<td>Sebaran berbobot atas area bernama</td>
+<td>Mock data generator</td>
+<td><strong>Done</strong></td>
+<td>Weighted distribution over named areas</td>
 </tr>
 <tr>
-<td>Deployment Docker</td>
-<td><strong>Selesai</strong></td>
-<td>Tiga kontainer, berjalan di <code>jarkom1</code></td>
+<td>Docker deployment</td>
+<td><strong>Done</strong></td>
+<td>Three containers, running on <code>jarkom1</code></td>
 </tr>
 <tr>
 <td>CI</td>
-<td><strong>Selesai</strong></td>
-<td>Backend, frontend, dan verifikasi <em>image</em></td>
+<td><strong>Done</strong></td>
+<td>Backend, frontend, and image verification</td>
 </tr>
 <tr>
 <td><code>DELETE /api/mock/clear</code></td>
-<td><strong>Belum ada</strong></td>
-<td>Ditandai opsional pada API.md dan memang belum diimplementasikan</td>
+<td><strong>Not built</strong></td>
+<td>Was listed as optional in an early draft of the API contract; never implemented, and no longer documented as an endpoint</td>
 </tr>
 <tr>
-<td>Uji otomatis</td>
-<td><strong>Belum ada</strong></td>
-<td>Lihat bab 14.4</td>
+<td>Automated tests</td>
+<td><strong>Not built</strong></td>
+<td>See chapter 14.4</td>
 </tr>
 <tr>
-<td>Rute debug Hyperbase</td>
-<td><strong>Perlu dilepas</strong></td>
-<td><code>GET /api/debug/hyperbase</code> ditandai sementara</td>
+<td>Hyperbase debug route</td>
+<td><strong>Should be removed</strong></td>
+<td><code>GET /api/debug/hyperbase</code> is marked temporary</td>
 </tr>
 </tbody>
 </table>
-<p>Ketiga baris terakhir sengaja dicantumkan. Semuanya adalah kesenjangan yang
-diketahui, bukan hal yang terlewat.</p>
+<p>The last three rows are listed on purpose. They are known gaps, not oversights.</p>
 <hr />
-<h2 id="16-pengembangan-lanjutan">16. Pengembangan Lanjutan<a class="headerlink" href="#16-pengembangan-lanjutan" title="Permanent link">&para;</a></h2>
-<p>Urutan berikut disusun berdasarkan nilai terhadap usaha:</p>
+<h2 id="16-further-development">16. Further Development<a class="headerlink" href="#16-further-development" title="Permanent link">&para;</a></h2>
+<p>Ordered by value against effort:</p>
 <ol>
-<li><strong>Uji otomatis untuk fungsi murni</strong> — <code>aggregation.service</code>,
-   <code>validateLocation</code>, <code>parseQuery</code>, <code>dbscan.service</code>. Nilai tertinggi dengan
-   usaha terendah, karena semuanya tanpa efek samping.</li>
-<li><strong>Melepas <code>GET /api/debug/hyperbase</code></strong> sebelum penggunaan produksi jangka
-   panjang.</li>
-<li><strong>Memindahkan agregasi ke sisi basis data.</strong> Sudah diukur dan terbukti sekitar
-   6,7 kali lebih cepat dengan keluaran identik, tetapi ditunda karena endpoint
-   yang dibutuhkan belum tersedia pada instans yang dirujuk konfigurasi saat ini.</li>
-<li><strong>Melengkapi <code>DELETE /api/mock/clear</code></strong> bila pembersihan data tiruan
-   diperlukan.</li>
-<li><strong>Menambahkan uji integrasi alur autentikasi</strong>, karena inilah jalur yang
-   paling sering gagal saat lingkungan berubah.</li>
+<li><strong>Automated tests for the pure functions</strong> — <code>aggregation.service</code>,
+   <code>validateLocation</code>, <code>parseQuery</code>, <code>dbscan.service</code>. Highest value for the
+   lowest effort, since none of them has side effects.</li>
+<li><strong>Remove <code>GET /api/debug/hyperbase</code></strong> before long-term production use.</li>
+<li><strong>Move aggregation into the database.</strong> Already measured at roughly 6.7×
+   faster with identical output, but deferred because the endpoint it needs is
+   not available on the instance the current configuration points at.</li>
+<li><strong>Implement <code>DELETE /api/mock/clear</code></strong> if clearing mock data turns out to be
+   needed.</li>
+<li><strong>Add integration tests for the authentication flow</strong>, since that is the path
+   that most often breaks when the environment changes.</li>
 </ol>
-<p><strong>Rujukan detail:</strong> <a href="../FURTHER_DEVELOPMENT/">FURTHER_DEVELOPMENT.md</a>.</p>
+<p><strong>See also:</strong> <a href="../FURTHER_DEVELOPMENT/">FURTHER_DEVELOPMENT.md</a>.</p>
 <hr />
-<h2 id="17-lampiran">17. Lampiran<a class="headerlink" href="#17-lampiran" title="Permanent link">&para;</a></h2>
-<h3 id="171-glosarium">17.1 Glosarium<a class="headerlink" href="#171-glosarium" title="Permanent link">&para;</a></h3>
+<h2 id="17-appendices">17. Appendices<a class="headerlink" href="#17-appendices" title="Permanent link">&para;</a></h2>
+<h3 id="171-glossary">17.1 Glossary<a class="headerlink" href="#171-glossary" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Istilah</th>
-<th>Penjelasan</th>
+<th>Term</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Agregasi grid</strong></td>
-<td>Pembagian kawasan menjadi sel berukuran tetap, lalu pencacahan titik pada tiap sel</td>
+<td><strong>Grid aggregation</strong></td>
+<td>Dividing the area into fixed-size cells, then counting the points in each</td>
 </tr>
 <tr>
 <td><strong>BaaS</strong></td>
-<td><em>Backend-as-a-Service</em> — basis data terkelola yang diakses lewat REST, di sini Hyperbase</td>
+<td>Backend-as-a-Service — a managed database reached over REST; here, Hyperbase</td>
 </tr>
 <tr>
 <td><strong>DBSCAN</strong></td>
-<td>Algoritma klasterisasi berbasis kepadatan; tidak menuntut jumlah klaster ditetapkan di muka dan mengenali <em>noise</em></td>
+<td>A density-based clustering algorithm; it does not require the cluster count up front and it recognises noise</td>
 </tr>
 <tr>
 <td><strong><code>eps</code></strong></td>
-<td>Radius ketetanggaan DBSCAN, dalam meter</td>
+<td>The DBSCAN neighbourhood radius, in metres</td>
 </tr>
 <tr>
 <td><strong>GeoJSON</strong></td>
-<td>Format standar data geospasial; koordinatnya berurutan <code>[longitude, latitude]</code></td>
+<td>The standard geospatial data format; its coordinates are ordered <code>[longitude, latitude]</code></td>
 </tr>
 <tr>
 <td><strong>Haversine</strong></td>
-<td>Rumus jarak antar dua titik pada permukaan bola</td>
+<td>The formula for distance between two points on a sphere</td>
 </tr>
 <tr>
 <td><strong>Heatmap</strong></td>
-<td>Visualisasi kepadatan dengan gradasi warna</td>
+<td>A density visualisation using a colour gradient</td>
 </tr>
 <tr>
 <td><strong><code>minSamples</code></strong></td>
-<td>Jumlah tetangga minimum pembentuk inti klaster DBSCAN</td>
+<td>The minimum neighbours needed to seed a DBSCAN cluster</td>
 </tr>
 <tr>
-<td><strong><em>Noise</em></strong></td>
-<td>Titik yang tidak masuk klaster mana pun dalam DBSCAN</td>
+<td><strong>Noise</strong></td>
+<td>A point DBSCAN assigns to no cluster</td>
 </tr>
 <tr>
-<td><strong><em>Polling</em></strong></td>
-<td>Pengambilan data berkala oleh klien, sebagai alternatif <em>push</em> server</td>
+<td><strong>Polling</strong></td>
+<td>Periodic fetching by the client, as an alternative to server push</td>
 </tr>
 <tr>
 <td><strong>ScyllaDB</strong></td>
-<td>Basis data NoSQL kolom-lebar, kompatibel Cassandra</td>
+<td>A wide-column NoSQL database, Cassandra-compatible</td>
 </tr>
 <tr>
 <td><strong>UUIDv7</strong></td>
-<td>UUID yang bit tingginya memuat <em>timestamp</em> unix-ms, sehingga terurut secara waktu</td>
+<td>A UUID whose high bits carry a unix-ms timestamp, making it time-ordered</td>
 </tr>
 <tr>
 <td><strong><code>weight</code></strong></td>
-<td>Kepadatan sel ternormalisasi (0..1), relatif terhadap sel terpadat pada jendela waktu yang sama</td>
+<td>Normalised cell density (0..1), relative to the busiest cell in the same time window</td>
 </tr>
 </tbody>
 </table>
-<h3 id="172-berkas-dokumentasi-terkait">17.2 Berkas dokumentasi terkait<a class="headerlink" href="#172-berkas-dokumentasi-terkait" title="Permanent link">&para;</a></h3>
+<h3 id="172-related-documentation">17.2 Related documentation<a class="headerlink" href="#172-related-documentation" title="Permanent link">&para;</a></h3>
+<p>Current:</p>
 <table>
 <thead>
 <tr>
-<th>Dokumen</th>
-<th>Isi</th>
+<th>Document</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../ARCHITECTURE/">ARCHITECTURE.md</a></td>
+<td>Architecture summary</td>
+</tr>
+<tr>
+<td><a href="../API/">API.md</a></td>
+<td>The binding endpoint contract</td>
+</tr>
+<tr>
+<td><a href="../DATA_FLOWS/">DATA_FLOWS.md</a></td>
+<td>Sequence diagrams for the mock generator and authentication</td>
+</tr>
+<tr>
+<td><a href="../HYPERBASE_SCHEMA/">HYPERBASE_SCHEMA.md</a></td>
+<td>The binding Hyperbase data model</td>
+</tr>
+<tr>
+<td><a href="../DEPLOYMENT/">DEPLOYMENT.md</a></td>
+<td>Topology, environment template, verification</td>
+</tr>
+<tr>
+<td><a href="../FURTHER_DEVELOPMENT/">FURTHER_DEVELOPMENT.md</a></td>
+<td>Post-deployment work</td>
+</tr>
+</tbody>
+</table>
+<p>Archived — kept for history, each one banner-marked so it is not mistaken for a
+current reference:</p>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Why archived</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="../PRD/">PRD.md</a></td>
-<td>Dokumen kebutuhan produk, termasuk rancangan awal</td>
-</tr>
-<tr>
-<td><a href="../ARCHITECTURE/">ARCHITECTURE.md</a></td>
-<td>Ringkasan arsitektur</td>
-</tr>
-<tr>
-<td><a href="../API/">API.md</a></td>
-<td>Kontrak endpoint yang mengikat</td>
-</tr>
-<tr>
-<td><a href="../DATA_FLOWS/">DATA_FLOWS.md</a></td>
-<td>Diagram sekuens generator tiruan dan autentikasi</td>
-</tr>
-<tr>
-<td><a href="../HYPERBASE_SCHEMA/">HYPERBASE_SCHEMA.md</a></td>
-<td>Model data Hyperbase yang mengikat</td>
-</tr>
-<tr>
-<td><a href="../HYPERBASE_INTEGRATION/">HYPERBASE_INTEGRATION.md</a></td>
-<td>Rincian integrasi Hyperbase</td>
-</tr>
-<tr>
-<td><a href="../DEPLOYMENT/">DEPLOYMENT.md</a></td>
-<td>Topologi, templat lingkungan, verifikasi</td>
-</tr>
-<tr>
-<td><a href="../FURTHER_DEVELOPMENT/">FURTHER_DEVELOPMENT.md</a></td>
-<td>Pekerjaan pasca-deployment</td>
+<td>The original brief; the system has drifted from it</td>
 </tr>
 <tr>
 <td><a href="../IMPLEMENTATION_PLAN/">IMPLEMENTATION_PLAN.md</a></td>
-<td>Rencana pengerjaan bertahap</td>
+<td>All four workstreams shipped</td>
+</tr>
+<tr>
+<td><a href="../HYPERBASE_INTEGRATION/">HYPERBASE_INTEGRATION.md</a></td>
+<td>Its <code>location_logs</code> schema was replaced by the <code>coordinate data</code> collection</td>
+</tr>
+<tr>
+<td><a href="../HYPERBASE_AUTH_INTEGRATION/">HYPERBASE_AUTH_INTEGRATION.md</a></td>
+<td>Auth through Hyperbase, replaced by PostgreSQL storage</td>
 </tr>
 </tbody>
 </table>
-<h3 id="173-diagram-versi-gambar">17.3 Diagram versi gambar<a class="headerlink" href="#173-diagram-versi-gambar" title="Permanent link">&para;</a></h3>
-<p>Seluruh diagram Mermaid pada dokumen ini juga tersedia sebagai berkas PNG di
-<code>docs/assets/diagrams/</code>, untuk ditempelkan ke laporan Word atau PDF. Sumber
-<code>.mmd</code>-nya ada di <code>docs/assets/diagrams/src/</code> dan dapat dibangun ulang dengan:</p>
+<h3 id="173-image-versions-of-the-diagrams">17.3 Image versions of the diagrams<a class="headerlink" href="#173-image-versions-of-the-diagrams" title="Permanent link">&para;</a></h3>
+<p>Every Mermaid diagram in this document is also available as a PNG in
+<code>docs/assets/diagrams/</code>, for pasting into a Word or PDF report. The <code>.mmd</code>
+sources are in <code>docs/assets/diagrams/src/</code> and can be rebuilt with:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bash<span class="w"> </span>scripts/render-diagrams.sh
 </code></pre></div>
-<h3 id="174-catatan-penulisan">17.4 Catatan penulisan<a class="headerlink" href="#174-catatan-penulisan" title="Permanent link">&para;</a></h3>
-<p>Beberapa dokumen lama dipertahankan sebagai arsip meskipun sebagian isinya sudah
-digantikan:</p>
-<ul>
-<li><code>HYPERBASE_AUTH_INTEGRATION.md</code> — rancangan autentikasi melalui Hyperbase,
-  digantikan penyimpanan PostgreSQL.</li>
-<li>Bagian <code>location_logs</code> pada <code>HYPERBASE_INTEGRATION.md</code> — digantikan koleksi
-  <code>coordinate data</code> yang dijelaskan <code>HYPERBASE_SCHEMA.md</code>.</li>
-</ul>
-<p>Keduanya diberi penanda di awal berkas agar tidak dijadikan acuan implementasi.</p>
 
 
 
@@ -2413,7 +3862,7 @@ digantikan:</p>
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
-  Kembali ke atas
+  Back to top
 </button>
         
       </main>
@@ -2425,30 +3874,30 @@ digantikan:</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Sebelumnya: Beranda">
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
             </div>
             <div class="md-footer__title">
               <span class="md-footer__direction">
-                Sebelumnya
+                Previous
               </span>
               <div class="md-ellipsis">
-                Beranda
+                Home
               </div>
             </div>
           </a>
         
         
           
-          <a href="../PRD/" class="md-footer__link md-footer__link--next" aria-label="Selanjutnya: Product Requirements">
+          <a href="../ARCHITECTURE/" class="md-footer__link md-footer__link--next" aria-label="Next: Architecture">
             <div class="md-footer__title">
               <span class="md-footer__direction">
-                Selanjutnya
+                Next
               </span>
               <div class="md-ellipsis">
-                Product Requirements
+                Architecture
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2499,7 +3948,7 @@ digantikan:</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Tersalin ke clipboard", "clipboard.copy": "Salin ke clipboard", "search.result.more.one": "1 lagi di halaman ini", "search.result.more.other": "# lagi di halaman ini", "search.result.none": "Tidak ada dokumen yang sesuai", "search.result.one": "1 dokumen ditemukan", "search.result.other": "# dokumen ditemukan", "search.result.placeholder": "Ketik untuk mulai pencarian", "search.result.term.missing": "Tidak ada", "select.version": "Pilih versi"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>

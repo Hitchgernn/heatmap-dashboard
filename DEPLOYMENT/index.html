@@ -1,19 +1,19 @@
 
 <!doctype html>
-<html lang="id" class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Dokumentasi dan blueprint proyek dashboard heatmap kepadatan pengunjung Candi Borobudur.">
+        <meta name="description" content="Documentation and project blueprint for the Borobudur visitor-density heatmap dashboard.">
       
       
       
         <link rel="canonical" href="https://hitchgernn.github.io/heatmap-dashboard/DEPLOYMENT/">
       
       
-        <link rel="prev" href="../HYPERBASE_AUTH_INTEGRATION/">
+        <link rel="prev" href="../HYPERBASE_SCHEMA/">
       
       
         <link rel="next" href="../FURTHER_DEVELOPMENT/">
@@ -77,7 +77,7 @@
       
         
         <a href="#deployment" class="md-skip">
-          Lewati ke isi
+          Skip to content
         </a>
       
     </div>
@@ -125,9 +125,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode gelap"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Mode gelap" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
       </label>
     
@@ -135,9 +135,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode terang"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Mode terang" for="__palette_0" hidden>
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
       </label>
     
@@ -160,16 +160,16 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Cari" placeholder="Cari" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Cari">
+      <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" title="Kosongkan" aria-label="Kosongkan" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -182,7 +182,7 @@
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Mempersiapkan pencarian
+            Initializing search
           </div>
           <ol class="md-search-result__list" role="presentation"></ol>
         </div>
@@ -194,7 +194,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -228,7 +228,7 @@
 
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigasi" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Borobudur Heatmap Dashboard" class="md-nav__button md-logo" aria-label="Borobudur Heatmap Dashboard" data-md-component="logo">
       
@@ -240,7 +240,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -265,7 +265,7 @@
   
   
   <span class="md-ellipsis">
-    Beranda
+    Home
     
   </span>
   
@@ -287,7 +287,7 @@
   
   
   <span class="md-ellipsis">
-    Blueprint Proyek
+    Project Blueprint
     
   </span>
   
@@ -325,7 +325,7 @@
   
   
   <span class="md-ellipsis">
-    Spesifikasi
+    Technical Reference
     
   </span>
   
@@ -336,32 +336,9 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Spesifikasi
+            Technical Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PRD/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Product Requirements
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -393,85 +370,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Implementation Plan
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    Referensi Teknis
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            Referensi Teknis
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../API/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    API Contract
+    API Reference
     
   </span>
   
@@ -528,52 +432,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Hyperbase Integration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Hyperbase Auth (arsip)
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -603,15 +461,15 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
   <span class="md-ellipsis">
-    Operasional
+    Operations
     
   </span>
   
@@ -619,10 +477,10 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Operasional
+            Operations
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -669,7 +527,7 @@
       
         
 
-<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
@@ -678,7 +536,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Daftar isi
+      Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -910,6 +768,138 @@
       7. Troubleshooting
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="7. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login-returns-500-authentication-service-unavailable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login returns 500 "Authentication service unavailable"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-succeeds-then-everything-says-authentication-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login succeeds, then everything says "Authentication required"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-returns-200-but-every-later-request-returns-401" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login returns 200 but every later request returns 401
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors-error-in-the-browser-console" class="md-nav__link">
+    <span class="md-ellipsis">
+      CORS error in the browser console
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#every-api-call-goes-to-localhost3001-from-the-users-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      Every API call goes to localhost:3001 from the user's browser
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-loads-but-every-request-404s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard loads but every request 404s
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refreshing-an-in-app-view-returns-404" class="md-nav__link">
+    <span class="md-ellipsis">
+      Refreshing an in-app view returns 404
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-calls-return-502-after-redeploying-the-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      API calls return 502 after redeploying the backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-routes-return-404-after-a-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      New routes return 404 after a deploy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-credentials-are-correct-but-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admin credentials are correct but rejected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-fails-with-function-gen_random_uuid-does-not-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema fails with function gen_random_uuid() does not exist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-logs-password-authentication-failed-for-user-borobudur" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend logs password authentication failed for user "borobudur"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose-up-fails-with-port-is-already-allocated-address-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      docker compose up fails with port is already allocated / address already in use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-cannot-reach-the-database-at-1270015432" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend cannot reach the database at 127.0.0.1:5432
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1003,7 +993,149 @@
   
   
   <span class="md-ellipsis">
-    Pengembangan Lanjutan
+    Further Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Archive
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PRD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Original PRD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Implementation Plan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Auth
     
   </span>
   
@@ -1034,7 +1166,7 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
@@ -1043,7 +1175,7 @@
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
-      Daftar isi
+      Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
@@ -1276,6 +1408,138 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="7. Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#login-returns-500-authentication-service-unavailable" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login returns 500 "Authentication service unavailable"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-succeeds-then-everything-says-authentication-required" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login succeeds, then everything says "Authentication required"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#login-returns-200-but-every-later-request-returns-401" class="md-nav__link">
+    <span class="md-ellipsis">
+      Login returns 200 but every later request returns 401
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cors-error-in-the-browser-console" class="md-nav__link">
+    <span class="md-ellipsis">
+      CORS error in the browser console
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#every-api-call-goes-to-localhost3001-from-the-users-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      Every API call goes to localhost:3001 from the user's browser
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dashboard-loads-but-every-request-404s" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dashboard loads but every request 404s
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#refreshing-an-in-app-view-returns-404" class="md-nav__link">
+    <span class="md-ellipsis">
+      Refreshing an in-app view returns 404
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-calls-return-502-after-redeploying-the-backend" class="md-nav__link">
+    <span class="md-ellipsis">
+      API calls return 502 after redeploying the backend
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-routes-return-404-after-a-deploy" class="md-nav__link">
+    <span class="md-ellipsis">
+      New routes return 404 after a deploy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admin-credentials-are-correct-but-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admin credentials are correct but rejected
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-fails-with-function-gen_random_uuid-does-not-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Schema fails with function gen_random_uuid() does not exist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-logs-password-authentication-failed-for-user-borobudur" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend logs password authentication failed for user "borobudur"
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-compose-up-fails-with-port-is-already-allocated-address-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      docker compose up fails with port is already allocated / address already in use
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-cannot-reach-the-database-at-1270015432" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend cannot reach the database at 127.0.0.1:5432
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1363,7 +1627,7 @@
 
 
   
-    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/DEPLOYMENT.md" title="Ubah halaman ini" class="md-content__button md-icon">
+    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/DEPLOYMENT.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1544,46 +1808,47 @@ tab should show no CORS preflight (<code>OPTIONS</code>) requests before the API
 <p>Create <code>backend/.env</code> (gitignored — <code>chmod 600</code> it, since a shared machine has other users):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>backend
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>.env<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="s"># backend/Dockerfile already sets NODE_ENV=production in the image, so the app</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="s"># runs in production mode whether or not this file mentions it. Deleting the</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="s"># line here does NOT turn it off — only setting it to another value would.</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="s">#</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="s"># While serving over plain HTTP, set COOKIE_SECURE=false (below). Browsers</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="s"># discard Secure cookies on http://, which looks like a successful login</span>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="s"># followed by &quot;Authentication required&quot; on every later request.</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="s">PORT=3001</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="s"># --- Hyperbase (location data) ---</span>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s">REPOSITORY_DRIVER=hyperbase</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s">HYPERBASE_BASE_URL=...</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s">HYPERBASE_PROJECT_ID=...</span>
-<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="s">HYPERBASE_LOCATION_COLLECTION_ID=...</span>
-<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="s">HYPERBASE_TOKEN_ID=...</span>
-<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="s">HYPERBASE_TOKEN_SECRET=...</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="s">PORT=3001</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="s"># --- Hyperbase (location data) ---</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="s">REPOSITORY_DRIVER=hyperbase</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="s">HYPERBASE_BASE_URL=...</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="s">HYPERBASE_PROJECT_ID=...</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="s">HYPERBASE_LOCATION_COLLECTION_ID=...</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="s">HYPERBASE_TOKEN_ID=...</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="s">HYPERBASE_TOKEN_SECRET=...</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="s"># --- PostgreSQL (admin auth) ---</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s">PGHOST=127.0.0.1</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s">PGPORT=5433</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="s">PGUSER=borobudur</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="s">PGPASSWORD=$(openssl rand -base64 24 | tr -d &#39;/+=&#39;)</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="s">PGDATABASE=borobudur_auth</span>
 <a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>
-<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="s"># --- PostgreSQL (admin auth) ---</span>
-<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="s"># PGHOST/PGPORT are overridden to postgres:5432 by docker-compose.yml; these</span>
-<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="s"># values are what `npm run dev` uses locally against the published port, which</span>
-<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="s"># defaults to 5433 (see PG_PUBLISH_PORT in docker-compose.yml).</span>
-<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="s">PGHOST=127.0.0.1</span>
-<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="s">PGPORT=5433</span>
-<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="s">PGUSER=borobudur</span>
-<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="s">PGPASSWORD=$(openssl rand -base64 24 | tr -d &#39;/+=&#39;)</span>
-<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="s">PGDATABASE=borobudur_auth</span>
-<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a>
-<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="s"># --- Auth ---</span>
-<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="s"># Leave unset once HTTPS is in front (section 4.3) — the cookie should be Secure</span>
-<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="s"># there. Set to false only while testing over plain http://.</span>
-<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a><span class="s">COOKIE_SECURE=false</span>
-<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="s">JWT_SECRET=$(openssl rand -hex 32)</span>
-<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="s">COOKIE_SECRET=$(openssl rand -hex 32)</span>
-<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="s">ADMIN_REGISTRATION_SECRET=$(openssl rand -hex 16)</span>
-<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a>
-<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="s"># Cross-origin switches are deliberately absent — this deployment is</span>
-<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="s"># same-origin. See section 3.</span>
-<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="s">EOF</span>
-<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>.env
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="s"># --- Auth ---</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="s">COOKIE_SECURE=false</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="s">JWT_SECRET=$(openssl rand -hex 32)</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="s">COOKIE_SECRET=$(openssl rand -hex 32)</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="s">ADMIN_REGISTRATION_SECRET=$(openssl rand -hex 16)</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="s">EOF</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>chmod<span class="w"> </span><span class="m">600</span><span class="w"> </span>.env
 </code></pre></div>
+<p>Four things about that file are worth knowing:</p>
+<p><strong><code>NODE_ENV</code> is not in it, and that is deliberate.</strong> <code>backend/Dockerfile</code> already
+sets <code>NODE_ENV=production</code> in the image, so the app runs in production mode
+whether this file mentions it or not. Deleting a line here does not turn it off —
+only setting it to another value would.</p>
+<p><strong><code>COOKIE_SECURE=false</code> is a temporary setting for plain HTTP.</strong> Browsers discard
+<code>Secure</code> cookies on <code>http://</code>, which produces a misleading symptom: login appears
+to succeed, then every later request answers "Authentication required". Once
+HTTPS is in front (section 4.3), remove the line so the cookie goes back to
+<code>Secure</code>.</p>
+<p><strong><code>PGHOST</code> and <code>PGPORT</code> here are the local-development values.</strong>
+<code>docker-compose.yml</code> overrides them to <code>postgres:5432</code> for the container. These
+values are what <code>npm run dev</code> uses against the published port, which defaults to
+5433 (<code>PG_PUBLISH_PORT</code> in <code>docker-compose.yml</code>).</p>
+<p><strong>There are no cross-origin switches.</strong> This deployment is same-origin — see
+section 3.</p>
 <p><code>JWT_SECRET</code> falls back to <code>"dev-jwt-secret-change-me"</code> when unset. Anyone who has read this
 repository could then forge a valid admin session — generating it is not optional on a
 publicly reachable server.</p>
@@ -1721,12 +1986,14 @@ backend and the backend answered. A <code>404</code> from nginx means the proxy 
 DevTools → Network should show <strong>no</strong> <code>OPTIONS</code> preflight requests — their absence is the proof
 that this is genuinely same-origin.</p>
 <h2 id="7-troubleshooting">7. Troubleshooting<a class="headerlink" href="#7-troubleshooting" title="Permanent link">&para;</a></h2>
-<p><strong>Login returns 500 <code>"Authentication service unavailable"</code></strong>
-PostgreSQL is not reachable. The message names auth, not the database. Check
+<p>Symptoms, in roughly the order you are likely to hit them. Each one is listed in
+the page contents on the right, so you can jump straight to yours.</p>
+<h3 id="login-returns-500-authentication-service-unavailable">Login returns 500 <code>"Authentication service unavailable"</code><a class="headerlink" href="#login-returns-500-authentication-service-unavailable" title="Permanent link">&para;</a></h3>
+<p>PostgreSQL is not reachable. The message names auth, not the database. Check
 <code>docker compose ps</code> — the postgres service should be <code>running (healthy)</code> — then
 <code>docker compose logs postgres</code>.</p>
-<p><strong>Login succeeds, then everything says "Authentication required"</strong>
-The cookie was issued <code>Secure</code> but served over plain HTTP, so the browser discarded it without
+<h3 id="login-succeeds-then-everything-says-authentication-required">Login succeeds, then everything says "Authentication required"<a class="headerlink" href="#login-succeeds-then-everything-says-authentication-required" title="Permanent link">&para;</a></h3>
+<p>The cookie was issued <code>Secure</code> but served over plain HTTP, so the browser discarded it without
 warning. Caused by <code>NODE_ENV=production</code> while the site is on <code>http://</code>. Confirm with:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>localhost:8090/api/auth/admin/signin<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -1740,48 +2007,48 @@ front.</p>
 Check what the container actually sees with <code>docker compose exec backend printenv NODE_ENV</code>.</p>
 <p>Note curl <strong>ignores</strong> <code>Secure</code> while browsers enforce it, so a curl end-to-end test passes while
 the browser fails. Reproduce cookie problems in a browser, not with curl.</p>
-<p><strong>Login returns 200 but every later request returns 401</strong>
-The cookie was not stored. Almost always one of: <code>CROSS_SITE_COOKIE</code> not set (so <code>SameSite</code>
+<h3 id="login-returns-200-but-every-later-request-returns-401">Login returns 200 but every later request returns 401<a class="headerlink" href="#login-returns-200-but-every-later-request-returns-401" title="Permanent link">&para;</a></h3>
+<p>The cookie was not stored. Almost always one of: <code>CROSS_SITE_COOKIE</code> not set (so <code>SameSite</code>
 is still <code>Strict</code>), the API served over HTTP instead of HTTPS (so <code>Secure</code> cookies are
 rejected), or a <code>VITE_API_BASE_URL</code> that does not match <code>CORS_ORIGINS</code>.</p>
-<p><strong>CORS error in the browser console</strong>
-Something is not same-origin. Either the page was loaded directly from the backend port (3001)
+<h3 id="cors-error-in-the-browser-console">CORS error in the browser console<a class="headerlink" href="#cors-error-in-the-browser-console" title="Permanent link">&para;</a></h3>
+<p>Something is not same-origin. Either the page was loaded directly from the backend port (3001)
 instead of the frontend port, or <code>VITE_API_BASE_URL</code> was baked in as an absolute URL. In this
 deployment no CORS should ever be involved.</p>
-<p><strong>Every API call goes to <code>localhost:3001</code> from the user's browser</strong>
-<code>VITE_API_BASE_URL</code> was absent at build time, so <code>lib/api.ts</code> fell back to its localhost default
+<h3 id="every-api-call-goes-to-localhost3001-from-the-users-browser">Every API call goes to <code>localhost:3001</code> from the user's browser<a class="headerlink" href="#every-api-call-goes-to-localhost3001-from-the-users-browser" title="Permanent link">&para;</a></h3>
+<p><code>VITE_API_BASE_URL</code> was absent at build time, so <code>lib/api.ts</code> fell back to its localhost default
 and baked that in. Rebuild: <code>docker compose up -d --build frontend</code>, then confirm with the grep
 in section 5.2. Restarting the container cannot fix it — the value is inlined at build time.</p>
-<p><strong>Dashboard loads but every request 404s</strong>
-<code>VITE_API_BASE_URL</code> was built as <code>/api</code>, producing <code>/api/api/...</code>. It must be empty (section 5.1).</p>
-<p><strong>Refreshing an in-app view returns 404</strong>
-nginx is not falling back to <code>index.html</code>. Check the <code>try_files</code> line in <code>frontend/nginx.conf</code>.</p>
-<p><strong>API calls return 502 after redeploying the backend</strong>
-nginx is holding a stale container IP. The shipped config re-resolves through Docker's DNS every
+<h3 id="dashboard-loads-but-every-request-404s">Dashboard loads but every request 404s<a class="headerlink" href="#dashboard-loads-but-every-request-404s" title="Permanent link">&para;</a></h3>
+<p><code>VITE_API_BASE_URL</code> was built as <code>/api</code>, producing <code>/api/api/...</code>. It must be empty (section 5.1).</p>
+<h3 id="refreshing-an-in-app-view-returns-404">Refreshing an in-app view returns 404<a class="headerlink" href="#refreshing-an-in-app-view-returns-404" title="Permanent link">&para;</a></h3>
+<p>nginx is not falling back to <code>index.html</code>. Check the <code>try_files</code> line in <code>frontend/nginx.conf</code>.</p>
+<h3 id="api-calls-return-502-after-redeploying-the-backend">API calls return 502 after redeploying the backend<a class="headerlink" href="#api-calls-return-502-after-redeploying-the-backend" title="Permanent link">&para;</a></h3>
+<p>nginx is holding a stale container IP. The shipped config re-resolves through Docker's DNS every
 10s, so this should self-heal — if it persists, <code>docker compose restart frontend</code>.</p>
-<p><strong>New routes return 404 after a deploy</strong>
-The container is running an older image. <code>docker compose restart</code> reuses the existing image —
+<h3 id="new-routes-return-404-after-a-deploy">New routes return 404 after a deploy<a class="headerlink" href="#new-routes-return-404-after-a-deploy" title="Permanent link">&para;</a></h3>
+<p>The container is running an older image. <code>docker compose restart</code> reuses the existing image —
 rebuild instead: <code>docker compose up -d --build backend</code>. If a non-container process from an
 earlier setup still holds the port, note that Node appears as <code>node-22</code> in <code>pgrep</code>, so
 <code>pkill -f "dist/index.js"</code> does <strong>not</strong> match it; find the real PID with <code>ss -ltnp | grep :3001</code>.</p>
-<p><strong>Admin credentials are correct but rejected</strong>
-No admin row exists yet. Register one via section 4.5.</p>
-<p><strong>Schema fails with <code>function gen_random_uuid() does not exist</code></strong>
-The cluster is PostgreSQL 12 or older, where that function is not in core. This cannot happen
+<h3 id="admin-credentials-are-correct-but-rejected">Admin credentials are correct but rejected<a class="headerlink" href="#admin-credentials-are-correct-but-rejected" title="Permanent link">&para;</a></h3>
+<p>No admin row exists yet. Register one via section 4.5.</p>
+<h3 id="schema-fails-with-function-gen_random_uuid-does-not-exist">Schema fails with <code>function gen_random_uuid() does not exist</code><a class="headerlink" href="#schema-fails-with-function-gen_random_uuid-does-not-exist" title="Permanent link">&para;</a></h3>
+<p>The cluster is PostgreSQL 12 or older, where that function is not in core. This cannot happen
 with the compose setup (it pins <code>postgres:16-alpine</code>) — it means you are pointing at a host
 PostgreSQL instead. See Appendix A.</p>
-<p><strong>Backend logs <code>password authentication failed for user "borobudur"</code></strong>
-<code>PGPASSWORD</code> in <code>backend/.env</code> no longer matches what Postgres stored when the volume was
+<h3 id="backend-logs-password-authentication-failed-for-user-borobudur">Backend logs <code>password authentication failed for user "borobudur"</code><a class="headerlink" href="#backend-logs-password-authentication-failed-for-user-borobudur" title="Permanent link">&para;</a></h3>
+<p><code>PGPASSWORD</code> in <code>backend/.env</code> no longer matches what Postgres stored when the volume was
 initialised. Changing the file does not change the database. Rotate it with the <code>ALTER ROLE</code>
 command in section 4.1, or destroy the volume with <code>docker compose down -v</code> — which also
 deletes every admin account.</p>
-<p><strong><code>docker compose up</code> fails with <code>port is already allocated</code> / <code>address already in use</code></strong>
-Another container or host service holds that port. A <code>0.0.0.0</code> binding elsewhere blocks a
+<h3 id="docker-compose-up-fails-with-port-is-already-allocated-address-already-in-use"><code>docker compose up</code> fails with <code>port is already allocated</code> / <code>address already in use</code><a class="headerlink" href="#docker-compose-up-fails-with-port-is-already-allocated-address-already-in-use" title="Permanent link">&para;</a></h3>
+<p>Another container or host service holds that port. A <code>0.0.0.0</code> binding elsewhere blocks a
 loopback binding here, so check with <code>sudo ss -ltnp | grep :&lt;port&gt;</code> rather than reading the
 port column of <code>docker ps</code>. Set <code>PG_PUBLISH_PORT</code> or <code>BACKEND_PUBLISH_PORT</code> to something free —
 neither affects how the backend reaches Postgres, which goes over the compose network.</p>
-<p><strong>Backend cannot reach the database at <code>127.0.0.1:5432</code></strong>
-<code>PGHOST</code> reached the container instead of the compose network. Inside a container <code>127.0.0.1</code>
+<h3 id="backend-cannot-reach-the-database-at-1270015432">Backend cannot reach the database at <code>127.0.0.1:5432</code><a class="headerlink" href="#backend-cannot-reach-the-database-at-1270015432" title="Permanent link">&para;</a></h3>
+<p><code>PGHOST</code> reached the container instead of the compose network. Inside a container <code>127.0.0.1</code>
 is that container. <code>docker-compose.yml</code> sets <code>PGHOST=postgres</code>; confirm with
 <code>docker compose exec backend printenv PGHOST</code>.</p>
 <hr />
@@ -1880,7 +2147,7 @@ database's exposure, which is precisely what the compose setup in section 2 avoi
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
-  Kembali ke atas
+  Back to top
 </button>
         
       </main>
@@ -1892,30 +2159,30 @@ database's exposure, which is precisely what the compose setup in section 2 avoi
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-footer__link md-footer__link--prev" aria-label="Sebelumnya: Hyperbase Auth (arsip)">
+          <a href="../HYPERBASE_SCHEMA/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Hyperbase Schema">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
             </div>
             <div class="md-footer__title">
               <span class="md-footer__direction">
-                Sebelumnya
+                Previous
               </span>
               <div class="md-ellipsis">
-                Hyperbase Auth (arsip)
+                Hyperbase Schema
               </div>
             </div>
           </a>
         
         
           
-          <a href="../FURTHER_DEVELOPMENT/" class="md-footer__link md-footer__link--next" aria-label="Selanjutnya: Pengembangan Lanjutan">
+          <a href="../FURTHER_DEVELOPMENT/" class="md-footer__link md-footer__link--next" aria-label="Next: Further Development">
             <div class="md-footer__title">
               <span class="md-footer__direction">
-                Selanjutnya
+                Next
               </span>
               <div class="md-ellipsis">
-                Pengembangan Lanjutan
+                Further Development
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1966,7 +2233,7 @@ database's exposure, which is precisely what the compose setup in section 2 avoi
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Tersalin ke clipboard", "clipboard.copy": "Salin ke clipboard", "search.result.more.one": "1 lagi di halaman ini", "search.result.more.other": "# lagi di halaman ini", "search.result.none": "Tidak ada dokumen yang sesuai", "search.result.one": "1 dokumen ditemukan", "search.result.other": "# dokumen ditemukan", "search.result.placeholder": "Ketik untuk mulai pencarian", "search.result.term.missing": "Tidak ada", "select.version": "Pilih versi"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>

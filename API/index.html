@@ -1,19 +1,19 @@
 
 <!doctype html>
-<html lang="id" class="no-js">
+<html lang="en" class="no-js">
   <head>
     
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Dokumentasi dan blueprint proyek dashboard heatmap kepadatan pengunjung Candi Borobudur.">
+        <meta name="description" content="Documentation and project blueprint for the Borobudur visitor-density heatmap dashboard.">
       
       
       
         <link rel="canonical" href="https://hitchgernn.github.io/heatmap-dashboard/API/">
       
       
-        <link rel="prev" href="../IMPLEMENTATION_PLAN/">
+        <link rel="prev" href="../ARCHITECTURE/">
       
       
         <link rel="next" href="../DATA_FLOWS/">
@@ -24,7 +24,7 @@
     
     
       
-        <title>API Contract - Borobudur Heatmap Dashboard</title>
+        <title>API Reference - Borobudur Heatmap Dashboard</title>
       
     
     
@@ -77,7 +77,7 @@
       
         
         <a href="#api-documentation" class="md-skip">
-          Lewati ke isi
+          Skip to content
         </a>
       
     </div>
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              API Contract
+              API Reference
             
           </span>
         </div>
@@ -125,9 +125,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode gelap"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Mode gelap" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
       </label>
     
@@ -135,9 +135,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Mode terang"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="amber"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
     
-      <label class="md-header__button md-icon" title="Mode terang" for="__palette_0" hidden>
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
       </label>
     
@@ -160,16 +160,16 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Cari" placeholder="Cari" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
-      <nav class="md-search__options" aria-label="Cari">
+      <nav class="md-search__options" aria-label="Search">
         
-        <button type="reset" class="md-search__icon md-icon" title="Kosongkan" aria-label="Kosongkan" tabindex="-1">
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -182,7 +182,7 @@
       <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
-            Mempersiapkan pencarian
+            Initializing search
           </div>
           <ol class="md-search-result__list" role="presentation"></ol>
         </div>
@@ -194,7 +194,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+        <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -228,7 +228,7 @@
 
 
 
-<nav class="md-nav md-nav--primary" aria-label="Navigasi" data-md-level="0">
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Borobudur Heatmap Dashboard" class="md-nav__button md-logo" aria-label="Borobudur Heatmap Dashboard" data-md-component="logo">
       
@@ -240,7 +240,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Ke repositori" class="md-source" data-md-component="source">
+      <a href="https://github.com/Hitchgernn/heatmap-dashboard" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
@@ -265,7 +265,7 @@
   
   
   <span class="md-ellipsis">
-    Beranda
+    Home
     
   </span>
   
@@ -287,7 +287,7 @@
   
   
   <span class="md-ellipsis">
-    Blueprint Proyek
+    Project Blueprint
     
   </span>
   
@@ -301,8 +301,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -313,11 +315,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
@@ -325,7 +327,7 @@
   
   
   <span class="md-ellipsis">
-    Spesifikasi
+    Technical Reference
     
   </span>
   
@@ -333,35 +335,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Spesifikasi
+            Technical Reference
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../PRD/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Product Requirements
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -390,81 +369,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Implementation Plan
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    Referensi Teknis
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            Referensi Teknis
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
     
   
   
@@ -477,17 +381,760 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    API Contract
+    API Reference
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-base-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Base URL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-global-api-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Global API Rules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Global API Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-privacy-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Privacy Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-geojson-coordinate-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 GeoJSON Coordinate Rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-standard-error-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Standard Error Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-standard-success-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Standard Success Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Authentication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Health Check
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Health Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /health
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /health">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-aggregated-heatmap-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Aggregated Heatmap API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Aggregated Heatmap API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apiheatmapaggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /api/heatmap/aggregate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /api/heatmap/aggregate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empty-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-dashboard-summary-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Dashboard Summary API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Dashboard Summary API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apidashboardsummary" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /api/dashboard/summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /api/dashboard/summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy Rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-insert-single-mock-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Insert Single Mock Location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Insert Single Mock Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-apimocklocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /api/mock/location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="POST /api/mock/location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Body
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-bulk-generate-mock-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Bulk Generate Mock Data
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Bulk Generate Mock Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-apimockgenerate" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /api/mock/generate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="POST /api/mock/generate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-body_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Body
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-descriptions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mock Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-hotspot-detection-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Hotspot Detection API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Hotspot Detection API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apihotspots" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /api/hotspots
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /api/hotspots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-descriptions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ml-scope-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      ML Scope Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-internal-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Internal Types
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Internal Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-locationlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 LocationLog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-locationquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 LocationQuery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-aggregatedgridcell" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 AggregatedGridCell
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-geojsonfeaturecollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4 GeoJSONFeatureCollection
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-validation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Validation Rules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Validation Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-latitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 Latitude
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-longitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 Longitude
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 Timestamp
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.4 Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-borobudur-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.5 Borobudur Bounds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -540,6 +1187,56 @@
 
               
             
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Operations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
                 
   
@@ -547,12 +1244,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
+      <a href="../DEPLOYMENT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Hyperbase Integration
+    Deployment
     
   </span>
   
@@ -570,12 +1267,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
+      <a href="../FURTHER_DEVELOPMENT/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Hyperbase Auth (arsip)
+    Further Development
     
   </span>
   
@@ -621,7 +1318,7 @@
   
   
   <span class="md-ellipsis">
-    Operasional
+    Archive
     
   </span>
   
@@ -632,7 +1329,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            Operasional
+            Archive
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -643,12 +1340,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../DEPLOYMENT/" class="md-nav__link">
+      <a href="../PRD/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Deployment
+    Original PRD
     
   </span>
   
@@ -666,12 +1363,58 @@
   
   
     <li class="md-nav__item">
-      <a href="../FURTHER_DEVELOPMENT/" class="md-nav__link">
+      <a href="../IMPLEMENTATION_PLAN/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Pengembangan Lanjutan
+    Implementation Plan
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HYPERBASE_AUTH_INTEGRATION/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hyperbase Auth
     
   </span>
   
@@ -702,12 +1445,731 @@
                   <div class="md-sidebar__inner">
                     
 
-<nav class="md-nav md-nav--secondary" aria-label="Daftar isi">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-base-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Base URL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-global-api-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Global API Rules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Global API Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-privacy-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Privacy Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-geojson-coordinate-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 GeoJSON Coordinate Rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-standard-error-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Standard Error Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-standard-success-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Standard Success Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Authentication
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-health-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Health Check
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Health Check">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-health" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /health
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /health">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-aggregated-heatmap-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Aggregated Heatmap API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Aggregated Heatmap API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apiheatmapaggregate" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /api/heatmap/aggregate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /api/heatmap/aggregate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empty-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-dashboard-summary-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Dashboard Summary API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Dashboard Summary API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apidashboardsummary" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /api/dashboard/summary
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /api/dashboard/summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      Privacy Rule
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-insert-single-mock-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Insert Single Mock Location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Insert Single Mock Location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-apimocklocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /api/mock/location
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="POST /api/mock/location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Body
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Backend Behavior
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validation Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-bulk-generate-mock-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Bulk Generate Mock Data
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Bulk Generate Mock Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#post-apimockgenerate" class="md-nav__link">
+    <span class="md-ellipsis">
+      POST /api/mock/generate
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="POST /api/mock/generate">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#request-body_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request Body
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-descriptions_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mock-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mock Distribution
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-hotspot-detection-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Hotspot Detection API
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Hotspot Detection API">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-apihotspots" class="md-nav__link">
+    <span class="md-ellipsis">
+      GET /api/hotspots
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GET /api/hotspots">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#request_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Request
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query-parameters_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Query Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-descriptions_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Descriptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ml-scope-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      ML Scope Rules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status-codes_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Codes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-curl_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Curl
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-internal-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Internal Types
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Internal Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-locationlog" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.1 LocationLog
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-locationquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.2 LocationQuery
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-aggregatedgridcell" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.3 AggregatedGridCell
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-geojsonfeaturecollection" class="md-nav__link">
+    <span class="md-ellipsis">
+      10.4 GeoJSONFeatureCollection
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-validation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. Validation Rules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Validation Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-latitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.1 Latitude
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-longitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.2 Longitude
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.3 Timestamp
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.4 Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#115-borobudur-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      11.5 Borobudur Bounds
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -723,7 +2185,7 @@
 
 
   
-    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/API.md" title="Ubah halaman ini" class="md-content__button md-icon">
+    <a href="https://github.com/Hitchgernn/heatmap-dashboard/edit/master/docs/API.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -732,99 +2194,231 @@
 
 
 <h1 id="api-documentation">API Documentation<a class="headerlink" href="#api-documentation" title="Permanent link">&para;</a></h1>
-<h1 id="borobudur-aggregated-heatmap-dashboard">Borobudur Aggregated Heatmap Dashboard<a class="headerlink" href="#borobudur-aggregated-heatmap-dashboard" title="Permanent link">&para;</a></h1>
 <h2 id="1-overview">1. Overview<a class="headerlink" href="#1-overview" title="Permanent link">&para;</a></h2>
-<p>This document defines the backend API contract for the Borobudur Aggregated Heatmap Dashboard.</p>
-<p>The frontend must not access Hyperbase directly. All data must be requested through the backend API.</p>
-<p>Main backend responsibilities:</p>
+<p>This is the binding contract for the backend API. Where this document and the
+code disagree, that is a bug in one of them.</p>
+<p>The backend sits between Hyperbase and the browser and does five things:</p>
 <ol>
-<li>Fetch raw visitor location data from Hyperbase.</li>
-<li>Validate and clean location data.</li>
-<li>Filter points outside the Borobudur boundary.</li>
-<li>Aggregate location data into grid-based heatmap data.</li>
-<li>Transform aggregated data into GeoJSON.</li>
-<li>Return privacy-safe responses to the frontend.</li>
-<li>Insert mock location data into Hyperbase for testing.</li>
-<li>Return hotspot detection results.</li>
+<li>Reads raw location logs from the repository (Hyperbase, or the in-memory store).</li>
+<li>Cleans them — drops invalid coordinates, invalid timestamps, and anything outside the Borobudur bounds.</li>
+<li>Aggregates the survivors onto a fixed grid.</li>
+<li>Converts the grid to GeoJSON.</li>
+<li>Clusters the same cleaned points with DBSCAN for the hotspot endpoint.</li>
 </ol>
+<p>The frontend never talks to Hyperbase. Every byte it displays comes through
+these endpoints.</p>
+<p><strong>Endpoints at a glance</strong></p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Returns</th>
+<th>Auth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GET</code></td>
+<td><code>/health</code></td>
+<td>Liveness check</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/heatmap/aggregate</code></td>
+<td>Raw GeoJSON</td>
+<td>Session</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/dashboard/summary</code></td>
+<td>Summary cards</td>
+<td>Session</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/hotspots</code></td>
+<td>DBSCAN clusters + scatter points</td>
+<td>Session</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/mock/location</code></td>
+<td>Inserts one mock point</td>
+<td>Session</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/mock/generate</code></td>
+<td>Inserts clustered mock data in bulk</td>
+<td>Session</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/auth/admin/signin</code></td>
+<td>Sets the session cookie</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/auth/admin/logout</code></td>
+<td>Clears the session cookie</td>
+<td>Public</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/auth/admin/me</code></td>
+<td>Current admin</td>
+<td>Session</td>
+</tr>
+</tbody>
+</table>
 <h2 id="2-base-url">2. Base URL<a class="headerlink" href="#2-base-url" title="Permanent link">&para;</a></h2>
-<h3 id="local-development">Local Development<a class="headerlink" href="#local-development" title="Permanent link">&para;</a></h3>
+<p>Local development — the backend listens on its own port:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>http://localhost:3001
 </code></pre></div>
-<h3 id="docker-nginx-deployment">Docker / Nginx Deployment<a class="headerlink" href="#docker-nginx-deployment" title="Permanent link">&para;</a></h3>
-<p>When deployed behind Nginx:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>/api
+<p>Behind nginx, the frontend and backend share one origin and the API lives under
+<code>/api</code>, so the base URL is just a path:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>VITE_API_BASE_URL=/api
 </code></pre></div>
-<p>Frontend should use:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>VITE_API_BASE_URL=/api
-</code></pre></div>
-<p>If backend is deployed separately:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>VITE_API_BASE_URL=https://your-backend-domain.com/api
+<p>If you deploy the backend to a separate host, give the full URL instead. That
+makes the request cross-origin, which means the session cookie needs
+<code>SameSite=None</code> and HTTPS on both ends:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>VITE_API_BASE_URL=https://your-backend-domain.com/api
 </code></pre></div>
 <h2 id="3-global-api-rules">3. Global API Rules<a class="headerlink" href="#3-global-api-rules" title="Permanent link">&para;</a></h2>
 <h3 id="31-privacy-rules">3.1 Privacy Rules<a class="headerlink" href="#31-privacy-rules" title="Permanent link">&para;</a></h3>
-<p>The API must never expose:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>visitor_id
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>individual visitor route
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>raw individual movement history
-</code></pre></div>
-<p>The backend may use <code>visitor_id</code> internally for counting unique visitors, but it must not appear in frontend-facing responses.</p>
+<p>Three things never appear in a response: <code>visitor_id</code>, any individual visitor's
+route, and raw movement history.</p>
+<p>The backend does use <code>visitor_id</code> internally, to count distinct visitors. It
+never crosses the API boundary — the response types have no field for it, so
+this holds by construction rather than by review.</p>
 <h3 id="32-geojson-coordinate-rule">3.2 GeoJSON Coordinate Rule<a class="headerlink" href="#32-geojson-coordinate-rule" title="Permanent link">&para;</a></h3>
-<p>All GeoJSON coordinates must use:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>[longitude, latitude]
-</code></pre></div>
-<p>Never use:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>[latitude, longitude]
-</code></pre></div>
+<p>GeoJSON coordinates are <code>[longitude, latitude]</code>. Always that order, never
+<code>[latitude, longitude]</code>.</p>
+<p>Leaflet takes the opposite order, so the frontend converts at the boundary in
+<code>frontend/src/lib/map.ts</code>. Do not reorder the GeoJSON to match Leaflet — flip it
+on the way into the map instead. Getting this backwards puts every point in the
+Indian Ocean and produces no error.</p>
 <h3 id="33-standard-error-response">3.3 Standard Error Response<a class="headerlink" href="#33-standard-error-response" title="Permanent link">&para;</a></h3>
-<p>All failed API responses should follow this format:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VALIDATION_ERROR&quot;</span><span class="p">,</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid request parameter&quot;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
+<p>Every failed response uses this shape:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VALIDATION_ERROR&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Invalid request parameter&quot;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
 </code></pre></div>
-<p>Example error codes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>VALIDATION_ERROR
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>NOT_FOUND
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>HYPERBASE_ERROR
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>INTERNAL_SERVER_ERROR
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>INVALID_TIME_WINDOW
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>INVALID_COORDINATE
-</code></pre></div>
+<p>Error codes emitted by the backend:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VALIDATION_ERROR</code></td>
+<td>A request parameter or body field is malformed</td>
+</tr>
+<tr>
+<td><code>INVALID_TIME_WINDOW</code></td>
+<td>Unknown <code>window</code> preset, or <code>from</code>/<code>to</code> is out of order or spans more than 90 days</td>
+</tr>
+<tr>
+<td><code>INVALID_COORDINATE</code></td>
+<td>Latitude or longitude outside its valid range</td>
+</tr>
+<tr>
+<td><code>NOT_FOUND</code></td>
+<td>No route matches the path</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td>Missing, invalid, or expired session cookie</td>
+</tr>
+<tr>
+<td><code>FORBIDDEN</code></td>
+<td>Valid session, but the account lacks the required role</td>
+</tr>
+<tr>
+<td><code>AUTH_FAILED</code></td>
+<td>Sign-in rejected — wrong email or password</td>
+</tr>
+<tr>
+<td><code>SIGNUP_FAILED</code></td>
+<td>Admin registration rejected (for example, the email is taken)</td>
+</tr>
+<tr>
+<td><code>REGISTRATION_DISABLED</code></td>
+<td><code>ADMIN_REGISTRATION_SECRET</code> is unset or did not match</td>
+</tr>
+<tr>
+<td><code>INTERNAL_SERVER_ERROR</code></td>
+<td>Unhandled failure</td>
+</tr>
+</tbody>
+</table>
 <h3 id="34-standard-success-response">3.4 Standard Success Response<a class="headerlink" href="#34-standard-success-response" title="Permanent link">&para;</a></h3>
 <p>For normal JSON responses that are not GeoJSON:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
 </code></pre></div>
 <p>For GeoJSON endpoints, return raw GeoJSON directly.</p>
+<h3 id="35-authentication">3.5 Authentication<a class="headerlink" href="#35-authentication" title="Permanent link">&para;</a></h3>
+<p>Every route under <code>/api</code> requires an admin session. <code>GET /health</code> is the only
+public endpoint.</p>
+<p>The session is a signed JWT in a cookie named <code>borobudur_session</code> — <code>httpOnly</code>,
+<code>SameSite=Strict</code>, <code>Secure</code> in production, 24 hours by default. Get one from
+<code>POST /api/auth/admin/signin</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-c<span class="w"> </span>cookies.txt<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3001/api/auth/admin/signin<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;admin@example.com&quot;,&quot;password&quot;:&quot;...&quot;}&#39;</span>
+</code></pre></div>
+<p>Then send it with every later request (<code>-b cookies.txt</code>). Browsers do this
+automatically as long as the fetch uses <code>credentials: "include"</code>.</p>
+<p>Without a valid cookie every <code>/api</code> route answers <code>401 Unauthorized</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;UNAUTHORIZED&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Authentication required&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
+</code></pre></div>
+<p>The curl examples below all omit <code>-b cookies.txt</code> for readability. Add it, or
+they will return 401.</p>
+<div class="admonition note">
+<p class="admonition-title">Interactive docs</p>
+<p>The backend also serves Swagger UI at <code>GET /api/docs</code> and the raw OpenAPI
+spec at <code>GET /api/docs.json</code>. Both are public, but "Try it out" only works
+once you hold a session cookie.</p>
+</div>
 <h2 id="4-health-check">4. Health Check<a class="headerlink" href="#4-health-check" title="Permanent link">&para;</a></h2>
-<h2 id="get-health">GET <code>/health</code><a class="headerlink" href="#get-health" title="Permanent link">&para;</a></h2>
+<h3 id="get-health">GET <code>/health</code><a class="headerlink" href="#get-health" title="Permanent link">&para;</a></h3>
 <p>Checks whether the backend server is running.</p>
-<h3 id="request">Request<a class="headerlink" href="#request" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="err">GET /health</span>
+<h4 id="request">Request<a class="headerlink" href="#request" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="err">GET /health</span>
 </code></pre></div>
-<h3 id="response">Response<a class="headerlink" href="#response" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="p">}</span>
+<h4 id="response">Response<a class="headerlink" href="#response" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="status-codes">Status Codes<a class="headerlink" href="#status-codes" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>200 OK
+<h4 id="status-codes">Status Codes<a class="headerlink" href="#status-codes" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>200 OK
 </code></pre></div>
 <hr />
 <h2 id="5-aggregated-heatmap-api">5. Aggregated Heatmap API<a class="headerlink" href="#5-aggregated-heatmap-api" title="Permanent link">&para;</a></h2>
-<h2 id="get-apiheatmapaggregate">GET <code>/api/heatmap/aggregate</code><a class="headerlink" href="#get-apiheatmapaggregate" title="Permanent link">&para;</a></h2>
+<h3 id="get-apiheatmapaggregate">GET <code>/api/heatmap/aggregate</code><a class="headerlink" href="#get-apiheatmapaggregate" title="Permanent link">&para;</a></h3>
 <p>Returns aggregated heatmap data in GeoJSON format.</p>
 <p>The endpoint fetches raw location data from Hyperbase, applies time filtering, validates coordinates, filters points outside the Borobudur area, aggregates points by grid, and returns GeoJSON.</p>
-<h3 id="request_1">Request<a class="headerlink" href="#request_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="err">GET /api/heatmap/aggregate?window=15m&amp;source=mock</span>
+<h4 id="request_1">Request<a class="headerlink" href="#request_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="err">GET /api/heatmap/aggregate?window=15m&amp;source=mock</span>
 </code></pre></div>
-<h3 id="query-parameters">Query Parameters<a class="headerlink" href="#query-parameters" title="Permanent link">&para;</a></h3>
+<h4 id="query-parameters">Query Parameters<a class="headerlink" href="#query-parameters" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -861,7 +2455,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h3>
+<h4 id="rules">Rules<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h4>
 <ol>
 <li>If <code>from</code> and <code>to</code> are provided, use custom date range. <code>from</code> must be earlier than <code>to</code> and the span must not exceed 90 days (<code>INVALID_TIME_WINDOW</code> otherwise).</li>
 <li>If <code>from</code> and <code>to</code> are not provided, use <code>window</code>.</li>
@@ -872,49 +2466,49 @@
 <li>Normalize <code>visitor_count</code> into <code>weight</code> between <code>0</code> and <code>1</code>.</li>
 <li>Do not include <code>visitor_id</code> in the response.</li>
 </ol>
-<h3 id="example-response">Example Response<a class="headerlink" href="#example-response" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">{</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">        </span><span class="nt">&quot;grid_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;grid_-7.6079_110.2037&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">        </span><span class="nt">&quot;visitor_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
-<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">        </span><span class="nt">&quot;weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.92</span><span class="p">,</span>
-<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">        </span><span class="nt">&quot;density_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span>
-<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">      </span><span class="p">},</span>
-<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
-<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">110.2037</span><span class="p">,</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">]</span>
-<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="p">}</span>
+<h4 id="example-response">Example Response<a class="headerlink" href="#example-response" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">        </span><span class="nt">&quot;grid_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;grid_-7.6079_110.2037&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span><span class="nt">&quot;visitor_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="nt">&quot;weight&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.92</span><span class="p">,</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">        </span><span class="nt">&quot;density_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">      </span><span class="nt">&quot;geometry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">        </span><span class="nt">&quot;coordinates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">110.2037</span><span class="p">,</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">]</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="empty-response">Empty Response<a class="headerlink" href="#empty-response" title="Permanent link">&para;</a></h3>
+<h4 id="empty-response">Empty Response<a class="headerlink" href="#empty-response" title="Permanent link">&para;</a></h4>
 <p>If no valid data exists:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">,</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">&quot;features&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="status-codes_1">Status Codes<a class="headerlink" href="#status-codes_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>200 OK
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>400 Bad Request
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>500 Internal Server Error
+<h4 id="status-codes_1">Status Codes<a class="headerlink" href="#status-codes_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>200 OK
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>400 Bad Request
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>500 Internal Server Error
 </code></pre></div>
-<h3 id="example-curl">Example Curl<a class="headerlink" href="#example-curl" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/heatmap/aggregate?window=15m&amp;source=mock&quot;</span>
+<h4 id="example-curl">Example Curl<a class="headerlink" href="#example-curl" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/heatmap/aggregate?window=15m&amp;source=mock&quot;</span>
 </code></pre></div>
 <hr />
 <h2 id="6-dashboard-summary-api">6. Dashboard Summary API<a class="headerlink" href="#6-dashboard-summary-api" title="Permanent link">&para;</a></h2>
-<h2 id="get-apidashboardsummary">GET <code>/api/dashboard/summary</code><a class="headerlink" href="#get-apidashboardsummary" title="Permanent link">&para;</a></h2>
+<h3 id="get-apidashboardsummary">GET <code>/api/dashboard/summary</code><a class="headerlink" href="#get-apidashboardsummary" title="Permanent link">&para;</a></h3>
 <p>Returns aggregate statistics for the dashboard cards.</p>
-<h3 id="request_2">Request<a class="headerlink" href="#request_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="err">GET /api/dashboard/summary?window=15m&amp;source=mock</span>
+<h4 id="request_2">Request<a class="headerlink" href="#request_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="err">GET /api/dashboard/summary?window=15m&amp;source=mock</span>
 </code></pre></div>
-<h3 id="query-parameters_1">Query Parameters<a class="headerlink" href="#query-parameters_1" title="Permanent link">&para;</a></h3>
+<h4 id="query-parameters_1">Query Parameters<a class="headerlink" href="#query-parameters_1" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -951,18 +2545,18 @@
 </tr>
 </tbody>
 </table>
-<h3 id="response_1">Response<a class="headerlink" href="#response_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">{</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nt">&quot;estimated_active_visitors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span>
-<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nt">&quot;total_location_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3021</span><span class="p">,</span>
-<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="nt">&quot;most_crowded_area&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Main Stupa&quot;</span><span class="p">,</span>
-<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">    </span><span class="nt">&quot;last_updated&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-16T10:30:00Z&quot;</span>
-<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="p">}</span>
+<h4 id="response_1">Response<a class="headerlink" href="#response_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">    </span><span class="nt">&quot;estimated_active_visitors&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="nt">&quot;total_location_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3021</span><span class="p">,</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="nt">&quot;most_crowded_area&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Main Stupa&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="nt">&quot;last_updated&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-16T10:30:00Z&quot;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="field-descriptions">Field Descriptions<a class="headerlink" href="#field-descriptions" title="Permanent link">&para;</a></h3>
+<h4 id="field-descriptions">Field Descriptions<a class="headerlink" href="#field-descriptions" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -989,97 +2583,120 @@
 </tr>
 </tbody>
 </table>
-<h3 id="privacy-rule">Privacy Rule<a class="headerlink" href="#privacy-rule" title="Permanent link">&para;</a></h3>
+<h4 id="privacy-rule">Privacy Rule<a class="headerlink" href="#privacy-rule" title="Permanent link">&para;</a></h4>
 <p>The backend may count distinct <code>visitor_id</code> internally, but the response must not expose visitor IDs.</p>
-<h3 id="status-codes_2">Status Codes<a class="headerlink" href="#status-codes_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>200 OK
-<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>400 Bad Request
-<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>500 Internal Server Error
+<h4 id="status-codes_2">Status Codes<a class="headerlink" href="#status-codes_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>200 OK
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>400 Bad Request
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>500 Internal Server Error
 </code></pre></div>
-<h3 id="example-curl_1">Example Curl<a class="headerlink" href="#example-curl_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/dashboard/summary?window=15m&amp;source=mock&quot;</span>
+<h4 id="example-curl_1">Example Curl<a class="headerlink" href="#example-curl_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/dashboard/summary?window=15m&amp;source=mock&quot;</span>
 </code></pre></div>
 <hr />
 <h2 id="7-insert-single-mock-location">7. Insert Single Mock Location<a class="headerlink" href="#7-insert-single-mock-location" title="Permanent link">&para;</a></h2>
-<h2 id="post-apimocklocation">POST <code>/api/mock/location</code><a class="headerlink" href="#post-apimocklocation" title="Permanent link">&para;</a></h2>
+<h3 id="post-apimocklocation">POST <code>/api/mock/location</code><a class="headerlink" href="#post-apimocklocation" title="Permanent link">&para;</a></h3>
 <p>Inserts one raw mock location into Hyperbase.</p>
 <p>This endpoint is for development and testing only.</p>
-<h3 id="request_3">Request<a class="headerlink" href="#request_3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="err">POST /api/mock/location</span>
-<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="err">Content-Type: application/json</span>
+<h4 id="request_3">Request<a class="headerlink" href="#request_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="err">POST /api/mock/location</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="err">Content-Type: application/json</span>
 </code></pre></div>
-<h3 id="request-body">Request Body<a class="headerlink" href="#request-body" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="nt">&quot;visitor_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock_visitor_001&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-16T10:30:00Z&quot;</span><span class="p">,</span>
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">  </span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">,</span>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037</span>
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="p">}</span>
+<h4 id="request-body">Request Body<a class="headerlink" href="#request-body" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">&quot;visitor_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock_visitor_001&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-16T10:30:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">,</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="backend-behavior">Backend Behavior<a class="headerlink" href="#backend-behavior" title="Permanent link">&para;</a></h3>
-<p>The backend must add:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">{</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">}</span>
+<h4 id="backend-behavior">Backend Behavior<a class="headerlink" href="#backend-behavior" title="Permanent link">&para;</a></h4>
+<p><code>source</code> is always forced to <code>"mock"</code> — you cannot pass another value here.
+<code>id_data</code> is generated if you omit it. The stored record:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">&quot;id_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock_generated_id&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-16T10:30:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="nt">&quot;visitor_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock_visitor_001&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">  </span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">,</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037</span><span class="p">,</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="p">}</span>
 </code></pre></div>
-<p>The inserted Hyperbase record should look like:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">{</span>
-<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&quot;id_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock_generated_id&quot;</span><span class="p">,</span>
-<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-06-16T10:30:00Z&quot;</span><span class="p">,</span>
-<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="nt">&quot;visitor_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock_visitor_001&quot;</span><span class="p">,</span>
-<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="w">  </span><span class="nt">&quot;latitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">,</span>
-<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">  </span><span class="nt">&quot;longitude&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037</span><span class="p">,</span>
-<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
-<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="p">}</span>
+<h4 id="response_2">Response<a class="headerlink" href="#response_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">{</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Mock location inserted&quot;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="response_2">Response<a class="headerlink" href="#response_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">{</span>
-<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Mock location inserted&quot;</span>
-<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="p">}</span>
+<p>Note this response has no <code>data</code> envelope.</p>
+<h4 id="validation-rules">Validation Rules<a class="headerlink" href="#validation-rules" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Rule</th>
+<th>Error code on failure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>visitor_id</code></td>
+<td>Required, non-empty string</td>
+<td><code>VALIDATION_ERROR</code></td>
+</tr>
+<tr>
+<td><code>timestamp</code></td>
+<td>Required, valid ISO 8601</td>
+<td><code>VALIDATION_ERROR</code></td>
+</tr>
+<tr>
+<td><code>latitude</code></td>
+<td>Required number in <code>-90..90</code></td>
+<td><code>INVALID_COORDINATE</code></td>
+</tr>
+<tr>
+<td><code>longitude</code></td>
+<td>Required number in <code>-180..180</code></td>
+<td><code>INVALID_COORDINATE</code></td>
+</tr>
+</tbody>
+</table>
+<p>Coordinates outside the Borobudur bounds are accepted here — they are dropped
+later, during aggregation, so they never reach the heatmap.</p>
+<h4 id="status-codes_3">Status Codes<a class="headerlink" href="#status-codes_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>201 Created
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>400 Bad Request
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>500 Internal Server Error
 </code></pre></div>
-<h3 id="validation-rules">Validation Rules<a class="headerlink" href="#validation-rules" title="Permanent link">&para;</a></h3>
-<ol>
-<li><code>visitor_id</code> is required.</li>
-<li><code>timestamp</code> is required and must be a valid ISO timestamp.</li>
-<li><code>latitude</code> is required and must be a number.</li>
-<li><code>longitude</code> is required and must be a number.</li>
-<li>Coordinate must be inside or near the Borobudur boundary.</li>
-</ol>
-<h3 id="status-codes_3">Status Codes<a class="headerlink" href="#status-codes_3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>201 Created
-<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>400 Bad Request
-<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>500 Internal Server Error
-</code></pre></div>
-<h3 id="example-curl_2">Example Curl<a class="headerlink" href="#example-curl_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/mock/location&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="s1">    &quot;visitor_id&quot;: &quot;mock_visitor_001&quot;,</span>
-<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="s1">    &quot;timestamp&quot;: &quot;2026-06-16T10:30:00Z&quot;,</span>
-<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="s1">    &quot;latitude&quot;: -7.6079,</span>
-<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="s1">    &quot;longitude&quot;: 110.2037</span>
-<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="s1">  }&#39;</span>
+<h4 id="example-curl_2">Example Curl<a class="headerlink" href="#example-curl_2" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/mock/location&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="s1">    &quot;visitor_id&quot;: &quot;mock_visitor_001&quot;,</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="s1">    &quot;timestamp&quot;: &quot;2026-06-16T10:30:00Z&quot;,</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="s1">    &quot;latitude&quot;: -7.6079,</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="s1">    &quot;longitude&quot;: 110.2037</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="s1">  }&#39;</span>
 </code></pre></div>
 <hr />
 <h2 id="8-bulk-generate-mock-data">8. Bulk Generate Mock Data<a class="headerlink" href="#8-bulk-generate-mock-data" title="Permanent link">&para;</a></h2>
-<h2 id="post-apimockgenerate">POST <code>/api/mock/generate</code><a class="headerlink" href="#post-apimockgenerate" title="Permanent link">&para;</a></h2>
+<h3 id="post-apimockgenerate">POST <code>/api/mock/generate</code><a class="headerlink" href="#post-apimockgenerate" title="Permanent link">&para;</a></h3>
 <p>Generates realistic mock visitor location data and inserts it into Hyperbase.</p>
 <p>This endpoint is used to test the full flow:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Mock Data Generator → Hyperbase → Backend Aggregation → GeoJSON API → Frontend Heatmap
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Mock Data Generator → Hyperbase → Backend Aggregation → GeoJSON API → Frontend Heatmap
 </code></pre></div>
-<h3 id="request_4">Request<a class="headerlink" href="#request_4" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="err">POST /api/mock/generate</span>
-<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="err">Content-Type: application/json</span>
+<h4 id="request_4">Request<a class="headerlink" href="#request_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="err">POST /api/mock/generate</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="err">Content-Type: application/json</span>
 </code></pre></div>
-<h3 id="request-body_1">Request Body<a class="headerlink" href="#request-body_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;visitor_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span><span class="nt">&quot;points_per_visitor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
-<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
-<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="p">}</span>
+<h4 id="request-body_1">Request Body<a class="headerlink" href="#request-body_1" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">{</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="nt">&quot;visitor_count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="nt">&quot;points_per_visitor&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="field-descriptions_1">Field Descriptions<a class="headerlink" href="#field-descriptions_1" title="Permanent link">&para;</a></h3>
+<h4 id="field-descriptions_1">Field Descriptions<a class="headerlink" href="#field-descriptions_1" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -1110,51 +2727,82 @@
 </tr>
 </tbody>
 </table>
-<h3 id="mock-distribution">Mock Distribution<a class="headerlink" href="#mock-distribution" title="Permanent link">&para;</a></h3>
-<p>Generated points should follow a realistic distribution:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Main Stupa: 45%
-<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>Entrance Area: 25%
-<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>East Stairs: 15%
-<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>West Area: 10%
-<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>Other Area: 5%
+<h4 id="mock-distribution">Mock Distribution<a class="headerlink" href="#mock-distribution" title="Permanent link">&para;</a></h4>
+<p>Points are clustered around named areas rather than scattered randomly, so the
+generated heatmap looks like a real crowd. Weights live in
+<code>backend/src/config/areas.ts</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th style="text-align: right;">Share</th>
+<th style="text-align: right;">Jitter radius</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main Stupa</td>
+<td style="text-align: right;">45%</td>
+<td style="text-align: right;">0.0006°</td>
+</tr>
+<tr>
+<td>Entrance Area</td>
+<td style="text-align: right;">25%</td>
+<td style="text-align: right;">0.0006°</td>
+</tr>
+<tr>
+<td>East Stairs</td>
+<td style="text-align: right;">15%</td>
+<td style="text-align: right;">0.0005°</td>
+</tr>
+<tr>
+<td>West Area</td>
+<td style="text-align: right;">10%</td>
+<td style="text-align: right;">0.0005°</td>
+</tr>
+<tr>
+<td>Other Area</td>
+<td style="text-align: right;">5%</td>
+<td style="text-align: right;">spread across the whole bounds</td>
+</tr>
+</tbody>
+</table>
+<p>"Other Area" is whatever probability mass the named areas leave over.</p>
+<h4 id="response_3">Response<a class="headerlink" href="#response_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">{</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="nt">&quot;inserted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="p">}</span>
 </code></pre></div>
-<p>Do not generate fully random points across the entire map.</p>
-<h3 id="response_3">Response<a class="headerlink" href="#response_3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="p">{</span>
-<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="w">  </span><span class="nt">&quot;inserted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span>
-<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="w">  </span><span class="nt">&quot;source&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
-<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="p">}</span>
+<h4 id="status-codes_4">Status Codes<a class="headerlink" href="#status-codes_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>201 Created
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>400 Bad Request
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>500 Internal Server Error
 </code></pre></div>
-<h3 id="status-codes_4">Status Codes<a class="headerlink" href="#status-codes_4" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>201 Created
-<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>400 Bad Request
-<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>500 Internal Server Error
-</code></pre></div>
-<h3 id="example-curl_3">Example Curl<a class="headerlink" href="#example-curl_3" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/mock/generate&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="s1">    &quot;visitor_count&quot;: 100,</span>
-<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="s1">    &quot;points_per_visitor&quot;: 10</span>
-<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="s1">  }&#39;</span>
+<h4 id="example-curl_3">Example Curl<a class="headerlink" href="#example-curl_3" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/mock/generate&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="s1">    &quot;visitor_count&quot;: 100,</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="s1">    &quot;points_per_visitor&quot;: 10</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="s1">  }&#39;</span>
 </code></pre></div>
 <hr />
 <h2 id="9-hotspot-detection-api">9. Hotspot Detection API<a class="headerlink" href="#9-hotspot-detection-api" title="Permanent link">&para;</a></h2>
-<h2 id="get-apihotspots">GET <code>/api/hotspots</code><a class="headerlink" href="#get-apihotspots" title="Permanent link">&para;</a></h2>
-<p>Returns hotspot detection results from the DBSCAN module.</p>
-<p>For MVP, the backend may read precomputed hotspot results from:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>ml/output/hotspots.json
+<h3 id="get-apihotspots">GET <code>/api/hotspots</code><a class="headerlink" href="#get-apihotspots" title="Permanent link">&para;</a></h3>
+<p>Runs DBSCAN over the selected time window and returns the clusters it found.</p>
+<p>The clustering happens <strong>live, on every request, inside the backend</strong> —
+<code>services/dbscan.service.ts</code> (haversine distance in metres) and
+<code>services/hotspot-detection.service.ts</code>. Nothing is precomputed and no Python
+runs at request time. The points go through the same cleaning and bounds
+filtering as the heatmap before clustering.</p>
+<p><code>ml/notebooks/dbscan_exploration.ipynb</code> is where the default <code>eps</code> and
+<code>minSamples</code> came from. It is a companion notebook, not a runtime dependency.</p>
+<h4 id="request_5">Request<a class="headerlink" href="#request_5" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="err">GET /api/hotspots?window=15m&amp;source=mock&amp;eps=8&amp;minSamples=5</span>
 </code></pre></div>
-<p>Alternative implementation:</p>
-<p>The backend may call:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>ml/hotspot_detection.py
-</code></pre></div>
-<p>and return the generated output.</p>
-<h3 id="request_5">Request<a class="headerlink" href="#request_5" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="err">GET /api/hotspots?from=2026-06-16T00:00:00Z&amp;to=2026-06-16T23:59:59Z&amp;source=mock</span>
-</code></pre></div>
-<h3 id="query-parameters_2">Query Parameters<a class="headerlink" href="#query-parameters_2" title="Permanent link">&para;</a></h3>
+<h4 id="query-parameters_2">Query Parameters<a class="headerlink" href="#query-parameters_2" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -1166,42 +2814,70 @@
 </thead>
 <tbody>
 <tr>
+<td><code>window</code></td>
+<td>string</td>
+<td style="text-align: right;">No</td>
+<td>Time window preset: <code>5m</code>, <code>15m</code>, <code>1h</code>, <code>today</code>, <code>3d</code>, <code>7d</code>, <code>30d</code>. Default: <code>15m</code>.</td>
+</tr>
+<tr>
 <td><code>from</code></td>
 <td>ISO timestamp</td>
 <td style="text-align: right;">No</td>
-<td>Start time for hotspot analysis.</td>
+<td>Custom start time.</td>
 </tr>
 <tr>
 <td><code>to</code></td>
 <td>ISO timestamp</td>
 <td style="text-align: right;">No</td>
-<td>End time for hotspot analysis.</td>
+<td>Custom end time.</td>
 </tr>
 <tr>
 <td><code>source</code></td>
 <td>string</td>
 <td style="text-align: right;">No</td>
-<td>Data source filter. Allowed values: <code>mobile_app</code>, <code>mock</code>, <code>all</code>. Default: <code>all</code>.</td>
+<td><code>mobile_app</code>, <code>mock</code>, or <code>all</code>. Default: <code>all</code>.</td>
+</tr>
+<tr>
+<td><code>eps</code></td>
+<td>number</td>
+<td style="text-align: right;">No</td>
+<td>Neighbourhood radius in metres. Default <code>8</code>, clamped to <code>2..200</code>.</td>
+</tr>
+<tr>
+<td><code>minSamples</code></td>
+<td>integer</td>
+<td style="text-align: right;">No</td>
+<td>Minimum neighbours needed to seed a cluster. Default <code>5</code>, clamped to <code>2..50</code>.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="response_4">Response<a class="headerlink" href="#response_4" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="p">{</span>
-<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">    </span><span class="nt">&quot;hotspots&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a><span class="w">      </span><span class="p">{</span>
-<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a><span class="w">        </span><span class="nt">&quot;cluster_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hotspot_01&quot;</span><span class="p">,</span>
-<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="w">        </span><span class="nt">&quot;center_lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">,</span>
-<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="w">        </span><span class="nt">&quot;center_lng&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037</span><span class="p">,</span>
-<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a><span class="w">        </span><span class="nt">&quot;total_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">420</span><span class="p">,</span>
-<a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a><span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;High Density Hotspot&quot;</span>
-<a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-39-12" name="__codelineno-39-12" href="#__codelineno-39-12"></a><span class="w">    </span><span class="p">]</span>
-<a id="__codelineno-39-13" name="__codelineno-39-13" href="#__codelineno-39-13"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-39-14" name="__codelineno-39-14" href="#__codelineno-39-14"></a><span class="p">}</span>
+<p>Out-of-range <code>eps</code> and <code>minSamples</code> are clamped rather than rejected, so these
+two never produce a 400.</p>
+<h4 id="response_4">Response<a class="headerlink" href="#response_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="p">{</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">  </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">    </span><span class="nt">&quot;hotspots&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">        </span><span class="nt">&quot;cluster_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cluster_0&quot;</span><span class="p">,</span>
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="w">        </span><span class="nt">&quot;center_lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079123</span><span class="p">,</span>
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">        </span><span class="nt">&quot;center_lng&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037456</span><span class="p">,</span>
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">        </span><span class="nt">&quot;total_points&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">420</span><span class="p">,</span>
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">        </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Main Stupa&quot;</span><span class="p">,</span>
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="w">        </span><span class="nt">&quot;density_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="w">        </span><span class="nt">&quot;radius_m&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span>
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="w">        </span><span class="nt">&quot;share&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.3812</span>
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="w">    </span><span class="p">],</span>
+<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="w">    </span><span class="nt">&quot;points&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6079</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;lng&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2037</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;lat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">-7.6081</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;lng&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">110.2035</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="p">}</span>
 </code></pre></div>
-<h3 id="field-descriptions_2">Field Descriptions<a class="headerlink" href="#field-descriptions_2" title="Permanent link">&para;</a></h3>
+<h4 id="field-descriptions_2">Field Descriptions<a class="headerlink" href="#field-descriptions_2" title="Permanent link">&para;</a></h4>
+<p><code>hotspots[]</code> — one entry per cluster, sorted largest first:</p>
 <table>
 <thead>
 <tr>
@@ -1212,209 +2888,145 @@
 <tbody>
 <tr>
 <td><code>cluster_id</code></td>
-<td>Unique hotspot cluster ID.</td>
+<td>Positional id, <code>cluster_0</code> is the biggest</td>
 </tr>
 <tr>
-<td><code>center_lat</code></td>
-<td>Latitude of hotspot center.</td>
-</tr>
-<tr>
-<td><code>center_lng</code></td>
-<td>Longitude of hotspot center.</td>
+<td><code>center_lat</code> / <code>center_lng</code></td>
+<td>Cluster centroid</td>
 </tr>
 <tr>
 <td><code>total_points</code></td>
-<td>Total points inside the cluster.</td>
+<td>Points inside the cluster</td>
 </tr>
 <tr>
 <td><code>label</code></td>
-<td>Human-readable density label.</td>
+<td>Nearest named area from <code>config/areas.ts</code></td>
+</tr>
+<tr>
+<td><code>density_level</code></td>
+<td><code>high</code> / <code>medium</code> / <code>low</code>, relative to the biggest cluster</td>
+</tr>
+<tr>
+<td><code>radius_m</code></td>
+<td>Furthest member from the centroid, in metres</td>
+</tr>
+<tr>
+<td><code>share</code></td>
+<td>Fraction of all clustered points in this cluster, <code>0..1</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="ml-scope-rules">ML Scope Rules<a class="headerlink" href="#ml-scope-rules" title="Permanent link">&para;</a></h3>
-<p>This endpoint must only return hotspot detection results.</p>
-<p>Do not implement:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>crowd density prediction
-<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>deep learning
-<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>trajectory analysis
-<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>next-zone prediction
-<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>structural damage prediction
+<p><code>points[]</code> — the scatter overlay. Position and density tier only, capped at
+4000 and downsampled beyond that. <code>tier</code> is <code>null</code> for noise points that
+DBSCAN did not assign to any cluster.</p>
+<h4 id="ml-scope-rules">ML Scope Rules<a class="headerlink" href="#ml-scope-rules" title="Permanent link">&para;</a></h4>
+<p>This endpoint returns hotspot detection only. Crowd prediction, deep learning,
+trajectory analysis, next-zone prediction, and structural damage prediction are
+all out of scope by design.</p>
+<p><code>points[]</code> carries no <code>visitor_id</code>, no timestamp, and <strong>no ordering</strong> — it
+cannot be reassembled into anyone's path.</p>
+<h4 id="status-codes_5">Status Codes<a class="headerlink" href="#status-codes_5" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>200 OK
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>400 Bad Request
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>500 Internal Server Error
 </code></pre></div>
-<h3 id="status-codes_5">Status Codes<a class="headerlink" href="#status-codes_5" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>200 OK
-<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>400 Bad Request
-<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>500 Internal Server Error
-</code></pre></div>
-<h3 id="example-curl_4">Example Curl<a class="headerlink" href="#example-curl_4" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/hotspots?source=mock&quot;</span>
-</code></pre></div>
-<hr />
-<h2 id="10-optional-clear-mock-data-api">10. Optional Clear Mock Data API<a class="headerlink" href="#10-optional-clear-mock-data-api" title="Permanent link">&para;</a></h2>
-<h2 id="delete-apimockclear">DELETE <code>/api/mock/clear</code><a class="headerlink" href="#delete-apimockclear" title="Permanent link">&para;</a></h2>
-<p>Optional endpoint for development.</p>
-<p>Deletes or ignores mock data from the repository layer.</p>
-<p>Only implement if it is safe with Hyperbase permissions.</p>
-<h3 id="request_6">Request<a class="headerlink" href="#request_6" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="err">DELETE /api/mock/clear</span>
-</code></pre></div>
-<h3 id="response_5">Response<a class="headerlink" href="#response_5" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="p">{</span>
-<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="nt">&quot;success&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span><span class="nt">&quot;deleted&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span>
-<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="p">}</span>
-</code></pre></div>
-<h3 id="safety-rule">Safety Rule<a class="headerlink" href="#safety-rule" title="Permanent link">&para;</a></h3>
-<p>If real Hyperbase deletion is risky, do not physically delete rows. Instead, implement mock filtering through the <code>source</code> field or skip this endpoint entirely.</p>
-<h3 id="status-codes_6">Status Codes<a class="headerlink" href="#status-codes_6" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>200 OK
-<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>500 Internal Server Error
+<h4 id="example-curl_4">Example Curl<a class="headerlink" href="#example-curl_4" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>curl<span class="w"> </span><span class="s2">&quot;http://localhost:3001/api/hotspots?source=mock&quot;</span>
 </code></pre></div>
 <hr />
-<h2 id="11-internal-types">11. Internal Types<a class="headerlink" href="#11-internal-types" title="Permanent link">&para;</a></h2>
-<h2 id="111-locationlog">11.1 LocationLog<a class="headerlink" href="#111-locationlog" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">LocationSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mobile_app&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span><span class="p">;</span>
-<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>
-<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">LocationLog</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="w">  </span><span class="nx">id_data</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="w">  </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="w">  </span><span class="nx">visitor_id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// internal only — never exposed to the frontend</span>
-<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="w">  </span><span class="nx">visitor_key?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// pseudonymous Hyperbase id, internal only; optional (mock/memory paths use visitor_id)</span>
-<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="w">  </span><span class="nx">latitude</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a><span class="w">  </span><span class="nx">longitude</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a><span class="w">  </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="kt">LocationSource</span><span class="p">;</span>
-<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a><span class="p">}</span>
+<h2 id="10-internal-types">10. Internal Types<a class="headerlink" href="#10-internal-types" title="Permanent link">&para;</a></h2>
+<h3 id="101-locationlog">10.1 LocationLog<a class="headerlink" href="#101-locationlog" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">LocationSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;mobile_app&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span><span class="p">;</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">LocationLog</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="w">  </span><span class="nx">id_data</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="w">  </span><span class="nx">timestamp</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="w">  </span><span class="nx">visitor_id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// internal only — never exposed to the frontend</span>
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">  </span><span class="nx">visitor_key?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// pseudonymous Hyperbase id, internal only; optional (mock/memory paths use visitor_id)</span>
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="w">  </span><span class="nx">latitude</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="w">  </span><span class="nx">longitude</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="w">  </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="kt">LocationSource</span><span class="p">;</span>
+<a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="112-locationquery">11.2 LocationQuery<a class="headerlink" href="#112-locationquery" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">LocationQuery</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="w">  </span><span class="nb">window</span><span class="o">?:</span><span class="w"> </span><span class="s2">&quot;5m&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;15m&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;1h&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;today&quot;</span><span class="p">;</span>
-<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="w">  </span><span class="nx">from?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="w">  </span><span class="nx">to?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="w">  </span><span class="nx">source</span><span class="o">?:</span><span class="w"> </span><span class="s2">&quot;mobile_app&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;all&quot;</span><span class="p">;</span>
-<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a><span class="p">}</span>
+<h3 id="102-locationquery">10.2 LocationQuery<a class="headerlink" href="#102-locationquery" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">TimeWindowPreset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;5m&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;15m&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;1h&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;today&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;3d&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;7d&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;30d&quot;</span><span class="p">;</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">SourceFilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">LocationSource</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;all&quot;</span><span class="p">;</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">LocationQuery</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a><span class="w">  </span><span class="nx">window?</span><span class="o">:</span><span class="w"> </span><span class="kt">TimeWindowPreset</span><span class="p">;</span>
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a><span class="w">  </span><span class="nx">from?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// ISO timestamp (overrides window when paired with `to`)</span>
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">  </span><span class="nx">to?</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w"> </span><span class="c1">// ISO timestamp</span>
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">  </span><span class="nx">source?</span><span class="o">:</span><span class="w"> </span><span class="kt">SourceFilter</span><span class="p">;</span>
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="113-aggregatedgridcell">11.3 AggregatedGridCell<a class="headerlink" href="#113-aggregatedgridcell" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">DensityLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;low&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">;</span>
-<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
-<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">AggregatedGridCell</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="w">  </span><span class="nx">grid_id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="w">  </span><span class="nx">center_lat</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a><span class="w">  </span><span class="nx">center_lng</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a><span class="w">  </span><span class="nx">visitor_count</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a><span class="w">  </span><span class="nx">weight</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a><span class="w">  </span><span class="nx">density_level</span><span class="o">:</span><span class="w"> </span><span class="kt">DensityLevel</span><span class="p">;</span>
-<a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a><span class="w">  </span><span class="nx">time_window</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a><span class="p">}</span>
+<h3 id="103-aggregatedgridcell">10.3 AggregatedGridCell<a class="headerlink" href="#103-aggregatedgridcell" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="k">export</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">DensityLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;low&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;medium&quot;</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">;</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">AggregatedGridCell</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="w">  </span><span class="nx">grid_id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a><span class="w">  </span><span class="nx">center_lat</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="w">  </span><span class="nx">center_lng</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="w">  </span><span class="nx">visitor_count</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">  </span><span class="nx">weight</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="w">  </span><span class="nx">density_level</span><span class="o">:</span><span class="w"> </span><span class="kt">DensityLevel</span><span class="p">;</span>
+<a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a><span class="w">  </span><span class="nx">time_window</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="114-geojsonfeaturecollection">11.4 GeoJSONFeatureCollection<a class="headerlink" href="#114-geojsonfeaturecollection" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">HeatmapFeatureCollection</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">;</span>
-<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">  </span><span class="nx">features</span><span class="o">:</span><span class="w"> </span><span class="kt">HeatmapFeature</span><span class="p">[];</span>
-<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="p">}</span>
-<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>
-<a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">HeatmapFeature</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">;</span>
-<a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a><span class="w">  </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a><span class="w">    </span><span class="nx">grid_id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
-<a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a><span class="w">    </span><span class="nx">visitor_count</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a><span class="w">    </span><span class="nx">weight</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
-<a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a><span class="w">    </span><span class="nx">density_level</span><span class="o">:</span><span class="w"> </span><span class="kt">DensityLevel</span><span class="p">;</span>
-<a id="__codelineno-49-13" name="__codelineno-49-13" href="#__codelineno-49-13"></a><span class="w">  </span><span class="p">};</span>
-<a id="__codelineno-49-14" name="__codelineno-49-14" href="#__codelineno-49-14"></a><span class="w">  </span><span class="nx">geometry</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-49-15" name="__codelineno-49-15" href="#__codelineno-49-15"></a><span class="w">    </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">;</span>
-<a id="__codelineno-49-16" name="__codelineno-49-16" href="#__codelineno-49-16"></a><span class="w">    </span><span class="nx">coordinates</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="kt">number</span><span class="p">];</span>
-<a id="__codelineno-49-17" name="__codelineno-49-17" href="#__codelineno-49-17"></a><span class="w">  </span><span class="p">};</span>
-<a id="__codelineno-49-18" name="__codelineno-49-18" href="#__codelineno-49-18"></a><span class="p">}</span>
+<h3 id="104-geojsonfeaturecollection">10.4 GeoJSONFeatureCollection<a class="headerlink" href="#104-geojsonfeaturecollection" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">HeatmapFeatureCollection</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;FeatureCollection&quot;</span><span class="p">;</span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span><span class="nx">features</span><span class="o">:</span><span class="w"> </span><span class="kt">HeatmapFeature</span><span class="p">[];</span>
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="p">}</span>
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">HeatmapFeature</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Feature&quot;</span><span class="p">;</span>
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="w">  </span><span class="nx">properties</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a><span class="w">    </span><span class="nx">grid_id</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span>
+<a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a><span class="w">    </span><span class="nx">visitor_count</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-38-11" name="__codelineno-38-11" href="#__codelineno-38-11"></a><span class="w">    </span><span class="nx">weight</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span>
+<a id="__codelineno-38-12" name="__codelineno-38-12" href="#__codelineno-38-12"></a><span class="w">    </span><span class="nx">density_level</span><span class="o">:</span><span class="w"> </span><span class="kt">DensityLevel</span><span class="p">;</span>
+<a id="__codelineno-38-13" name="__codelineno-38-13" href="#__codelineno-38-13"></a><span class="w">  </span><span class="p">};</span>
+<a id="__codelineno-38-14" name="__codelineno-38-14" href="#__codelineno-38-14"></a><span class="w">  </span><span class="nx">geometry</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-38-15" name="__codelineno-38-15" href="#__codelineno-38-15"></a><span class="w">    </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Point&quot;</span><span class="p">;</span>
+<a id="__codelineno-38-16" name="__codelineno-38-16" href="#__codelineno-38-16"></a><span class="w">    </span><span class="nx">coordinates</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="kt">number</span><span class="p">,</span><span class="w"> </span><span class="kt">number</span><span class="p">];</span>
+<a id="__codelineno-38-17" name="__codelineno-38-17" href="#__codelineno-38-17"></a><span class="w">  </span><span class="p">};</span>
+<a id="__codelineno-38-18" name="__codelineno-38-18" href="#__codelineno-38-18"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="12-validation-rules">12. Validation Rules<a class="headerlink" href="#12-validation-rules" title="Permanent link">&para;</a></h2>
-<h3 id="121-latitude">12.1 Latitude<a class="headerlink" href="#121-latitude" title="Permanent link">&para;</a></h3>
+<h2 id="11-validation-rules">11. Validation Rules<a class="headerlink" href="#11-validation-rules" title="Permanent link">&para;</a></h2>
+<h3 id="111-latitude">11.1 Latitude<a class="headerlink" href="#111-latitude" title="Permanent link">&para;</a></h3>
 <p>Valid range:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>-90 &lt;= latitude &lt;= 90
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>-90 &lt;= latitude &lt;= 90
 </code></pre></div>
-<h3 id="122-longitude">12.2 Longitude<a class="headerlink" href="#122-longitude" title="Permanent link">&para;</a></h3>
+<h3 id="112-longitude">11.2 Longitude<a class="headerlink" href="#112-longitude" title="Permanent link">&para;</a></h3>
 <p>Valid range:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>-180 &lt;= longitude &lt;= 180
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>-180 &lt;= longitude &lt;= 180
 </code></pre></div>
-<h3 id="123-timestamp">12.3 Timestamp<a class="headerlink" href="#123-timestamp" title="Permanent link">&para;</a></h3>
+<h3 id="113-timestamp">11.3 Timestamp<a class="headerlink" href="#113-timestamp" title="Permanent link">&para;</a></h3>
 <p>Must be valid ISO timestamp.</p>
 <p>Example:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>2026-06-16T10:30:00Z
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>2026-06-16T10:30:00Z
 </code></pre></div>
-<h3 id="124-source">12.4 Source<a class="headerlink" href="#124-source" title="Permanent link">&para;</a></h3>
+<h3 id="114-source">11.4 Source<a class="headerlink" href="#114-source" title="Permanent link">&para;</a></h3>
 <p>Allowed values:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>mobile_app
-<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>mock
-<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a>all
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>mobile_app
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>mock
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>all
 </code></pre></div>
 <p>For inserted mock data, backend must force:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>source = mock
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>source = mock
 </code></pre></div>
-<h3 id="125-borobudur-bounds">12.5 Borobudur Bounds<a class="headerlink" href="#125-borobudur-bounds" title="Permanent link">&para;</a></h3>
-<p>Use placeholder bounds:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">BOROBUDUR_BOUNDS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="w">  </span><span class="nx">minLat</span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="mf">7.615</span><span class="p">,</span>
-<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="w">  </span><span class="nx">maxLat</span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="mf">7.600</span><span class="p">,</span>
-<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="w">  </span><span class="nx">minLng</span><span class="o">:</span><span class="w"> </span><span class="kt">110.195</span><span class="p">,</span>
-<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="w">  </span><span class="nx">maxLng</span><span class="o">:</span><span class="w"> </span><span class="kt">110.215</span>
-<a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a><span class="p">};</span>
+<h3 id="115-borobudur-bounds">11.5 Borobudur Bounds<a class="headerlink" href="#115-borobudur-bounds" title="Permanent link">&para;</a></h3>
+<p>Defined once in <code>backend/src/config/bounds.ts</code> — never hardcoded anywhere else:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">BOROBUDUR_BOUNDS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">  </span><span class="nx">minLat</span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="mf">7.615</span><span class="p">,</span>
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">  </span><span class="nx">maxLat</span><span class="o">:</span><span class="w"> </span><span class="o">-</span><span class="mf">7.6</span><span class="p">,</span>
+<a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="w">  </span><span class="nx">minLng</span><span class="o">:</span><span class="w"> </span><span class="kt">110.195</span><span class="p">,</span>
+<a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="w">  </span><span class="nx">maxLng</span><span class="o">:</span><span class="w"> </span><span class="kt">110.215</span><span class="p">,</span>
+<a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="p">}</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="kd">const</span><span class="p">;</span>
 </code></pre></div>
-<p>Points outside this range should be ignored during aggregation.</p>
-<h2 id="13-frontend-api-usage">13. Frontend API Usage<a class="headerlink" href="#13-frontend-api-usage" title="Permanent link">&para;</a></h2>
-<p>The frontend should use a centralized API client:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>frontend/src/lib/api.ts
-</code></pre></div>
-<p>Required functions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="nx">getAggregatedHeatmap</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
-<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="nx">getDashboardSummary</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
-<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="nx">getHotspots</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span>
-<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="nx">generateMockData</span><span class="p">(</span><span class="nx">params</span><span class="p">)</span><span class="w">  </span><span class="c1">// used by the Mock Generator admin page</span>
-</code></pre></div>
-<p>Example:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">geojson</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">getAggregatedHeatmap</span><span class="p">({</span>
-<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="w">  </span><span class="nb">window</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;15m&quot;</span><span class="p">,</span>
-<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="w">  </span><span class="nx">source</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;mock&quot;</span>
-<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="p">});</span>
-</code></pre></div>
-<p>Frontend must read API base URL from:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>VITE_API_BASE_URL=/api
-</code></pre></div>
-<h2 id="14-polling-behavior">14. Polling Behavior<a class="headerlink" href="#14-polling-behavior" title="Permanent link">&para;</a></h2>
-<p>The frontend should poll:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>GET /api/heatmap/aggregate?window=15m
-<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>GET /api/dashboard/summary?window=15m
-</code></pre></div>
-<p>Default interval:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>30 seconds
-</code></pre></div>
-<p>Polling rules:</p>
-<ol>
-<li>Do not recreate the Leaflet map on every poll.</li>
-<li>Only update the existing heat layer using new data.</li>
-<li>Show last updated timestamp.</li>
-<li>Show loading state only on first load.</li>
-<li>Show subtle refreshing state for later updates.</li>
-<li>Handle API errors gracefully.</li>
-</ol>
-<h2 id="15-acceptance-criteria">15. Acceptance Criteria<a class="headerlink" href="#15-acceptance-criteria" title="Permanent link">&para;</a></h2>
-<p>The API implementation is complete when:</p>
-<ol>
-<li><code>/health</code> returns status ok.</li>
-<li><code>/api/heatmap/aggregate</code> returns valid GeoJSON.</li>
-<li><code>/api/dashboard/summary</code> returns aggregate statistics.</li>
-<li><code>/api/mock/location</code> inserts one mock location.</li>
-<li><code>/api/mock/generate</code> inserts bulk mock data.</li>
-<li><code>/api/hotspots</code> returns hotspot results.</li>
-<li>visitor_id never appears in frontend-facing heatmap response.</li>
-<li>Invalid coordinates are filtered.</li>
-<li>Out-of-bound points are filtered.</li>
-<li>Time window filtering works.</li>
-<li>Source filtering works.</li>
-<li>GeoJSON uses <code>[longitude, latitude]</code>.</li>
-<li>API errors follow the standard error format.</li>
-<li>Frontend can consume all required API endpoints.</li>
-</ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>
-</code></pre></div>
+<p>Points outside this box are dropped during cleaning, before aggregation. The
+same file holds <code>BOROBUDUR_CENTER</code> (derived from the bounds) and <code>GRID_SIZE</code>
+(<code>0.0001</code> degrees, roughly 11 metres at this latitude).</p>
 
 
 
@@ -1438,7 +3050,7 @@
           <button type="button" class="md-top md-icon" data-md-component="top" hidden>
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
-  Kembali ke atas
+  Back to top
 </button>
         
       </main>
@@ -1450,27 +3062,27 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../IMPLEMENTATION_PLAN/" class="md-footer__link md-footer__link--prev" aria-label="Sebelumnya: Implementation Plan">
+          <a href="../ARCHITECTURE/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Architecture">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
             </div>
             <div class="md-footer__title">
               <span class="md-footer__direction">
-                Sebelumnya
+                Previous
               </span>
               <div class="md-ellipsis">
-                Implementation Plan
+                Architecture
               </div>
             </div>
           </a>
         
         
           
-          <a href="../DATA_FLOWS/" class="md-footer__link md-footer__link--next" aria-label="Selanjutnya: Data Flows">
+          <a href="../DATA_FLOWS/" class="md-footer__link md-footer__link--next" aria-label="Next: Data Flows">
             <div class="md-footer__title">
               <span class="md-footer__direction">
-                Selanjutnya
+                Next
               </span>
               <div class="md-ellipsis">
                 Data Flows
@@ -1524,7 +3136,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Tersalin ke clipboard", "clipboard.copy": "Salin ke clipboard", "search.result.more.one": "1 lagi di halaman ini", "search.result.more.other": "# lagi di halaman ini", "search.result.none": "Tidak ada dokumen yang sesuai", "search.result.one": "1 dokumen ditemukan", "search.result.other": "# dokumen ditemukan", "search.result.placeholder": "Ketik untuk mulai pencarian", "search.result.term.missing": "Tidak ada", "select.version": "Pilih versi"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
