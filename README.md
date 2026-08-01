@@ -98,7 +98,7 @@ MkDocs Material.
 
 | Document | Contents |
 |---|---|
-| [`docs/BLUEPRINT.md`](docs/BLUEPRINT.md) | Project blueprint — background, scope, design, testing, status (Bahasa Indonesia) |
+| [`docs/BLUEPRINT.md`](docs/BLUEPRINT.md) | Project blueprint — background, scope, design, testing, status |
 | [`docs/API.md`](docs/API.md) | Authoritative endpoint contract |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Architecture summary |
 | [`docs/HYPERBASE_SCHEMA.md`](docs/HYPERBASE_SCHEMA.md) | Authoritative Hyperbase data model |

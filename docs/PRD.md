@@ -1,6 +1,14 @@
-# Coding PRD
+# Original PRD
 
-# Borobudur Aggregated Heatmap Dashboard
+!!! warning "Archived"
+    This is the brief the project started from. The system has since drifted from
+    it in several places — the ML runs in TypeScript inside the backend rather
+    than in Python, the map uses plain OpenStreetMap tiles rather than CARTO, and
+    the mobile app records `client_id` rather than `visitor_id`.
+
+    For what the system does today, read [BLUEPRINT.md](BLUEPRINT.md). For the
+    binding endpoint contract, read [API.md](API.md). This page is kept as a
+    record of the original requirements.
 
 ## 1. Project Summary
 

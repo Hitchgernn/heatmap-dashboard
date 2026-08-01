@@ -1,16 +1,16 @@
 # Hyperbase Integration Guide
 
-## Borobudur Aggregated Heatmap Dashboard
+!!! warning "Archived — schema superseded"
+    The `location_logs` collection in section 5 was a testing plan. The real
+    collection the mobile app writes to is **`coordinate data`** (`_id`,
+    `_created_by`, `_updated_at`, `altitude_m`, `client_id`, `floor`, `latitude`,
+    `longitude` — no custom timestamp, no source column), and that is what the
+    backend repository targets. [HYPERBASE_SCHEMA.md](HYPERBASE_SCHEMA.md) is the
+    authoritative schema and query shape.
 
-> **⚠️ Schema superseded.** The `location_logs` collection design in this
-> document (§5 custom fields `id_data`, `timestamp`, `visitor_key`, `source`,
-> and every sample record/query built on them) was a testing plan. The real
-> collection written by the Borobudur mobile app is **`coordinate data`**
-> (`_id`, `_created_by`, `_updated_at`, `altitude_m`, `client_id`, `floor`,
-> `latitude`, `longitude` — no custom timestamp, no source column), and the
-> backend repository targets it. See **`HYPERBASE_SCHEMA.md`** for the
-> authoritative schema and query shape. Transport details here (auth,
-> pagination, ALLOW FILTERING, token rules) still apply.
+    The transport details here still apply: authentication (section 8),
+    pagination (section 10.2), ALLOW FILTERING (section 3.2), and token rules
+    (section 4).
 
 ## 1. Purpose
 

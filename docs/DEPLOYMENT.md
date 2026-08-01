@@ -221,13 +221,6 @@ Create `backend/.env` (gitignored — `chmod 600` it, since a shared machine has
 ```bash
 cd backend
 cat > .env <<EOF
-# backend/Dockerfile already sets NODE_ENV=production in the image, so the app
-# runs in production mode whether or not this file mentions it. Deleting the
-# line here does NOT turn it off — only setting it to another value would.
-#
-# While serving over plain HTTP, set COOKIE_SECURE=false (below). Browsers
-# discard Secure cookies on http://, which looks like a successful login
-# followed by "Authentication required" on every later request.
 PORT=3001
 
 # --- Hyperbase (location data) ---
@@ -239,9 +232,6 @@ HYPERBASE_TOKEN_ID=...
 HYPERBASE_TOKEN_SECRET=...
 
 # --- PostgreSQL (admin auth) ---
-# PGHOST/PGPORT are overridden to postgres:5432 by docker-compose.yml; these
-# values are what `npm run dev` uses locally against the published port, which
-# defaults to 5433 (see PG_PUBLISH_PORT in docker-compose.yml).
 PGHOST=127.0.0.1
 PGPORT=5433
 PGUSER=borobudur
@@ -249,18 +239,34 @@ PGPASSWORD=$(openssl rand -base64 24 | tr -d '/+=')
 PGDATABASE=borobudur_auth
 
 # --- Auth ---
-# Leave unset once HTTPS is in front (section 4.3) — the cookie should be Secure
-# there. Set to false only while testing over plain http://.
 COOKIE_SECURE=false
 JWT_SECRET=$(openssl rand -hex 32)
 COOKIE_SECRET=$(openssl rand -hex 32)
 ADMIN_REGISTRATION_SECRET=$(openssl rand -hex 16)
-
-# Cross-origin switches are deliberately absent — this deployment is
-# same-origin. See section 3.
 EOF
 chmod 600 .env
 ```
+
+Four things about that file are worth knowing:
+
+**`NODE_ENV` is not in it, and that is deliberate.** `backend/Dockerfile` already
+sets `NODE_ENV=production` in the image, so the app runs in production mode
+whether this file mentions it or not. Deleting a line here does not turn it off —
+only setting it to another value would.
+
+**`COOKIE_SECURE=false` is a temporary setting for plain HTTP.** Browsers discard
+`Secure` cookies on `http://`, which produces a misleading symptom: login appears
+to succeed, then every later request answers "Authentication required". Once
+HTTPS is in front (section 4.3), remove the line so the cookie goes back to
+`Secure`.
+
+**`PGHOST` and `PGPORT` here are the local-development values.**
+`docker-compose.yml` overrides them to `postgres:5432` for the container. These
+values are what `npm run dev` uses against the published port, which defaults to
+5433 (`PG_PUBLISH_PORT` in `docker-compose.yml`).
+
+**There are no cross-origin switches.** This deployment is same-origin — see
+section 3.
 
 `JWT_SECRET` falls back to `"dev-jwt-secret-change-me"` when unset. Anyone who has read this
 repository could then forge a valid admin session — generating it is not optional on a
@@ -451,12 +457,17 @@ that this is genuinely same-origin.
 
 ## 7. Troubleshooting
 
-**Login returns 500 `"Authentication service unavailable"`**
+Symptoms, in roughly the order you are likely to hit them. Each one is listed in
+the page contents on the right, so you can jump straight to yours.
+
+### Login returns 500 `"Authentication service unavailable"`
+
 PostgreSQL is not reachable. The message names auth, not the database. Check
 `docker compose ps` — the postgres service should be `running (healthy)` — then
 `docker compose logs postgres`.
 
-**Login succeeds, then everything says "Authentication required"**
+### Login succeeds, then everything says "Authentication required"
+
 The cookie was issued `Secure` but served over plain HTTP, so the browser discarded it without
 warning. Caused by `NODE_ENV=production` while the site is on `http://`. Confirm with:
 
@@ -477,58 +488,70 @@ Check what the container actually sees with `docker compose exec backend printen
 Note curl **ignores** `Secure` while browsers enforce it, so a curl end-to-end test passes while
 the browser fails. Reproduce cookie problems in a browser, not with curl.
 
-**Login returns 200 but every later request returns 401**
+### Login returns 200 but every later request returns 401
+
 The cookie was not stored. Almost always one of: `CROSS_SITE_COOKIE` not set (so `SameSite`
 is still `Strict`), the API served over HTTP instead of HTTPS (so `Secure` cookies are
 rejected), or a `VITE_API_BASE_URL` that does not match `CORS_ORIGINS`.
 
-**CORS error in the browser console**
+### CORS error in the browser console
+
 Something is not same-origin. Either the page was loaded directly from the backend port (3001)
 instead of the frontend port, or `VITE_API_BASE_URL` was baked in as an absolute URL. In this
 deployment no CORS should ever be involved.
 
-**Every API call goes to `localhost:3001` from the user's browser**
+### Every API call goes to `localhost:3001` from the user's browser
+
 `VITE_API_BASE_URL` was absent at build time, so `lib/api.ts` fell back to its localhost default
 and baked that in. Rebuild: `docker compose up -d --build frontend`, then confirm with the grep
 in section 5.2. Restarting the container cannot fix it — the value is inlined at build time.
 
-**Dashboard loads but every request 404s**
+### Dashboard loads but every request 404s
+
 `VITE_API_BASE_URL` was built as `/api`, producing `/api/api/...`. It must be empty (section 5.1).
 
-**Refreshing an in-app view returns 404**
+### Refreshing an in-app view returns 404
+
 nginx is not falling back to `index.html`. Check the `try_files` line in `frontend/nginx.conf`.
 
-**API calls return 502 after redeploying the backend**
+### API calls return 502 after redeploying the backend
+
 nginx is holding a stale container IP. The shipped config re-resolves through Docker's DNS every
 10s, so this should self-heal — if it persists, `docker compose restart frontend`.
 
-**New routes return 404 after a deploy**
+### New routes return 404 after a deploy
+
 The container is running an older image. `docker compose restart` reuses the existing image —
 rebuild instead: `docker compose up -d --build backend`. If a non-container process from an
 earlier setup still holds the port, note that Node appears as `node-22` in `pgrep`, so
 `pkill -f "dist/index.js"` does **not** match it; find the real PID with `ss -ltnp | grep :3001`.
 
-**Admin credentials are correct but rejected**
+### Admin credentials are correct but rejected
+
 No admin row exists yet. Register one via section 4.5.
 
-**Schema fails with `function gen_random_uuid() does not exist`**
+### Schema fails with `function gen_random_uuid() does not exist`
+
 The cluster is PostgreSQL 12 or older, where that function is not in core. This cannot happen
 with the compose setup (it pins `postgres:16-alpine`) — it means you are pointing at a host
 PostgreSQL instead. See Appendix A.
 
-**Backend logs `password authentication failed for user "borobudur"`**
+### Backend logs `password authentication failed for user "borobudur"`
+
 `PGPASSWORD` in `backend/.env` no longer matches what Postgres stored when the volume was
 initialised. Changing the file does not change the database. Rotate it with the `ALTER ROLE`
 command in section 4.1, or destroy the volume with `docker compose down -v` — which also
 deletes every admin account.
 
-**`docker compose up` fails with `port is already allocated` / `address already in use`**
+### `docker compose up` fails with `port is already allocated` / `address already in use`
+
 Another container or host service holds that port. A `0.0.0.0` binding elsewhere blocks a
 loopback binding here, so check with `sudo ss -ltnp | grep :<port>` rather than reading the
 port column of `docker ps`. Set `PG_PUBLISH_PORT` or `BACKEND_PUBLISH_PORT` to something free —
 neither affects how the backend reaches Postgres, which goes over the compose network.
 
-**Backend cannot reach the database at `127.0.0.1:5432`**
+### Backend cannot reach the database at `127.0.0.1:5432`
+
 `PGHOST` reached the container instead of the compose network. Inside a container `127.0.0.1`
 is that container. `docker-compose.yml` sets `PGHOST=postgres`; confirm with
 `docker compose exec backend printenv PGHOST`.

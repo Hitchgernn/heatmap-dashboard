@@ -1,7 +1,5 @@
 # Architecture
 
-# Borobudur Aggregated Heatmap Dashboard
-
 ## 1. Overview
 
 The system turns raw visitor GPS logs into a privacy-safe, aggregated heatmap.
@@ -23,7 +21,7 @@ Mobile App / Mock Generator
 
 ## 2. Components
 
-### 2.1 Frontend (built)
+### 2.1 Frontend
 
 React + Vite + TypeScript + Tailwind + Leaflet (`react-leaflet` + `leaflet.heat`),
 plus Recharts for the dashboard charts. Client-side only; no SSR. Supports
@@ -38,7 +36,7 @@ the in-map layer picker, not tied to the theme.
 Polls `GET /api/heatmap/aggregate` and `GET /api/dashboard/summary` every ~30s and
 updates the existing Leaflet heat layer in place (no map re-creation).
 
-### 2.2 Backend (this phase)
+### 2.2 Backend
 
 Express + TypeScript REST API. Layered:
 
@@ -51,7 +49,7 @@ config/        Bounds, grid size, env
 types/         Shared domain types
 ```
 
-### 2.3 Hotspot detection (built)
+### 2.3 Hotspot detection
 
 DBSCAN, scoped to hotspot detection only. It runs **live inside the backend**, in
 TypeScript — `services/dbscan.service.ts` implements the clustering and
@@ -101,7 +99,7 @@ Swapping drivers requires no service changes.
   has no field for it, so it cannot leak through the heatmap endpoint.
 - Output is aggregated grid cells, never individual points or routes.
 
-## 6. Deployment (built)
+## 6. Deployment
 
 Docker Compose on the campus server (`jarkom1`), three containers: `frontend`
 (nginx serving the static build and proxying `/api` to the backend), `backend`,

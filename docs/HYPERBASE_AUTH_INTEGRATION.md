@@ -1,14 +1,17 @@
 # Hyperbase Authentication Integration Guide
 
-> **⚠️ Superseded.** Admin auth no longer runs through Hyperbase. It was migrated
-> to a self-hosted **PostgreSQL** store: `admins` table, `bcryptjs` password
-> hashing, and our own `jsonwebtoken`-signed session JWTs (see
-> `backend/src/services/auth.service.ts`, `backend/src/db/`, and the
-> Authentication section of `CLAUDE.md`). Location logs still live in Hyperbase;
-> only auth moved. This document is retained as historical reference for the
-> original Hyperbase-proxy design.
+!!! warning "Archived"
+    Admin auth no longer runs through Hyperbase. It moved to a self-hosted
+    **PostgreSQL** store: an `admins` table, `bcryptjs` password hashing, and our
+    own `jsonwebtoken`-signed session JWTs. See
+    `backend/src/services/auth.service.ts`, `backend/src/db/`, and the
+    Authentication section of `CLAUDE.md` for what runs today.
 
-This document details the authentication flows within the Hyperbase ecosystem and how the Borobudur Heatmap Dashboard backend must integrate with it. It serves as a technical specification and implementation guide for Claude Code.
+    Location logs still live in Hyperbase — only auth moved. This page is kept as
+    a record of the original Hyperbase-proxy design.
+
+This document describes the authentication flows inside the Hyperbase ecosystem
+and how the dashboard backend was meant to integrate with them.
 
 ---
 

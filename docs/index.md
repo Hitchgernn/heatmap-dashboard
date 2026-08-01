@@ -1,81 +1,74 @@
 # Borobudur Aggregated Heatmap Dashboard
 
-Dashboard web yang memvisualisasikan kepadatan pengunjung Candi Borobudur.
+A web dashboard that shows how visitors are spread across Borobudur temple.
 
-Titik GPS mentah dari aplikasi mobile tersimpan di Hyperbase (ScyllaDB BaaS).
-Backend membacanya, membersihkannya, menyaring titik di luar kawasan candi,
-mengagregasinya ke dalam grid tetap, lalu menyajikannya sebagai GeoJSON.
-Frontend melakukan *polling* atas GeoJSON tersebut dan menggambarnya sebagai
-heatmap Leaflet.
+A mobile app records visitor GPS points into Hyperbase, a Backend-as-a-Service
+built on ScyllaDB. The backend reads those points, throws out the invalid ones
+and anything outside the temple grounds, counts what is left into a fixed grid,
+and serves the grid as GeoJSON. The frontend polls that GeoJSON and draws it as
+a Leaflet heatmap.
 
-Yang keluar dari backend hanyalah sel grid berisi cacah titik — **tidak pernah**
-titik per pengunjung, dan tidak pernah `visitor_id`. Privasi terjaga oleh bentuk
-tipenya, bukan oleh kebijakan.
+Only grid cells leave the backend — never an individual visitor's points, and
+never a `visitor_id`. The response types have no field for it, so privacy holds
+by construction rather than by policy.
+
+Live on the campus server. Status: built and running.
 
 ---
 
-## Mulai dari mana
+## Start here
 
 <div class="grid cards" markdown>
 
-- :material-file-document-outline: **[Blueprint Proyek](BLUEPRINT.md)**
+- :material-file-document-outline: **[Project Blueprint](BLUEPRINT.md)**
 
-    Naskah utuh: latar belakang, tujuan, ruang lingkup, rancangan,
-    implementasi, pengujian, dan status. **Mulai di sini.**
+    The full account — background, goals, scope, design, implementation,
+    testing, and status. **Read this first.**
 
-- :material-api: **[Kontrak API](API.md)**
+- :material-api: **[API Reference](API.md)**
 
-    Dokumen yang mengikat untuk seluruh endpoint — parameter, bentuk respons,
-    kode galat.
+    The binding contract for every endpoint: parameters, response shapes,
+    error codes.
 
-- :material-sitemap-outline: **[Arsitektur](ARCHITECTURE.md)**
+- :material-sitemap-outline: **[Architecture](ARCHITECTURE.md)**
 
-    Lapisan backend, pola *repository*, dan alur data — ringkas.
+    Backend layers, the repository pattern, and the data flow — in two pages.
 
 - :material-server-network: **[Deployment](DEPLOYMENT.md)**
 
-    Topologi Docker Compose, templat lingkungan, dan langkah verifikasi.
+    Docker Compose topology, environment template, and verification steps.
 
 </div>
 
 ---
 
-## Tumpukan teknologi
+## How the data moves
 
-| Lapisan | Teknologi |
-|---|---|
-| Frontend | React 18, Vite 6, TypeScript, Tailwind CSS v4, Leaflet + `leaflet.heat`, Recharts |
-| Backend | Node.js, Express 4, TypeScript, Swagger (OpenAPI 3.0.3) |
-| Data lokasi | Hyperbase — BaaS di atas ScyllaDB |
-| Autentikasi | PostgreSQL, bcrypt, JWT dalam cookie `httpOnly` |
-| Machine Learning | DBSCAN — berjalan langsung di backend (TypeScript); eksplorasi parameter dengan Python + scikit-learn |
-| Deployment | Docker Compose, nginx, Cloudflare Tunnel |
+```mermaid
+flowchart LR
+    A[Mobile app] --> B[(Hyperbase)]
+    B --> C[Backend]
+    C -->|clean, filter,<br/>aggregate| D[GeoJSON]
+    D --> E[Leaflet heatmap]
+```
 
 ---
 
-## Peta dokumen
+## Tech stack
 
-**Spesifikasi**
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, Vite 6, TypeScript, Tailwind CSS v4, Leaflet + `leaflet.heat`, Recharts |
+| Backend | Node.js, Express 4, TypeScript, Swagger (OpenAPI 3.0.3) |
+| Location data | Hyperbase — a BaaS on top of ScyllaDB |
+| Authentication | PostgreSQL, bcrypt, JWT in an `httpOnly` cookie |
+| Machine learning | DBSCAN, running in the backend in TypeScript |
+| Deployment | Docker Compose, nginx, Cloudflare Tunnel |
 
-- [PRD.md](PRD.md) — dokumen kebutuhan produk
-- [ARCHITECTURE.md](ARCHITECTURE.md) — ringkasan arsitektur
-- [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) — rencana pengerjaan bertahap
+No map token is needed. Tiles are standard OpenStreetMap, with Esri World
+Imagery satellite as an opt-in layer.
 
-**Referensi teknis**
-
-- [API.md](API.md) — kontrak endpoint (mengikat)
-- [DATA_FLOWS.md](DATA_FLOWS.md) — diagram sekuens generator tiruan dan autentikasi
-- [HYPERBASE_SCHEMA.md](HYPERBASE_SCHEMA.md) — model data Hyperbase (mengikat)
-- [HYPERBASE_INTEGRATION.md](HYPERBASE_INTEGRATION.md) — rincian integrasi
-- [HYPERBASE_AUTH_INTEGRATION.md](HYPERBASE_AUTH_INTEGRATION.md) — arsip, sudah digantikan
-
-**Operasional**
-
-- [DEPLOYMENT.md](DEPLOYMENT.md) — topologi dan prosedur
-- [FURTHER_DEVELOPMENT.md](FURTHER_DEVELOPMENT.md) — pekerjaan lanjutan
-
-!!! note "Bahasa"
-    Blueprint dan halaman beranda ini ditulis dalam bahasa Indonesia. Dokumen
-    teknis rujukan ditulis dalam bahasa Inggris, dan istilah teknis, nama kode,
-    serta nama endpoint sengaja tidak diterjemahkan agar cocok persis dengan
-    yang ada di dalam kode.
+!!! note "About the Archive section"
+    Pages under **Archive** in the sidebar are superseded or finished work,
+    kept for history. Each one opens with a banner saying what replaced it.
+    Nothing there describes the system as it runs today.

@@ -1,10 +1,16 @@
 # Implementation Plan — 4 workstreams
 
-> **Status: all four shipped.** WS1 Swagger `e9de215` · WS2 Timelapse animation
-> `9965f76` · WS3 Mock→Hyperbase collection `450f6c8` · WS4 Auth→PostgreSQL
-> `f921229`. All build-verified; WS4 also tested end-to-end against a live
-> Postgres. Pending your infra to run: bring up Postgres + `npm run db:init` +
-> re-register admin (WS4); provision + set `HYPERBASE_MOCK_COLLECTION_ID` (WS3).
+!!! warning "Archived"
+    All four workstreams shipped: WS1 Swagger `e9de215`, WS2 Timelapse animation
+    `9965f76`, WS3 Mock→Hyperbase collection `450f6c8`, WS4 Auth→PostgreSQL
+    `f921229`. Kept as a record of how the work was planned — it is not a to-do
+    list any more. For what the system does today, read
+    [BLUEPRINT.md](BLUEPRINT.md); for what is next, read
+    [FURTHER_DEVELOPMENT.md](FURTHER_DEVELOPMENT.md).
+
+    Two setup steps still depend on your infrastructure: bring up Postgres, run
+    `npm run db:init`, and re-register the admin (WS4); provision a collection and
+    set `HYPERBASE_MOCK_COLLECTION_ID` (WS3).
 
 ## Context
 

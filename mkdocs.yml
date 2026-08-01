@@ -1,7 +1,7 @@
 site_name: Borobudur Heatmap Dashboard
 site_description: >-
-  Dokumentasi dan blueprint proyek dashboard heatmap kepadatan pengunjung
-  Candi Borobudur.
+  Documentation and project blueprint for the Borobudur visitor-density
+  heatmap dashboard.
 site_url: https://hitchgernn.github.io/heatmap-dashboard/
 repo_url: https://github.com/Hitchgernn/heatmap-dashboard
 repo_name: Hitchgernn/heatmap-dashboard
@@ -16,7 +16,7 @@ exclude_docs: |
 
 theme:
   name: material
-  language: id
+  language: en
   icon:
     repo: fontawesome/brands/github
   features:
@@ -37,14 +37,14 @@ theme:
       accent: amber
       toggle:
         icon: material/weather-night
-        name: Mode gelap
+        name: Dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: deep orange
       accent: amber
       toggle:
         icon: material/weather-sunny
-        name: Mode terang
+        name: Light mode
 
 markdown_extensions:
   - abbr
@@ -71,28 +71,27 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 
 plugins:
-  # lunr has no Indonesian stemmer, so 'id' is not a supported search language —
-  # passing it only produces a fallback notice. English tokenisation handles the
-  # Latin-script Indonesian text acceptably.
   - search:
       lang: en
 
+# Live docs come first. Everything under "Archive" is superseded or finished
+# work, kept for history — each of those pages opens with a banner saying so.
 nav:
-  - Beranda: index.md
-  - Blueprint Proyek: BLUEPRINT.md
-  - Spesifikasi:
-      - Product Requirements: PRD.md
+  - Home: index.md
+  - Project Blueprint: BLUEPRINT.md
+  - Technical Reference:
       - Architecture: ARCHITECTURE.md
-      - Implementation Plan: IMPLEMENTATION_PLAN.md
-  - Referensi Teknis:
-      - API Contract: API.md
+      - API Reference: API.md
       - Data Flows: DATA_FLOWS.md
       - Hyperbase Schema: HYPERBASE_SCHEMA.md
-      - Hyperbase Integration: HYPERBASE_INTEGRATION.md
-      - Hyperbase Auth (arsip): HYPERBASE_AUTH_INTEGRATION.md
-  - Operasional:
+  - Operations:
       - Deployment: DEPLOYMENT.md
-      - Pengembangan Lanjutan: FURTHER_DEVELOPMENT.md
+      - Further Development: FURTHER_DEVELOPMENT.md
+  - Archive:
+      - Original PRD: PRD.md
+      - Implementation Plan: IMPLEMENTATION_PLAN.md
+      - Hyperbase Integration: HYPERBASE_INTEGRATION.md
+      - Hyperbase Auth: HYPERBASE_AUTH_INTEGRATION.md
 
 extra:
   social:
