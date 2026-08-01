@@ -37,6 +37,9 @@ export const env = {
     tokenSecret: process.env.HYPERBASE_TOKEN_SECRET || "",
     pageSize: num(process.env.HYPERBASE_PAGE_SIZE, 500),
     timeoutMs: num(process.env.HYPERBASE_TIMEOUT_MS, 5000),
+    // Opt-in server-side SQL GROUP BY for the heatmap; requires the instance to
+    // expose /records/query. Off by default → pagination path.
+    sqlAggregation: process.env.HYPERBASE_SQL_AGGREGATION === "true",
   },
 
   /**

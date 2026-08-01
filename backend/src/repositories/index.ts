@@ -13,6 +13,7 @@
 
 import { env } from "../config/env";
 import type { LocationLog, LocationQuery } from "../types/location";
+import type { GridCount } from "../services/aggregation.service";
 import type { LocationRepository } from "./location.repository";
 import { MemoryLocationRepository } from "./memory-location.repository";
 import { HyperbaseLocationRepository } from "./hyperbase-location.repository";
@@ -33,6 +34,11 @@ class RoutingLocationRepository implements LocationRepository {
 
   getLocations(params: LocationQuery): Promise<LocationLog[]> {
     return (params.source === "mock" ? this.mock : this.real).getLocations(params);
+  }
+
+  getAggregatedCells(params: LocationQuery): Promise<GridCount[] | null> {
+    const target = params.source === "mock" ? this.mock : this.real;
+    return target.getAggregatedCells?.(params) ?? Promise.resolve(null);
   }
 
   insertLocation(): Promise<void> {
