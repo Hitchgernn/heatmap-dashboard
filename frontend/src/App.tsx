@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import TopHeader from "./components/TopHeader";
 import type { DataSource } from "./components/TopHeader";
@@ -21,6 +21,12 @@ import type { ClusterPoint, Hotspot } from "./types/hotspot";
 import type { Page } from "./types/nav";
 
 const POLL_INTERVAL_MS = 30_000;
+
+// A single failed poll is usually an upstream blip that the next one clears, and
+// the map keeps showing the previous data either way — so hold the red banner
+// until two in a row fail. With nothing on screen yet there is nothing to hold
+// back, so the first failure still speaks up.
+const ERROR_AFTER_FAILURES = 2;
 
 // Page titles are proper section names — intentionally untranslated (see i18n.ts).
 const PAGE_TITLE: Record<Page, string> = {
@@ -101,6 +107,12 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [hotspots, setHotspots] = useState<Hotspot[]>([]);
   const [clusterPoints, setClusterPoints] = useState<ClusterPoint[]>([]);
 
+  // Consecutive failed polls, and whether a poll has ever succeeded for the
+  // current window/source. Refs, not state: the poll closure reads them and they
+  // must never retrigger it.
+  const failuresRef = useRef(0);
+  const hasDataRef = useRef(false);
+
   const [firstLoad, setFirstLoad] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [hotspotsLoading, setHotspotsLoading] = useState(true);
@@ -134,10 +146,15 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
         if (cancelled) return;
         setHeatmap(hm);
         setSummary(sm);
+        failuresRef.current = 0;
+        hasDataRef.current = true;
         setError(null);
       } catch (err) {
         if (cancelled || controller.signal.aborted) return;
-        setError(err instanceof Error ? err.message : "Failed to load data");
+        failuresRef.current += 1;
+        if (!hasDataRef.current || failuresRef.current >= ERROR_AFTER_FAILURES) {
+          setError(err instanceof Error ? err.message : "Failed to load data");
+        }
       } finally {
         if (!cancelled) {
           setFirstLoad(false);
@@ -146,6 +163,9 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       }
     }
 
+    // A new window/source is a fresh screen: no data yet, no failures behind us.
+    failuresRef.current = 0;
+    hasDataRef.current = false;
     setFirstLoad(true);
     load();
     const id = setInterval(load, POLL_INTERVAL_MS);
