@@ -2,13 +2,17 @@ import { useEffect, useMemo, useState } from "react";
 import type { Hotspot } from "../types/hotspot";
 import { hotspotTier, maxPoints, TIER_META } from "../lib/hotspots";
 import { useLanguage } from "../context/language";
+import { isWall } from "../lib/display";
 
 /**
  * Rows shown per page. The table renders exactly this many row slots at all
  * times (short pages are padded with blank rows) so the panel height is static
  * and the dashboard layout never reflows as you page through.
+ *
+ * A wall display shows more at once: nobody is standing there to press Next, so
+ * pagination that a desk operator drives becomes dead weight on the wall.
  */
-const PAGE_SIZE = 4;
+const PAGE_SIZE = isWall() ? 8 : 4;
 
 interface HotspotTableProps {
   hotspots: Hotspot[];
@@ -52,9 +56,9 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
   const filler = Math.max(0, PAGE_SIZE - pageRows.length);
 
   return (
-    <section className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <section aria-labelledby="hotspot-table-title" className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-100 px-5 py-3.5 dark:border-gray-800">
-        <h2 className="font-display text-lg text-gray-900 dark:text-white">{t("table.title")}</h2>
+        <h2 id="hotspot-table-title" className="font-display text-lg text-gray-900 wall:text-2xl dark:text-white">{t("table.title")}</h2>
         <div className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-gray-50 p-0.5 dark:border-gray-700 dark:bg-gray-800">
           {(["all", "high"] as Filter[]).map((f) => (
             <button
@@ -66,7 +70,7 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
               }}
               aria-pressed={filter === f}
               className={
-                "rounded-md px-3 py-1 text-xs font-medium transition-colors " +
+                "tap rounded-md px-3 py-1 text-xs font-medium transition-colors wall:px-4 wall:py-2 wall:text-sm " +
                 (filter === f
                   ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
                   : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white")
@@ -79,9 +83,9 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
       </header>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
+        <table className="w-full text-left text-sm wall:text-lg">
           <thead>
-            <tr className="border-b border-gray-100 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:border-gray-800 dark:text-gray-500">
+            <tr className="border-b border-gray-100 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-500 wall:text-sm dark:border-gray-800 dark:text-gray-400">
               <th className="px-5 py-2.5">{t("table.colArea")}</th>
               <th className="px-5 py-2.5">{t("table.colDensity")}</th>
               <th className="px-5 py-2.5 text-right">{t("table.colPoints")}</th>
@@ -111,8 +115,8 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
                     }
                   >
                     <td className="px-5 py-3">
-                      <p className="font-medium text-gray-900 dark:text-white">{h.label}</p>
-                      <p className="font-mono text-xs text-gray-400 dark:text-gray-500">ID: #{h.cluster_id}</p>
+                      <p className="break-words font-medium text-gray-900 dark:text-white">{h.label}</p>
+                      <p className="font-mono text-xs text-gray-500 dark:text-gray-400">ID: #{h.cluster_id}</p>
                     </td>
                     <td className="px-5 py-3">
                       <span className="inline-flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
@@ -124,7 +128,7 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
                       {h.total_points.toLocaleString()}
                     </td>
                     <td className="px-5 py-3">
-                      <span className={"inline-flex rounded-full px-2.5 py-0.5 font-mono text-xs font-medium " + meta.badgeClass}>
+                      <span className={"inline-flex rounded-full px-2.5 py-0.5 font-mono text-xs font-medium wall:px-3 wall:py-1 wall:text-base " + meta.badgeClass}>
                         {t(meta.statusKey)}
                       </span>
                     </td>
@@ -139,7 +143,7 @@ export default function HotspotTable({ hotspots, loading, selectedId, onSelect }
       </div>
 
       <footer className="flex items-center justify-between gap-3 border-t border-gray-100 px-5 py-3 dark:border-gray-800">
-        <p className="font-mono text-xs text-gray-400 dark:text-gray-500">
+        <p className="font-mono text-xs text-gray-500 dark:text-gray-400">
           {rows.length === 0
             ? t("table.pageStatus", { from: 0, to: 0, total: 0 })
             : t("table.pageStatus", {
@@ -191,7 +195,7 @@ function MessageRows({ text }: { text: string }) {
   return (
     <>
       <tr className="border-b border-gray-50 dark:border-gray-800/60">
-        <td colSpan={4} className="px-5 py-3 text-center text-gray-400 dark:text-gray-500">
+        <td colSpan={4} className="px-5 py-3 text-center text-gray-500 dark:text-gray-400">
           <p className="font-medium">{text}</p>
           <p className="font-mono text-xs">&nbsp;</p>
         </td>
@@ -218,7 +222,7 @@ function PageButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 transition-colors hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-700 dark:text-gray-300 dark:hover:text-white"
+      className="tap rounded-md border border-gray-200 px-2.5 py-1 text-xs font-medium text-gray-600 transition-colors hover:text-gray-900 disabled:cursor-not-allowed disabled:opacity-40 wall:px-4 wall:py-2 wall:text-sm dark:border-gray-700 dark:text-gray-300 dark:hover:text-white"
     >
       {label}
     </button>

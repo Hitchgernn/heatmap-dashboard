@@ -21,15 +21,15 @@ interface CardProps {
 
 function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
   return (
-    <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-white px-5 py-4 shadow-sm wall:px-7 wall:py-6 dark:border-gray-800 dark:bg-gray-900">
       <span className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: accent }} aria-hidden="true" />
-      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">{label}</p>
+      <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-500 wall:text-sm dark:text-gray-400">{label}</p>
       {skeleton ? (
-        <div className="mt-2 h-8 w-24 animate-pulse rounded bg-gray-100 dark:bg-gray-800" />
+        <div className="mt-2 h-8 w-24 animate-pulse rounded bg-gray-100 wall:h-14 wall:w-40 dark:bg-gray-800" />
       ) : (
         <p
           className={
-            "mt-1 truncate text-3xl text-gray-900 dark:text-white " +
+            "mt-1 truncate text-3xl text-gray-900 wall:text-6xl dark:text-white " +
             (tabular ? "font-mono font-semibold tabular-nums" : "font-display")
           }
           title={value}
@@ -37,7 +37,7 @@ function Card({ label, value, accent, hint, skeleton, tabular }: CardProps) {
           {value}
         </p>
       )}
-      {hint && !skeleton && <p className="mt-1.5 text-xs text-gray-500 dark:text-gray-400">{hint}</p>}
+      {hint && !skeleton && <p className="mt-1.5 text-xs text-gray-500 wall:text-base dark:text-gray-400">{hint}</p>}
     </div>
   );
 }

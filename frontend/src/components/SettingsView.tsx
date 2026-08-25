@@ -20,7 +20,7 @@ function OptionCard({ title, selected, onSelect, icon }: OptionCardProps) {
       aria-checked={selected}
       onClick={onSelect}
       className={
-        "flex w-full items-center gap-3 rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
+        "tap flex w-full items-center gap-3 rounded-xl border p-4 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
         (selected
           ? "border-gray-900 bg-gray-50 dark:border-white dark:bg-gray-800"
           : "border-gray-200 bg-white hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:bg-gray-800")
@@ -131,7 +131,7 @@ export default function SettingsView({
             type="button"
             onClick={onClose}
             aria-label="Close settings"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-white"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M18 6 6 18M6 6l12 12" />

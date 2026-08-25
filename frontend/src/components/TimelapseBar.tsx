@@ -38,7 +38,7 @@ export default function TimelapseBar({
           type="button"
           onClick={onTogglePlay}
           aria-label={playing ? t("tl.pause") : t("tl.play")}
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition-colors hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+          className="tap flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition-colors hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
           {playing ? (
             <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 fill-current" aria-hidden="true">
@@ -65,7 +65,7 @@ export default function TimelapseBar({
 
         <div className="flex shrink-0 flex-col items-end font-mono text-xs tabular-nums text-gray-700 dark:text-gray-200">
           <span>{timeLabel}</span>
-          <span className="text-gray-400 dark:text-gray-500">
+          <span className="text-gray-500 dark:text-gray-400">
             {dateLabel ? `${dateLabel} · ` : ""}
             {frameIndex + 1}/{totalFrames}
           </span>
@@ -78,10 +78,10 @@ export default function TimelapseBar({
         {error ? (
           <span className="text-red-600 dark:text-red-400">{t("tl.frameError")}</span>
         ) : loading ? (
-          <span className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+          <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
             <svg
               viewBox="0 0 16 16"
-              className="h-3 w-3 animate-spin text-gray-400 dark:text-gray-500"
+              className="h-3 w-3 animate-spin text-gray-500 dark:text-gray-400"
               aria-hidden="true"
             >
               <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />

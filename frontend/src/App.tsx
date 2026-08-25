@@ -1,12 +1,20 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import TopHeader from "./components/TopHeader";
 import type { DataSource } from "./components/TopHeader";
-import DashboardView from "./components/DashboardView";
-import HeatmapView from "./components/HeatmapView";
-import HotspotsView from "./components/HotspotsView";
-import MockGeneratorView from "./components/MockGeneratorView";
+import LoadingState from "./components/LoadingState";
 import SettingsView from "./components/SettingsView";
+
+/**
+ * The four page views are code-split. Leaflet, leaflet.heat, react-leaflet and
+ * Recharts are reachable only through them, so an admin sitting on the login
+ * screen no longer downloads a map engine and a charting library to type a
+ * password. The boot splash and the shell chrome cover the fetch.
+ */
+const DashboardView = lazy(() => import("./components/DashboardView"));
+const HeatmapView = lazy(() => import("./components/HeatmapView"));
+const HotspotsView = lazy(() => import("./components/HotspotsView"));
+const MockGeneratorView = lazy(() => import("./components/MockGeneratorView"));
 import Modal from "./components/Modal";
 import ShowSidebarButton from "./components/ShowSidebarButton";
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -16,6 +24,9 @@ import { useAuth } from "./context/auth";
 import { getAggregatedHeatmap, getDashboardSummary, getHotspots } from "./lib/api";
 import { toHeatPoints } from "./lib/map";
 import { dismissBootSplash } from "./lib/splash";
+import { applyDisplayMode, pinnedPage } from "./lib/display";
+import { BELOW_LG, useMediaQuery } from "./hooks/useMediaQuery";
+import { isSessionError } from "./lib/errors";
 import type { DashboardSummary, HeatmapFeatureCollection, TimeWindow } from "./types/heatmap";
 import type { ClusterPoint, Hotspot } from "./types/hotspot";
 import type { Page } from "./types/nav";
@@ -44,6 +55,10 @@ const PAGE_STORAGE_KEY = "borobudur.page";
 const PERSISTED_PAGES: Page[] = ["dashboard", "heatmap", "hotspots", "mock"];
 
 function readStoredPage(): Page {
+  // A `?page=` pin (used by wall-display bookmarks) beats whatever page the
+  // last operator left behind in this browser.
+  const pinned = pinnedPage();
+  if (pinned) return pinned;
   if (typeof localStorage === "undefined") return "dashboard";
   const stored = localStorage.getItem(PAGE_STORAGE_KEY) as Page | null;
   return stored && PERSISTED_PAGES.includes(stored) ? stored : "dashboard";
@@ -64,8 +79,14 @@ function readStoredSource(): DataSource {
  * renders the Dashboard shell; otherwise shows the login page.
  */
 export default function App() {
-  const { status: authStatus, signout } = useAuth();
+  const { status: authStatus, signout, expireSession } = useAuth();
   const resolved = authStatus !== "loading";
+
+  // Puts the `wall` class on <html> so the `wall:` variant applies. The mode is
+  // fixed for the life of the tab, so this runs once.
+  useEffect(() => {
+    applyDisplayMode();
+  }, []);
 
   // The boot splash from index.html is still covering the viewport until this
   // fires — it spans both the bundle-parse gap and the session check.
@@ -79,7 +100,11 @@ export default function App() {
   return (
     // Fades up as the splash fades out, so the handoff isn't a hard cut.
     <div className="page-enter h-full">
-      {authStatus === "unauthenticated" ? <LoginPage /> : <DashboardShell onLogout={signout} />}
+      {authStatus === "unauthenticated" ? (
+        <LoginPage />
+      ) : (
+        <DashboardShell onLogout={signout} onSessionExpired={expireSession} />
+      )}
     </div>
   );
 }
@@ -88,7 +113,13 @@ export default function App() {
  * The authenticated dashboard shell — all hooks live here so they're never
  * called conditionally (React rules-of-hooks).
  */
-function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
+function DashboardShell({
+  onLogout,
+  onSessionExpired,
+}: {
+  onLogout: () => Promise<void>;
+  onSessionExpired: () => void;
+}) {
   const { t } = useLanguage();
   const [page, setPage] = useState<Page>(readStoredPage);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -96,7 +127,28 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [source, setSource] = useState<DataSource>(readStoredSource);
   // DBSCAN tuning (Hotspots page sliders). Defaults mirror the backend.
   const [dbscanParams, setDbscanParams] = useState({ eps: 8, minSamples: 5 });
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+
+  // Below `lg` the rail can't push content aside without starving the map, so
+  // it becomes an overlay drawer that starts closed. Above `lg` it is the
+  // familiar pushing rail, open by default.
+  const drawerNav = useMediaQuery(BELOW_LG);
+  const [sidebarVisible, setSidebarVisible] = useState(() => !drawerNav);
+
+  // Crossing the breakpoint re-establishes that default in the new mode —
+  // otherwise rotating a tablet to portrait leaves a rail covering the map.
+  useEffect(() => {
+    setSidebarVisible(!drawerNav);
+  }, [drawerNav]);
+
+  // Escape closes the drawer, matching the Settings modal.
+  useEffect(() => {
+    if (!drawerNav || !sidebarVisible) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSidebarVisible(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [drawerNav, sidebarVisible]);
 
   // Dashboard layer toggles (full-map pages force their own layer state).
   const [showHeatmap, setShowHeatmap] = useState(true);
@@ -106,6 +158,22 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [hotspots, setHotspots] = useState<Hotspot[]>([]);
   const [clusterPoints, setClusterPoints] = useState<ClusterPoint[]>([]);
+
+  // The browser knows it is offline before any fetch times out; saying so beats
+  // "Failed to fetch" and stops the operator hunting a backend fault.
+  const [online, setOnline] = useState(() =>
+    typeof navigator === "undefined" ? true : navigator.onLine
+  );
+  useEffect(() => {
+    const up = () => setOnline(true);
+    const down = () => setOnline(false);
+    window.addEventListener("online", up);
+    window.addEventListener("offline", down);
+    return () => {
+      window.removeEventListener("online", up);
+      window.removeEventListener("offline", down);
+    };
+  }, []);
 
   // Consecutive failed polls, and whether a poll has ever succeeded for the
   // current window/source. Refs, not state: the poll closure reads them and they
@@ -151,6 +219,11 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
         setError(null);
       } catch (err) {
         if (cancelled || controller.signal.aborted) return;
+        // An expired cookie can never recover by retrying — hand back to login.
+        if (isSessionError(err)) {
+          onSessionExpired();
+          return;
+        }
         failuresRef.current += 1;
         if (!hasDataRef.current || failuresRef.current >= ERROR_AFTER_FAILURES) {
           setError(err instanceof Error ? err.message : "Failed to load data");
@@ -175,7 +248,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       controller.abort();
       clearInterval(id);
     };
-  }, [timeWindow, source]);
+  }, [timeWindow, source, onSessionExpired]);
 
   // Hotspots are used by every page (markers + dashboard table), so fetch them
   // on mount and refresh on the same poll cadence.
@@ -198,8 +271,13 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
           setHotspots(result.hotspots);
           setClusterPoints(result.points);
         }
-      } catch {
-        /* hotspots are optional — ignore errors silently */
+      } catch (err) {
+        // Hotspots are optional, so ordinary failures stay silent — but an
+        // expired session is not an optional failure.
+        if (!cancelled && isSessionError(err)) {
+          onSessionExpired();
+          return;
+        }
       } finally {
         if (!cancelled) setHotspotsLoading(false);
       }
@@ -214,9 +292,9 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
       controller.abort();
       clearInterval(id);
     };
-  }, [source, timeWindow, dbscanParams]);
+  }, [source, timeWindow, dbscanParams, onSessionExpired]);
 
-  const status: "live" | "refreshing" | "error" = error
+  const status: "live" | "refreshing" | "error" = !online || error
     ? "error"
     : refreshing && !firstLoad
       ? "refreshing"
@@ -226,18 +304,52 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
   const collapsible = page === "dashboard" || page === "heatmap" || page === "hotspots" || page === "mock";
   const showSidebar = sidebarVisible;
 
+  // Map overlays step right only to clear the floating show-sidebar button,
+  // which exists on desk layouts alone.
+  const mapControlsShifted = !showSidebar && !drawerNav;
+
   // Search shows on the Dashboard and both map pages.
   const showSearch = page === "dashboard" || page === "heatmap" || page === "hotspots";
 
   return (
-    <div className="flex h-full bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
+    <div
+      className="relative flex h-full bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200"
+      style={{
+        paddingTop: "env(safe-area-inset-top)",
+        paddingLeft: "env(safe-area-inset-left)",
+        paddingRight: "env(safe-area-inset-right)",
+        paddingBottom: "env(safe-area-inset-bottom)",
+      }}
+    >
+      {/* First tab stop: jumps the five nav items. Visible only on focus. */}
+      <a
+        href="#main-content"
+        className="sr-only left-3 top-3 z-[1000] rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white focus:not-sr-only focus:absolute dark:bg-white dark:text-gray-900"
+      >
+        {t("a11y.skipToContent")}
+      </a>
+
       <Sidebar
         active={page}
-        onNavigate={(p) => setPage(p)}
+        onNavigate={(p) => {
+          setPage(p);
+          // A drawer covers what you just navigated to — close it behind you.
+          if (drawerNav) setSidebarVisible(false);
+        }}
         visible={showSidebar}
+        overlay={drawerNav}
         onCollapse={collapsible ? () => setSidebarVisible(false) : undefined}
         onOpenSettings={() => setSettingsOpen(true)}
       />
+
+      {/* Drawer scrim — only in overlay mode, so the pushing rail is unaffected. */}
+      {drawerNav && showSidebar && (
+        <div
+          className="modal-backdrop fixed inset-0 z-[850] bg-gray-900/40 dark:bg-black/60"
+          onClick={() => setSidebarVisible(false)}
+          aria-hidden="true"
+        />
+      )}
 
       <div className="relative flex min-w-0 flex-1 flex-col">
         <TopHeader
@@ -247,20 +359,35 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
           showSource={showSearch}
           source={source}
           onSourceChange={setSource}
+          // Stays mounted while the drawer is open — it is the element focus
+          // returns to on close, and a detached node cannot receive focus.
+          onOpenNav={drawerNav ? () => setSidebarVisible(true) : undefined}
         />
 
-        {error && (
+        {!online ? (
           <div
-            role="alert"
-            className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-6 py-2 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300"
+            role="status"
+            className="flex items-center gap-2 border-b border-amber-100 bg-amber-50 px-4 py-2 text-sm text-amber-800 sm:px-6 wall:text-base dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-300"
           >
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
-            <span>{t("error.retrying", { error, seconds: POLL_INTERVAL_MS / 1000 })}</span>
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-600" />
+            <span>{t("error.offline")}</span>
           </div>
+        ) : (
+          error && (
+            <div
+              role="alert"
+              className="flex items-center gap-2 border-b border-red-100 bg-red-50 px-4 py-2 text-sm text-red-700 sm:px-6 wall:text-base dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300"
+            >
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-600" />
+              <span>{t("error.retrying", { error, seconds: POLL_INTERVAL_MS / 1000 })}</span>
+            </div>
+          )
         )}
 
-        <main className="relative flex min-h-0 flex-1 flex-col overflow-auto">
-          {collapsible && !showSidebar && (
+        <main id="main-content" tabIndex={-1} className="relative flex min-h-0 flex-1 flex-col overflow-auto outline-none">
+          {/* Desk only — in drawer mode the opener lives in the header instead,
+              where it can't overlap the content it reveals. */}
+          {collapsible && !showSidebar && !drawerNav && (
             <ShowSidebarButton onClick={() => setSidebarVisible(true)} />
           )}
 
@@ -268,6 +395,13 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
               page-enter animation for a smooth transition between views. */}
           <div key={page} className="page-enter flex min-h-0 flex-1 flex-col">
            <ErrorBoundary>
+            <Suspense
+              fallback={
+                <div className="flex flex-1 items-center justify-center p-6">
+                  <LoadingState mode="loading" />
+                </div>
+              }
+            >
             {page === "dashboard" && (
               <DashboardView
                 timeWindow={timeWindow}
@@ -282,7 +416,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 loading={refreshing}
                 hotspotsLoading={hotspotsLoading}
                 aggregatingLabel={firstLoad ? t("tl.processing") : null}
-                sidebarCollapsed={!showSidebar}
+                sidebarCollapsed={mapControlsShifted}
               />
             )}
 
@@ -292,7 +426,7 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 onTimeChange={setTimeWindow}
                 heatPoints={heatPoints}
                 source={source}
-                sidebarCollapsed={!showSidebar}
+                sidebarCollapsed={mapControlsShifted}
               />
             )}
 
@@ -305,11 +439,12 @@ function DashboardShell({ onLogout }: { onLogout: () => Promise<void> }) {
                 dbscanParams={dbscanParams}
                 onDbscanChange={setDbscanParams}
                 aggregatingLabel={hotspotsLoading ? t("tl.processing") : null}
-                sidebarCollapsed={!showSidebar}
+                sidebarCollapsed={mapControlsShifted}
               />
             )}
 
             {page === "mock" && <MockGeneratorView />}
+            </Suspense>
            </ErrorBoundary>
           </div>
         </main>

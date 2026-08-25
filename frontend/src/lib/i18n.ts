@@ -109,6 +109,8 @@ const en = {
 
   // Error banner
   "error.retrying": "{error}. Retrying every {seconds}s.",
+  "error.offline": "No network connection. The dashboard will catch up once it returns.",
+  "a11y.skipToContent": "Skip to content",
 
   // Settings — Appearance
   "settings.appearanceTitle": "Appearance",
@@ -223,6 +225,8 @@ const id: Record<TranslationKey, string> = {
 
   // Error banner
   "error.retrying": "{error}. Mencoba lagi setiap {seconds}d.",
+  "error.offline": "Tidak ada koneksi jaringan. Dasbor akan menyusul setelah koneksi kembali.",
+  "a11y.skipToContent": "Lewati ke konten",
 
   // Settings — Appearance
   "settings.appearanceTitle": "Tampilan",

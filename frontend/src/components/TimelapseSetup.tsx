@@ -65,7 +65,7 @@ export default function TimelapseSetup({ onStart }: TimelapseSetupProps) {
   const canStart = range !== null && error === null;
 
   return (
-    <div className="flex w-72 flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900">
+    <div className="flex w-[min(18rem,calc(100vw-5rem))] flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-900">
       <div
         role="group"
         aria-label="Range mode"
@@ -141,7 +141,7 @@ export default function TimelapseSetup({ onStart }: TimelapseSetupProps) {
           type="button"
           disabled={!canStart}
           onClick={() => range && onStart({ range, step })}
-          className="rounded-md bg-gray-900 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+          className="tap rounded-md bg-gray-900 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
         >
           {t("tl.start")}
         </button>

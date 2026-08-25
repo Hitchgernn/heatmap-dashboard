@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode } from "react";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface ModalProps {
   open: boolean;
@@ -10,8 +11,8 @@ interface ModalProps {
 }
 
 /**
- * Centered modal dialog with a blurred backdrop. Closes on Escape, on backdrop
- * click, and traps initial focus on the panel. Animates in via the `modal-*`
+ * Centered modal dialog with a blurred backdrop. Closes on Escape and on
+ * backdrop click, and traps focus for as long as it is open. Animates in via the `modal-*`
  * keyframes in index.css (respects prefers-reduced-motion).
  */
 export default function Modal({ open, onClose, title, children }: ModalProps) {
@@ -27,10 +28,8 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  // Move focus into the panel when it opens.
-  useEffect(() => {
-    if (open) panelRef.current?.focus();
-  }, [open]);
+  // Hold Tab inside the panel while it is open, and hand focus back on close.
+  useFocusTrap(panelRef, open);
 
   if (!open) return null;
 

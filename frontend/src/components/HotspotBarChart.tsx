@@ -12,6 +12,7 @@ import type { Hotspot } from "../types/hotspot";
 import { hotspotTier, maxPoints, TIER_META } from "../lib/hotspots";
 import { useLanguage } from "../context/language";
 import { useTheme } from "../context/theme";
+import { isWall } from "../lib/display";
 
 interface HotspotBarChartProps {
   hotspots: Hotspot[];
@@ -20,6 +21,16 @@ interface HotspotBarChartProps {
 
 /** Cap the number of bars so labels stay legible in the fixed-width panel. */
 const MAX_BARS = 8;
+
+/**
+ * Recharts sizes its ticks in SVG units, so `wall:` Tailwind variants can't
+ * reach them — the chart reads the display mode directly instead. A wall screen
+ * is read from metres away, where an 11px axis label is a smudge.
+ */
+const WALL = isWall();
+const AXIS_FONT_SIZE = WALL ? 15 : 11;
+const AXIS_WIDTH = WALL ? 150 : 112;
+const ROW_HEIGHT = WALL ? 62 : 44;
 
 /** Truncate long area labels so the vertical axis stays readable. */
 function truncate(label: string, max = 18): string {
@@ -43,7 +54,7 @@ function AreaTick({
   fill: string;
 }) {
   return (
-    <text x={x} y={y} dy={4} textAnchor="end" fontSize={11} fill={fill}>
+    <text x={x} y={y} dy={4} textAnchor="end" fontSize={AXIS_FONT_SIZE} fill={fill}>
       {truncate(payload?.value ?? "")}
     </text>
   );
@@ -85,22 +96,22 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
   const empty = !loading && data.length === 0;
 
   return (
-    <section className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <section aria-labelledby="hotspot-bar-title" className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <header className="border-b border-gray-100 px-5 py-3.5 dark:border-gray-800">
-        <h2 className="font-display text-lg text-gray-900 dark:text-white">{t("chart.title")}</h2>
+        <h2 id="hotspot-bar-title" className="font-display text-lg text-gray-900 wall:text-2xl dark:text-white">{t("chart.title")}</h2>
       </header>
 
       <div className="py-3 pl-1 pr-2">
         {loading && hotspots.length === 0 ? (
-          <p className="px-3 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
+          <p className="px-3 py-10 text-center text-sm text-gray-500 dark:text-gray-400">
             {t("table.loading")}
           </p>
         ) : empty ? (
-          <p className="px-3 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
+          <p className="px-3 py-10 text-center text-sm text-gray-500 dark:text-gray-400">
             {t("table.empty")}
           </p>
         ) : (
-          <ResponsiveContainer width="100%" height={Math.max(data.length * 44, 130)}>
+          <ResponsiveContainer width="100%" height={Math.max(data.length * ROW_HEIGHT, WALL ? 180 : 130)}>
             <BarChart
               layout="vertical"
               data={data}
@@ -109,7 +120,7 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
             >
               <XAxis
                 type="number"
-                tick={{ fontSize: 11, fill: axisColor }}
+                tick={{ fontSize: AXIS_FONT_SIZE, fill: axisColor }}
                 stroke={axisColor}
                 tickLine={false}
                 axisLine={false}
@@ -117,7 +128,7 @@ export default function HotspotBarChart({ hotspots, loading }: HotspotBarChartPr
               <YAxis
                 type="category"
                 dataKey="label"
-                width={112}
+                width={AXIS_WIDTH}
                 tick={<AreaTick fill={axisColor} />}
                 stroke={axisColor}
                 tickLine={false}
