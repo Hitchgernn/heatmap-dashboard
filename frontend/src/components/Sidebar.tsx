@@ -1,11 +1,19 @@
+import { useRef } from "react";
 import type { Page } from "../types/nav";
 import { useLanguage } from "../context/language";
+import { useFocusTrap } from "../hooks/useFocusTrap";
 
 interface SidebarProps {
   active: Page;
   onNavigate: (page: Page) => void;
   /** When false, the sidebar collapses to zero width (animated). */
   visible: boolean;
+  /**
+   * Overlay mode (below `lg`): the rail floats above the content and slides in
+   * from the left instead of pushing it aside. Below that breakpoint there is
+   * not enough width to give up 256px to navigation.
+   */
+  overlay?: boolean;
   /** Collapse button (only shown on pages that allow hiding). */
   onCollapse?: () => void;
   /** Open the Settings modal (bottom-left action beside the profile). */
@@ -79,33 +87,53 @@ const NAV_ITEMS: NavItem[] = [
  * Left navigation rail: branding, nav items, collapse control, and a bottom row
  * with the admin profile plus a Settings action (opens the settings modal).
  *
- * The rail stays mounted and animates its width between 16rem and 0 so the
- * collapse / return glides instead of snapping. The inner content keeps a fixed
- * width and is clipped during the transition so labels don't reflow.
+ * On a desk browser the rail stays mounted and animates its width between 16rem
+ * and 0 so the collapse / return glides instead of snapping. The inner content
+ * keeps a fixed width and is clipped during the transition so labels don't
+ * reflow. In `overlay` mode (tablet and narrower) it slides in over the content
+ * instead, so the map never loses width to navigation.
  */
-export default function Sidebar({ active, onNavigate, visible, onCollapse, onOpenSettings }: SidebarProps) {
+export default function Sidebar({
+  active,
+  onNavigate,
+  visible,
+  overlay = false,
+  onCollapse,
+  onOpenSettings,
+}: SidebarProps) {
   const { t } = useLanguage();
+  const frameRef = useRef<HTMLElement>(null);
+
+  // In overlay mode the drawer sits above a scrim that blocks the mouse; Tab
+  // has to be blocked from the content behind it for the same reason.
+  useFocusTrap(frameRef, overlay && visible);
+
+  const frameClass = overlay
+    ? "absolute inset-y-0 left-0 z-[900] w-64 wall:w-72 border-r shadow-2xl transition-transform duration-300 ease-in-out motion-reduce:transition-none dark:border-gray-800 dark:bg-gray-900 bg-white " +
+      (visible ? "translate-x-0 border-gray-200" : "-translate-x-full border-transparent")
+    : "h-full shrink-0 overflow-hidden border-r bg-white transition-[width] duration-300 ease-in-out motion-reduce:transition-none dark:border-gray-800 dark:bg-gray-900 " +
+      (visible ? "w-64 wall:w-72 border-gray-200" : "w-0 border-transparent");
 
   return (
     <aside
+      ref={frameRef}
+      tabIndex={-1}
       aria-hidden={!visible}
-      className={
-        "h-full shrink-0 overflow-hidden border-r bg-white transition-[width] duration-300 ease-in-out motion-reduce:transition-none dark:border-gray-800 dark:bg-gray-900 " +
-        (visible ? "w-64 border-gray-200" : "w-0 border-transparent")
-      }
+      aria-label={overlay ? "Main navigation" : undefined}
+      className={frameClass + " outline-none"}
     >
       <div
         className={
-          "flex h-full w-64 flex-col transition-opacity duration-200 ease-in-out motion-reduce:transition-none " +
+          "flex h-full w-64 flex-col wall:w-72 transition-opacity duration-200 ease-in-out motion-reduce:transition-none " +
           (visible ? "opacity-100" : "opacity-0")
         }
       >
         {/* Branding */}
         <div className="px-6 pb-5 pt-6">
-          <h1 className="font-display text-2xl leading-none text-gray-900 dark:text-white">
+          <h1 className="font-display text-2xl leading-none text-gray-900 wall:text-3xl dark:text-white">
             Borobudur
           </h1>
-          <p className="mt-1 font-mono text-[11px] font-medium uppercase tracking-wider text-gray-400 dark:text-gray-500">
+          <p className="mt-1 font-mono text-[11px] font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
             {t("sidebar.tagline")}
           </p>
           {onCollapse && (
@@ -113,7 +141,7 @@ export default function Sidebar({ active, onNavigate, visible, onCollapse, onOpe
               type="button"
               onClick={onCollapse}
               tabIndex={visible ? 0 : -1}
-              className="mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200"
+              className="tap mt-3 inline-flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             >
               <span aria-hidden="true">&laquo;</span> {t("sidebar.collapse")}
             </button>
@@ -133,12 +161,12 @@ export default function Sidebar({ active, onNavigate, visible, onCollapse, onOpe
                 onClick={() => item.enabled && onNavigate(item.id)}
                 aria-current={isActive ? "page" : undefined}
                 className={
-                  "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
+                  "tap flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 wall:py-3 wall:text-base " +
                   (isActive
                     ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
                     : item.enabled
                       ? "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white"
-                      : "cursor-not-allowed text-gray-300 dark:text-gray-600")
+                      : "cursor-not-allowed text-gray-500 dark:text-gray-400")
                 }
                 title={item.enabled ? undefined : t("sidebar.comingSoon")}
               >
@@ -172,7 +200,7 @@ export default function Sidebar({ active, onNavigate, visible, onCollapse, onOpe
                 <p className="truncate text-sm font-semibold text-gray-900 dark:text-white">
                   {t("sidebar.adminName")}
                 </p>
-                <p className="truncate text-xs text-gray-400 dark:text-gray-500">
+                <p className="truncate text-xs text-gray-500 dark:text-gray-400">
                   {t("sidebar.adminRole")}
                 </p>
               </div>
@@ -183,7 +211,7 @@ export default function Sidebar({ active, onNavigate, visible, onCollapse, onOpe
               tabIndex={visible ? 0 : -1}
               aria-label={t("sidebar.settings")}
               title={t("sidebar.settings")}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
+              className="tap flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"
             >
               <svg
                 width="18"

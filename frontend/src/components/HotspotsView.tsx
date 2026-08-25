@@ -55,12 +55,13 @@ export default function HotspotsView({
         onSelectHotspot={setSelectedId}
         aggregatingLabel={aggregatingLabel}
       >
-        <div className={"absolute top-3 z-[600] flex flex-col gap-2 " + (sidebarCollapsed ? "left-14" : "left-3")}>
+        <div className={"absolute top-3 z-[600] flex max-w-[calc(100%-1.5rem)] flex-col gap-2 sm:max-w-[calc(100%-13rem)] " +
+          (sidebarCollapsed ? "left-14" : "left-3")}>
           <TimeFilter value={timeWindow} onChange={onTimeChange} />
           <DbscanControls value={dbscanParams} onChange={onDbscanChange} />
         </div>
 
-        <div className="absolute right-3 top-3 z-[600] flex flex-col items-end gap-2">
+        <div className="absolute right-3 top-3 z-[600] flex max-w-[calc(100%-1.5rem)] flex-col items-end gap-2">
           <ActiveIndicator label={t("active.hotspots")} />
           {selected && (
             <HotspotDetailCard hotspot={selected} hotspots={hotspots} onClose={() => setSelectedId(null)} />

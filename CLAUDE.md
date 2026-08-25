@@ -120,7 +120,8 @@ React 18 + Vite 6 + TypeScript + Tailwind v4 + Leaflet (`leaflet` + `react-leafl
 ### Frontend gotchas
 
 - **Leaflet uses `[latitude, longitude]`; backend GeoJSON is `[longitude, latitude]`.** Convert when crossing the boundary: `lib/map.ts` `toHeatPoints()` maps GeoJSON features to `[lat, lng, weight]`; hotspot `CircleMarker` centers use `[center_lat, center_lng]`. Do not mix these up.
-- The Google Fonts `@import` must be the **first line** of `src/index.css`, before the Tailwind import, or the build warns and fonts may not load.
+- **Fonts load from `index.html`, not from CSS.** A preconnect pair plus a `<link rel="stylesheet">` to Google Fonts sits in `<head>`. The old `@import` at the top of `src/index.css` was removed: an `@import` cannot be discovered until the stylesheet containing it has downloaded and parsed, so every glyph waited two serialized round trips — including the boot splash's Instrument Serif wordmark. If you add or drop a family, update the `<link>` tag **and** the `@theme` block in `src/index.css`; nothing type-checks that pair.
+- **Chunking is verified, not assumed** (`vite.config.ts` `manualChunks`). The four page views are `React.lazy`-loaded, which keeps Leaflet and Recharts off the login screen. `manualChunks` uses the **function** form on purpose: with the object form, naming `"react"` claims only that one module id, so React's internals and `scheduler` stayed folded inside `vendor-map` and the entry statically imported 300 kB of Leaflet to render a password field. After changing chunking, check `grep -o 'modulepreload[^>]*' frontend/dist/index.html` — `vendor-map` and `vendor-charts` must not appear.
 - Build is `tsc --noEmit && vite build` — a single tsconfig, not project references (the `tsc -b` / `tsconfig.node.json` setup was removed because it conflicted with `noEmit`). `*.tsbuildinfo` is gitignored.
 
 ## Response conventions

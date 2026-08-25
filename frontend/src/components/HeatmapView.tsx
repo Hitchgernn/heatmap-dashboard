@@ -25,7 +25,7 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 
 // Same pill styling as TimeFilter's segmented control.
 const PILL_BASE =
-  "rounded-md px-3 py-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 ";
+  "tap shrink-0 rounded-md px-3 py-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 wall:px-4 wall:py-2 wall:text-base ";
 const PILL_ACTIVE = "bg-gray-900 text-white dark:bg-white dark:text-gray-900";
 const PILL_IDLE =
   "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white";
@@ -60,7 +60,7 @@ export default function HeatmapView({
       <MapView heatPoints={displayPoints} showHeatmap hotspots={[]} showHotspots={false}>
         <div
           className={
-            "absolute top-3 z-[600] flex flex-col items-start gap-2 " +
+            "absolute top-3 z-[600] flex max-w-[calc(100%-1.5rem)] flex-col items-start gap-2 sm:max-w-[calc(100%-13rem)] " +
             (sidebarCollapsed ? "left-14" : "left-3")
           }
         >
@@ -123,7 +123,7 @@ export default function HeatmapView({
         )}
 
         {timelapseActive && config && tl.bounds && (
-          <div className="absolute bottom-3 left-1/2 z-[600] w-[min(560px,calc(100%-180px))] -translate-x-1/2">
+          <div className="absolute bottom-3 left-1/2 z-[600] w-[min(560px,calc(100%-1.5rem))] -translate-x-1/2 sm:w-[min(560px,calc(100%-180px))]">
             <TimelapseBar
               playing={tl.playing}
               onTogglePlay={tl.togglePlay}

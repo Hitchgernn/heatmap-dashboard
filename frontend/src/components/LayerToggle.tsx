@@ -20,7 +20,7 @@ function PillButton({ label, active, onClick, children }: PillButtonProps) {
       onClick={onClick}
       aria-pressed={active}
       className={
-        "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 " +
+        "tap inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 wall:px-4 wall:py-2.5 wall:text-base " +
         (active
           ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white")

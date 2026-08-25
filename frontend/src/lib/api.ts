@@ -6,6 +6,7 @@
  *  - everything else uses { success, data } / { success, error }.
  */
 
+import { ApiError } from "./errors";
 import type { HeatmapFeatureCollection, DashboardSummary, TimeWindow } from "../types/heatmap";
 import type { ClusterPoint, Hotspot } from "../types/hotspot";
 
@@ -46,7 +47,16 @@ function buildUrl(path: string, params: Record<string, string | undefined>): str
 }
 
 async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
-  const res = await fetch(url, { signal, credentials: "include" });
+  let res: Response;
+  try {
+    res = await fetch(url, { signal, credentials: "include" });
+  } catch (err) {
+    // An aborted request is a caller decision, not a failure — rethrow as-is so
+    // the AbortError checks upstream still work.
+    if (err instanceof DOMException && err.name === "AbortError") throw err;
+    throw new ApiError("Network unreachable", 0);
+  }
+
   if (!res.ok) {
     // Try to surface the backend's standard error message.
     let detail = `HTTP ${res.status}`;
@@ -56,7 +66,7 @@ async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
     } catch {
       /* non-JSON error body — keep the status */
     }
-    throw new Error(detail);
+    throw new ApiError(detail, res.status);
   }
   return (await res.json()) as T;
 }
@@ -64,7 +74,8 @@ async function fetchJson<T>(url: string, signal?: AbortSignal): Promise<T> {
 async function fetchData<T>(url: string, signal?: AbortSignal): Promise<T> {
   const body = await fetchJson<ApiEnvelope<T>>(url, signal);
   if (!body.success || body.data === undefined) {
-    throw new Error(body.error?.message ?? "Request failed");
+    // 200 with success:false — the transport worked, the request didn't.
+    throw new ApiError(body.error?.message ?? "Request failed", 200);
   }
   return body.data;
 }
@@ -174,7 +185,7 @@ export async function generateMockData(
     | null;
 
   if (!res.ok || !body?.success) {
-    throw new Error(body?.error?.message ?? `HTTP ${res.status}`);
+    throw new ApiError(body?.error?.message ?? `HTTP ${res.status}`, res.status);
   }
   return { inserted: body.inserted ?? 0, source: body.source ?? params.source };
 }

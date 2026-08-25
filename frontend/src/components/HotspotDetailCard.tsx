@@ -22,14 +22,14 @@ export default function HotspotDetailCard({ hotspot, hotspots, onClose }: Hotspo
   const sharePct = hotspot.share !== undefined ? Math.round(hotspot.share * 100) : null;
 
   return (
-    <div className="w-60 rounded-xl border border-gray-200 bg-white/95 p-4 shadow-xl backdrop-blur dark:border-gray-700 dark:bg-gray-900/95">
+    <div className="w-[min(15rem,calc(100vw-5rem))] rounded-xl border border-gray-200 bg-white/95 p-4 wall:w-72 shadow-xl backdrop-blur dark:border-gray-700 dark:bg-gray-900/95">
       <div className="mb-3 flex items-start justify-between gap-2">
-        <h3 className="font-display text-lg leading-tight text-gray-900 dark:text-white">{hotspot.label}</h3>
+        <h3 className="min-w-0 break-words font-display text-lg leading-tight text-gray-900 dark:text-white">{hotspot.label}</h3>
         <button
           type="button"
           onClick={onClose}
           aria-label={t("common.close")}
-          className="-mr-1 -mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+          className="tap -mr-1 -mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200"
         >
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
             <path d="M4 4l8 8M12 4l-8 8" strokeLinecap="round" />
@@ -58,7 +58,7 @@ export default function HotspotDetailCard({ hotspot, hotspots, onClose }: Hotspo
           </Row>
         )}
         <Row label={t("hotspot.id")}>
-          <b className="font-mono text-xs text-gray-500 dark:text-gray-400">#{hotspot.cluster_id}</b>
+          <b className="font-mono text-xs text-gray-600 dark:text-gray-400">#{hotspot.cluster_id}</b>
         </Row>
       </div>
     </div>
@@ -68,7 +68,7 @@ export default function HotspotDetailCard({ hotspot, hotspots, onClose }: Hotspo
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="text-gray-500 dark:text-gray-400">{label}</span>
+      <span className="text-gray-600 dark:text-gray-400">{label}</span>
       <span className="text-gray-900 dark:text-gray-100">{children}</span>
     </div>
   );

@@ -23,7 +23,7 @@ const MAX_DAYS = 90;
 const MAX_HOURS = MAX_DAYS * 24;
 
 const PILL_BASE =
-  "rounded-md px-3 py-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 ";
+  "tap shrink-0 rounded-md px-3 py-1 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 wall:px-4 wall:py-2 wall:text-base ";
 const PILL_ACTIVE = "bg-gray-900 text-white dark:bg-white dark:text-gray-900";
 const PILL_IDLE =
   "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white";
@@ -73,11 +73,13 @@ export default function TimeFilter({ value, onChange }: TimeFilterProps) {
   };
 
   return (
-    <div ref={rootRef} className="relative inline-flex">
+    <div ref={rootRef} className="relative inline-flex max-w-full">
+      {/* Eight pills plus Custom overflow a portrait tablet: the strip scrolls
+          horizontally rather than wrapping into a second row over the map. */}
       <div
         role="group"
         aria-label="Time window"
-        className="inline-flex items-center gap-0.5 rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
+        className="strip-scroll inline-flex max-w-full flex-nowrap items-center gap-0.5 rounded-lg border border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-gray-900"
       >
         {OPTIONS.map((opt) => {
           const active = value.kind === "preset" && opt.value === value.value;
@@ -142,7 +144,7 @@ export default function TimeFilter({ value, onChange }: TimeFilterProps) {
             type="button"
             onClick={apply}
             disabled={!amountValid}
-            className="rounded-md bg-gray-900 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+            className="tap rounded-md bg-gray-900 px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-gray-700 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
           >
             {t("time.apply")}
           </button>

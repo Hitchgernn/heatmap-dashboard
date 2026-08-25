@@ -11,7 +11,7 @@ import { useState, type FormEvent } from "react";
 import { useAuth } from "../context/auth";
 
 export default function LoginPage() {
-  const { signin, error: authError } = useAuth();
+  const { signin, error: authError, sessionExpired } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +40,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex h-full min-h-screen bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
+    <div className="flex h-full min-h-dvh bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-200">
       {/* Left branding panel — hidden on mobile */}
       <div 
         className="login-brand-enter relative hidden w-[45%] overflow-hidden bg-gray-900 bg-cover bg-center lg:flex lg:flex-col lg:justify-between"
@@ -95,6 +95,15 @@ export default function LoginPage() {
             Enter your admin credentials to access the dashboard.
           </p>
 
+          {sessionExpired && !error && (
+            <div
+              role="status"
+              className="mt-5 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/40 dark:text-amber-300"
+            >
+              Your session ended. Sign in again to pick up where you left off.
+            </div>
+          )}
+
           {error && (
             <div
               role="alert"
@@ -145,8 +154,9 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 transition dark:hover:text-gray-300"
-                  tabIndex={-1}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  aria-pressed={showPassword}
+                  className="tap absolute inset-y-0 right-0 flex items-center rounded-lg pr-3 pl-2 text-gray-500 transition hover:text-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 dark:hover:text-gray-300"
                 >
                   {showPassword ? (
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -165,7 +175,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 active:bg-black disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 dark:active:bg-gray-200"
+              className="tap flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900 active:bg-black disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100 dark:active:bg-gray-200"
             >
               {loading ? (
                 <span className="flex items-center gap-2">

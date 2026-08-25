@@ -5,6 +5,8 @@
  * so the httpOnly session cookie is sent/received automatically.
  */
 
+import { ApiError } from "./errors";
+
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:3001";
 
 export interface AuthUser {
@@ -36,17 +38,22 @@ async function authFetch<T>(
   method: "GET" | "POST",
   body?: unknown
 ): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    method,
-    credentials: "include",
-    headers: body ? { "Content-Type": "application/json" } : undefined,
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${BASE_URL}${path}`, {
+      method,
+      credentials: "include",
+      headers: body ? { "Content-Type": "application/json" } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  } catch {
+    throw new ApiError("Network unreachable", 0);
+  }
 
   const envelope = (await res.json().catch(() => null)) as AuthEnvelope<T> | null;
 
   if (!res.ok || !envelope?.success) {
-    throw new Error(envelope?.error?.message ?? `HTTP ${res.status}`);
+    throw new ApiError(envelope?.error?.message ?? `HTTP ${res.status}`, res.status);
   }
 
   return envelope.data as T;

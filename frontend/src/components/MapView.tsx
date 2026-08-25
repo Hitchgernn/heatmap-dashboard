@@ -130,7 +130,7 @@ function LayerPicker({ basemap, onChange }: LayerPickerProps) {
                   setOpen(false);
                 }}
                 className={`
-                  flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-xs font-medium
+                  tap flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left text-xs font-medium
                   transition-colors duration-150
                   ${
                     isActive
@@ -164,7 +164,7 @@ function LayerPicker({ basemap, onChange }: LayerPickerProps) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={`
-          flex h-8 w-8 items-center justify-center rounded-lg border shadow-md
+          tap flex h-8 w-8 items-center justify-center rounded-lg border shadow-md wall:h-11 wall:w-11
           transition-all duration-150 active:scale-95
           ${
             open
@@ -268,7 +268,7 @@ export default function MapView({
             aria-live="polite"
             className="map-aggregating flex items-center gap-2 rounded-full border border-gray-200 bg-white/95 px-3 py-1.5 text-xs font-medium text-gray-700 shadow-md backdrop-blur dark:border-gray-700 dark:bg-gray-900/95 dark:text-gray-200"
           >
-            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 animate-spin text-gray-400 dark:text-gray-500" aria-hidden="true">
+            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 animate-spin text-gray-500 dark:text-gray-400" aria-hidden="true">
               <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
               <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>

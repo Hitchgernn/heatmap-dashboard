@@ -49,7 +49,7 @@ function NumberField({
         onChange={(e) => onChange(Number(e.target.value))}
         className="w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 tabular-nums focus:border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-200 disabled:opacity-60 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-gray-600 dark:focus:ring-gray-700"
       />
-      <span className="mt-1 block font-mono text-[11px] text-gray-400 dark:text-gray-500">
+      <span className="mt-1 block font-mono text-[11px] text-gray-500 dark:text-gray-400">
         {min}–{max}
       </span>
     </label>
@@ -127,9 +127,9 @@ export default function MockGeneratorView() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl space-y-5 p-6">
-      <section className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-        <h3 className="font-display text-lg text-gray-900 dark:text-white">Mock Generator</h3>
+    <div className="mx-auto w-full max-w-2xl space-y-5 p-4 sm:p-6">
+      <section aria-labelledby="mock-generator-title" className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <h3 id="mock-generator-title" className="font-display text-lg text-gray-900 dark:text-white">Mock Generator</h3>
         <p className="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
           Generate clustered visitor data around Borobudur for testing.
         </p>
@@ -186,7 +186,7 @@ export default function MockGeneratorView() {
             type="button"
             onClick={handleGenerate}
             disabled={invalid || loading}
-            className="inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
+            className="tap inline-flex items-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200"
           >
             {loading && (
               <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">

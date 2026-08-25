@@ -58,7 +58,7 @@ export default function DashboardView({
   const toggleSelect = (id: string) => setSelectedId((cur) => (cur === id ? null : id));
 
   return (
-    <div className="space-y-5 p-6">
+    <div className="space-y-4 p-4 sm:space-y-5 sm:p-6 wall:space-y-6 wall:p-8">
       {/* Summary cards across the top */}
       <DashboardCards summary={summary} loading={loading} areaCount={hotspots.length} />
 
@@ -67,8 +67,10 @@ export default function DashboardView({
           it extends to fill the width freed when the sidebar collapses.
           items-start keeps the shorter right column from stretching to the
           map's height. */}
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,720px)_minmax(0,1fr)] lg:items-start">
-        <div className="relative aspect-square overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+      <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-[minmax(0,720px)_minmax(0,1fr)] lg:items-start wall:lg:grid-cols-[minmax(0,980px)_minmax(0,1fr)]">
+        {/* Below `sm` a square map would push everything else off a phone-height
+            viewport, so it takes a viewport fraction instead. */}
+        <div className="relative h-[60vh] overflow-hidden rounded-xl border border-gray-200 shadow-sm sm:aspect-square sm:h-auto">
           <MapView
             heatPoints={heatPoints}
             showHeatmap={showHeatmap}
@@ -78,10 +80,17 @@ export default function DashboardView({
             onSelectHotspot={toggleSelect}
             aggregatingLabel={aggregatingLabel}
           >
-            <div className={"absolute top-3 z-[600] " + (sidebarCollapsed ? "left-14" : "left-3")}>
+            <div
+              className={
+                // Capped so the scrolling pill strip can never slide under the
+                // layer toggle sitting at the map's top-right.
+                "absolute top-3 z-[600] max-w-[50%] lg:max-w-[calc(100%-15rem)] " +
+                (sidebarCollapsed ? "left-14" : "left-3")
+              }
+            >
               <TimeFilter value={timeWindow} onChange={onTimeChange} />
             </div>
-            <div className="absolute right-3 top-3 z-[600] flex flex-col items-end gap-2">
+            <div className="absolute right-3 top-3 z-[600] flex max-w-[calc(100%-1.5rem)] flex-col items-end gap-2">
               <LayerToggle
                 showHeatmap={showHeatmap}
                 showHotspots={showHotspots}

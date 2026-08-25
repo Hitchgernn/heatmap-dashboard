@@ -27,13 +27,13 @@ export default function DbscanControls({ value, onChange }: DbscanControlsProps)
   const { t } = useLanguage();
 
   return (
-    <div className="w-56 rounded-lg border border-gray-200 bg-white/95 p-3 shadow-md backdrop-blur dark:border-gray-700 dark:bg-gray-900/95">
-      <h3 className="mb-2 font-display text-base text-gray-900 dark:text-white">{t("dbscan.title")}</h3>
+    <div className="w-[min(14rem,calc(100vw-5rem))] rounded-lg border border-gray-200 bg-white/95 p-3 shadow-md backdrop-blur wall:w-72 wall:p-4 dark:border-gray-700 dark:bg-gray-900/95">
+      <h3 className="mb-2 font-display text-base text-gray-900 wall:text-xl dark:text-white">{t("dbscan.title")}</h3>
 
       <div className="mb-3">
-        <label className="mb-1 flex items-baseline justify-between text-xs text-gray-600 dark:text-gray-300">
+        <label className="mb-1 flex items-baseline justify-between text-xs text-gray-600 wall:text-base dark:text-gray-300">
           <span>
-            {t("dbscan.eps")} <span className="font-mono text-gray-400 dark:text-gray-500">eps</span>
+            {t("dbscan.eps")} <span className="font-mono text-gray-500 dark:text-gray-400">eps</span>
           </span>
           <b className="font-mono tabular-nums text-gray-900 dark:text-gray-100">{value.eps} m</b>
         </label>
@@ -50,10 +50,10 @@ export default function DbscanControls({ value, onChange }: DbscanControlsProps)
       </div>
 
       <div>
-        <label className="mb-1 flex items-baseline justify-between text-xs text-gray-600 dark:text-gray-300">
+        <label className="mb-1 flex items-baseline justify-between text-xs text-gray-600 wall:text-base dark:text-gray-300">
           <span>
             {t("dbscan.minSamples")}{" "}
-            <span className="font-mono text-gray-400 dark:text-gray-500">min_samples</span>
+            <span className="font-mono text-gray-500 dark:text-gray-400">min_samples</span>
           </span>
           <b className="font-mono tabular-nums text-gray-900 dark:text-gray-100">{value.minSamples}</b>
         </label>

@@ -4,6 +4,7 @@ import type { Hotspot } from "../types/hotspot";
 import { hotspotTier, maxPoints, TIER_META, type DensityTier } from "../lib/hotspots";
 import { useLanguage } from "../context/language";
 import { useTheme } from "../context/theme";
+import { isWall } from "../lib/display";
 
 interface DensityDonutProps {
   hotspots: Hotspot[];
@@ -11,6 +12,9 @@ interface DensityDonutProps {
 }
 
 const TIER_ORDER: DensityTier[] = ["high", "medium", "low"];
+
+/** Recharts sizes in SVG units — see the note in HotspotBarChart.tsx. */
+const DONUT_HEIGHT = isWall() ? 210 : 150;
 
 /**
  * Dashboard donut: how the total visitor points split across density tiers
@@ -41,19 +45,19 @@ export default function DensityDonut({ hotspots, loading }: DensityDonutProps) {
   const empty = !loading && total === 0;
 
   return (
-    <section className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <section aria-labelledby="density-donut-title" className="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <header className="border-b border-gray-100 px-5 py-3.5 dark:border-gray-800">
-        <h2 className="font-display text-lg text-gray-900 dark:text-white">{t("chart.densityTitle")}</h2>
+        <h2 id="density-donut-title" className="font-display text-lg text-gray-900 wall:text-2xl dark:text-white">{t("chart.densityTitle")}</h2>
       </header>
 
       <div className="px-5 py-4">
         {loading && hotspots.length === 0 ? (
-          <p className="py-10 text-center text-sm text-gray-400 dark:text-gray-500">{t("table.loading")}</p>
+          <p className="py-10 text-center text-sm text-gray-500 dark:text-gray-400">{t("table.loading")}</p>
         ) : empty ? (
-          <p className="py-10 text-center text-sm text-gray-400 dark:text-gray-500">{t("table.empty")}</p>
+          <p className="py-10 text-center text-sm text-gray-500 dark:text-gray-400">{t("table.empty")}</p>
         ) : (
           <div className="flex items-center gap-4">
-            <ResponsiveContainer width="55%" height={150}>
+            <ResponsiveContainer width="55%" height={DONUT_HEIGHT}>
               <PieChart>
                 <Pie
                   data={data}
@@ -83,7 +87,7 @@ export default function DensityDonut({ hotspots, loading }: DensityDonutProps) {
             </ResponsiveContainer>
 
             {/* Legend with tier color, label, and share. */}
-            <ul className="flex-1 space-y-2 text-sm">
+            <ul className="flex-1 space-y-2 text-sm wall:space-y-3 wall:text-lg">
               {data.map((d) => (
                 <li key={d.tier} className="flex items-center gap-2">
                   <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: d.color }} />

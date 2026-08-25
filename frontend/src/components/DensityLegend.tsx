@@ -14,15 +14,15 @@ export default function DensityLegend() {
   ];
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white/95 px-3 py-2.5 text-xs shadow-md backdrop-blur dark:border-gray-700 dark:bg-gray-900/95">
-      <p className="mb-1.5 font-mono font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+    <div className="rounded-lg border border-gray-200 bg-white/95 px-3 py-2.5 text-xs shadow-md backdrop-blur wall:px-5 wall:py-4 wall:text-base dark:border-gray-700 dark:bg-gray-900/95">
+      <p className="mb-1.5 font-mono font-semibold uppercase tracking-wider text-gray-600 wall:mb-2.5 dark:text-gray-400">
         {t("legend.title")}
       </p>
-      <ul className="space-y-1">
+      <ul className="space-y-1 wall:space-y-2">
         {rows.map((r) => (
-          <li key={r.key} className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+          <li key={r.key} className="flex items-center gap-2 text-gray-700 wall:gap-3 dark:text-gray-300">
             <span
-              className="h-2.5 w-2.5 rounded-sm"
+              className="h-2.5 w-2.5 rounded-sm wall:h-4 wall:w-4"
               style={{ backgroundColor: r.color }}
               aria-hidden="true"
             />
