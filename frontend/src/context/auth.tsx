@@ -26,6 +26,14 @@ interface AuthContextValue {
   user: AuthUser | null;
   signin: (email: string, password: string) => Promise<void>;
   signout: () => Promise<void>;
+  /**
+   * End the session because the backend rejected it (401/403), not because the
+   * user asked. Skips the logout call — the cookie is already invalid — and
+   * raises `sessionExpired` so the login page can say why it appeared.
+   */
+  expireSession: () => void;
+  /** True when the last session ended by expiry rather than by signing out. */
+  sessionExpired: boolean;
   /** Error from the last signin attempt (cleared on retry). */
   error: string | null;
 }
@@ -36,6 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading");
   const [user, setUser] = useState<AuthUser | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [sessionExpired, setSessionExpired] = useState(false);
 
   // Check existing session on mount.
   useEffect(() => {
@@ -52,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signin = useCallback(async (email: string, password: string) => {
     setError(null);
+    setSessionExpired(false);
     try {
       await authApi.signin({ email, password });
       // Fetch the full profile after setting the cookie.
@@ -64,6 +74,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const expireSession = useCallback(() => {
+    setUser(null);
+    setStatus("unauthenticated");
+    setError(null);
+    setSessionExpired(true);
+  }, []);
+
   const signout = useCallback(async () => {
     try {
       await authApi.logout();
@@ -73,11 +90,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setStatus("unauthenticated");
     setError(null);
+    setSessionExpired(false);
   }, []);
 
   const value = useMemo(
-    () => ({ status, user, signin, signout, error }),
-    [status, user, signin, signout, error]
+    () => ({ status, user, signin, signout, expireSession, sessionExpired, error }),
+    [status, user, signin, signout, expireSession, sessionExpired, error]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
