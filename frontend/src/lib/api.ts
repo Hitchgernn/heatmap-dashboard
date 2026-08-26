@@ -7,6 +7,7 @@
  */
 
 import { ApiError } from "./errors";
+import { dayRange } from "./timelapse";
 import type { HeatmapFeatureCollection, DashboardSummary, TimeWindow } from "../types/heatmap";
 import type { ClusterPoint, Hotspot } from "../types/hotspot";
 
@@ -21,10 +22,15 @@ export interface HeatmapParams {
  * Convert the selected TimeWindow into query params. Presets map to `window=`;
  * custom "last N hours/days" windows compute a fresh from/to pair at call time
  * so every poll re-anchors the range to now (the window rolls forward, same as
- * presets).
+ * presets). A picked date is the opposite: fixed local-midnight bounds that
+ * stay put across polls.
  */
 function windowParams(window: TimeWindow): Record<string, string | undefined> {
   if (window.kind === "preset") return { window: window.value };
+  if (window.kind === "date") {
+    const { fromMs, toMs } = dayRange(window.date);
+    return { from: new Date(fromMs).toISOString(), to: new Date(toMs).toISOString() };
+  }
   const unitMs = window.unit === "hours" ? 3_600_000 : 86_400_000;
   const to = new Date();
   const from = new Date(to.getTime() - window.amount * unitMs);

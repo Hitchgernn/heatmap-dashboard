@@ -83,6 +83,13 @@ const en = {
   "time.apply": "Apply",
   "time.hours": "hours",
   "time.days": "days",
+  "time.date": "Date",
+  "time.pickDate": "Pick your date",
+  "time.yesterday": "Yesterday",
+  "time.weekAgo": "A week ago",
+  "time.prev": "Previous",
+  "time.next": "Next",
+  "time.close": "Close",
 
   // Timelapse (heatmap page)
   "tl.date": "Date",
@@ -106,6 +113,8 @@ const en = {
 
   // Loading
   "loading.loading": "Loading…",
+  // {source} is a product label ("Mobile App" / "Mock") — English in both locales.
+  "source.switching": "Loading {source} data…",
 
   // Error banner
   "error.retrying": "{error}. Retrying every {seconds}s.",
@@ -199,6 +208,13 @@ const id: Record<TranslationKey, string> = {
   "time.apply": "Terapkan",
   "time.hours": "jam",
   "time.days": "hari",
+  "time.date": "Tanggal",
+  "time.pickDate": "Pilih tanggal",
+  "time.yesterday": "Kemarin",
+  "time.weekAgo": "Seminggu lalu",
+  "time.prev": "Sebelumnya",
+  "time.next": "Berikutnya",
+  "time.close": "Tutup",
 
   // Timelapse (heatmap page)
   "tl.date": "Tanggal",
@@ -222,6 +238,7 @@ const id: Record<TranslationKey, string> = {
 
   // Loading
   "loading.loading": "Memuat…",
+  "source.switching": "Memuat data {source}…",
 
   // Error banner
   "error.retrying": "{error}. Mencoba lagi setiap {seconds}d.",

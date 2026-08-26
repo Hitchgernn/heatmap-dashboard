@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CustomTimeUnit, TimeWindow, TimeWindowPreset } from "../types/heatmap";
 import { useLanguage } from "../context/language";
+import DatePicker, { fromDateValue } from "./DatePicker";
 
 interface TimeFilterProps {
   value: TimeWindow;
@@ -31,11 +32,13 @@ const PILL_IDLE =
 /**
  * Segmented control for the time window. Light pills, black active item.
  * The trailing "Custom" pill opens a small popover for a "last N hours/days"
- * window. Changing the selection triggers a refetch upstream.
+ * window; the "Date" pill opens a calendar for one exact day. Changing the
+ * selection triggers a refetch upstream.
  */
 export default function TimeFilter({ value, onChange }: TimeFilterProps) {
-  const { t } = useLanguage();
-  const [open, setOpen] = useState(false);
+  const { t, lang } = useLanguage();
+  // One popover at a time — Custom and Date share the anchor.
+  const [open, setOpen] = useState<null | "custom" | "date">(null);
   const [amount, setAmount] = useState(value.kind === "custom" ? String(value.amount) : "3");
   const [unit, setUnit] = useState<CustomTimeUnit>(value.kind === "custom" ? value.unit : "days");
   const rootRef = useRef<HTMLDivElement>(null);
@@ -44,10 +47,10 @@ export default function TimeFilter({ value, onChange }: TimeFilterProps) {
   useEffect(() => {
     if (!open) return;
     const onPointerDown = (e: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(null);
     };
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") setOpen(null);
     };
     document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("keydown", onKeyDown);
@@ -66,10 +69,19 @@ export default function TimeFilter({ value, onChange }: TimeFilterProps) {
     ? `${value.amount}${value.unit === "hours" ? "h" : "d"}`
     : t("time.custom");
 
+  const dateActive = value.kind === "date";
+  const dateLabel = dateActive
+    ? new Intl.DateTimeFormat(lang === "id" ? "id-ID" : "en-GB", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }).format(fromDateValue(value.date))
+    : t("time.date");
+
   const apply = () => {
     if (!amountValid) return;
     onChange({ kind: "custom", amount: parsed, unit });
-    setOpen(false);
+    setOpen(null);
   };
 
   return (
@@ -88,7 +100,7 @@ export default function TimeFilter({ value, onChange }: TimeFilterProps) {
               key={opt.value}
               type="button"
               onClick={() => {
-                setOpen(false);
+                setOpen(null);
                 onChange({ kind: "preset", value: opt.value });
               }}
               aria-pressed={active}
@@ -101,16 +113,51 @@ export default function TimeFilter({ value, onChange }: TimeFilterProps) {
 
         <button
           type="button"
-          onClick={() => setOpen((o) => !o)}
+          onClick={() => setOpen((o) => (o === "custom" ? null : "custom"))}
           aria-pressed={customActive}
-          aria-expanded={open}
+          aria-expanded={open === "custom"}
           className={PILL_BASE + (customActive ? PILL_ACTIVE : PILL_IDLE)}
         >
           {customLabel}
         </button>
+
+        {/* Exact day. Its label carries the picked date, so the strip still
+            reads as the answer to "what am I looking at?" when it is active. */}
+        <button
+          type="button"
+          onClick={() => setOpen((o) => (o === "date" ? null : "date"))}
+          aria-pressed={dateActive}
+          aria-expanded={open === "date"}
+          className={
+            PILL_BASE +
+            (dateActive ? PILL_ACTIVE : PILL_IDLE) +
+            (dateActive ? " font-mono tabular-nums" : "")
+          }
+        >
+          <span className="inline-flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <path d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+            {dateLabel}
+          </span>
+        </button>
       </div>
 
-      {open && (
+      {open === "date" && (
+        <div className="absolute right-0 top-full z-[1000] mt-2">
+          <DatePicker
+            value={value.kind === "date" ? value.date : null}
+            onSelect={(date) => {
+              onChange({ kind: "date", date });
+              setOpen(null);
+            }}
+            onClose={() => setOpen(null)}
+          />
+        </div>
+      )}
+
+      {open === "custom" && (
         <div className="absolute right-0 top-full z-[1000] mt-2 flex items-center gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg dark:border-gray-700 dark:bg-gray-900">
           <span className="text-sm text-gray-600 dark:text-gray-300">{t("time.last")}</span>
           <input

@@ -10,13 +10,17 @@ export type TimeWindowPreset = "5m" | "15m" | "1h" | "today" | "3d" | "7d" | "30
 export type CustomTimeUnit = "hours" | "days";
 
 /**
- * Selected time window: either a named backend preset (sent as `window=`) or a
- * user-entered "last N hours/days" range (sent as a fresh `from`/`to` pair on
- * every fetch so the window rolls forward with polling).
+ * Selected time window. Three shapes:
+ *  - `preset`  — a named backend preset (sent as `window=`).
+ *  - `custom`  — "last N hours/days", sent as a fresh `from`/`to` pair on every
+ *                fetch so the window rolls forward with polling.
+ *  - `date`    — one exact calendar day, `yyyy-mm-dd` in the operator's local
+ *                time. Absolute: it does not roll forward with polling.
  */
 export type TimeWindow =
   | { kind: "preset"; value: TimeWindowPreset }
-  | { kind: "custom"; amount: number; unit: CustomTimeUnit };
+  | { kind: "custom"; amount: number; unit: CustomTimeUnit }
+  | { kind: "date"; date: string };
 
 export type DensityLevel = "low" | "medium" | "high";
 
