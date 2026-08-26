@@ -74,6 +74,12 @@ function readStoredSource(): DataSource {
   return stored === "mock" || stored === "mobile_app" ? stored : "mobile_app";
 }
 
+// Product labels — English in both locales, matching the header toggle.
+const SOURCE_LABEL: Record<DataSource, string> = {
+  mobile_app: "Mobile App",
+  mock: "Mock",
+};
+
 /**
  * Top-level App component — handles the auth gate. When authenticated,
  * renders the Dashboard shell; otherwise shows the login page.
@@ -185,6 +191,22 @@ function DashboardShell({
   const [refreshing, setRefreshing] = useState(false);
   const [hotspotsLoading, setHotspotsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Switching data source refetches heatmap, summary and hotspots. Until they
+  // land the map still shows the previous source, so say what is happening
+  // instead of letting stale points read as the new source's data.
+  const [switchingSource, setSwitchingSource] = useState(false);
+  const lastSourceRef = useRef(source);
+  useEffect(() => {
+    if (lastSourceRef.current === source) return;
+    lastSourceRef.current = source;
+    setSwitchingSource(true);
+  }, [source]);
+  // Both loaders flip their flags in the same commit as the one above, so this
+  // never clears before the refetch it is announcing has started.
+  useEffect(() => {
+    if (switchingSource && !firstLoad && !hotspotsLoading) setSwitchingSource(false);
+  }, [switchingSource, firstLoad, hotspotsLoading]);
 
   // Convert backend GeoJSON ([lng, lat]) to leaflet.heat points ([lat, lng, intensity]).
   const heatPoints = useMemo(() => toHeatPoints(heatmap), [heatmap]);
@@ -389,6 +411,24 @@ function DashboardShell({
               where it can't overlap the content it reveals. */}
           {collapsible && !showSidebar && !drawerNav && (
             <ShowSidebarButton onClick={() => setSidebarVisible(true)} />
+          )}
+
+          {/* Same top-center pill the timelapse uses while aggregating — one
+              visual language for "the backend is working on it". */}
+          {switchingSource && (
+            <div className="pointer-events-none absolute left-1/2 top-3 z-[700] -translate-x-1/2">
+              <div
+                role="status"
+                aria-live="polite"
+                className="flex items-center gap-2 rounded-full border border-gray-200 bg-white/95 px-3 py-1.5 text-xs font-medium text-gray-700 shadow-md backdrop-blur dark:border-gray-700 dark:bg-gray-900/95 dark:text-gray-200"
+              >
+                <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 animate-spin text-gray-500 dark:text-gray-400" aria-hidden="true">
+                  <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2" />
+                  <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+                {t("source.switching", { source: SOURCE_LABEL[source] })}
+              </div>
+            </div>
           )}
 
           {/* Keyed by page so React remounts on navigation, replaying the
