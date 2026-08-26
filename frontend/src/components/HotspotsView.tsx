@@ -55,7 +55,8 @@ export default function HotspotsView({
         onSelectHotspot={setSelectedId}
         aggregatingLabel={aggregatingLabel}
       >
-        <div className={"absolute top-3 z-[600] flex max-w-[calc(100%-1.5rem)] flex-col gap-2 sm:max-w-[calc(100%-13rem)] " +
+        {/* z above the other z-[600] overlays so the date picker opens over them. */}
+        <div className={"absolute top-3 z-[650] flex max-w-[calc(100%-1.5rem)] flex-col items-start gap-2 sm:max-w-[calc(100%-13rem)] " +
           (sidebarCollapsed ? "left-14" : "left-3")}>
           <TimeFilter value={timeWindow} onChange={onTimeChange} />
           <DbscanControls value={dbscanParams} onChange={onDbscanChange} />

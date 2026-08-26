@@ -8,7 +8,9 @@ interface TimeFilterProps {
   onChange: (window: TimeWindow) => void;
 }
 
-// Duration labels (5m/15m/1h/3d/7d/30d) are universal; only "Today" is translated.
+// Duration labels (5m/15m/1h/3d/7d) are universal; only "Today" is translated.
+// No 30d pill: with Custom and Date on the strip it overflowed into the layer
+// toggle, and "last 30 days" is one click away under Custom.
 const OPTIONS: { value: TimeWindowPreset; label: string }[] = [
   { value: "5m", label: "5m" },
   { value: "15m", label: "15m" },
@@ -16,7 +18,6 @@ const OPTIONS: { value: TimeWindowPreset; label: string }[] = [
   { value: "today", label: "Today" },
   { value: "3d", label: "3d" },
   { value: "7d", label: "7d" },
-  { value: "30d", label: "30d" },
 ];
 
 // Mirror the backend's 90-day custom-range cap (parseQuery.ts).

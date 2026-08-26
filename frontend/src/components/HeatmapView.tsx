@@ -60,7 +60,9 @@ export default function HeatmapView({
       <MapView heatPoints={displayPoints} showHeatmap hotspots={[]} showHotspots={false}>
         <div
           className={
-            "absolute top-3 z-[600] flex max-w-[calc(100%-1.5rem)] flex-col items-start gap-2 sm:max-w-[calc(100%-13rem)] " +
+            // z above the other z-[600] map overlays: they are later siblings, so
+            // otherwise they paint over the open date picker.
+            "absolute top-3 z-[650] flex max-w-[calc(100%-1.5rem)] flex-col items-start gap-2 sm:max-w-[calc(100%-13rem)] " +
             (sidebarCollapsed ? "left-14" : "left-3")
           }
         >
