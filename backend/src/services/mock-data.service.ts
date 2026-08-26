@@ -3,10 +3,12 @@
  *
  * Produces realistic, clustered raw location logs around Borobudur for testing
  * the full pipeline. Every generated record is forced to source "mock".
+ *
+ * Points are drawn from NAMED_AREAS only — never scattered across the raw
+ * bounds — so mock data lands on the actual on-site spots.
  */
 
-import { BOROBUDUR_BOUNDS } from "../config/bounds";
-import { NAMED_AREAS } from "../config/areas";
+import { NAMED_AREAS, type NamedArea } from "../config/areas";
 import type { LocationLog, LocationSource } from "../types/location";
 
 let idCounter = 0;
@@ -17,19 +19,19 @@ export function generateMockId(): string {
   return `mock_${Date.now().toString(36)}_${idCounter}`;
 }
 
-/** Cumulative-weight pick of a named area, or null for the "Other Area" bucket. */
-function pickArea() {
+/**
+ * Cumulative-weight pick of a named area. Weights sum to 1, but float rounding
+ * can leave `r` past the last boundary — fall back to the last area rather than
+ * letting a point escape the defined spots.
+ */
+function pickArea(): NamedArea {
   const r = Math.random();
   let cumulative = 0;
   for (const area of NAMED_AREAS) {
     cumulative += area.weight;
     if (r < cumulative) return area;
   }
-  return null; // Other Area — scatter across bounds
-}
-
-function randomBetween(min: number, max: number): number {
-  return min + Math.random() * (max - min);
+  return NAMED_AREAS[NAMED_AREAS.length - 1];
 }
 
 /** Gaussian-ish jitter via averaging two uniforms (cheap, no deps). */
@@ -58,16 +60,8 @@ export function generateMockLocations(opts: GenerateOptions): LocationLog[] {
     const visitorId = `mock_visitor_${v + 1}`;
     for (let p = 0; p < opts.pointsPerVisitor; p++) {
       const area = pickArea();
-
-      let lat: number;
-      let lng: number;
-      if (area) {
-        lat = area.lat + jitter(area.spread);
-        lng = area.lng + jitter(area.spread);
-      } else {
-        lat = randomBetween(BOROBUDUR_BOUNDS.minLat, BOROBUDUR_BOUNDS.maxLat);
-        lng = randomBetween(BOROBUDUR_BOUNDS.minLng, BOROBUDUR_BOUNDS.maxLng);
-      }
+      const lat = area.lat + jitter(area.spread);
+      const lng = area.lng + jitter(area.spread);
 
       // Timestamp within the last hour.
       const ageMs = Math.floor(Math.random() * 60 * 60 * 1000);
