@@ -5,7 +5,7 @@
  * Data lives only for the lifetime of the process.
  */
 
-import { BOROBUDUR_CENTER } from "../config/bounds";
+import { NAMED_AREAS } from "../config/areas";
 import type { LocationLog, LocationQuery } from "../types/location";
 import { resolveTimeRange, isWithinRange } from "../utils/timeWindow";
 import type { LocationRepository } from "./location.repository";
@@ -37,14 +37,16 @@ export class MemoryLocationRepository implements LocationRepository {
   }
 
   /**
-   * Seed a small clustered sample around the Borobudur center so the heatmap
-   * endpoint returns visible data during local development.
+   * Seed a small clustered sample on the named areas so the heatmap endpoint
+   * returns visible data during local development. Anchored to NAMED_AREAS —
+   * the same spots the mock generator uses — so seeded and generated data land
+   * on the same places.
    */
   seedSampleData(now: Date = new Date()): number {
     const clusters = [
-      { lat: BOROBUDUR_CENTER.lat, lng: BOROBUDUR_CENTER.lng, points: 60 }, // dense core
-      { lat: BOROBUDUR_CENTER.lat + 0.0008, lng: BOROBUDUR_CENTER.lng - 0.001, points: 25 },
-      { lat: BOROBUDUR_CENTER.lat - 0.0012, lng: BOROBUDUR_CENTER.lng + 0.0009, points: 12 },
+      { lat: NAMED_AREAS[0].lat, lng: NAMED_AREAS[0].lng, points: 60 }, // dense core: the temple
+      { lat: NAMED_AREAS[1].lat, lng: NAMED_AREAS[1].lng, points: 25 },
+      { lat: NAMED_AREAS[2].lat, lng: NAMED_AREAS[2].lng, points: 12 },
     ];
 
     const seeded: LocationLog[] = [];

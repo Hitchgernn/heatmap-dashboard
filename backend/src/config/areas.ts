@@ -2,10 +2,13 @@
  * Named areas within Borobudur.
  *
  * Used by two things:
- *  - the mock generator, to produce realistic clustered data, and
+ *  - the mock generator, which draws every point from these areas only, and
  *  - the dashboard summary, to give `most_crowded_area` a readable label.
  *
- * Centers sit comfortably inside BOROBUDUR_BOUNDS so jittered points stay valid.
+ * Coordinates are the surveyed on-site positions. "Temple Grounds" is the
+ * temple structure itself, so it carries a footprint-sized spread; the rest are
+ * small spots and stay tight. Centers sit comfortably inside BOROBUDUR_BOUNDS
+ * so jittered points stay valid.
  */
 
 export interface NamedArea {
@@ -19,14 +22,17 @@ export interface NamedArea {
 }
 
 /**
- * Weighted areas. The remaining probability mass (1 - sum of weights) is the
- * "Other Area" bucket: points scattered uniformly across the bounds.
+ * Weighted areas. Weights sum to 1 — the mock generator never scatters points
+ * across the raw bounds, so anything outside these areas is real data only.
+ *
+ * 0.0001 deg ~= 11 m here, so spread 0.00045 ~= +/-50 m (the temple footprint)
+ * and 0.00012 ~= +/-13 m (a single spot).
  */
 export const NAMED_AREAS: NamedArea[] = [
-  { name: "Main Stupa", lat: -7.6079, lng: 110.2037, weight: 0.45, spread: 0.0006 },
-  { name: "Entrance Area", lat: -7.6095, lng: 110.205, weight: 0.25, spread: 0.0006 },
-  { name: "East Stairs", lat: -7.6079, lng: 110.2055, weight: 0.15, spread: 0.0005 },
-  { name: "West Area", lat: -7.6079, lng: 110.202, weight: 0.1, spread: 0.0005 },
+  { name: "Temple Grounds", lat: -7.6078864585185055, lng: 110.20387777762937, weight: 0.4, spread: 0.00045 },
+  { name: "West Terrace", lat: -7.607954164345888, lng: 110.20288465661754, weight: 0.2, spread: 0.00012 },
+  { name: "East Terrace", lat: -7.6083503804259545, lng: 110.20449100592475, weight: 0.2, spread: 0.00012 },
+  { name: "South Courtyard", lat: -7.608719455389016, lng: 110.20382327634375, weight: 0.2, spread: 0.00012 },
 ];
 
 export const OTHER_AREA_NAME = "Other Area";
