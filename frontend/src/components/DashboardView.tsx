@@ -83,8 +83,10 @@ export default function DashboardView({
             <div
               className={
                 // Capped so the scrolling pill strip can never slide under the
-                // layer toggle sitting at the map's top-right.
-                "absolute top-3 z-[600] max-w-[50%] lg:max-w-[calc(100%-15rem)] " +
+                // layer toggle sitting at the map's top-right. z sits above the
+                // toggle's own layer: both are z-[600] siblings, so without this
+                // the later-painted toggle covers the open date picker.
+                "absolute top-3 z-[650] max-w-[50%] lg:max-w-[calc(100%-16rem)] " +
                 (sidebarCollapsed ? "left-14" : "left-3")
               }
             >
