@@ -61,7 +61,7 @@ export function generateMockLocations(opts: GenerateOptions): LocationLog[] {
     for (let p = 0; p < opts.pointsPerVisitor; p++) {
       const area = pickArea();
       const lat = area.lat + jitter(area.spread);
-      const lng = area.lng + jitter(area.spread);
+      const lng = area.lng + jitter(area.spreadLng ?? area.spread);
 
       // Timestamp within the last hour.
       const ageMs = Math.floor(Math.random() * 60 * 60 * 1000);
