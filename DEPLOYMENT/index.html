@@ -1649,7 +1649,7 @@ PostgreSQL, and only the backend talks to either.</p>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                                  ├── cloudflared (TLS + public hostname)
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                                                  │      └── reaches 127.0.0.1:8090
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                                  │
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                                  └── docker compose &quot;borobudur-dashboard&quot;
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                                                  └── docker compose "borobudur-dashboard"
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                                                         ├── frontend  :8090 → loopback
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                                         │     ├── serves the built dashboard
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                                                         │     └── proxies /api → backend:3001
@@ -1694,7 +1694,7 @@ and no open inbound port.</p>
   <code>FRONTEND_PUBLISH_PORT</code> (default 8090 — the only one that needs to be reachable by the
   tunnel). Check before starting:</li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-ltnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;:(3001|5433|8090)\b&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;all three free&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>ss<span class="w"> </span>-ltnp<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">':(3001|5433|8090)\b'</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"all three free"</span>
 </code></pre></div>
 <p>A <code>0.0.0.0</code> binding by another container blocks a loopback binding here, so a port that looks
   free in <code>docker ps</code> may still conflict — trust <code>ss</code>, not the port column.
@@ -1712,7 +1712,7 @@ and no open inbound port.</p>
 repository root defines both services; <code>backend/Dockerfile</code> builds the API image.</p>
 <h3 id="21-install-docker">2.1 Install Docker<a class="headerlink" href="#21-install-docker" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.docker.com<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>sh
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$USER</span><span class="s2">&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>usermod<span class="w"> </span>-aG<span class="w"> </span>docker<span class="w"> </span><span class="s2">"</span><span class="nv">$USER</span><span class="s2">"</span>
 </code></pre></div>
 <p>Log out and back in for the group change to apply, then verify <strong>without</strong> sudo:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>version
@@ -1760,7 +1760,7 @@ silently, so apply the schema yourself:</p>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>&lt;<span class="w"> </span>backend/src/db/schema.sql
 </code></pre></div>
 <p>Either way, verify:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;\d admins&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>-c<span class="w"> </span><span class="s1">'\d admins'</span>
 </code></pre></div>
 <h3 id="26-restarts-and-reboots">2.6 Restarts and reboots<a class="headerlink" href="#26-restarts-and-reboots" title="Permanent link">&para;</a></h3>
 <p>Both services carry <code>restart: unless-stopped</code>, so they return after a crash and after a host
@@ -1822,7 +1822,7 @@ tab should show no CORS preflight (<code>OPTIONS</code>) requests before the API
 <a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="s">PGHOST=127.0.0.1</span>
 <a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="s">PGPORT=5433</span>
 <a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="s">PGUSER=borobudur</span>
-<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="s">PGPASSWORD=$(openssl rand -base64 24 | tr -d &#39;/+=&#39;)</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="s">PGPASSWORD=$(openssl rand -base64 24 | tr -d '/+=')</span>
 <a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="s">PGDATABASE=borobudur_auth</span>
 <a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>
 <a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="s"># --- Auth ---</span>
@@ -1856,12 +1856,12 @@ publicly reachable server.</p>
 when the database is initialised. Changing it in <code>.env</code> later does not change the database, and
 the backend will fail to authenticate. To rotate it, change it in both places:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>borobudur<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-c<span class="w"> </span><span class="s2">&quot;ALTER ROLE borobudur PASSWORD &#39;new-password&#39;;&quot;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-c<span class="w"> </span><span class="s2">"ALTER ROLE borobudur PASSWORD 'new-password';"</span>
 </code></pre></div>
 <h3 id="42-build-and-run">4.2 Build and run<a class="headerlink" href="#42-build-and-run" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps<span class="w">                    </span><span class="c1"># both services &quot;running&quot;, postgres &quot;healthy&quot;</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3001/health<span class="w">        </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps<span class="w">                    </span><span class="c1"># both services "running", postgres "healthy"</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3001/health<span class="w">        </span><span class="c1"># {"status":"ok"}</span>
 </code></pre></div>
 <p><code>restart: unless-stopped</code> on both services covers crashes and host reboots — no systemd unit is
 needed for the application itself, only <code>sudo systemctl enable docker</code>.</p>
@@ -1893,7 +1893,7 @@ own loopback is a separate namespace and the tunnel resolves nothing.</p>
 <p>The token grants control of the tunnel — treat it like a password. Keep it out of the shell
 history (<code>docker run</code> arguments are visible in <code>ps</code> while running), and out of the repository.</p>
 <p>Verify from anywhere:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>-s<span class="w">  </span>https://dashboard.your-domain.ac.id/health<span class="w">   </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}  (proxied to backend)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>-s<span class="w">  </span>https://dashboard.your-domain.ac.id/health<span class="w">   </span><span class="c1"># {"status":"ok"}  (proxied to backend)</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>curl<span class="w"> </span>-sI<span class="w"> </span>https://dashboard.your-domain.ac.id/<span class="w">        </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w">   </span><span class="c1"># 200 — the dashboard itself</span>
 </code></pre></div>
 <blockquote>
@@ -1912,8 +1912,8 @@ exposing the server publicly.</p>
 <p>No admin exists until you create one; correct credentials fail without this step.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">set</span><span class="w"> </span>-a<span class="p">;</span><span class="w"> </span>.<span class="w"> </span>.env<span class="p">;</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span>+a
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:3001/api/auth/admin/signup<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;{\&quot;email\&quot;:\&quot;you@campus.ac.id\&quot;,\&quot;password\&quot;:\&quot;&lt;at-least-8-chars&gt;\&quot;,\&quot;registration_secret\&quot;:\&quot;</span><span class="nv">$ADMIN_REGISTRATION_SECRET</span><span class="s2">\&quot;}&quot;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">"{\"email\":\"you@campus.ac.id\",\"password\":\"&lt;at-least-8-chars&gt;\",\"registration_secret\":\"</span><span class="nv">$ADMIN_REGISTRATION_SECRET</span><span class="s2">\"}"</span>
 </code></pre></div>
 <hr />
 <h2 id="5-the-frontend-container">5. The frontend container<a class="headerlink" href="#5-the-frontend-container" title="Permanent link">&para;</a></h2>
@@ -1938,7 +1938,7 @@ frontend</code>; restarting the container does nothing.</p>
 <h3 id="52-verify-the-built-bundle">5.2 Verify the built bundle<a class="headerlink" href="#52-verify-the-built-bundle" title="Permanent link">&para;</a></h3>
 <p>Worth checking after a build, because the failure is silent — the app loads and then every
 request fails:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>frontend<span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;localhost:3001&quot;</span><span class="w"> </span>/usr/share/nginx/html/assets/*.js
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>frontend<span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span><span class="s2">"localhost:3001"</span><span class="w"> </span>/usr/share/nginx/html/assets/*.js
 </code></pre></div>
 <p><code>0</code> (or "no match") is correct. Any hits mean the build arg did not reach Vite.</p>
 <h3 id="53-nginx-behaviour-worth-knowing">5.3 nginx behaviour worth knowing<a class="headerlink" href="#53-nginx-behaviour-worth-knowing" title="Permanent link">&para;</a></h3>
@@ -1960,20 +1960,20 @@ to look.</p>
 <a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>docker<span class="w"> </span>compose<span class="w"> </span>ps
 <a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
 <a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># 2. Backend alive on the compose network</span>
-<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3001/health<span class="w">                      </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:3001/health<span class="w">                      </span><span class="c1"># {"status":"ok"}</span>
 <a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
 <a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># 3. nginx serves the dashboard</span>
 <a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>curl<span class="w"> </span>-sI<span class="w"> </span>localhost:8090/<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="w">                 </span><span class="c1"># HTTP/1.1 200 OK</span>
 <a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>
 <a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="c1"># 4. nginx proxies /api to the backend — the same-origin path</span>
-<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:8090/health<span class="w">                      </span><span class="c1"># {&quot;status&quot;:&quot;ok&quot;}</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:8090/health<span class="w">                      </span><span class="c1"># {"status":"ok"}</span>
 <a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>curl<span class="w"> </span>-s<span class="w"> </span>localhost:8090/api/auth/admin/me<span class="w">           </span><span class="c1"># 401 unauthenticated (correct: it reached the API)</span>
 <a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
 <a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="c1"># 5. Login sets the cookie with Strict, and the session works through the proxy</span>
 <a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>curl<span class="w"> </span>-s<span class="w"> </span>-c<span class="w"> </span>/tmp/c.txt<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>localhost:8090/api/auth/admin/signin<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;you@campus.ac.id&quot;,&quot;password&quot;:&quot;&lt;pw&gt;&quot;}&#39;</span><span class="w"> </span>-i<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>set-cookie
-<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>curl<span class="w"> </span>-s<span class="w"> </span>-b<span class="w"> </span>/tmp/c.txt<span class="w"> </span><span class="s2">&quot;localhost:8090/api/dashboard/summary?window=1h&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">200</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"email":"you@campus.ac.id","password":"&lt;pw&gt;"}'</span><span class="w"> </span>-i<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>set-cookie
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>curl<span class="w"> </span>-s<span class="w"> </span>-b<span class="w"> </span>/tmp/c.txt<span class="w"> </span><span class="s2">"localhost:8090/api/dashboard/summary?window=1h"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-c<span class="w"> </span><span class="m">200</span>
 <a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>
 <a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a><span class="c1"># 6. Publicly, through the tunnel</span>
 <a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>curl<span class="w"> </span>-sI<span class="w"> </span>https://dashboard.your-domain.ac.id/<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1
@@ -1996,8 +1996,8 @@ the page contents on the right, so you can jump straight to yours.</p>
 <p>The cookie was issued <code>Secure</code> but served over plain HTTP, so the browser discarded it without
 warning. Caused by <code>NODE_ENV=production</code> while the site is on <code>http://</code>. Confirm with:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>curl<span class="w"> </span>-si<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>localhost:8090/api/auth/admin/signin<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;email&quot;:&quot;...&quot;,&quot;password&quot;:&quot;...&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>set-cookie
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"email":"...","password":"..."}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>set-cookie
 </code></pre></div>
 <p>If <code>Secure</code> appears, set <code>COOKIE_SECURE=false</code> in <code>backend/.env</code> and run
 <code>docker compose up -d backend</code> (<code>restart</code> will not reload env). Remove it again once HTTPS is in
@@ -2077,7 +2077,7 @@ ships PostgreSQL 12 and needs section A.3.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>curl<span class="w"> </span>ca-certificates<span class="w"> </span>gnupg<span class="w"> </span>lsb-release
 <a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://www.postgresql.org/media/keys/ACCC4CF8.asc<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span>-o<span class="w"> </span>/usr/share/keyrings/postgresql.gpg
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt focal-pgdg main&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"deb [signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt focal-pgdg main"</span><span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/pgdg.list
 <a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
 <a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>apt-cache<span class="w"> </span>policy<span class="w"> </span>postgresql-16
@@ -2087,22 +2087,22 @@ so PGDG may no longer publish builds for it. If a candidate is listed, install
 <code>postgresql-16 postgresql-contrib-16</code>. Otherwise try 15, 14, then 13.</p>
 <p><strong>Option B — PostgreSQL 12 with pgcrypto</strong>, if PGDG has dropped focal. Create the role and
 database first (A.4), then:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;CREATE EXTENSION IF NOT EXISTS pgcrypto;&#39;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-d<span class="w"> </span>borobudur_auth<span class="w"> </span>-c<span class="w"> </span><span class="s1">'CREATE EXTENSION IF NOT EXISTS pgcrypto;'</span>
 </code></pre></div>
 <p>Must run as the <code>postgres</code> superuser, and extensions are <strong>per-database</strong>, so <code>-d borobudur_auth</code>
 is required — installing into the default <code>postgres</code> database has no effect here. With pgcrypto
 present, <code>gen_random_uuid()</code> resolves and <code>db/schema.sql</code> runs unchanged.</p>
 <h3 id="a4-role-database-and-access">A.4 Role, database, and access<a class="headerlink" href="#a4-role-database-and-access" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nv">DBPASS</span><span class="o">=</span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-base64<span class="w"> </span><span class="m">24</span><span class="k">)</span>
-<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;SAVE THIS: </span><span class="nv">$DBPASS</span><span class="s2">&quot;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"SAVE THIS: </span><span class="nv">$DBPASS</span><span class="s2">"</span>
 <a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
 <a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
-<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="s">CREATE ROLE borobudur LOGIN PASSWORD &#39;$DBPASS&#39;;</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="s">CREATE ROLE borobudur LOGIN PASSWORD '$DBPASS';</span>
 <a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="s">CREATE DATABASE borobudur_auth OWNER borobudur;</span>
 <a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="s">EOF</span>
 </code></pre></div>
 <p>Confirm password authentication over loopback:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;^(local|host)&#39;</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-tAc<span class="w"> </span><span class="s1">&#39;SHOW hba_file;&#39;</span><span class="k">)</span><span class="s2">&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'^(local|host)'</span><span class="w"> </span><span class="s2">"</span><span class="k">$(</span>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-tAc<span class="w"> </span><span class="s1">'SHOW hba_file;'</span><span class="k">)</span><span class="s2">"</span>
 </code></pre></div>
 <p>You want <code>host all all 127.0.0.1/32 scram-sha-256</code>. Debian and Ubuntu ship this by default.
 RHEL and Rocky default to <code>ident</code>, which rejects password logins — change the <code>127.0.0.1/32</code> and
@@ -2119,7 +2119,7 @@ host. Remove the <code>PGHOST</code> override from <code>docker-compose.yml</cod
 <div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
 <a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">      </span><span class="nt">PGHOST</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">host.docker.internal</span>
 <a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="nt">extra_hosts</span><span class="p">:</span>
-<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;host.docker.internal:host-gateway&quot;</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"host.docker.internal:host-gateway"</span>
 </code></pre></div>
 <p>This also requires PostgreSQL to accept connections from the Docker bridge — <code>listen_addresses</code>
 must include the bridge address and <code>pg_hba.conf</code> must permit <code>172.17.0.0/16</code>. That widens the
