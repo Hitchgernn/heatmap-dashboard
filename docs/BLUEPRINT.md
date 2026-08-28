@@ -243,11 +243,11 @@ The system boundary and everything that interacts with it.
 
 ```mermaid
 flowchart LR
-    Visitor["Visitor<br/>(carrying the mobile app)"]
+    Visitor(["🧍 Visitor<br/>(carrying the mobile app)"])
     MobileApp["Mobile App<br/>(separate system)"]
     Hyperbase[("Hyperbase<br/>ScyllaDB BaaS<br/>collection: coordinate data")]
     System["Borobudur Heatmap Dashboard<br/>(the system built here)"]
-    Admin["Admin / Site manager"]
+    Admin(["🧍 Admin / Site manager"])
 
     Visitor -->|"moves around the site"| MobileApp
     MobileApp -->|"writes GPS points"| Hyperbase
