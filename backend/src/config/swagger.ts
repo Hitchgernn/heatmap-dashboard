@@ -31,6 +31,7 @@ const options: swaggerJSDoc.Options = {
     },
     servers: [
       { url: "http://localhost:3001", description: "Local development" },
+      { url: "https://borobudurmonitoring.context.my.id", description: "Production (Cloudflare Tunnel)" },
       { url: "/api", description: "Behind Nginx (VITE_API_BASE_URL=/api)" },
     ],
     tags: [
